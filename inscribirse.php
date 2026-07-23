@@ -139,9 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div style="text-align: center; margin-bottom: 40px;">
                         <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.85rem; font-weight: 600;">Cohorte de Fomento 2026</span>
                         <h2 style="font-size: 2.5rem; margin-top: 8px; margin-bottom: 12px;">Formulario de Postulación</h2>
-                        <p style="font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
+                        <p style="font-size: 0.95rem; max-width: 550px; margin: 0 auto 16px auto;">
                             Por favor llene este formulario a conciencia. Evaluamos el espíritu de trabajo, compromiso e innovación para dar el acompañamiento técnico personalizado de 8 semanas.
                         </p>
+                        <div style="display: inline-block; background-color: rgba(176, 42, 83, 0.15); border: 1px solid var(--color-wild-berry); border-radius: 6px; padding: 10px 20px; font-size: 0.9rem; font-weight: 500; color: var(--color-text-primary);">
+                            ⚠️ Convocatoria abierta únicamente hasta el <strong>9 de agosto</strong> para esta primera cohorte.
+                        </div>
                     </div>
 
                     <?php if (!empty($error_msg)): ?>
