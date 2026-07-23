@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laboratorio de Destino Esquel · Convocatoria Cohorte 2026</title>
-    <meta name="description" content="Aceleramos y estructuramos comercialmente experiencias turísticas urbanas y rurales en Esquel. Co-creación práctica con el sector público-privado.">
+    <meta name="description" content="Programa de la Subsecretaría de Turismo y la Subsecretaría de Producción de Esquel para la estructuración comercial de experiencias turísticas urbanas y rurales.">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -43,7 +43,7 @@
                     <li><a href="#metodo" class="nav-link">Metodología</a></li>
                     <li><a href="#programas" class="nav-link">Programas</a></li>
                     <li><a href="#convocatoria" class="nav-link">Convocatoria</a></li>
-                    <li><a href="#comunidad" class="nav-link">Comunidad</a></li>
+                    <li><a href="#comunidad" class="nav-link">Información Comunitaria</a></li>
                     <li><a href="media-kit.php" class="nav-link">Sala de Prensa</a></li>
                     <li><a href="inscribirse.php" class="btn btn-primary btn-sm">Inscribirse</a></li>
                 </ul>
@@ -55,14 +55,14 @@
     <section class="section" style="padding-top: 180px; min-height: 100vh; display: flex; align-items: center;">
         <div class="container">
             <div class="hero-content">
-                <span class="hero-subtitle text-mono">Esquel LAB · Laboratorio de Destino</span>
-                <h1 class="hero-title">Hagamos juntos.<br>Dejemos cosas andando.</h1>
+                <span class="hero-subtitle text-mono">Programa de Fomento de la Oferta Turística</span>
+                <h1 class="hero-title" style="font-size: 3.2rem;">Laboratorio de<br>Destino Esquel.</h1>
                 <p class="hero-description">
-                    Una propuesta municipal disruptiva de fomento turístico. No te capacitamos en teoría; nos ponemos a tu disposición con un equipo de idóneos para estructurar y acelerar comercialmente tus propuestas turísticas y rurales en ciclos cortos, ágiles y reales.
+                    Un espacio municipal de acompañamiento técnico para estructurar comercialmente experiencias urbanas y rurales. Trabajamos junto a emprendedores locales para desarrollar tarifas, habilitar canales de reserva digital y conectar sus servicios con la producción del territorio.
                 </p>
                 <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <a href="inscribirse.php" class="btn btn-primary">Postularse a la Cohorte 2026</a>
-                    <a href="#metodo" class="btn btn-secondary">Conocer la Metodología</a>
+                    <a href="inscribirse.php" class="btn btn-primary">Formulario de Postulación</a>
+                    <a href="#metodo" class="btn btn-secondary">Especificaciones Técnicas</a>
                 </div>
             </div>
         </div>
@@ -73,46 +73,46 @@
         <div class="container">
             <div class="grid-2" style="align-items: center;">
                 <div>
-                    <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.85rem; font-weight: 600;">Metodología Práctica</span>
-                    <h2 style="font-size: 2.5rem; margin-top: 10px;">La Economía de los Recuerdos</h2>
+                    <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.85rem; font-weight: 600;">Metodología de Trabajo</span>
+                    <h2 style="font-size: 2.2rem; margin-top: 10px;">Estructuración y Economía de los Recuerdos</h2>
                     <p>
-                        Los destinos turísticos no compiten únicamente por la espectacularidad de sus paisajes; compiten por el lugar emocional que logran ocupar en la memoria de quienes los visitan.
+                        El programa asume que las experiencias turísticas crean vínculos emocionales y que los objetos locales con identidad territorial (artesanías, lana, alimentos elaborados) actúan como el canal físico que mantiene vivo el recuerdo del destino en el tiempo.
                     </p>
                     <p>
-                        Bajo esta premisa, nuestra metodología integra la dimensión de las <strong>experiencias</strong> (el viaje memorable) y los <strong>objetos locales con identidad</strong> (el Sello Hecho en Esquel) como vehículos que mantienen vivos esos recuerdos en el tiempo, elevando el ticket promedio de consumo y fortaleciendo a los productores locales.
+                        La metodología consiste en un acompañamiento técnico individual en territorio. El equipo de facilitadores asiste a cada postulante seleccionado en el diseño de su guión interpretativo, el establecimiento de precios neta para la venta a operadores receptivos, y la habilitación de un canal digital de reservas.
                     </p>
-                    <div class="scarcity-box">
-                        <h4 style="margin-bottom: 8px;">Acompañamiento 1:1 Personalizado</h4>
+                    <div class="scarcity-box" style="border-color: var(--color-wild-berry);">
+                        <h4 style="margin-bottom: 8px;">Acompañamiento Técnico Individual</h4>
                         <p style="margin-bottom: 0; font-size: 0.95rem; color: #a1a5ab;">
-                            El proceso es corto e intensivo. Trabajamos codo a codo en el territorio para definir itinerarios, costear precios de venta para operadores turísticos, habilitar canales de reserva digital y dotar a cada propuesta de fichas comerciales listas para vender.
+                            Se priorizan proyectos en funcionamiento o negocios no turísticos con saberes configurables como experiencia. El proceso evalúa la factibilidad de incorporar al menos un producto físico asociado con el Sello "Hecho en Esquel" para extender el impacto comercial del destino.
                         </p>
                     </div>
                 </div>
-                <div class="card" style="background: linear-gradient(135deg, var(--glass-bg) 0%, rgba(176, 42, 83, 0.05) 100%);">
-                    <h3 style="margin-bottom: 24px; color: var(--color-wild-berry);">¿Qué entregamos al finalizar?</h3>
+                <div class="card">
+                    <h3 style="margin-bottom: 24px; font-size: 1.5rem;">Entregables del Proceso</h3>
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 16px; display: flex; gap: 12px;">
                             <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
                             <div>
-                                <strong>Ficha Técnica Comercial:</strong> Estructura de tarifas neta y detalles de operación para comercialización directa e indirecta.
+                                <strong>Ficha técnica comercial:</strong> Definición de tarifas netas para operadores comerciales receptivos, duración, capacidad operativa y requisitos.
                             </div>
                         </li>
                         <li style="margin-bottom: 16px; display: flex; gap: 12px;">
                             <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
                             <div>
-                                <strong>Canal Digital Mínimo:</strong> Habilitación funcional de reservas y contacto digital para operar de inmediato.
+                                <strong>Canal digital de reservas:</strong> Habilitación y configuración de un canal digital básico y funcional para contacto y recepción de reservas.
                             </div>
                         </li>
                         <li style="margin-bottom: 16px; display: flex; gap: 12px;">
                             <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
                             <div>
-                                <strong>Registro Promocional:</strong> Registro fotográfico básico de la experiencia y diseño de su guión interpretativo.
+                                <strong>Registro promocional básico:</strong> Relevamiento fotográfico inicial de la experiencia turística para su difusión.
                             </div>
                         </li>
                         <li style="margin-bottom: 0; display: flex; gap: 12px;">
                             <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
                             <div>
-                                <strong>Anclaje Productivo:</strong> Evaluación de viabilidad de su producto físico de identidad y postulación directa al sello "Hecho en Esquel".
+                                <strong>Informe de viabilidad de producto físico:</strong> Análisis técnico para asociar o comercializar un objeto físico representativo de la identidad de Esquel.
                             </div>
                         </li>
                     </ul>
@@ -125,10 +125,10 @@
     <section id="programas" class="section" style="background-color: rgba(255, 255, 255, 0.01); border-top: 1px solid var(--glass-border);">
         <div class="container">
             <div style="text-align: center; max-width: 700px; margin: 0 auto 60px auto;">
-                <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.85rem; font-weight: 600;">Dos líneas complementarias</span>
-                <h2 style="font-size: 2.5rem; margin-top: 10px;">Programas de Aceleración 2026</h2>
+                <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.85rem; font-weight: 600;">Estructura comparada</span>
+                <h2 style="font-size: 2.2rem; margin-top: 10px;">Líneas de Aceleración y Desarrollo</h2>
                 <p>
-                    Dividimos las postulaciones según el ámbito y madurez de la propuesta. Ambas líneas trabajan con metodologías ágiles coordinadas de 8 semanas.
+                    El programa coordina dos líneas complementarias bajo el mismo horizonte temporal de ejecución y metodología aplicada en territorio.
                 </p>
             </div>
 
@@ -137,16 +137,16 @@
                 <div class="card program-card">
                     <div class="program-card-header">
                         <img src="assets/images/logo-acelera.png" alt="Esquel Acelera" style="height: 64px; margin-bottom: 16px;">
-                        <span class="program-badge badge-acelera text-mono">Aceleración Urbana</span>
+                        <span class="program-badge badge-acelera text-mono">Esquel Acelera</span>
                         <p style="font-size: 0.95rem; margin-bottom: 0;">
-                            Orientado a consolidar experiencias en el ejido urbano: gastronomía temática, talleres de artesanos, circuitos culturales y paseos activos únicos.
+                            Línea orientada a la consolidación de emprendimientos, organizaciones de la sociedad civil y prestadores de servicios turísticos dentro del ejido urbano de Esquel.
                         </p>
                     </div>
                     <ul class="program-features">
-                        <li><strong>Destinatarios:</strong> Emprendedores urbanos con servicios activos o saberes transformables en experiencia.</li>
-                        <li><strong>Economía de recuerdos:</strong> Incorporación obligatoria de productos físicos identitarios asociados.</li>
-                        <li><strong>Cupos Limitados:</strong> De 8 a 10 experiencias estructuradas por cohorte.</li>
-                        <li><strong>Duración:</strong> 8 semanas de trabajo intensivo 1:1 y grupal.</li>
+                        <li><strong>Destinatarios:</strong> Casas de té, talleres artesanales, circuitos históricos y propuestas gastronómicas locales.</li>
+                        <li><strong>Resultado esperado:</strong> 8 a 10 experiencias estructuradas y preparadas para su comercialización por edición.</li>
+                        <li><strong>Plazo de ejecución:</strong> 8 semanas de trabajo técnico en territorio.</li>
+                        <li><strong>Requisito productivo:</strong> Evaluación de integración con el Sello Municipal "Hecho en Esquel".</li>
                     </ul>
                     <a href="inscribirse.php?linea=Acelera" class="btn btn-primary" style="margin-top: 24px;">Postularse a Acelera</a>
                 </div>
@@ -155,16 +155,16 @@
                 <div class="card program-card" style="border-color: rgba(35, 111, 76, 0.25);">
                     <div class="program-card-header">
                         <img src="assets/images/logo-raiz.png" alt="Esquel Raíz" style="height: 64px; margin-bottom: 16px;">
-                        <span class="program-badge badge-raiz text-mono">Desarrollo Rural</span>
+                        <span class="program-badge badge-raiz text-mono">Raíz</span>
                         <p style="font-size: 0.95rem; margin-bottom: 0;">
-                            Dedicado a estructurar el turismo rural andino y de estepa. Diseñamos guiones interpretativos y protocolos seguros sobre la labor tradicional del campo patagónico.
+                            Línea orientada a la estructuración de la oferta turística en el ámbito rural, asociando saberes tradicionales a la comercialización del producto de campo.
                         </p>
                     </div>
                     <ul class="program-features" style="border-top-color: rgba(35, 111, 76, 0.1);">
-                        <li><strong>Destinatarios:</strong> Chacras, estancias, productores de fruta fina, viñedos y artesanos textiles.</li>
-                        <li><strong>Objetos Conectores:</strong> Vinculación directa con packaging, dulces, lanas y licores de origen rural.</li>
-                        <li><strong>Cupos Limitados:</strong> De 5 a 8 establecimientos seleccionados por cohorte.</li>
-                        <li><strong>Duración:</strong> 8 semanas de relevamiento, costeo y mapa interactivo.</li>
+                        <li><strong>Destinatarios:</strong> Establecimientos rurales, chacras, viñedos, productores de lana y productores de fruta fina.</li>
+                        <li><strong>Resultado esperado:</strong> 5 a 8 experiencias rurales estructuradas y geolocalizadas en el Mapa de Turismo Rural.</li>
+                        <li><strong>Plazo de ejecución:</strong> 8 semanas de relevamiento y desarrollo técnico.</li>
+                        <li><strong>Requisito productivo:</strong> Mejora de packaging, relato y exhibición de productos agrícolas y textiles.</li>
                     </ul>
                     <a href="inscribirse.php?linea=Raiz" class="btn btn-secondary" style="margin-top: 24px; border-color: rgba(35, 111, 76, 0.4); color: #cbd5e1;">Postularse a Raíz</a>
                 </div>
@@ -177,49 +177,49 @@
         <div class="container">
             <div class="grid-2">
                 <div>
-                    <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.85rem; font-weight: 600;">Fechas Importantes</span>
-                    <h2 style="font-size: 2.5rem; margin-top: 10px;">Línea de Tiempo Convocatoria</h2>
+                    <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.85rem; font-weight: 600;">Detalles de la Convocatoria</span>
+                    <h2 style="font-size: 2.2rem; margin-top: 10px;">Cronograma de Trabajo y Compromisos</h2>
                     <p>
-                        Para asegurar la máxima calidad del acompañamiento personalizado y el desarrollo real de productos digitales y físicos, establecemos un riguroso sistema de cupos. 
+                        Para garantizar un acompañamiento técnico personalizado de alta dedicación individual, el programa cuenta con cupos limitados por edición (8 a 10 proyectos urbanos y 5 a 8 proyectos rurales).
                     </p>
                     <div class="scarcity-box" style="border-color: #236f4c;">
-                        <h4 style="margin-bottom: 8px;">Requisito de Compromiso Temporal</h4>
+                        <h4 style="margin-bottom: 8px;">Dedicación Requerida</h4>
                         <p style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 0;">
-                            Las propuestas seleccionadas firmarán una carta de compromiso asumiendo una **dedicación mínima de 12 horas semanales** al trabajo de co-creación junto al Cuadro Técnico.
+                            Las propuestas seleccionadas asumen el compromiso de prever y destinar un mínimo de **12 horas semanales** al proceso de co-creación y desarrollo técnico.
                         </p>
                     </div>
                     <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
-                        *Si no resultas seleccionado en esta cohorte, la postulación quedará registrada para futuros clusters y programas complementarios sectoriales que habilitaremos a partir del relevamiento general.
+                        Las postulaciones que no resulten seleccionadas para esta primera cohorte formarán parte de una base de datos para la definición de futuros programas y clusters complementarios.
                     </p>
                 </div>
                 <div>
                     <div class="timeline">
                         <div class="timeline-item">
-                            <div class="timeline-date">23 de Julio al 9 de Agosto</div>
-                            <h4 style="margin-bottom: 8px;">Período de Postulación Abierto</h4>
+                            <div class="timeline-date">Del 23 de Julio al 9 de Agosto</div>
+                            <h4 style="margin-bottom: 8px;">Recepción de Formularios de Postulación</h4>
                             <p style="font-size: 0.9rem; color: #a1a5ab;">
-                                Recepción de formularios interactivos. Los aplicantes deben explayarse a conciencia sobre sus recursos, motivación e integración comercial.
+                                Apertura de la convocatoria pública. Los postulantes deben completar el formulario detallando sus recursos y su motivación para participar.
                             </p>
                         </div>
                         <div class="timeline-item">
-                            <div class="timeline-date">30 de Julio al 9 de Agosto</div>
-                            <h4 style="margin-bottom: 8px;">Evaluaciones y Entrevistas Técnicas</h4>
+                            <div class="timeline-date">Del 23 de Julio al 9 de Agosto</div>
+                            <h4 style="margin-bottom: 8px;">Evaluación y Entrevistas Técnicas</h4>
                             <p style="font-size: 0.9rem; color: #a1a5ab;">
-                                El Cuadro Técnico (CAMOCH, Prestadores y FEHGRA) pondera las propuestas y realiza visitas de diagnóstico en el territorio.
+                                Ponderación de los proyectos a cargo del Cuadro Técnico integrado por representantes del sector privado y los facilitadores del programa.
                             </p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-date">10 de Agosto</div>
-                            <h4 style="margin-bottom: 8px;">Inicio de Trabajos Técnicos</h4>
+                            <h4 style="margin-bottom: 8px;">Notificación e Inicio de Trabajos</h4>
                             <p style="font-size: 0.9rem; color: #a1a5ab;">
-                                Comunicación oficial de seleccionados e inicio de los sprints semanales (Diagnóstico, Desarrollo de Precios, Digitalización e Integración Productiva).
+                                Comunicación oficial de las propuestas seleccionadas e inicio inmediato del proceso de acompañamiento técnico en territorio.
                             </p>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-date">2 de Octubre</div>
-                            <h4 style="margin-bottom: 8px;">Lanzamiento y Evento de Resultados</h4>
+                            <h4 style="margin-bottom: 8px;">Cierre y Presentación de Experiencias</h4>
                             <p style="font-size: 0.9rem; color: #a1a5ab; margin-bottom: 0;">
-                                Evento formal de lanzamiento comercial de las experiencias y sus objetos de identidad ante la prensa regional y operadores receptivos nacionales.
+                                Evento formal de lanzamiento de las experiencias estructuradas y sus productos físicos asociados ante operadores receptivos y prensa.
                             </p>
                         </div>
                     </div>
@@ -232,15 +232,15 @@
     <section id="comunidad" class="section civic-card" style="border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
         <div class="container">
             <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <span class="text-mono" style="color: #4ed392; font-size: 0.85rem; font-weight: 600;">Destino Esquel · Turismo para todos</span>
-                <h2 style="font-size: 2.5rem; margin-top: 10px; margin-bottom: 24px;">Una Matriz Turística Real e Integradora</h2>
+                <span class="text-mono" style="color: #4ed392; font-size: 0.85rem; font-weight: 600;">Desarrollo Productivo Local</span>
+                <h2 style="font-size: 2.2rem; margin-top: 10px; margin-bottom: 24px;">Información sobre el Impacto del Programa en la Comunidad</h2>
                 <p style="font-size: 1.1rem; line-height: 1.7; color: #e2e8f0; margin-bottom: 24px;">
-                    Existe la noción histórica de que el turismo beneficia exclusivamente a grandes capitales de inversión hotelera o gastronómica externa, dejando al ciudadano local fuera del juego. El Laboratorio de Destino Esquel nace para romper ese paradigma.
+                    El programa busca diversificar la oferta del destino apoyando directamente a pequeños productores y emprendimientos locales que constituyen la base de la identidad de Esquel.
                 </p>
                 <p style="color: #cbd5e1; margin-bottom: 32px;">
-                    Creemos firmemente que Esquel posee un potencial turístico inmenso y no tradicional que reside en sus vecinos: en el productor de fruta fina de las afueras, en el artesano textil que preserva saberes, en el guía local de naturaleza, y en las pequeñas cocinas de tradición patagónica. Al priorizar el acompañamiento a estos micro-emprendedores pioneros, allanamos el camino para diversificar los recursos económicos de la ciudad de forma permanente, equitativa y continua.
+                    A diferencia del régimen general de grandes inversiones turísticas de capital externo, este programa se enfoca en dotar de herramientas comerciales y de diseño a los productores locales (chacras, artesanos y elaboradores urbanos). La estructuración de estas experiencias busca generar un circuito complementario continuo en el territorio, abriendo canales de venta directa que permiten que el derrame del gasto del visitante beneficie de manera equitativa a los prestadores y productores locales.
                 </p>
-                <a href="inscribirse.php" class="btn btn-primary" style="background-color: var(--color-lichen-green); box-shadow: 0 4px 20px var(--color-lichen-green-glow);">Sumate al Cambio Local</a>
+                <a href="inscribirse.php" class="btn btn-primary" style="background-color: var(--color-lichen-green); box-shadow: 0 4px 20px var(--color-lichen-green-glow);">Iniciar Formulario de Postulación</a>
             </div>
         </div>
     </section>
@@ -248,14 +248,14 @@
     <!-- Co-creadores y Gobernabilidad -->
     <section class="section" style="border-bottom: 1px solid var(--glass-border);">
         <div class="container" style="text-align: center;">
-            <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.8rem; letter-spacing: 0.1em; display: block; margin-bottom: 32px;">SISTEMA DE GOBERNANZA MIXTA · EVALUACIÓN TRANSPARENTE</span>
+            <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.8rem; letter-spacing: 0.1em; display: block; margin-bottom: 32px;">SISTEMA DE GOBERNANZA MIXTA · CUADRO TÉCNICO DE EVALUACIÓN</span>
             <div style="display: flex; justify-content: center; align-items: center; gap: 64px; flex-wrap: wrap; opacity: 0.75;">
                 <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">CAMOCH</div>
-                <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">Cámara Prestadores Esquel</div>
+                <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">Cámara de Prestadores Turísticos de Esquel</div>
                 <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">FEHGRA Filial Esquel</div>
             </div>
             <p style="font-size: 0.85rem; color: var(--color-text-secondary); max-width: 600px; margin: 24px auto 0 auto; line-height: 1.5;">
-                Estas organizaciones conforman el Cuadro Técnico que pondera con criterios públicos y objetivos (innovación, perfil, derrame y viabilidad) cada propuesta para garantizar equidad, transparencia y un buen mix de diversidad de estadios comerciales.
+                La evaluación y selección técnica de los postulantes se realiza mediante una matriz multidimensional co-diseñada junto a las cámaras sectoriales locales para asegurar la transparencia e imparcialidad del proceso.
             </p>
         </div>
     </section>
