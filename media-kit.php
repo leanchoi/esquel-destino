@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recursos Editoriales & Media Kit · Esquel LAB</title>
     <meta name="description" content="Sala de recursos interactivos para medios de prensa. Notas editoriales, logos y material gráfico oficial de Esquel LAB.">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.1">
 </head>
 <body>
     <div class="bg-vignette"></div>

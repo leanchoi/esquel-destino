@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laboratorio de Destino Esquel · Convocatoria Cohorte 2026</title>
     <meta name="description" content="Programa de la Subsecretaría de Turismo y la Subsecretaría de Producción de Esquel para la estructuración comercial de experiencias turísticas urbanas y rurales.">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.1">
 </head>
 <body>
     <div class="bg-vignette"></div>
@@ -54,7 +54,7 @@
     <!-- Hero Section -->
     <section class="section" style="padding-top: 200px; min-height: 100vh; display: flex; align-items: center;">
         <div class="container">
-            <div class="hero-grid">
+            <div class="hero-grid" style="display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 48px; align-items: center; width: 100%;">
                 <div class="hero-content">
                     <span class="hero-subtitle text-mono">Programa de Fomento de la Oferta Turística</span>
                     <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Laboratorio de<br>Destino Esquel.</h1>
