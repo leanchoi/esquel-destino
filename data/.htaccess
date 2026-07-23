@@ -1,0 +1,2 @@
+# Impedir acceso a los archivos de base de datos SQLite y configuraciones desde el exterior
+Deny from all
