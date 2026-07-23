@@ -52,17 +52,22 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="section" style="padding-top: 180px; min-height: 100vh; display: flex; align-items: center;">
+    <section class="section" style="padding-top: 200px; min-height: 100vh; display: flex; align-items: center;">
         <div class="container">
-            <div class="hero-content">
-                <span class="hero-subtitle text-mono">Programa de Fomento de la Oferta Turística</span>
-                <h1 class="hero-title" style="font-size: 3.2rem;">Laboratorio de<br>Destino Esquel.</h1>
-                <p class="hero-description">
-                    Un espacio municipal de acompañamiento técnico para estructurar comercialmente experiencias urbanas y rurales. Trabajamos junto a emprendedores locales para desarrollar tarifas, habilitar canales de reserva digital y conectar sus servicios con la producción del territorio.
-                </p>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <a href="inscribirse.php" class="btn btn-primary">Formulario de Postulación</a>
-                    <a href="#metodo" class="btn btn-secondary">Especificaciones Técnicas</a>
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="hero-subtitle text-mono">Programa de Fomento de la Oferta Turística</span>
+                    <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Laboratorio de<br>Destino Esquel.</h1>
+                    <p class="hero-description" style="font-size: 1.15rem; line-height: 1.6; margin-bottom: 2rem;">
+                        Un programa práctico diseñado para transformar tus ideas, emprendimiento o saberes tradicionales en una propuesta turística lista para vender. Te brindamos acompañamiento técnico personalizado en tu propio lugar de trabajo para definir tarifas comerciales, abrir canales de reserva digital y conectar tu actividad con los productores locales.
+                    </p>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <a href="inscribirse.php" class="btn btn-primary">Formulario de Postulación</a>
+                        <a href="#metodo" class="btn btn-secondary">Especificaciones Técnicas</a>
+                    </div>
+                </div>
+                <div class="hero-logo-container" style="display: flex; justify-content: center; align-items: center;">
+                    <img src="assets/images/logo-lab-white.png" alt="Esquel LAB Logo" style="width: 100%; max-width: 320px; height: auto; opacity: 0.9; filter: drop-shadow(0 0 45px rgba(255,255,255,0.06));">
                 </div>
             </div>
         </div>
