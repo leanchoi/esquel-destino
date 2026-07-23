@@ -81,7 +81,7 @@
                             ¿Necesitás coordinar una entrevista con el equipo técnico municipal o las Cámaras asociadas?
                         </p>
                     </div>
-                    <a href="mailto:prensa@esquel.gov.ar" class="btn btn-primary btn-sm" style="width: 100%;">Escribir a Prensa</a>
+                    <a href="mailto:comunicacionesquel25@gmail.com" class="btn btn-primary btn-sm" style="width: 100%;">Escribir a Prensa</a>
                 </div>
             </div>
 
