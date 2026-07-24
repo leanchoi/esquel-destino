@@ -26,7 +26,7 @@ $nav = $nav ?? '';
 <header class="admin-header">
   <div class="admin-header-inner">
     <a href="dashboard.php" class="admin-brand">
-      <img src="../assets/images/logo-lab.png" alt="Esquel LAB">
+      <img src="../assets/images/logo-esquel-lab.png" alt="Esquel LAB">
     </a>
     <nav class="admin-nav">
       <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>

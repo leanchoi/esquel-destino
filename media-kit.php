@@ -28,10 +28,10 @@ require __DIR__ . '/includes/header.php';
         <h3>Logos oficiales</h3>
         <p>Isologotipos de Esquel LAB, Acelera y Raíz en PNG con fondo transparente.</p>
         <div class="dl">
-          <a href="assets/images/logo-lab.png" download class="btn btn-secondary btn-sm">Esquel LAB (color)</a>
-          <a href="assets/images/logo-lab-blanco.png" download class="btn btn-secondary btn-sm">Esquel LAB (blanco)</a>
-          <a href="assets/images/logo-acelera.png" download class="btn btn-secondary btn-sm">Esquel Acelera</a>
-          <a href="assets/images/logo-raiz.png" download class="btn btn-secondary btn-sm">Raíz</a>
+          <a href="assets/images/logo-esquel-lab.png" download class="btn btn-secondary btn-sm">Esquel LAB (color)</a>
+          <a href="assets/images/logo-esquel-lab-blanco.png" download class="btn btn-secondary btn-sm">Esquel LAB (blanco)</a>
+          <a href="assets/images/logo-esquel-acelera.png" download class="btn btn-secondary btn-sm">Esquel Acelera</a>
+          <a href="assets/images/logo-esquel-raiz.png" download class="btn btn-secondary btn-sm">Raíz</a>
         </div>
       </div>
 

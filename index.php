@@ -200,7 +200,7 @@ require __DIR__ . '/includes/header.php';
           <img src="assets/images/ilustraciones/linea-acelera.svg" alt="Calle comercial de Esquel con la cordillera de fondo" loading="lazy">
         </div>
         <div class="line-body">
-          <img src="assets/images/logo-acelera.png" alt="Esquel Acelera" class="line-logo">
+          <img src="assets/images/logo-esquel-acelera.png" alt="Esquel Acelera" class="line-logo">
           <span class="line-badge">Urbano</span>
           <p class="line-for">Si tu proyecto está en la ciudad</p>
           <p>Gastronomía, casas de té, talleres artesanales, comercios con un saber propio, circuitos históricos, guías y actividades urbanas. También negocios que hoy no son turísticos pero podrían serlo.</p>
@@ -217,7 +217,7 @@ require __DIR__ . '/includes/header.php';
           <img src="assets/images/ilustraciones/linea-raiz.svg" alt="Campo con ovejas, alambrado y galpón, con la cordillera de fondo" loading="lazy">
         </div>
         <div class="line-body">
-          <img src="assets/images/logo-raiz.png" alt="Raíz" class="line-logo">
+          <img src="assets/images/logo-esquel-raiz.png" alt="Raíz" class="line-logo">
           <span class="line-badge">Rural</span>
           <p class="line-for">Si tu proyecto está en el campo</p>
           <p>Chacras, estancias, crianceros, viñedos y microcervecerías, productores de lana, fruta fina y dulces regionales. Todo lo que tenga un proceso que se pueda mostrar y visitar.</p>

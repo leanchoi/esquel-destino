@@ -79,11 +79,11 @@ Los cuatro logos están en `assets/images/`, ya recortados y con los nombres cor
 
 | Archivo | Contenido |
 |---|---|
-| `logo-lab.png` | Esquel LAB, color |
-| `logo-lab-blanco.png` | Esquel LAB, blanco (para fondos oscuros) |
-| `logo-acelera.png` | Esquel Acelera, color |
-| `logo-raiz.png` | Raíz, color |
+| `logo-esquel-lab.png` | Esquel LAB, color |
+| `logo-esquel-lab-blanco.png` | Esquel LAB, blanco (para fondos oscuros) |
+| `logo-esquel-acelera.png` | Esquel Acelera, color |
+| `logo-esquel-raiz.png` | Raíz, color |
 
-> **Nota:** los archivos venían cruzados en el repositorio original — `logo-acelera.png` contenía el logo de LAB, `logo-lab-color.png` contenía el de Raíz, y el logo real de Acelera estaba guardado como `logo-lab-white-2.png`. Ya está corregido, pero si aparece una copia vieja de esos archivos en algún lado, revisá el contenido antes de usarla.
+> **Nota:** los archivos venían cruzados en el repositorio original — `logo-esquel-acelera.png` contenía el logo de LAB, `logo-lab-color.png` contenía el de Raíz, y el logo real de Acelera estaba guardado como `logo-lab-white-2.png`. Ya está corregido, pero si aparece una copia vieja de esos archivos en algún lado, revisá el contenido antes de usarla.
 
 Falta, si existen: las versiones en blanco de Acelera y Raíz, y los archivos vectoriales (SVG o AI) de los cuatro.

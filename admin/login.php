@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="admin-body">
 <div class="login-wrap">
   <form class="login-card" method="post" novalidate>
-    <img src="../assets/images/logo-lab.png" alt="Esquel LAB" class="login-logo">
+    <img src="../assets/images/logo-esquel-lab.png" alt="Esquel LAB" class="login-logo">
     <h1>Acceso del equipo</h1>
     <p class="login-sub">Panel de evaluación de postulaciones.</p>
 
