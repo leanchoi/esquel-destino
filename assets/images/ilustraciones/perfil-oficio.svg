@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img">
+  <defs>
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter></defs>
+  
+  <rect width="800" height="500" fill="#E9E0D5"/>
+  <!-- tablero de herramientas -->
+  <rect x="48" y="40" width="704" height="220" fill="#DCD0C0" rx="5"/>
+  <circle cx="72" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="118.4" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="164.8" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="211.20000000000002" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="257.6" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="304" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="350.40000000000003" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="396.80000000000007" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="443.20000000000005" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="489.6" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="536" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="582.4000000000001" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="628.8000000000001" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="675.2" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="721.6000000000001" cy="65" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="72" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="118.4" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="164.8" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="211.20000000000002" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="257.6" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="304" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="350.40000000000003" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="396.80000000000007" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="443.20000000000005" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="489.6" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="536" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="582.4000000000001" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="628.8000000000001" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="675.2" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="721.6000000000001" cy="115" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="72" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="118.4" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="164.8" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="211.20000000000002" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="257.6" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="304" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="350.40000000000003" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="396.80000000000007" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="443.20000000000005" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="489.6" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="536" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="582.4000000000001" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="628.8000000000001" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="675.2" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="721.6000000000001" cy="165" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="72" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="118.4" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="164.8" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="211.20000000000002" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="257.6" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="304" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="350.40000000000003" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="396.80000000000007" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="443.20000000000005" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="489.6" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="536" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="582.4000000000001" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="628.8000000000001" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="675.2" cy="215" r="2.6" fill="#71675D" opacity="0.3"/><circle cx="721.6000000000001" cy="215" r="2.6" fill="#71675D" opacity="0.3"/>
+  <!-- herramientas colgadas -->
+  <g stroke-linecap="round">
+    <line x1="144" y1="70" x2="144" y2="170" stroke="#2E2A26" stroke-width="8"/>
+    <rect x="124" y="165" width="34" height="16" rx="3" fill="#AB2759"/>
+    <path d="M240,70 l0,22 l-16,0 l0,10 l40,0 l0,-10 l-16,0 l0,-22 Z" fill="#2E2A26"/>
+    <circle cx="352" cy="110" r="20" fill="none" stroke="#2E2A26" stroke-width="7"/>
+    <line x1="352" y1="130" x2="352" y2="210" stroke="#2E2A26" stroke-width="7"/>
+    <path d="M463.99999999999994,70 q26,10 0,26 q-26,-16 0,-26 Z" fill="#C9A24B"/>
+    <line x1="560" y1="70" x2="560" y2="200" stroke="#A97C53" stroke-width="9"/>
+    <path d="M544,200 l32,0 l-6,14 l-20,0 Z" fill="#2E2A26"/>
+    <circle cx="672" cy="120" r="26" fill="none" stroke="#236F4C" stroke-width="7"/>
+  </g>
+  <!-- banco de trabajo -->
+  <rect x="0" y="300" width="800" height="200" fill="#8A6242"/>
+  <rect x="0" y="300" width="800" height="9" fill="#A97C53"/>
+  <!-- artesano de perfil trabajando una pieza de cerámica en el torno -->
+  <g>
+    <circle cx="192" cy="180" r="24" fill="#2E2A26"/>
+    <path d="M188,201 q-30,6 -34,40 l0,45 l72,0 l0,-50 q-4,-28 -34,-31 Z" fill="#2E2A26"/>
+    <!-- brazos hacia la pieza -->
+    <path d="M216,275 Q280,280 336,275"
+          stroke="#2E2A26" stroke-width="14" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- torno + vasija en proceso -->
+  <ellipse cx="376" cy="300" rx="66" ry="13" fill="#2E2A26" opacity="0.35"/>
+  <path d="M346,300
+           q-10,-32 6,-48 q-14,-16 24,-16 q38,0 24,16 q16,16 6,48 Z" fill="#AB2759"/>
+  <ellipse cx="376" cy="236" rx="24" ry="7" fill="#C95480"/>
+  <rect width="800" height="500" filter="url(#grain)" opacity="0.055" style="mix-blend-mode:multiply"/>
+</svg>

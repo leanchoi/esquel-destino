@@ -1,11 +1,6 @@
 <?php
-// Creado para el Laboratorio de Destino Esquel
-// admin/logout.php
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
 
-session_start();
-session_unset();
-session_destroy();
-
-header("Location: login.php");
-exit();
-?>
+cerrar_sesion();
+redirect('login.php');

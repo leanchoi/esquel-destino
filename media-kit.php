@@ -1,150 +1,200 @@
 <?php
-// Creado para el Laboratorio de Destino Esquel
-// media-kit.php
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/helpers.php';
+
+$pageTitle = 'Sala de prensa · Esquel LAB';
+$pageDescription = 'Kit de prensa de Esquel LAB: qué es el programa, cómo funciona la evaluación, datos clave, notas listas para publicar y logos para descargar.';
+$activeNav = 'prensa';
+require __DIR__ . '/includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recursos Editoriales & Media Kit · Esquel LAB</title>
-    <meta name="description" content="Sala de recursos interactivos para medios de prensa. Notas editoriales, logos y material gráfico oficial de Esquel LAB.">
-    <link rel="stylesheet" href="assets/css/style.css?v=1.1">
-</head>
-<body>
-    <div class="bg-vignette"></div>
 
-    <!-- Header Navigation -->
-    <header class="header">
-        <div class="container header-container">
-            <a href="index.php" class="logo-link">
-                <img src="assets/images/logo-lab-white.png" alt="Esquel LAB" class="logo-img">
-            </a>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="index.php" class="nav-link">Inicio</a></li>
-                    <li><a href="index.php#metodo" class="nav-link">Metodología</a></li>
-                    <li><a href="index.php#programas" class="nav-link">Programas</a></li>
-                    <li><a href="index.php#convocatoria" class="nav-link">Convocatoria</a></li>
-                    <li><a href="inscribirse.php" class="btn btn-primary btn-sm">Inscribirse</a></li>
-                </ul>
-            </nav>
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow"><span class="dot"></span> Sala de prensa</span>
+    <h1>Todo lo que necesitás para escribir sobre Esquel LAB</h1>
+    <p class="lede">
+      El resumen del programa, los números, cómo se eligen los participantes y notas listas para copiar y adaptar.
+      Si necesitás algo que no está acá, escribinos.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- ---------------- descargas ---------------- -->
+    <div class="mk-grid">
+      <div class="mk-card">
+        <h3>Logos oficiales</h3>
+        <p>Isologotipos de Esquel LAB, Acelera y Raíz en PNG con fondo transparente.</p>
+        <div class="dl">
+          <a href="assets/images/logo-lab.png" download class="btn btn-secondary btn-sm">Esquel LAB (color)</a>
+          <a href="assets/images/logo-lab-blanco.png" download class="btn btn-secondary btn-sm">Esquel LAB (blanco)</a>
+          <a href="assets/images/logo-acelera.png" download class="btn btn-secondary btn-sm">Esquel Acelera</a>
+          <a href="assets/images/logo-raiz.png" download class="btn btn-secondary btn-sm">Raíz</a>
         </div>
-    </header>
+      </div>
 
-    <main class="section" style="padding-top: 140px; min-height: 90vh;">
-        <div class="container">
-            
-            <div style="text-align: center; max-width: 800px; margin: 0 auto 60px auto;">
-                <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.85rem; font-weight: 600;">Sala de Prensa Interactiva</span>
-                <h2 style="font-size: 2.8rem; margin-top: 10px; margin-bottom: 16px;">Recursos Editoriales & Media Kit</h2>
-                <p style="font-size: 1.05rem;">
-                    Facilitamos el trabajo de los comunicadores. Ponemos a disposición recursos listos para copiar, adaptar y publicar, junto con las descargas de materiales visuales oficiales.
-                </p>
-            </div>
-
-            <div class="grid-3" style="margin-bottom: 64px;">
-                <!-- Card Descarga Logos -->
-                <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-                    <div style="margin-bottom: 20px;">
-                        <div style="font-size: 2.5rem; margin-bottom: 12px;">📁</div>
-                        <h4 style="margin-bottom: 8px;">Logotipos Oficiales</h4>
-                        <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0;">
-                            Isologotipos de Esquel LAB, Acelera y Raíz en formato transparente de alta definición.
-                        </p>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
-                        <a href="assets/images/logo-lab-white.png" download class="btn btn-secondary btn-sm" style="width: 100%;">Descargar Logo LAB (Blanco)</a>
-                        <a href="assets/images/logo-acelera.png" download class="btn btn-secondary btn-sm" style="width: 100%;">Descargar Logo Acelera</a>
-                        <a href="assets/images/logo-raiz.png" download class="btn btn-secondary btn-sm" style="width: 100%;">Descargar Logo Raíz</a>
-                    </div>
-                </div>
-
-                <!-- Card Documentación Técnica -->
-                <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-                    <div style="margin-bottom: 20px;">
-                        <div style="font-size: 2.5rem; margin-bottom: 12px;">📄</div>
-                        <h4 style="margin-bottom: 8px;">Dossier del Programa</h4>
-                        <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0;">
-                            Documentación ejecutiva detallada en formato PDF sobre el Laboratorio de Destino Esquel.
-                        </p>
-                    </div>
-                    <a href="PRODUCT.md" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%;">Ver Ficha del Proyecto (Markdown)</a>
-                </div>
-
-                <!-- Contacto de Prensa -->
-                <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-                    <div style="margin-bottom: 20px;">
-                        <div style="font-size: 2.5rem; margin-bottom: 12px;">✉️</div>
-                        <h4 style="margin-bottom: 8px;">Contacto de Prensa</h4>
-                        <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0;">
-                            ¿Necesitás coordinar una entrevista con el equipo técnico municipal o las Cámaras asociadas?
-                        </p>
-                    </div>
-                    <a href="mailto:comunicacionesquel25@gmail.com" class="btn btn-primary btn-sm" style="width: 100%;">Escribir a Prensa</a>
-                </div>
-            </div>
-
-            <!-- Notas de prensa interactivas -->
-            <h3 style="font-size: 1.8rem; margin-bottom: 32px; text-align: center;">Notas Editoriales Disponibles</h3>
-
-            <div class="grid-2">
-                <!-- Nota 1: Gobernanza y selección transparente -->
-                <div class="card release-card">
-                    <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.75rem; font-weight: 600;">Eje: Transparencia y Gobernanza</span>
-                    <h4 style="font-size: 1.25rem; margin: 12px 0 8px 0;">El sector privado de Esquel asume un rol activo en la selección de emprendimientos turísticos</h4>
-                    
-                    <div id="releaseText1" class="release-content">
-                        ESQUEL, CHUBUT · Con el lanzamiento de la primera cohorte del Laboratorio de Destino Esquel, el municipio y el sector privado local presentaron un modelo de gobernanza mixta inédito en la región. Las instituciones representativas del comercio, la hotelería y la prestación turística —CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial Esquel— no solo avalan el programa, sino que conforman el Cuadro Técnico a cargo del sistema de ponderación de postulantes.
-
-                        Este sistema busca garantizar equidad, transparencia y un análisis técnico preciso de cada propuesta. La evaluación se realiza bajo cinco dimensiones ponderadas: diferenciación de la propuesta, impacto en la matriz turística local, motivación de los emprendedores, viabilidad del producto físico y capacidad operativa mínima. De esta manera, se asegura un buen mix de diversidad de proyectos en distintos estadios de desarrollo, evitando beneficiar únicamente a los actores ya consolidados y brindando oportunidades reales a nuevos emprendedores locales.
-                    </div>
-
-                    <button class="btn btn-secondary btn-sm btn-copy" data-target="releaseText1" style="width: 100%;">
-                        Copiar nota de prensa
-                    </button>
-                </div>
-
-                <!-- Nota 2: Economía de los Recuerdos y Producción -->
-                <div class="card release-card" style="border-left-color: #236f4c;">
-                    <span class="text-mono" style="color: #4ed392; font-size: 0.75rem; font-weight: 600;">Eje: Economía de los Recuerdos</span>
-                    <h4 style="font-size: 1.25rem; margin: 12px 0 8px 0;">Esquel impulsa la "Economía de los Recuerdos" integrando el turismo con los productores locales</h4>
-                    
-                    <div id="releaseText2" class="release-content">
-                        ESQUEL, CHUBUT · La Subsecretaría de Turismo en conjunto con la Subsecretaría de Producción de Esquel anunciaron la implementación metodológica de la "Economía de los Recuerdos" dentro del nuevo Laboratorio de Destino. Bajo este enfoque estratégico, los recuerdos generados por el turista son considerados el bien más valioso que produce un destino.
-
-                        A través de las líneas de trabajo "Esquel Acelera" y "Raíz", el programa vincula directamente el diseño de experiencias turísticas con la adquisición de productos físicos tangibles con identidad local. Se buscará que cada experiencia rural (chacras, lanas, fruta fina) y urbana (gastronomía, artesanías) asocie y mejore la presentación de un producto conector representativo. Esto no solo incrementará el ticket de gasto del visitante, sino que impulsará de forma directa las ventas de los pequeños artesanos y productores locales nucleados en el Sello Municipal "Hecho en Esquel".
-                    </div>
-
-                    <button class="btn btn-secondary btn-sm btn-copy" data-target="releaseText2" style="width: 100%;">
-                        Copiar nota de prensa
-                    </button>
-                </div>
-            </div>
-
-            <!-- Continuidad Nota Informativa -->
-            <div class="card" style="margin-top: 48px; border-color: rgba(255, 255, 255, 0.05); background-color: rgba(0,0,0,0.15);">
-                <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.75rem;">Nota Adicional sobre la Convocatoria</span>
-                <h4 style="margin: 12px 0 8px 0;">Un programa municipal continuo y con foco territorial</h4>
-                <div id="releaseText3" class="release-content" style="max-height: 150px;">
-                    El Laboratorio de Destino Esquel prevé abrir de manera secuencial y continua futuras cohortes a lo largo del año. La selección de un cupo restringido en esta primera etapa (8 a 10 urbanos y 5 a 8 rurales) responde a la necesidad de concentrar recursos y asesoramiento personalizado 1:1, asegurando que las experiencias seleccionadas abran camino comercial estable y sirvan de modelo para futuros programas y clusters complementarios.
-                </div>
-                <button class="btn btn-secondary btn-sm btn-copy" data-target="releaseText3" style="max-width: 250px;">
-                    Copiar nota corta
-                </button>
-            </div>
-
+      <div class="mk-card">
+        <h3>Datos del programa</h3>
+        <p>Fechas, cupos, líneas de trabajo y composición del Cuadro Técnico, todo en esta misma página para copiar.</p>
+        <div class="dl">
+          <a href="#numeros" class="btn btn-secondary btn-sm">Ver los números</a>
+          <a href="#evaluacion" class="btn btn-secondary btn-sm">Cómo se evalúa</a>
         </div>
-    </main>
+      </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Laboratorio de Destino Esquel. Subsecretaría de Turismo y Subsecretaría de Producción.</p>
-            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 4px;">Municipalidad de Esquel, Chubut, Patagonia Argentina.</p>
+      <div class="mk-card">
+        <h3>Contacto de prensa</h3>
+        <p>Para coordinar entrevistas con el municipio o con las cámaras que integran el Cuadro Técnico.</p>
+        <div class="dl">
+          <a href="mailto:<?= e(EMAIL_PRENSA) ?>" class="btn btn-primary btn-sm">Escribir a prensa</a>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
+    <!-- ---------------- boilerplate ---------------- -->
+    <h2 style="font-size:28px">Qué es Esquel LAB, en 100 palabras</h2>
+    <p style="color:var(--ink-2)">Párrafo de contexto listo para insertar al pie de una nota.</p>
+    <div class="release">
+      <div class="release-body" id="boilerplate">
+        <p>Esquel LAB (Laboratorio de Destino Esquel) es un programa municipal gratuito de las Subsecretarías de Turismo y de Producción que acompaña a emprendedores urbanos y productores rurales a transformar servicios y saberes que ya existen en experiencias turísticas que se puedan vender. Se organiza en dos líneas: Esquel Acelera, para el ámbito urbano, y Raíz, para el rural. Cada edición dura ocho semanas de trabajo intensivo, con acompañamiento individual en el lugar de trabajo de cada participante y talleres grupales, y cierra con la presentación pública de las experiencias ante agencias receptivas y prensa. La selección está a cargo de un Cuadro Técnico mixto integrado por el municipio y tres cámaras del sector privado.</p>
+      </div>
+      <button class="copy-btn" data-copy="#boilerplate">Copiar texto</button>
+    </div>
+
+    <!-- ---------------- números ---------------- -->
+    <h2 id="numeros" style="font-size:28px;margin-top:56px">Los números</h2>
+    <table class="facts-table">
+      <tr><td>Costo para el participante</td><td>Gratuito</td></tr>
+      <tr><td>Líneas</td><td>2 — Esquel Acelera (urbano) y Raíz (rural)</td></tr>
+      <tr><td>Postulaciones</td><td><?= e(fecha_larga(FECHA_APERTURA)) ?> al <?= e(fecha_larga(FECHA_CIERRE)) ?> de 2026</td></tr>
+      <tr><td>Trabajo en territorio</td><td><?= e(fecha_larga(FECHA_INICIO)) ?> al <?= e(fecha_larga(FECHA_FIN)) ?> de 2026 (8 semanas)</td></tr>
+      <tr><td>Proyectos por edición</td><td>13 a 18 en total — 8 a 10 urbanos y 5 a 8 rurales</td></tr>
+      <tr><td>Dedicación exigida</td><td>Mínimo 12 horas semanales por proyecto</td></tr>
+      <tr><td>Requisitos de entrada</td><td>No se exige monotributo ni habilitación previa para postularse</td></tr>
+      <tr><td>Gobernanza</td><td>Municipio (Turismo y Producción) + CAMOCH + Cámara de Prestadores Turísticos + FEHGRA Filial Esquel</td></tr>
+    </table>
+
+    <!-- ---------------- evaluación ---------------- -->
+    <h2 id="evaluacion" style="font-size:28px;margin-top:56px">Cómo se eligen los participantes</h2>
+    <p style="color:var(--ink-2);max-width:70ch">
+      La selección no la hace sólo el municipio. Un <strong>Cuadro Técnico</strong> integrado por las Subsecretarías de
+      Turismo y de Producción junto a <strong>CAMOCH</strong> (Cámara de Comercio, Industria, Producción y Turismo del Oeste
+      de Chubut), la <strong>Cámara de Prestadores Turísticos de Esquel</strong> y <strong>FEHGRA Filial Esquel</strong>
+      acuerda los criterios antes de abrir la convocatoria y participa de la evaluación.
+    </p>
+    <p style="color:var(--ink-2);max-width:70ch">
+      Se pondera con una matriz de cinco dimensiones. El objetivo explícito de acordarla de antemano es que el proceso
+      no dependa de un solo actor y no beneficie únicamente a los proyectos ya consolidados, dándole lugar real a los
+      que recién empiezan.
+    </p>
+
+    <div class="ba-wrap" style="margin-top:22px">
+      <table class="ba-table">
+        <thead><tr><th>Criterio</th><th>Qué mira</th><th>Peso</th></tr></thead>
+        <tbody>
+          <?php foreach (CRITERIOS as $def): ?>
+            <tr>
+              <td class="ba-key"><?= e($def['label']) ?></td>
+              <td class="ba-before" style="color:var(--ink-2)"><?= e($def['ayuda']) ?></td>
+              <td class="ba-after"><?= e(number_format($def['peso'], 1)) ?>×</td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:14.5px;color:var(--ink-3);margin-top:12px">
+      El perfil y la motivación del postulante pesan más que el resto por decisión del programa: una propuesta simple
+      con alguien decidido a sostenerla llega más lejos que una propuesta redonda sin nadie que la empuje.
+    </p>
+
+    <!-- ---------------- comparativa ---------------- -->
+    <h2 style="font-size:28px;margin-top:56px">Acelera y Raíz, comparadas</h2>
+    <div class="ba-wrap">
+      <table class="ba-table">
+        <thead><tr><th>&nbsp;</th><th>Esquel Acelera</th><th>Raíz</th></tr></thead>
+        <tbody>
+          <tr><td class="ba-key">Ámbito</td><td class="ba-before" style="color:var(--ink-2)">Urbano</td><td class="ba-after" style="font-weight:400">Rural</td></tr>
+          <tr><td class="ba-key">A quién apunta</td><td class="ba-before" style="color:var(--ink-2)">Emprendedores, organizaciones y empresas de servicios turísticos de la ciudad</td><td class="ba-after" style="font-weight:400">Productores y prestadores del campo</td></tr>
+          <tr><td class="ba-key">Cupo</td><td class="ba-before" style="color:var(--ink-2)">8 a 10 proyectos</td><td class="ba-after" style="font-weight:400">5 a 8 proyectos</td></tr>
+          <tr><td class="ba-key">Producto físico asociado</td><td class="ba-before" style="color:var(--ink-2)">Se evalúa caso por caso</td><td class="ba-after" style="font-weight:400">Vínculo directo: lana, dulces, fruta fina, bebidas artesanales</td></tr>
+          <tr><td class="ba-key">Sello vinculado</td><td class="ba-before" style="color:var(--ink-2)">“Hecho en Esquel”</td><td class="ba-after" style="font-weight:400">“Hecho en Esquel” y nexo con “Origen Chubut”</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---------------- notas ---------------- -->
+    <h2 style="font-size:28px;margin-top:56px">Notas listas para publicar</h2>
+    <p style="color:var(--ink-2)">Redactadas para adaptar y publicar. Copialas, cortalas o reescribilas como te sirva.</p>
+
+    <div class="release">
+      <span class="tag">Eje: transparencia y gobernanza</span>
+      <h3>El sector privado de Esquel asume un rol activo en la selección de emprendimientos turísticos</h3>
+      <div class="release-body" id="nota1">
+        <p>ESQUEL, CHUBUT · Con el lanzamiento de la primera cohorte del Laboratorio de Destino Esquel, el municipio y el sector privado local pusieron en marcha un esquema de gobernanza mixta para elegir a los participantes del programa. Las instituciones que representan al comercio, la hotelería y la prestación turística —CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial Esquel— no sólo acompañan la iniciativa: integran el Cuadro Técnico que pondera cada postulación.</p>
+        <p>Los criterios se acordaron antes de abrir la convocatoria y se publicaron junto con ella. Se evalúan cinco dimensiones: el perfil y la motivación de quien se postula, la diferenciación de la propuesta, su impacto en la oferta turística del destino, la viabilidad operativa y el potencial de asociar un producto físico de identidad local. El peso mayor recae sobre la motivación y el compromiso, una definición deliberada del programa.</p>
+        <p>El objetivo declarado del esquema es evitar que el acompañamiento beneficie únicamente a los emprendimientos ya consolidados y garantizar lugar a quienes recién empiezan. El programa es gratuito y no exige monotributo ni habilitación previa para postularse.</p>
+      </div>
+      <button class="copy-btn" data-copy="#nota1">Copiar nota</button>
+    </div>
+
+    <div class="release green">
+      <span class="tag">Eje: producción local</span>
+      <h3>Esquel integra el turismo con sus productores a través de la “Economía de los Recuerdos”</h3>
+      <div class="release-body" id="nota2">
+        <p>ESQUEL, CHUBUT · Las Subsecretarías de Turismo y de Producción de Esquel incorporaron al Laboratorio de Destino el enfoque de la “Economía de los Recuerdos”, que parte de una premisa simple: el recuerdo es el bien más valioso que produce un destino turístico, y un objeto tangible lo mantiene vivo mucho después del viaje.</p>
+        <p>En la práctica, esto significa que cada experiencia desarrollada en el programa evalúa la posibilidad de asociar un producto físico con identidad territorial: un dulce, una madeja de lana, una pieza de cerámica, una conserva. Cuando la propuesta lo permite, el acompañamiento incluye trabajar el envase, la etiqueta y el relato que lo acompaña, y evaluar su vínculo con el sello municipal “Hecho en Esquel”.</p>
+        <p>El impacto buscado es doble: elevar el gasto promedio del visitante y abrir un canal de venta directa para artesanos y productores locales que hoy comercializan sin conexión con el circuito turístico. El programa trabaja con dos líneas —Esquel Acelera en el ámbito urbano y Raíz en el rural— y cierra el 2 de octubre con la presentación pública de las experiencias ante agencias receptivas.</p>
+      </div>
+      <button class="copy-btn" data-copy="#nota2">Copiar nota</button>
+    </div>
+
+    <div class="release">
+      <span class="tag">Nota breve</span>
+      <h3>Un programa municipal gratuito y pensado como proceso continuo</h3>
+      <div class="release-body" id="nota3">
+        <p>El Laboratorio de Destino Esquel prevé abrir cohortes sucesivas a lo largo del año. El cupo acotado de esta primera etapa —8 a 10 proyectos urbanos y 5 a 8 rurales— responde a que el acompañamiento es individual y en territorio: el equipo trabaja en el lugar de cada participante durante ocho semanas, con una dedicación exigida de al menos 12 horas semanales de su parte. Las postulaciones que no resulten seleccionadas quedan registradas para las próximas convocatorias y para el diseño de programas complementarios.</p>
+      </div>
+      <button class="copy-btn" data-copy="#nota3">Copiar nota</button>
+    </div>
+
+    <!-- ---------------- preguntas ---------------- -->
+    <h2 style="font-size:28px;margin-top:56px">Preguntas que suelen hacernos</h2>
+    <div class="faq">
+      <details class="faq-item">
+        <summary>¿Esto es sólo para quienes ya tienen capital para invertir?</summary>
+        <div class="faq-body">
+          <p>No. Esquel LAB no es un régimen de inversión: es acompañamiento técnico gratuito para emprendedores y productores que ya están operando con lo que tienen y necesitan estructura comercial —precio, canal de venta, materiales— para poder vender.</p>
+          <p>El municipio tiene además un Régimen de Promoción de Inversiones Turísticas, orientado a proyectos de mayor escala. Son instrumentos distintos y complementarios: uno moviliza capital, el otro pone equipo técnico al servicio de quien ya está trabajando.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Hace falta estar formalizado para participar?</summary>
+        <div class="faq-body">
+          <p>No para postularse. Si la propuesta necesita alguna habilitación para poder comercializarse, ordenar eso forma parte del acompañamiento. La profesionalización es el objetivo del programa, no su requisito de entrada.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué pasa con quienes no queden seleccionados?</summary>
+        <div class="faq-body">
+          <p>Sus postulaciones quedan registradas. Esta es la primera cohorte de un proceso concebido como continuo: de sus resultados van a salir las próximas convocatorias y los programas complementarios.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Hay antecedentes de este tipo de programa en la región?</summary>
+        <div class="faq-body">
+          <p>Esta es la primera cohorte de Esquel LAB. La metodología tiene un precedente regional cercano: un programa comparable trabajó con este enfoque en El Bolsón, priorizando a los vecinos frente a las grandes inversiones externas y poniendo en valor saberes locales que no estaban integrados a la oferta turística.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="callout" style="margin-top:48px">
+      <span class="lbl">Contacto</span>
+      <p>Subsecretaría de Turismo de Esquel · <a href="mailto:<?= e(EMAIL_PRENSA) ?>"><?= e(EMAIL_PRENSA) ?></a></p>
+    </div>
+
+  </div>
+</section>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>

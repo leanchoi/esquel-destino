@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img">
+  <defs>
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter></defs>
+  
+  <rect width="800" height="500" fill="#8A6242"/>
+  <rect y="0" width="800" height="67.42857142857143" fill="#94694A"/><rect y="71.42857142857143" width="800" height="67.42857142857143" fill="#8A6242"/><rect y="142.85714285714286" width="800" height="67.42857142857143" fill="#94694A"/><rect y="214.28571428571428" width="800" height="67.42857142857143" fill="#8A6242"/><rect y="285.7142857142857" width="800" height="67.42857142857143" fill="#94694A"/><rect y="357.14285714285717" width="800" height="67.42857142857143" fill="#8A6242"/><rect y="428.57142857142856" width="800" height="67.42857142857143" fill="#94694A"/>
+  <!-- cuaderno -->
+  <rect x="80" y="90" width="368" height="320" rx="6" fill="#F7F3EC" transform="rotate(-4 264 250)"/>
+  <g transform="rotate(-4 264 250)">
+    <rect x="112.00000000000001" y="140" width="288" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="166" width="288" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="192" width="176" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="218" width="288" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="244" width="288" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="270" width="176" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="296" width="288" height="6" rx="3" fill="#71675D" opacity="0.3"/><rect x="112.00000000000001" y="322" width="288" height="6" rx="3" fill="#71675D" opacity="0.3"/>
+    <rect x="112.00000000000001" y="115" width="144" height="9" rx="4" fill="#AB2759"/>
+  </g>
+  <!-- lápiz -->
+  <g transform="rotate(38 496 275)">
+    <rect x="480" y="150" width="16" height="200" fill="#C9A24B"/>
+    <path d="M480,350 l16,0 l-8,22 Z" fill="#2E2A26"/>
+    <rect x="480" y="150" width="16" height="16" fill="#AB2759"/>
+  </g>
+  <!-- mate -->
+  <ellipse cx="656" cy="310" rx="46" ry="50" fill="#236F4C"/>
+  <ellipse cx="656" cy="266" rx="30" ry="12" fill="#3E9169"/>
+  <line x1="688" y1="254" x2="760" y2="140" stroke="#C8CBD0" stroke-width="8" stroke-linecap="round"/>
+  <!-- notas adhesivas -->
+  <rect x="504" y="70" width="72" height="66" rx="3" fill="#C9A24B" transform="rotate(7 528 90)"/>
+  <rect x="576" y="100" width="66" height="60" rx="3" fill="#C95480" transform="rotate(-9 600 120)"/>
+  <rect width="800" height="500" filter="url(#grain)" opacity="0.055" style="mix-blend-mode:multiply"/>
+</svg>

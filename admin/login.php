@@ -1,92 +1,61 @@
 <?php
-// Creado para el Laboratorio de Destino Esquel
-// admin/login.php
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
 
-session_start();
-require_once 'db_config.php';
+iniciar_sesion();
 
-// Redireccionar si ya está logueado
-if (isset($_SESSION['user_id'])) {
-    header("Location: dashboard.php");
-    exit();
+if (usuario_actual()) {
+    redirect('dashboard.php');
 }
 
-$error_msg = '';
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
-
-    if (empty($username) || empty($password)) {
-        $error_msg = 'Por favor complete todos los campos.';
+    if (!csrf_valido($_POST['csrf_token'] ?? null)) {
+        $error = 'La sesión expiró. Volvé a intentar.';
     } else {
-        try {
-            $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
-            $stmt->execute([':username' => $username]);
-            $user = $stmt->fetch();
-
-            if ($user && password_verify($password, $user['password'])) {
-                // Generar sesión segura
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['role'] = $user['role'];
-
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                $error_msg = 'Usuario o contraseña incorrectos.';
-            }
-        } catch (PDOException $e) {
-            $error_msg = 'Error en el inicio de sesión: ' . $e->getMessage();
+        $r = intentar_login(trim((string) ($_POST['username'] ?? '')), (string) ($_POST['password'] ?? ''));
+        if ($r['ok']) {
+            redirect(!empty($r['must_change']) ? 'password.php' : 'dashboard.php');
         }
+        $error = $r['error'];
     }
 }
-?>
-<!DOCTYPE html>
+?><!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Interno · Esquel LAB</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acceso del equipo · Esquel LAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css?v=2.0">
+<link rel="stylesheet" href="../assets/css/admin.css?v=2.0">
 </head>
-<body>
-    <div class="bg-vignette"></div>
+<body class="admin-body">
+<div class="login-wrap">
+  <form class="login-card" method="post" novalidate>
+    <img src="../assets/images/logo-lab.png" alt="Esquel LAB" class="login-logo">
+    <h1>Acceso del equipo</h1>
+    <p class="login-sub">Panel de evaluación de postulaciones.</p>
 
-    <main class="section" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;">
-        <div class="auth-card card" style="width: 100%; border-color: rgba(255, 255, 255, 0.05); animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-            <div style="text-align: center; margin-bottom: 32px;">
-                <a href="../index.php">
-                    <img src="../assets/images/logo-lab-white.png" alt="Esquel LAB" style="height: 48px; margin-bottom: 16px;">
-                </a>
-                <h3 style="margin-bottom: 4px;">Acceso de Gestión</h3>
-                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 0;">Laboratorio de Destino Esquel</p>
-            </div>
+    <?php if ($error): ?><div class="form-alert error" style="text-align:left"><?= e($error) ?></div><?php endif; ?>
 
-            <?php if (!empty($error_msg)): ?>
-                <div class="card" style="background-color: rgba(220, 53, 69, 0.1); border-color: #dc3545; padding: 12px; margin-bottom: 24px; text-align: center; border-radius: 6px;">
-                    <p style="color: #f87171; margin-bottom: 0; font-size: 0.85rem;"><?php echo htmlspecialchars($error_msg); ?></p>
-                </div>
-            <?php endif; ?>
-
-            <form action="login.php" method="POST">
-                <div class="form-group">
-                    <label class="form-label" for="username">Usuario</label>
-                    <input class="form-input" type="text" id="username" name="username" required autocomplete="username" placeholder="Ingrese su usuario">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="password">Contraseña</label>
-                    <input class="form-input" type="password" id="password" name="password" required autocomplete="current-password" placeholder="Ingrese su contraseña">
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 12px;">Ingresar al Panel</button>
-            </form>
-
-            <div style="text-align: center; margin-top: 24px;">
-                <a href="../index.php" style="font-size: 0.8rem; color: var(--color-text-secondary); hover:color: var(--color-text-primary);">← Volver al sitio público</a>
-            </div>
-        </div>
-    </main>
+    <?= csrf_field() ?>
+    <div class="field">
+      <label class="lbl" for="username">Usuario</label>
+      <input type="text" id="username" name="username" autocomplete="username" required autofocus>
+    </div>
+    <div class="field">
+      <label class="lbl" for="password">Contraseña</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+    <a href="../index.php" class="login-back">← Volver al sitio</a>
+  </form>
+</div>
 </body>
 </html>

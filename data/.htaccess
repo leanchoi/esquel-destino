@@ -1,2 +1,12 @@
-# Impedir acceso a los archivos de base de datos SQLite y configuraciones desde el exterior
-Deny from all
+# Bloquea el acceso web a la base de datos SQLite.
+# Incluye las dos sintaxis: Apache 2.4+ (Require) y 2.2 (Order/Deny), porque
+# `Deny from all` solo no funciona en 2.4 sin mod_access_compat.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

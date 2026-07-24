@@ -1,279 +1,455 @@
 <?php
-// Creado para el Laboratorio de Destino Esquel
-// index.php
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/helpers.php';
+
+$pageTitle = 'Esquel LAB — Convertí lo que ya hacés en algo que se pueda vender';
+$pageDescription = 'Programa municipal gratuito. Ocho semanas de acompañamiento técnico para que tu servicio, tu campo o tu oficio tenga precio, canal de venta y esté listo para operar. Postulaciones hasta el 9 de agosto de 2026.';
+$activeNav = 'home';
+$abierta = convocatoria_abierta();
+$dias = dias_para_cierre();
+require __DIR__ . '/includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio de Destino Esquel · Convocatoria Cohorte 2026</title>
-    <meta name="description" content="Programa de la Subsecretaría de Turismo y la Subsecretaría de Producción de Esquel para la estructuración comercial de experiencias turísticas urbanas y rurales.">
-    <link rel="stylesheet" href="assets/css/style.css?v=1.1">
-</head>
-<body>
-    <div class="bg-vignette"></div>
-    
-    <!-- Hero Background SVG (Vectorial, Patagonian Mountain Lines) -->
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; z-index: -2; background: linear-gradient(180deg, #161a1e 0%, #111315 100%);">
-        <svg viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; width: 100%; height: auto; opacity: 0.15;">
-            <path d="M0 800L250 500L500 680L800 380L1100 620L1440 300V800H0Z" fill="url(#mountainGrad)"/>
-            <path d="M150 800L450 550L750 710L1050 480L1350 690L1440 620V800H150Z" fill="url(#mountainGrad2)" opacity="0.5"/>
-            <defs>
-                <linearGradient id="mountainGrad" x1="720" y1="300" x2="720" y2="800" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#b02a53" stop-opacity="0.3"/>
-                    <stop offset="1" stop-color="#111315"/>
-                </linearGradient>
-                <linearGradient id="mountainGrad2" x1="795" y1="480" x2="795" y2="800" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#236f4c" stop-opacity="0.2"/>
-                    <stop offset="1" stop-color="#111315"/>
-                </linearGradient>
-            </defs>
-        </svg>
+
+<!-- Barra de plazo -->
+<div class="deadline-bar <?= $abierta ? '' : 'is-closed' ?>">
+  <div class="container">
+    <?php if ($abierta): ?>
+      <span class="pill">Convocatoria abierta</span>
+      <span>Las postulaciones cierran el <strong><?= e(fecha_larga(FECHA_CIERRE)) ?></strong><?= $dias > 0 ? ' · quedan ' . $dias . ' día' . ($dias === 1 ? '' : 's') : '' ?></span>
+    <?php else: ?>
+      <span class="pill">Convocatoria cerrada</span>
+      <span>La postulación a la primera cohorte cerró el <strong><?= e(fecha_larga(FECHA_CIERRE)) ?></strong>. Va a haber más.</span>
+    <?php endif; ?>
+  </div>
+</div>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> Primera cohorte · 2026</span>
+      <h1>Tenés algo.<br>Te falta <em>poder venderlo</em>.</h1>
+      <p class="hero-lede">
+        Ocho semanas de trabajo con un equipo que va a tu lugar, para que lo que ya hacés
+        —tu servicio, tu campo, tu oficio— tenga precio, canal de venta y quede listo para
+        que una agencia lo comercialice.
+      </p>
+
+      <div class="hero-facts">
+        <span class="fact is-free">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+          Gratuito
+        </span>
+        <span class="fact">13 a 18 proyectos</span>
+        <span class="fact">10 de agosto al 2 de octubre</span>
+        <span class="fact">12 hs por semana</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
+        <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
+      </div>
+      <p class="hero-note">No hace falta que tengas monotributo ni habilitación para postularte.</p>
     </div>
 
-    <!-- Header Navigation -->
-    <header class="header">
-        <div class="container header-container">
-            <a href="index.php" class="logo-link">
-                <img src="assets/images/logo-lab-white.png" alt="Esquel LAB" class="logo-img">
-            </a>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="#metodo" class="nav-link">Metodología</a></li>
-                    <li><a href="#programas" class="nav-link">Programas</a></li>
-                    <li><a href="#convocatoria" class="nav-link">Convocatoria</a></li>
-                    <li><a href="#comunidad" class="nav-link">Información Comunitaria</a></li>
-                    <li><a href="media-kit.php" class="nav-link">Sala de Prensa</a></li>
-                    <li><a href="inscribirse.php" class="btn btn-primary btn-sm">Inscribirse</a></li>
-                </ul>
-            </nav>
+    <figure class="hero-figure">
+      <!-- FOTO REAL PENDIENTE: valle de Esquel con cordillera al fondo, hora dorada.
+           Ver docs/FOTOS-QUE-NECESITAMOS.md -->
+      <img src="assets/images/ilustraciones/hero-valle.svg" alt="Ilustración del valle de Esquel con la cordillera al fondo y dos personas mirando el paisaje">
+      <figcaption class="hero-caption">Esquel, puerta del Parque Nacional Los Alerces.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ ¿ES PARA VOS? ============================ -->
+<section class="section" id="para-vos">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">¿Esto es para vos?</span>
+      <h2>Probablemente sí, aunque no te consideres “turístico”</h2>
+      <p>El programa no busca solo empresas de turismo. Busca gente que ya hace algo por lo que un visitante pagaría.</p>
+    </div>
+
+    <div class="profile-grid">
+      <article class="profile-card">
+        <figure><img src="assets/images/ilustraciones/perfil-gastronomia.svg" alt="Mesa servida con tetera y tazas frente a una ventana con vista a la montaña" loading="lazy"></figure>
+        <div class="body">
+          <h3>Tenés un negocio que funciona pero no le vende a turistas</h3>
+          <p>Una casa de té, una panadería, un taller. La gente pasa, compra y se va. Nunca lo armaste como experiencia.</p>
         </div>
-    </header>
+      </article>
 
-    <!-- Hero Section -->
-    <section class="section" style="padding-top: 200px; min-height: 100vh; display: flex; align-items: center;">
-        <div class="container">
-            <div class="hero-grid" style="display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 48px; align-items: center; width: 100%;">
-                <div class="hero-content">
-                    <span class="hero-subtitle text-mono">Programa de Fomento de la Oferta Turística</span>
-                    <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Laboratorio de<br>Destino Esquel.</h1>
-                    <p class="hero-description" style="font-size: 1.15rem; line-height: 1.6; margin-bottom: 2rem;">
-                        Un programa práctico diseñado para transformar tus ideas, emprendimiento o saberes tradicionales en una propuesta turística lista para vender. Te brindamos acompañamiento técnico personalizado en tu propio lugar de trabajo para definir tarifas comerciales, abrir canales de reserva digital y conectar tu actividad con los productores locales.
-                    </p>
-                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                        <a href="inscribirse.php" class="btn btn-primary">Formulario de Postulación</a>
-                        <a href="#metodo" class="btn btn-secondary">Especificaciones Técnicas</a>
-                    </div>
-                </div>
-                <div class="hero-logo-container" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="assets/images/logo-lab-white.png" alt="Esquel LAB Logo" style="width: 100%; max-width: 320px; height: auto; opacity: 0.9; filter: drop-shadow(0 0 45px rgba(255,255,255,0.06));">
-                </div>
-            </div>
+      <article class="profile-card">
+        <figure><img src="assets/images/ilustraciones/perfil-guia.svg" alt="Guía señalando la montaña a dos visitantes en un sendero" loading="lazy"></figure>
+        <div class="body">
+          <h3>Sos guía o prestador y vendés solo por WhatsApp</h3>
+          <p>Tenés el servicio. No tenés precio para agencias, ni forma de que te reserven sin escribirte.</p>
         </div>
-    </section>
+      </article>
 
-    <!-- Metodología Section -->
-    <section id="metodo" class="section" style="border-top: 1px solid var(--glass-border);">
-        <div class="container">
-            <div class="grid-2" style="align-items: center;">
-                <div>
-                    <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.85rem; font-weight: 600;">Metodología de Trabajo</span>
-                    <h2 style="font-size: 2.2rem; margin-top: 10px;">Estructuración y Economía de los Recuerdos</h2>
-                    <p>
-                        El programa asume que las experiencias turísticas crean vínculos emocionales y que los objetos locales con identidad territorial (artesanías, lana, alimentos elaborados) actúan como el canal físico que mantiene vivo el recuerdo del destino en el tiempo.
-                    </p>
-                    <p>
-                        La metodología consiste en un acompañamiento técnico individual en territorio. El equipo de facilitadores asiste a cada postulante seleccionado en el diseño de su guión interpretativo, el establecimiento de precios neta para la venta a operadores receptivos, y la habilitación de un canal digital de reservas.
-                    </p>
-                    <div class="scarcity-box" style="border-color: var(--color-wild-berry);">
-                        <h4 style="margin-bottom: 8px;">Acompañamiento Técnico Individual</h4>
-                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #a1a5ab;">
-                            Se priorizan proyectos en funcionamiento o negocios no turísticos con saberes configurables como experiencia. El proceso evalúa la factibilidad de incorporar al menos un producto físico asociado con el Sello "Hecho en Esquel" para extender el impacto comercial del destino.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 style="margin-bottom: 24px; font-size: 1.5rem;">Entregables del Proceso</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 16px; display: flex; gap: 12px;">
-                            <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
-                            <div>
-                                <strong>Ficha técnica comercial:</strong> Definición de tarifas netas para operadores comerciales receptivos, duración, capacidad operativa y requisitos.
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 16px; display: flex; gap: 12px;">
-                            <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
-                            <div>
-                                <strong>Canal digital de reservas:</strong> Habilitación y configuración de un canal digital básico y funcional para contacto y recepción de reservas.
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 16px; display: flex; gap: 12px;">
-                            <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
-                            <div>
-                                <strong>Registro promocional básico:</strong> Relevamiento fotográfico inicial de la experiencia turística para su difusión.
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 0; display: flex; gap: 12px;">
-                            <span style="color: var(--color-wild-berry); font-weight: bold;">✓</span>
-                            <div>
-                                <strong>Informe de viabilidad de producto físico:</strong> Análisis técnico para asociar o comercializar un objeto físico representativo de la identidad de Esquel.
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+      <article class="profile-card">
+        <figure><img src="assets/images/ilustraciones/perfil-chacra.svg" alt="Persona cosechando fruta fina entre hileras de cultivo con un invernadero al fondo" loading="lazy"></figure>
+        <div class="body">
+          <h3>Tenés campo y no sabés si “eso” se puede visitar</h3>
+          <p>La esquila, la cosecha, el proceso del dulce. Para vos es el trabajo de todos los días. Para un visitante es algo que nunca vio.</p>
         </div>
-    </section>
+      </article>
 
-    <!-- Programas Section -->
-    <section id="programas" class="section" style="background-color: rgba(255, 255, 255, 0.01); border-top: 1px solid var(--glass-border);">
-        <div class="container">
-            <div style="text-align: center; max-width: 700px; margin: 0 auto 60px auto;">
-                <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.85rem; font-weight: 600;">Estructura comparada</span>
-                <h2 style="font-size: 2.2rem; margin-top: 10px;">Líneas de Aceleración y Desarrollo</h2>
-                <p>
-                    El programa coordina dos líneas complementarias bajo el mismo horizonte temporal de ejecución y metodología aplicada en territorio.
-                </p>
-            </div>
-
-            <div class="grid-2">
-                <!-- Esquel Acelera -->
-                <div class="card program-card">
-                    <div class="program-card-header">
-                        <img src="assets/images/logo-acelera.png" alt="Esquel Acelera" style="height: 64px; margin-bottom: 16px;">
-                        <span class="program-badge badge-acelera text-mono">Esquel Acelera</span>
-                        <p style="font-size: 0.95rem; margin-bottom: 0;">
-                            Línea orientada a la consolidación de emprendimientos, organizaciones de la sociedad civil y prestadores de servicios turísticos dentro del ejido urbano de Esquel.
-                        </p>
-                    </div>
-                    <ul class="program-features">
-                        <li><strong>Destinatarios:</strong> Casas de té, talleres artesanales, circuitos históricos y propuestas gastronómicas locales.</li>
-                        <li><strong>Resultado esperado:</strong> 8 a 10 experiencias estructuradas y preparadas para su comercialización por edición.</li>
-                        <li><strong>Plazo de ejecución:</strong> 8 semanas de trabajo técnico en territorio.</li>
-                        <li><strong>Requisito productivo:</strong> Evaluación de integración con el Sello Municipal "Hecho en Esquel".</li>
-                    </ul>
-                    <a href="inscribirse.php?linea=Acelera" class="btn btn-primary" style="margin-top: 24px;">Postularse a Acelera</a>
-                </div>
-
-                <!-- Esquel Raíz -->
-                <div class="card program-card" style="border-color: rgba(35, 111, 76, 0.25);">
-                    <div class="program-card-header">
-                        <img src="assets/images/logo-raiz.png" alt="Esquel Raíz" style="height: 64px; margin-bottom: 16px;">
-                        <span class="program-badge badge-raiz text-mono">Raíz</span>
-                        <p style="font-size: 0.95rem; margin-bottom: 0;">
-                            Línea orientada a la estructuración de la oferta turística en el ámbito rural, asociando saberes tradicionales a la comercialización del producto de campo.
-                        </p>
-                    </div>
-                    <ul class="program-features" style="border-top-color: rgba(35, 111, 76, 0.1);">
-                        <li><strong>Destinatarios:</strong> Establecimientos rurales, chacras, viñedos, productores de lana y productores de fruta fina.</li>
-                        <li><strong>Resultado esperado:</strong> 5 a 8 experiencias rurales estructuradas y geolocalizadas en el Mapa de Turismo Rural.</li>
-                        <li><strong>Plazo de ejecución:</strong> 8 semanas de relevamiento y desarrollo técnico.</li>
-                        <li><strong>Requisito productivo:</strong> Mejora de packaging, relato y exhibición de productos agrícolas y textiles.</li>
-                    </ul>
-                    <a href="inscribirse.php?linea=Raiz" class="btn btn-secondary" style="margin-top: 24px; border-color: rgba(35, 111, 76, 0.4); color: #cbd5e1;">Postularse a Raíz</a>
-                </div>
-            </div>
+      <article class="profile-card">
+        <figure><img src="assets/images/ilustraciones/perfil-lana.svg" alt="Persona tejiendo en un telar con madejas de lana teñida colgando" loading="lazy"></figure>
+        <div class="body">
+          <h3>Hacés algo con las manos y lo vendés suelto</h3>
+          <p>Lana, cerámica, conservas. Sin relato, sin packaging y sin conexión con quien visita Esquel.</p>
         </div>
-    </section>
+      </article>
 
-    <!-- Convocatoria y Cronograma -->
-    <section id="convocatoria" class="section" style="border-top: 1px solid var(--glass-border);">
-        <div class="container">
-            <div class="grid-2">
-                <div>
-                    <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.85rem; font-weight: 600;">Detalles de la Convocatoria</span>
-                    <h2 style="font-size: 2.2rem; margin-top: 10px;">Cronograma de Trabajo y Compromisos</h2>
-                    <p>
-                        Para garantizar un acompañamiento técnico personalizado de alta dedicación individual, el programa cuenta con cupos limitados por edición (8 a 10 proyectos urbanos y 5 a 8 proyectos rurales).
-                    </p>
-                    <div class="scarcity-box" style="border-color: #236f4c;">
-                        <h4 style="margin-bottom: 8px;">Dedicación Requerida</h4>
-                        <p style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 0;">
-                            Las propuestas seleccionadas asumen el compromiso de prever y destinar un mínimo de **12 horas semanales** al proceso de co-creación y desarrollo técnico.
-                        </p>
-                    </div>
-                    <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
-                        Las postulaciones que no resulten seleccionadas para esta primera cohorte formarán parte de una base de datos para la definición de futuros programas y clusters complementarios.
-                    </p>
-                </div>
-                <div>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date">Del 23 de Julio al 9 de Agosto</div>
-                            <h4 style="margin-bottom: 8px;">Recepción de Formularios de Postulación</h4>
-                            <p style="font-size: 0.9rem; color: #a1a5ab;">
-                                Apertura de la convocatoria pública. Los postulantes deben completar el formulario detallando sus recursos y su motivación para participar.
-                            </p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">Del 23 de Julio al 9 de Agosto</div>
-                            <h4 style="margin-bottom: 8px;">Evaluación y Entrevistas Técnicas</h4>
-                            <p style="font-size: 0.9rem; color: #a1a5ab;">
-                                Ponderación de los proyectos a cargo del Cuadro Técnico integrado por representantes del sector privado y los facilitadores del programa.
-                            </p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">10 de Agosto</div>
-                            <h4 style="margin-bottom: 8px;">Notificación e Inicio de Trabajos</h4>
-                            <p style="font-size: 0.9rem; color: #a1a5ab;">
-                                Comunicación oficial de las propuestas seleccionadas e inicio inmediato del proceso de acompañamiento técnico en territorio.
-                            </p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">2 de Octubre</div>
-                            <h4 style="margin-bottom: 8px;">Cierre y Presentación de Experiencias</h4>
-                            <p style="font-size: 0.9rem; color: #a1a5ab; margin-bottom: 0;">
-                                Evento formal de lanzamiento de las experiencias estructuradas y sus productos físicos asociados ante operadores receptivos y prensa.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <article class="profile-card">
+        <figure><img src="assets/images/ilustraciones/perfil-reabrir.svg" alt="Persona abriendo su local con la persiana a medio subir" loading="lazy"></figure>
+        <div class="body">
+          <h3>Tenés un emprendimiento turístico que se quedó</h3>
+          <p>Antes funcionaba y hoy no. Necesitás rearmar el producto, no empezar de cero.</p>
         </div>
-    </section>
+      </article>
 
-    <!-- Comunidad y Desmitificación Turística -->
-    <section id="comunidad" class="section civic-card" style="border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
-        <div class="container">
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <span class="text-mono" style="color: #4ed392; font-size: 0.85rem; font-weight: 600;">Desarrollo Productivo Local</span>
-                <h2 style="font-size: 2.2rem; margin-top: 10px; margin-bottom: 24px;">Información sobre el Impacto del Programa en la Comunidad</h2>
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #e2e8f0; margin-bottom: 24px;">
-                    El programa busca diversificar la oferta del destino apoyando directamente a pequeños productores y emprendimientos locales que constituyen la base de la identidad de Esquel.
-                </p>
-                <p style="color: #cbd5e1; margin-bottom: 32px;">
-                    A diferencia del régimen general de grandes inversiones turísticas de capital externo, este programa se enfoca en dotar de herramientas comerciales y de diseño a los productores locales (chacras, artesanos y elaboradores urbanos). La estructuración de estas experiencias busca generar un circuito complementario continuo en el territorio, abriendo canales de venta directa que permiten que el derrame del gasto del visitante beneficie de manera equitativa a los prestadores y productores locales.
-                </p>
-                <a href="inscribirse.php" class="btn btn-primary" style="background-color: var(--color-lichen-green); box-shadow: 0 4px 20px var(--color-lichen-green-glow);">Iniciar Formulario de Postulación</a>
-            </div>
+      <article class="profile-card">
+        <figure><img src="assets/images/ilustraciones/perfil-idea.svg" alt="Cuaderno con anotaciones, lápiz y mate sobre una mesa de madera" loading="lazy"></figure>
+        <div class="body">
+          <h3>Tenés una idea y algo con qué arrancar</h3>
+          <p>No hace falta que ya esté funcionando. Hace falta que puedas dedicarle tiempo real durante ocho semanas.</p>
         </div>
-    </section>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <!-- Co-creadores y Gobernabilidad -->
-    <section class="section" style="border-bottom: 1px solid var(--glass-border);">
-        <div class="container" style="text-align: center;">
-            <span class="text-mono" style="color: var(--color-text-secondary); font-size: 0.8rem; letter-spacing: 0.1em; display: block; margin-bottom: 32px;">SISTEMA DE GOBERNANZA MIXTA · CUADRO TÉCNICO DE EVALUACIÓN</span>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 64px; flex-wrap: wrap; opacity: 0.75;">
-                <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">CAMOCH</div>
-                <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">Cámara de Prestadores Turísticos de Esquel</div>
-                <div style="font-family: var(--font-display); font-weight: 600; color: #cbd5e1; font-size: 1.1rem;">FEHGRA Filial Esquel</div>
-            </div>
-            <p style="font-size: 0.85rem; color: var(--color-text-secondary); max-width: 600px; margin: 24px auto 0 auto; line-height: 1.5;">
-                La evaluación y selección técnica de los postulantes se realiza mediante una matriz multidimensional co-diseñada junto a las cámaras sectoriales locales para asegurar la transparencia e imparcialidad del proceso.
-            </p>
-        </div>
-    </section>
+<!-- ============================ QUÉ TE LLEVÁS ============================ -->
+<section class="section section-alt" id="que-te-llevas">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Resultados concretos</span>
+      <h2>El 2 de octubre te vas con esto en la mano</h2>
+      <p>No con un diagnóstico ni un PDF de recomendaciones. Con la experiencia armada y funcionando.</p>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p style="margin-bottom: 8px;">&copy; 2026 Laboratorio de Destino Esquel. Subsecretaría de Turismo y Subsecretaría de Producción.</p>
-            <p style="font-size: 0.75rem; color: var(--color-text-secondary);">Municipalidad de Esquel, Chubut, Patagonia Argentina.</p>
-            <a href="admin/login.php" class="footer-lock" title="Acceso de Gestión Interna">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </a>
+    <div class="ba-wrap">
+      <table class="ba-table">
+        <thead>
+          <tr><th>&nbsp;</th><th>Antes</th><th>Después</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ba-key">Precio</td>
+            <td class="ba-before">“Y… depende, hacemé una oferta.”</td>
+            <td class="ba-after">Precio al público y precio neto para agencias, con tus costos calculados.</td>
+          </tr>
+          <tr>
+            <td class="ba-key">Reservas</td>
+            <td class="ba-before">WhatsApp, cuando te acordás de contestar.</td>
+            <td class="ba-after">Un canal digital donde te reservan y te llega el aviso.</td>
+          </tr>
+          <tr>
+            <td class="ba-key">Cómo lo contás</td>
+            <td class="ba-before">Improvisado, distinto cada vez.</td>
+            <td class="ba-after">Un guión de la experiencia: qué pasa, en qué orden y cuánto dura.</td>
+          </tr>
+          <tr>
+            <td class="ba-key">Fotos</td>
+            <td class="ba-before">Las del celular, cuando salieron bien.</td>
+            <td class="ba-after">Registro fotográfico hecho para promoción.</td>
+          </tr>
+          <tr>
+            <td class="ba-key">Quién lo vende</td>
+            <td class="ba-before">Vos, y nadie más.</td>
+            <td class="ba-after">Tu ficha en manos de las agencias receptivas de Esquel.</td>
+          </tr>
+          <tr>
+            <td class="ba-key">Qué se lleva el visitante</td>
+            <td class="ba-before">El recuerdo, y nada más.</td>
+            <td class="ba-after">El recuerdo y un producto físico tuyo, con identidad de Esquel.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hours-split" style="margin-top:56px">
+      <div>
+        <h3 style="font-size:24px">La “Economía de los Recuerdos”, sin vueltas</h3>
+        <p>Un visitante que se lleva algo tuyo a su casa te sigue recordando —y te sigue recomendando— mucho después del viaje. Por eso el programa trabaja, cuando se puede, en asociar a cada experiencia un producto físico con identidad local: un dulce, una madeja, una pieza.</p>
+        <p>No es obligatorio para postularse, y no todas las propuestas lo van a tener. Cuando aplica, se trabaja también el envase, la etiqueta y el relato, y se evalúa el vínculo con el sello municipal <strong>“Hecho en Esquel”</strong>.</p>
+      </div>
+      <figure style="margin:0">
+        <!-- FOTO REAL PENDIENTE: productos locales con etiqueta, sobre madera. -->
+        <img src="assets/images/ilustraciones/economia-recuerdos.svg" alt="Frasco de dulce, botella artesanal, madeja de lana y etiqueta colgante sobre una mesa de madera" style="border-radius:var(--r);border:1px solid var(--line)" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ LÍNEAS ============================ -->
+<section class="section" id="lineas">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Dos líneas, un mismo método</span>
+      <h2>Elegí la que es tuya</h2>
+      <p>Comparten equipo, cronograma y forma de trabajo. Lo que cambia es el terreno.</p>
+    </div>
+
+    <div class="lines-grid">
+      <article class="line-card line-acelera">
+        <div class="line-figure">
+          <img src="assets/images/ilustraciones/linea-acelera.svg" alt="Calle comercial de Esquel con la cordillera de fondo" loading="lazy">
         </div>
-    </footer>
-</body>
-</html>
+        <div class="line-body">
+          <img src="assets/images/logo-acelera.png" alt="Esquel Acelera" class="line-logo">
+          <span class="line-badge">Urbano</span>
+          <p class="line-for">Si tu proyecto está en la ciudad</p>
+          <p>Gastronomía, casas de té, talleres artesanales, comercios con un saber propio, circuitos históricos, guías y actividades urbanas. También negocios que hoy no son turísticos pero podrían serlo.</p>
+          <div class="line-meta">
+            <div><div class="num">8 a 10</div><div class="lbl">Proyectos</div></div>
+            <div><div class="num">8</div><div class="lbl">Semanas</div></div>
+          </div>
+          <a href="inscribirse.php?linea=Acelera" class="btn btn-primary">Postularme a Acelera</a>
+        </div>
+      </article>
+
+      <article class="line-card line-raiz">
+        <div class="line-figure">
+          <img src="assets/images/ilustraciones/linea-raiz.svg" alt="Campo con ovejas, alambrado y galpón, con la cordillera de fondo" loading="lazy">
+        </div>
+        <div class="line-body">
+          <img src="assets/images/logo-raiz.png" alt="Raíz" class="line-logo">
+          <span class="line-badge">Rural</span>
+          <p class="line-for">Si tu proyecto está en el campo</p>
+          <p>Chacras, estancias, crianceros, viñedos y microcervecerías, productores de lana, fruta fina y dulces regionales. Todo lo que tenga un proceso que se pueda mostrar y visitar.</p>
+          <div class="line-meta">
+            <div><div class="num">5 a 8</div><div class="lbl">Proyectos</div></div>
+            <div><div class="num">8</div><div class="lbl">Semanas</div></div>
+          </div>
+          <a href="inscribirse.php?linea=Raiz" class="btn btn-green">Postularme a Raíz</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CÓMO ES EL TRABAJO ============================ -->
+<section class="section section-alt" id="como-es">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Cómo es el trabajo</span>
+      <h2>12 horas por semana. Esto es lo que son.</h2>
+      <p>La mayor parte del tiempo es trabajo sobre lo tuyo, no reuniones.</p>
+    </div>
+
+    <div class="hours-split">
+      <div>
+        <ul class="hours-list">
+          <li>
+            <span class="h">2 hs</span>
+            <span class="t"><b>Taller grupal</b><span>Con el resto de la cohorte. Precio, relato, canales de venta.</span></span>
+          </li>
+          <li>
+            <span class="h">1 a 2 hs</span>
+            <span class="t"><b>Reunión individual</b><span>En tu lugar de trabajo, sobre tu proyecto puntual.</span></span>
+          </li>
+          <li>
+            <span class="h">8 a 9 hs</span>
+            <span class="t"><b>Trabajo tuyo</b><span>Costos, fotos, textos, probar la experiencia y corregirla.</span></span>
+          </li>
+        </ul>
+
+        <div class="callout">
+          <span class="lbl">Por qué lo pedimos por escrito</span>
+          <p>Un cupo ocupado por alguien que no puede sostenerlo es un cupo que le sacamos a otro. Si hoy no podés garantizar ese tiempo, va a haber próximas cohortes.</p>
+        </div>
+      </div>
+
+      <div class="steps-flow">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Te postulás</h4>
+            <p>Completás el formulario. Te lleva entre 15 y 25 minutos y podés guardarlo a medio hacer.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Un jurado con las cámaras de Esquel lee tu postulación</h4>
+            <p>No es por orden de llegada. Se evalúa con una matriz acordada de antemano.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Vamos a tu lugar</h4>
+            <p>Primera visita de diagnóstico: qué tenés, qué falta y por dónde se empieza.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div>
+            <h4>Ocho semanas de trabajo conjunto</h4>
+            <p>Talleres grupales y acompañamiento individual, en paralelo, sobre tu proyecto.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">5</div>
+          <div>
+            <h4>Presentás lo que armaste</h4>
+            <p>Ante las agencias receptivas de Esquel y la prensa local, con tu experiencia lista para vender.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PREGUNTAS ============================ -->
+<section class="section" id="preguntas">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Lo que todos preguntan</h2>
+    </div>
+
+    <div class="faq">
+      <details class="faq-item" open>
+        <summary>¿Cuánto cuesta?</summary>
+        <div class="faq-body">
+          <p>Nada. El programa es <strong>gratuito</strong>. Está financiado por el municipio a través de las Subsecretarías de Turismo y de Producción.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Necesito monotributo, habilitación o estar inscripto en algún registro?</summary>
+        <div class="faq-body">
+          <p><strong>Para postularte, no.</strong> Podés participar aunque hoy no estés formalizado.</p>
+          <p>Ahora bien: si tu propuesta necesita alguna habilitación para poder venderse en serio, ordenar eso es parte del camino, y el programa te acompaña a hacerlo. La profesionalización es el objetivo, no el requisito de entrada.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>No tengo un emprendimiento turístico. ¿Igual puedo?</summary>
+        <div class="faq-body">
+          <p>Sí, y es parte del objetivo. Varias de las propuestas que buscamos hoy no se dedican al turismo: son oficios, producciones o negocios locales que pueden convertirse en una experiencia.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Y si no quedo seleccionado?</summary>
+        <div class="faq-body">
+          <p>Tu postulación queda registrada. Esta es la primera cohorte de un proceso pensado como continuo: de lo que veamos acá van a salir las próximas convocatorias y los programas complementarios. Si tu propuesta no entra ahora, sabemos que existe.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Tengo que tener un local o un lugar físico?</summary>
+        <div class="faq-body">
+          <p>No necesariamente. Hay experiencias que ocurren en un recorrido, en el campo o en la casa de quien las ofrece.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Puedo postularme con más de un proyecto?</summary>
+        <div class="faq-body">
+          <p>Sí, pero cargá cada uno por separado. Tené en cuenta que el compromiso de 12 horas semanales es por proyecto.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Qué pasa si me seleccionan y después no puedo sostener las horas?</summary>
+        <div class="faq-body">
+          <p>Avisanos apenas lo sepas. Preferimos liberar el cupo a mitad de camino y que lo aproveche otra propuesta, antes que perderlo entero.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Hasta cuándo puedo postularme?</summary>
+        <div class="faq-body">
+          <p>Hasta el <strong><?= e(fecha_larga(FECHA_CIERRE)) ?> de 2026</strong> inclusive. Es una fecha de cierre real: pasada esa fecha el formulario deja de recibir postulaciones.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FECHAS ============================ -->
+<section class="section section-alt" id="fechas">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Cronograma</span>
+      <h2>Las fechas que importan</h2>
+    </div>
+
+    <div class="dates-grid">
+      <div class="date-card <?= $abierta ? 'now' : '' ?>">
+        <div class="d">23 jul — 9 ago</div>
+        <h4>Postulación y evaluación</h4>
+        <p>Recibimos formularios y el Cuadro Técnico los evalúa en paralelo.</p>
+      </div>
+      <div class="date-card">
+        <div class="d">10 de agosto</div>
+        <h4>Aviso y arranque</h4>
+        <p>Avisamos a todos, hayan quedado o no, y empieza el trabajo en territorio.</p>
+      </div>
+      <div class="date-card">
+        <div class="d">Agosto — septiembre</div>
+        <h4>Ocho semanas de trabajo</h4>
+        <p>Talleres grupales, visitas individuales y desarrollo de cada experiencia.</p>
+      </div>
+      <div class="date-card">
+        <div class="d">2 de octubre</div>
+        <h4>Presentación pública</h4>
+        <p>Lanzamiento de las experiencias ante agencias receptivas y prensa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ GOBERNANZA ============================ -->
+<section class="section section-sm section-line">
+  <div class="container" style="text-align:center">
+    <span class="eyebrow" style="justify-content:center">Quién decide</span>
+    <h2 style="font-size:26px">La selección no la hace solo el municipio</h2>
+    <div class="gov-logos">
+      <span>CAMOCH</span>
+      <span>Cámara de Prestadores Turísticos de Esquel</span>
+      <span>FEHGRA Filial Esquel</span>
+    </div>
+    <p style="max-width:64ch;margin:0 auto;color:var(--ink-2);font-size:15.5px">
+      Estas tres instituciones del sector privado integran el Cuadro Técnico junto a las Subsecretarías de Turismo y de Producción.
+      Acuerdan los criterios antes de abrir la convocatoria y participan de la evaluación, para que el proceso no dependa de un solo actor
+      ni beneficie únicamente a los proyectos ya consolidados. <a href="media-kit.php">Cómo funciona la evaluación →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================ COMUNIDAD ============================ -->
+<section class="section civic">
+  <div class="container" style="max-width:820px">
+    <span class="eyebrow"><span class="dot"></span> Para la comunidad de Esquel</span>
+    <h2>“Acá no hay nada para hacer” es justo lo que este programa viene a desmentir</h2>
+    <p>
+      Esquel es la puerta al Parque Nacional Los Alerces, a La Trochita y a La Hoya. Lo que falta no es paisaje
+      ni gente con algo para ofrecer: falta que eso se convierta en algo que se pueda vender, con precio, con
+      canal y con quién lo comercialice.
+    </p>
+    <div class="callout">
+      <span class="lbl">Sobre el régimen de inversiones</span>
+      <p>
+        Esquel tiene además un Régimen de Promoción de Inversiones Turísticas para proyectos de capital grande,
+        y es una herramienta necesaria. Pero no es la única puerta. Esquel LAB es la que no te pide capital para
+        invertir: te pide que tengas algo para mostrar y ganas de trabajarlo.
+      </p>
+    </div>
+    <p>
+      Esta primera cohorte prioriza a quienes hoy pueden dedicarle tiempo real al proceso, porque son quienes
+      pueden mostrar el camino más rápido. De ahí van a salir los aprendizajes para identificar nuevos grupos
+      y diseñar los programas que siguen. No es una convocatoria de una sola vez.
+    </p>
+    <a href="inscribirse.php" class="btn btn-primary btn-lg" style="margin-top:12px">Postularme</a>
+  </div>
+</section>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>

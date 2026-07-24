@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img">
+  <defs>
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter></defs>
+  
+  <rect width="800" height="500" fill="#EFE6D9"/>
+  <rect y="350" width="800" height="150" fill="#8A6242"/>
+  <rect y="350" width="800" height="8" fill="#A97C53"/>
+  <!-- frasco de dulce -->
+  <g>
+    <rect x="96" y="180" width="110" height="170" rx="12" fill="#AB2759" opacity="0.9"/>
+    <rect x="96" y="160" width="110" height="26" rx="6" fill="#2E2A26"/>
+    <rect x="104" y="240" width="88" height="42" rx="4" fill="#F7F3EC"/>
+    <rect x="115.99999999999999" y="255" width="58" height="6" rx="3" fill="#71675D" opacity="0.5"/>
+    <rect x="115.99999999999999" y="275" width="40" height="5" rx="2.5" fill="#71675D" opacity="0.3"/>
+  </g>
+  <!-- botella -->
+  <g>
+    <path d="M304,350 l0,-120 q0,-20 18,-30 l0,-24 l24,0 l0,24 q18,10 18,30 l0,120 Z" fill="#236F4C" opacity="0.92"/>
+    <rect x="316" y="250" width="76" height="46" rx="4" fill="#F7F3EC"/>
+    <rect x="328" y="265" width="48" height="6" rx="3" fill="#71675D" opacity="0.5"/>
+    <rect x="328" y="285" width="32" height="5" rx="2.5" fill="#71675D" opacity="0.3"/>
+  </g>
+  <!-- madeja de lana -->
+  <ellipse cx="576" cy="280" rx="62" ry="52" fill="#C9A24B"/>
+  <path d="M518,240 q58,20 110,-10" stroke="#F7F3EC" stroke-width="3" fill="none" opacity="0.35"/><path d="M524,244 q58,26 110,-6" stroke="#F7F3EC" stroke-width="3" fill="none" opacity="0.35"/><path d="M530,248 q58,32 110,-2" stroke="#F7F3EC" stroke-width="3" fill="none" opacity="0.35"/><path d="M536,252 q58,38 110,--2" stroke="#F7F3EC" stroke-width="3" fill="none" opacity="0.35"/><path d="M542,256 q58,44 110,--6" stroke="#F7F3EC" stroke-width="3" fill="none" opacity="0.35"/>
+  <!-- etiqueta colgante de identidad local: silueta de montaña, sin texto -->
+  <g transform="rotate(-10 688 200)">
+    <path d="M652,150 l84,0 l0,74 l-42,20 l-42,-20 Z" fill="#F7F3EC" stroke="#71675D" stroke-width="2.5"/>
+    <circle cx="685.6" cy="162.5" r="5" fill="none" stroke="#71675D" stroke-width="2.5"/>
+    <path d="M662.4,220 l20,-30 l13,19 l11,-14 l18,25 Z" fill="#AB2759"/>
+    <rect x="662.4" y="227.5" width="66" height="5" rx="2.5" fill="#71675D" opacity="0.35"/>
+  </g>
+  <!-- hilo de la etiqueta -->
+  <path d="M632,250 Q656,210 676,170"
+        stroke="#71675D" stroke-width="2.5" fill="none" opacity="0.7"/>
+  <rect width="800" height="500" filter="url(#grain)" opacity="0.055" style="mix-blend-mode:multiply"/>
+</svg>

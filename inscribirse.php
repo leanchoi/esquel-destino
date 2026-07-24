@@ -1,303 +1,416 @@
 <?php
-// Creado para el Laboratorio de Destino Esquel
-// inscribirse.php
+require_once __DIR__ . '/includes/db.php';
 
-require_once 'admin/db_config.php';
+iniciar_sesion();
 
-$success = false;
-$error_msg = '';
+$abierta = convocatoria_abierta();
+$errores = [];
+$enviado = false;
 
-// Leer pre-selección de línea por parámetro GET
-$linea_previa = isset($_GET['linea']) ? $_GET['linea'] : '';
-if ($linea_previa !== 'Acelera' && $linea_previa !== 'Raiz') {
-    $linea_previa = '';
+// Campos del formulario. El orden refleja los pasos.
+$campos = [
+    'program', 'situacion',
+    'name', 'contact_name', 'email', 'phone', 'ubicacion', 'antiguedad', 'redes',
+    'descripcion', 'diferencial', 'visitable',
+    'conexiones', 'producto_fisico', 'producto_fisico_cual',
+    'recursos', 'falta',
+    'motivacion', 'equipo', 'material',
+];
+$v = array_fill_keys($campos, '');
+$v['compromiso'] = '';
+
+// Preselección de línea desde el home (?linea=Acelera|Raiz)
+if (isset($_GET['linea']) && array_key_exists($_GET['linea'], PROGRAMAS)) {
+    $v['program'] = $_GET['linea'];
 }
 
-// Procesar formulario enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitizar y validar datos básicos
-    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-    $contact_name = isset($_POST['contact_name']) ? trim($_POST['contact_name']) : '';
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
-    $program = isset($_POST['program']) ? trim($_POST['program']) : '';
-    
-    // Compromiso horario obligatorio
-    $compromiso = isset($_POST['compromiso_tiempo']) ? true : false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
+    foreach ($campos as $c) {
+        $v[$c] = trim((string) ($_POST[$c] ?? ''));
+    }
+    $v['compromiso'] = isset($_POST['compromiso']) ? 'on' : '';
 
-    if (empty($name) || empty($contact_name) || empty($email) || empty($phone) || empty($program) || !$compromiso) {
-        $error_msg = 'Por favor complete todos los datos obligatorios y acepte el compromiso de dedicación horaria.';
+    if (!csrf_valido($_POST['csrf_token'] ?? null)) {
+        $errores['general'] = 'La sesión expiró mientras completabas el formulario. Revisá los datos y volvé a enviarlo.';
+    } elseif (!empty($_POST['sitio_web'])) {
+        // Honeypot: campo oculto que sólo completa un bot.
+        $errores['general'] = 'No pudimos procesar el envío.';
     } else {
-        try {
-            // Iniciar transacción para asegurar coherencia
-            $db->beginTransaction();
+        if (!array_key_exists($v['program'], PROGRAMAS)) {
+            $errores['program'] = 'Elegí una de las dos líneas.';
+        }
+        if ($v['name'] === '')          $errores['name'] = 'Poné el nombre de tu proyecto.';
+        if ($v['contact_name'] === '')  $errores['contact_name'] = 'Necesitamos saber con quién hablamos.';
+        if (!filter_var($v['email'], FILTER_VALIDATE_EMAIL)) $errores['email'] = 'Revisá el correo: es por donde te vamos a contactar.';
+        if ($v['phone'] === '')         $errores['phone'] = 'Dejanos un teléfono de contacto.';
+        if ($v['descripcion'] === '')   $errores['descripcion'] = 'Contanos qué hacés hoy. Sin esto no podemos evaluar la propuesta.';
+        if ($v['diferencial'] === '')   $errores['diferencial'] = 'Este campo es de los que más pesan en la evaluación.';
+        if ($v['motivacion'] === '')    $errores['motivacion'] = 'Contanos por qué querés participar. Es el criterio de mayor peso.';
+        if ($v['compromiso'] !== 'on')  $errores['compromiso'] = 'Necesitamos que confirmes la disponibilidad de 12 horas semanales.';
+        if ($v['material'] !== '' && !filter_var($v['material'], FILTER_VALIDATE_URL)) {
+            $errores['material'] = 'Ese enlace no parece válido. Revisalo o dejalo vacío.';
+        }
 
-            // Insertar postulante básico
-            $stmt = $db->prepare("INSERT INTO applications (name, contact_name, email, phone, program, stage) 
-                                  VALUES (:name, :contact_name, :email, :phone, :program, 'Pendiente')");
-            $stmt->execute([
-                ':name' => $name,
-                ':contact_name' => $contact_name,
-                ':email' => $email,
-                ':phone' => $phone,
-                ':program' => $program
-            ]);
-            
-            $application_id = $db->lastInsertId();
+        if (!$errores) {
+            $pdo = db();
+            try {
+                $pdo->beginTransaction();
 
-            // Guardar detalles específicos condicionalmente
-            $details = [];
-
-            // Campo de motivación (común a ambos)
-            if (isset($_POST['motivacion'])) {
-                $details['motivacion'] = trim($_POST['motivacion']);
-            }
-
-            if ($program === 'Acelera') {
-                if (isset($_POST['acelera_descripcion'])) $details['descripcion'] = trim($_POST['acelera_descripcion']);
-                if (isset($_POST['acelera_etapa'])) $details['etapa'] = trim($_POST['acelera_etapa']);
-                if (isset($_POST['acelera_producto'])) $details['producto_integracion'] = trim($_POST['acelera_producto']);
-            } else if ($program === 'Raiz') {
-                if (isset($_POST['raiz_tipo'])) $details['tipo_establecimiento'] = trim($_POST['raiz_tipo']);
-                if (isset($_POST['raiz_proceso'])) $details['proceso_visitable'] = trim($_POST['raiz_proceso']);
-                if (isset($_POST['raiz_producto'])) $details['producto_conector'] = trim($_POST['raiz_producto']);
-            }
-
-            // Guardar en la base de datos
-            $stmt_detail = $db->prepare("INSERT INTO application_details (application_id, field_key, field_value) VALUES (:app_id, :key, :val)");
-            foreach ($details as $key => $val) {
-                $stmt_detail->execute([
-                    ':app_id' => $application_id,
-                    ':key' => $key,
-                    ':val' => $val
+                $stmt = $pdo->prepare(
+                    "INSERT INTO applications (name, contact_name, email, phone, program, stage)
+                     VALUES (:name, :contact_name, :email, :phone, :program, 'Pendiente')"
+                );
+                $stmt->execute([
+                    ':name' => $v['name'],
+                    ':contact_name' => $v['contact_name'],
+                    ':email' => $v['email'],
+                    ':phone' => $v['phone'],
+                    ':program' => $v['program'],
                 ]);
-            }
+                $appId = (int) $pdo->lastInsertId();
 
-            // Confirmar transacción
-            $db->commit();
-            $success = true;
-        } catch (Exception $e) {
-            $db->rollBack();
-            $error_msg = 'Error al registrar la postulación: ' . $e->getMessage();
+                // Todo lo demás va a application_details, con la clave que
+                // usa ETIQUETAS_DETALLE para mostrarlo y exportarlo.
+                $detalles = [
+                    'situacion' => $v['situacion'],
+                    'ubicacion' => $v['ubicacion'],
+                    'antiguedad' => $v['antiguedad'],
+                    'redes' => $v['redes'],
+                    'descripcion' => $v['descripcion'],
+                    'diferencial' => $v['diferencial'],
+                    'visitable' => $v['visitable'],
+                    'conexiones' => $v['conexiones'],
+                    'producto_fisico' => $v['producto_fisico'],
+                    'producto_fisico_cual' => $v['producto_fisico_cual'],
+                    'recursos' => $v['recursos'],
+                    'falta' => $v['falta'],
+                    'motivacion' => $v['motivacion'],
+                    'equipo' => $v['equipo'],
+                    'material' => $v['material'],
+                ];
+
+                $ins = $pdo->prepare("INSERT INTO application_details (application_id, field_key, field_value) VALUES (?, ?, ?)");
+                foreach ($detalles as $k => $val) {
+                    if ($val !== '') {
+                        $ins->execute([$appId, $k, $val]);
+                    }
+                }
+
+                $pdo->commit();
+                $enviado = true;
+            } catch (PDOException $ex) {
+                $pdo->rollBack();
+                error_log('[esquel-lab] error guardando postulación: ' . $ex->getMessage());
+                $errores['general'] = 'No pudimos guardar tu postulación. Probá de nuevo en unos minutos; si sigue fallando, escribinos a ' . EMAIL_PROGRAMA . '.';
+            }
         }
     }
 }
+
+$pageTitle = 'Postulación · Esquel LAB';
+$pageDescription = 'Formulario de postulación a Esquel Acelera y Raíz. Convocatoria abierta hasta el 9 de agosto de 2026.';
+require __DIR__ . '/includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postulación · Laboratorio de Destino Esquel</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=1.1">
-</head>
-<body>
-    <div class="bg-vignette"></div>
 
-    <!-- Header Navigation -->
-    <header class="header">
-        <div class="container header-container">
-            <a href="index.php" class="logo-link">
-                <img src="assets/images/logo-lab-white.png" alt="Esquel LAB" class="logo-img">
-            </a>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="index.php" class="nav-link">Inicio</a></li>
-                    <li><a href="index.php#metodo" class="nav-link">Metodología</a></li>
-                    <li><a href="index.php#programas" class="nav-link">Programas</a></li>
-                    <li><a href="media-kit.php" class="nav-link">Sala de Prensa</a></li>
-                </ul>
-            </nav>
+<section class="form-page">
+  <div class="container form-shell">
+
+  <?php if ($enviado): ?>
+
+    <div class="done-card">
+      <div class="done-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h1>Listo, ya la tenemos</h1>
+      <p style="font-size:17.5px;color:var(--ink-2)">
+        Tu postulación entró al proceso de evaluación. Te vamos a escribir a
+        <strong><?= e($v['email']) ?></strong> con el resultado, hayas quedado o no.
+      </p>
+      <div class="callout" style="margin:26px 0">
+        <span class="lbl">Qué sigue</span>
+        <p>
+          El Cuadro Técnico evalúa las postulaciones hasta el <strong><?= e(fecha_larga(FECHA_CIERRE)) ?></strong>.
+          El <strong><?= e(fecha_larga(FECHA_INICIO)) ?></strong> avisamos a todos y arranca el trabajo con los proyectos seleccionados.
+        </p>
+      </div>
+      <p style="font-size:15.5px;color:var(--ink-2)">
+        Mientras tanto: si conocés a alguien que también debería postularse, pasale el dato. La convocatoria sigue abierta hasta el <?= e(fecha_larga(FECHA_CIERRE)) ?>.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+        <a href="index.php" class="btn btn-secondary">Volver al inicio</a>
+      </div>
+    </div>
+
+  <?php elseif (!$abierta): ?>
+
+    <div class="done-card">
+      <h1>La convocatoria cerró</h1>
+      <p style="font-size:17px;color:var(--ink-2)">
+        Las postulaciones a la primera cohorte se recibieron del <?= e(fecha_larga(FECHA_APERTURA)) ?>
+        al <?= e(fecha_larga(FECHA_CIERRE)) ?> de 2026, y esa fecha de cierre ya pasó.
+      </p>
+      <p style="font-size:17px;color:var(--ink-2)">
+        Esta es la primera cohorte de un proceso continuo: va a haber próximas convocatorias.
+        Si te interesa participar, escribinos a <a href="mailto:<?= e(EMAIL_PROGRAMA) ?>"><?= e(EMAIL_PROGRAMA) ?></a>
+        y quedás en el registro para la siguiente.
+      </p>
+      <a href="index.php" class="btn btn-primary" style="margin-top:10px">Volver al inicio</a>
+    </div>
+
+  <?php else: ?>
+
+    <div class="form-intro">
+      <span class="eyebrow"><span class="dot"></span> Cierra el <?= e(fecha_larga(FECHA_CIERRE)) ?></span>
+      <h1>Postulación</h1>
+      <p>
+        Son 6 pasos y te va a llevar entre 15 y 25 minutos. Cuanto más completo y pensado lo dejes,
+        mejor te podemos evaluar: en varias preguntas nos importa más cómo lo contás que el dato en sí.
+        Podés cerrar la pestaña y volver después, se guarda solo en este navegador.
+      </p>
+    </div>
+
+    <?php if (!empty($errores['general'])): ?>
+      <div class="form-alert error"><?= e($errores['general']) ?></div>
+    <?php elseif ($errores): ?>
+      <div class="form-alert warn">Faltan algunos datos. Te marcamos abajo cuáles.</div>
+    <?php endif; ?>
+
+    <div class="progress" id="progress" hidden>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <p class="progress-label" id="progressLabel">Paso 1 de 6</p>
+    </div>
+
+    <form method="post" id="formPostulacion" class="form-card" novalidate data-con-errores="<?= $errores ? '1' : '0' ?>">
+      <?= csrf_field() ?>
+      <input type="text" name="sitio_web" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true">
+
+      <!-- ============ PASO 1 ============ -->
+      <fieldset class="fstep" data-step="1">
+        <legend>Paso 1 de 6</legend>
+        <h2>¿Dónde está tu proyecto?</h2>
+        <p class="help">De esto depende con qué equipo vas a trabajar y qué te vamos a preguntar después.</p>
+
+        <div class="field">
+          <div class="opt-grid">
+            <label class="opt">
+              <input type="radio" name="program" value="Acelera" <?= $v['program'] === 'Acelera' ? 'checked' : '' ?>>
+              <span class="opt-t">Esquel Acelera <span class="opt-tag">Urbano</span></span>
+              <span class="opt-d">En la ciudad: gastronomía, talleres, comercios, circuitos, guías, oficios.</span>
+            </label>
+            <label class="opt opt-raiz">
+              <input type="radio" name="program" value="Raiz" <?= $v['program'] === 'Raiz' ? 'checked' : '' ?>>
+              <span class="opt-t">Raíz <span class="opt-tag">Rural</span></span>
+              <span class="opt-d">En el campo: chacras, estancias, crianceros, viñedos, lana, fruta fina.</span>
+            </label>
+          </div>
+          <p class="err" data-err="program"><?= e($errores['program'] ?? '') ?></p>
         </div>
-    </header>
 
-    <main class="section" style="padding-top: 140px; min-height: 90vh;">
-        <div class="container">
-            
-            <?php if ($success): ?>
-                <!-- Success State Screen -->
-                <div class="card" style="max-width: 600px; margin: 40px auto; text-align: center; border-color: var(--color-wild-berry); animation: fadeIn 0.5s ease-out;">
-                    <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(176, 42, 83, 0.1); border: 2px solid var(--color-wild-berry); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
-                        <span style="font-size: 2rem; color: var(--color-wild-berry); line-height: 1;">✓</span>
-                    </div>
-                    <h2 style="font-size: 2.2rem; margin-bottom: 16px;">¡Postulación Recibida!</h2>
-                    <p style="font-size: 1.05rem; color: #e2e8f0; margin-bottom: 24px;">
-                        Muchas gracias por completar la postulación a conciencia. Tu proyecto ha sido ingresado al sistema de selección del Laboratorio de Destino Esquel.
-                    </p>
-                    <div class="scarcity-box" style="text-align: left; background-color: rgba(255, 255, 255, 0.02);">
-                        <h5 style="margin-bottom: 6px;">Próximos Pasos</h5>
-                        <p style="font-size: 0.9rem; margin-bottom: 0; color: #a1a5ab;">
-                            El Cuadro Técnico (CAMOCH, Prestadores y FEHGRA) evaluará las solicitudes del **23 de julio al 9 de agosto**. Los proyectos seleccionados para esta primera cohorte serán notificados el **10 de agosto** para iniciar de inmediato los trabajos técnicos territoriales.
-                        </p>
-                    </div>
-                    <a href="index.php" class="btn btn-primary" style="margin-top: 16px;">Volver al Inicio</a>
-                </div>
-            <?php else: ?>
-
-                <!-- Form step container -->
-                <div class="form-step-container">
-                    <div style="text-align: center; margin-bottom: 40px;">
-                        <span class="text-mono" style="color: var(--color-wild-berry); font-size: 0.85rem; font-weight: 600;">Cohorte de Fomento 2026</span>
-                        <h2 style="font-size: 2.5rem; margin-top: 8px; margin-bottom: 12px;">Formulario de Postulación</h2>
-                        <p style="font-size: 0.95rem; max-width: 550px; margin: 0 auto 16px auto;">
-                            Por favor llene este formulario a conciencia. Evaluamos el espíritu de trabajo, compromiso e innovación para dar el acompañamiento técnico personalizado de 8 semanas.
-                        </p>
-                        <div style="display: inline-block; background-color: rgba(176, 42, 83, 0.15); border: 1px solid var(--color-wild-berry); border-radius: 6px; padding: 10px 20px; font-size: 0.9rem; font-weight: 500; color: var(--color-text-primary);">
-                            ⚠️ Convocatoria abierta únicamente hasta el <strong>9 de agosto</strong> para esta primera cohorte.
-                        </div>
-                    </div>
-
-                    <?php if (!empty($error_msg)): ?>
-                        <div class="card" style="background-color: rgba(220, 53, 69, 0.1); border-color: #dc3545; padding: 16px; margin-bottom: 24px; text-align: center;">
-                            <p style="color: #f87171; margin-bottom: 0; font-size: 0.95rem;"><?php echo htmlspecialchars($error_msg); ?></p>
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="card">
-                        <!-- Step Dots indicators -->
-                        <div class="step-indicator">
-                            <div class="step-dot active">1</div>
-                            <div class="step-dot">2</div>
-                            <div class="step-dot">3</div>
-                        </div>
-
-                        <form id="postulacionForm" action="inscribirse.php" method="POST">
-                            
-                            <!-- ETAPA 1: Datos de contacto -->
-                            <div class="form-step active">
-                                <h3 style="margin-bottom: 24px;">Paso 1: Datos de Contacto</h3>
-                                
-                                <div class="form-group">
-                                    <label class="form-label" for="name">Nombre de tu Proyecto / Emprendimiento <span>*</span></label>
-                                    <input class="form-input" type="text" id="name" name="name" required placeholder="Ej: Casa de Té Las Rosas, Dulces La Estepa, Paseos del Aconcagua">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="contact_name">Nombre y Apellido del Responsable <span>*</span></label>
-                                    <input class="form-input" type="text" id="contact_name" name="contact_name" required placeholder="Ej: Juana Gómez">
-                                </div>
-
-                                <div class="grid-2" style="gap: 16px;">
-                                    <div class="form-group">
-                                        <label class="form-label" for="email">Correo Electrónico <span>*</span></label>
-                                        <input class="form-input" type="email" id="email" name="email" required placeholder="juana@ejemplo.com">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label" for="phone">Teléfono de Contacto <span>*</span></label>
-                                        <input class="form-input" type="tel" id="phone" name="phone" required placeholder="Ej: 2945 123456">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label">Línea del Laboratorio a la que te postulás <span>*</span></label>
-                                    <div class="form-radio-group">
-                                        <input type="radio" id="prog_acelera" name="program" value="Acelera" class="form-radio-input" <?php echo ($linea_previa === 'Acelera' || $linea_previa === '') ? 'checked' : ''; ?>>
-                                        <label for="prog_acelera" class="form-radio-label">
-                                            <span class="radio-title">Esquel Acelera <span class="status-badge badge-acelera" style="padding: 2px 8px; font-size:0.65rem;">Urbano</span></span>
-                                            <span class="radio-desc">Servicios urbanos, comercios, talleres artísticos o gastronómicos dentro del ejido urbano.</span>
-                                        </label>
-
-                                        <input type="radio" id="prog_raiz" name="program" value="Raiz" class="form-radio-input" <?php echo ($linea_previa === 'Raiz') ? 'checked' : ''; ?>>
-                                        <label for="prog_raiz" class="form-radio-label">
-                                            <span class="radio-title">Raíz <span class="status-badge badge-raiz" style="padding: 2px 8px; font-size:0.65rem;">Rural</span></span>
-                                            <span class="radio-desc">Productores de campo, chacras, lana, frutas finas, destilerías artesanales y entornos rurales.</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="form-navigation">
-                                    <div></div>
-                                    <button type="button" class="btn btn-primary btn-next">Siguiente Paso</button>
-                                </div>
-                            </div>
-
-                            <!-- ETAPA 2: Preguntas condicionales -->
-                            <div class="form-step">
-                                <h3 style="margin-bottom: 24px;">Paso 2: Detalles de tu Propuesta</h3>
-
-                                <!-- CAMPOS ESQUEL ACELERA -->
-                                <div id="aceleraFields">
-                                    <div class="form-group">
-                                        <label class="form-label" for="acelera_descripcion">Descripción detallada del servicio o negocio urbano que querés convertir en experiencia turística <span>*</span></label>
-                                        <textarea class="form-input" id="acelera_descripcion" name="acelera_descripcion" rows="4" placeholder="Contanos qué hacés, cómo es tu espacio y qué tiene de único tu propuesta para Esquel..."></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="acelera_etapa">¿En qué etapa de desarrollo se encuentra tu propuesta actualmente? <span>*</span></label>
-                                        <input class="form-input" type="text" id="acelera_etapa" name="acelera_etapa" placeholder="Ej: Idea en mente, en operación hace 1 año, negocio tradicional sin foco turístico">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="acelera_producto">¿Cómo visualizás integrar un producto físico complementario de Esquel (Economía de los Recuerdos) en la vivencia del turista? <span>*</span></label>
-                                        <textarea class="form-input" id="acelera_producto" name="acelera_producto" rows="3" placeholder="Ej: Al terminar la degustación de té, el visitante puede comprar las hebras enlatadas o vajilla cerámica artesanal local..."></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- CAMPOS ESQUEL RAÍZ -->
-                                <div id="raizFields">
-                                    <div class="form-group">
-                                        <label class="form-label" for="raiz_tipo">Describí tu establecimiento rural y ubicación <span>*</span></label>
-                                        <textarea class="form-input" id="raiz_tipo" name="raiz_tipo" rows="3" placeholder="Contanos qué tipo de chacra o estancia tenés, qué producen y en qué zona de Esquel/aledaños se ubica..."></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="raiz_proceso">¿Qué tareas de campo, saberes productivos tradicionales o artesanías son visitables y explicables al público? <span>*</span></label>
-                                        <textarea class="form-input" id="raiz_proceso" name="raiz_proceso" rows="4" placeholder="Ej: El proceso de esquila tradicional, cosecha de berries, destilación de gin artesanal, etc..."></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="raiz_producto">¿Qué producto propio (lana, fruta fina, dulces, bebidas) querés potenciar como el objeto conector de tu experiencia rural? <span>*</span></label>
-                                        <textarea class="form-input" id="raiz_producto" name="raiz_producto" rows="3" placeholder="Ej: Dulce envasado con etiquetas de la marca, madejas de lana teñidas naturalmente en el campo..."></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-navigation">
-                                    <button type="button" class="btn btn-secondary btn-prev">Anterior</button>
-                                    <button type="button" class="btn btn-primary btn-next">Siguiente Paso</button>
-                                </div>
-                            </div>
-
-                            <!-- ETAPA 3: Motivación y compromiso -->
-                            <div class="form-step">
-                                <h3 style="margin-bottom: 24px;">Paso 3: Motivación y Compromiso</h3>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="motivacion">Explayate sobre tu motivación y voluntad de co-crear junto al equipo técnico del Laboratorio <span>*</span></label>
-                                    <textarea class="form-input" id="motivacion" name="motivacion" rows="5" required placeholder="¿Por qué te entusiasma este programa? Comentanos sobre tu perfil emprendedor y por qué valorás que hagamos cosas juntos..."></textarea>
-                                </div>
-
-                                <div class="form-group" style="margin-top: 32px; background: rgba(176, 42, 83, 0.03); padding: 24px; border-radius: 8px; border: 1px solid var(--glass-border);">
-                                    <label class="checkbox-container">
-                                        <input type="checkbox" id="compromiso_tiempo" name="compromiso_tiempo" class="checkbox-input" required>
-                                        <span class="checkbox-text">
-                                            <strong>Compromiso de dedicación horaria:</strong> Declaro conocer que la convocatoria y evaluación es del 23 de julio al 9 de agosto, y en caso de resultar seleccionado, me comprometo formalmente a **dedicar un mínimo de 12 horas semanales** al proceso de acompañamiento técnico del **10 de agosto al 2 de octubre**.
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="form-navigation">
-                                    <button type="button" class="btn btn-secondary btn-prev">Anterior</button>
-                                    <button type="submit" class="btn btn-primary" style="background-color: #236f4c;">Enviar Postulación</button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-            <?php endif; ?>
-
+        <div class="field">
+          <label class="lbl">¿En qué situación estás hoy?</label>
+          <p class="hint">No hay respuesta mejor que otra. Nos sirve para saber desde dónde arrancamos.</p>
+          <div class="opt-list">
+            <?php
+            $situaciones = [
+                'Funcionando' => 'Ya estoy funcionando, pero no le vendo a turistas',
+                'Turistico'   => 'Ya le vendo a turistas y quiero mejorar cómo lo hago',
+                'Parado'      => 'Tuve algo andando y hoy está parado o necesita rearmarse',
+                'Idea'        => 'Todavía no arranqué, tengo la idea y con qué empezar',
+            ];
+            foreach ($situaciones as $val => $txt): ?>
+              <label class="opt">
+                <input type="radio" name="situacion" value="<?= e($val) ?>" <?= $v['situacion'] === $val ? 'checked' : '' ?>>
+                <span class="opt-t" style="font-size:15.5px"><?= e($txt) ?></span>
+              </label>
+            <?php endforeach; ?>
+          </div>
         </div>
-    </main>
+      </fieldset>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Laboratorio de Destino Esquel. Subsecretaría de Turismo y Subsecretaría de Producción.</p>
-            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 4px;">Municipalidad de Esquel, Chubut, Patagonia Argentina.</p>
+      <!-- ============ PASO 2 ============ -->
+      <fieldset class="fstep" data-step="2">
+        <legend>Paso 2 de 6</legend>
+        <h2>Quién sos</h2>
+        <p class="help">Datos de contacto. Todo lo marcado con asterisco es obligatorio.</p>
+
+        <div class="field">
+          <label class="lbl" for="name">Nombre de tu proyecto, emprendimiento u organización *</label>
+          <input type="text" id="name" name="name" value="<?= e($v['name']) ?>" placeholder="Ej.: Casa de Té Las Rosas, Chacra El Ñire, Cerámica del Valle">
+          <p class="err" data-err="name"><?= e($errores['name'] ?? '') ?></p>
         </div>
-    </footer>
 
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
+        <div class="field">
+          <label class="lbl" for="contact_name">Tu nombre y apellido *</label>
+          <input type="text" id="contact_name" name="contact_name" value="<?= e($v['contact_name']) ?>">
+          <p class="err" data-err="contact_name"><?= e($errores['contact_name'] ?? '') ?></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl" for="email">Correo electrónico *</label>
+            <input type="email" id="email" name="email" value="<?= e($v['email']) ?>">
+            <p class="err" data-err="email"><?= e($errores['email'] ?? '') ?></p>
+          </div>
+          <div class="field">
+            <label class="lbl" for="phone">Teléfono o WhatsApp *</label>
+            <input type="tel" id="phone" name="phone" value="<?= e($v['phone']) ?>" placeholder="2945 123456">
+            <p class="err" data-err="phone"><?= e($errores['phone'] ?? '') ?></p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl" for="ubicacion">¿Dónde está?</label>
+            <input type="text" id="ubicacion" name="ubicacion" value="<?= e($v['ubicacion']) ?>" placeholder="Barrio, paraje o zona">
+          </div>
+          <div class="field">
+            <label class="lbl" for="antiguedad">¿Hace cuánto estás en esto?</label>
+            <input type="text" id="antiguedad" name="antiguedad" value="<?= e($v['antiguedad']) ?>" placeholder="Ej.: 3 años, recién arranco, toda la vida">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="redes">Redes sociales o página web</label>
+          <p class="hint">Si no tenés, dejalo vacío. No es un requisito.</p>
+          <input type="text" id="redes" name="redes" value="<?= e($v['redes']) ?>" placeholder="@tuusuario">
+        </div>
+      </fieldset>
+
+      <!-- ============ PASO 3 ============ -->
+      <fieldset class="fstep" data-step="3">
+        <legend>Paso 3 de 6</legend>
+        <h2>Qué hacés y qué te hace distinto</h2>
+        <p class="help">Este paso es el que más mira el jurado. Tomate el tiempo.</p>
+
+        <div class="field">
+          <label class="lbl" for="descripcion">Contanos qué hacés hoy *</label>
+          <p class="hint">Qué ofrecés, cómo es tu lugar, a quién le vendés ahora. No hace falta que ya sea turismo.</p>
+          <textarea id="descripcion" name="descripcion"><?= e($v['descripcion']) ?></textarea>
+          <p class="err" data-err="descripcion"><?= e($errores['descripcion'] ?? '') ?></p>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="diferencial">¿Qué tiene tu propuesta que no tenga ninguna otra en Esquel? *</label>
+          <p class="hint">Contanos la historia, no solo el dato. Un saber familiar, una receta, un lugar, una forma de hacer las cosas.</p>
+          <textarea id="diferencial" name="diferencial"><?= e($v['diferencial']) ?></textarea>
+          <p class="err" data-err="diferencial"><?= e($errores['diferencial'] ?? '') ?></p>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="visitable">¿Qué podría ver, hacer o probar un visitante?</label>
+          <p class="hint">Ej.: ver la esquila, amasar, recorrer la chacra, participar de la cosecha, entrar al taller.</p>
+          <textarea id="visitable" name="visitable" rows="4"><?= e($v['visitable']) ?></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ============ PASO 4 ============ -->
+      <fieldset class="fstep" data-step="4">
+        <legend>Paso 4 de 6</legend>
+        <h2>Cómo se conecta con el resto de Esquel</h2>
+        <p class="help">Nos interesa que tu propuesta sume a la oferta del destino, no que quede aislada.</p>
+
+        <div class="field">
+          <label class="lbl" for="conexiones">¿Con qué otros lugares, personas o negocios de Esquel se podría conectar?</label>
+          <p class="hint">Otros prestadores, agencias, alojamientos, productores. Si trabajás con alguien hoy, contanos con quién.</p>
+          <textarea id="conexiones" name="conexiones" rows="4"><?= e($v['conexiones']) ?></textarea>
+        </div>
+
+        <div class="field">
+          <label class="lbl">¿Hay algún producto físico que el visitante podría llevarse?</label>
+          <p class="hint">Un dulce, una madeja, una pieza, una conserva. Es lo que llamamos “Economía de los Recuerdos”. No es obligatorio.</p>
+          <div class="opt-list">
+            <?php foreach ([
+                'Si' => 'Sí, ya tengo algo así',
+                'Podria' => 'Todavía no, pero podría desarrollarlo',
+                'No' => 'No lo veo por ahora',
+            ] as $val => $txt): ?>
+              <label class="opt">
+                <input type="radio" name="producto_fisico" value="<?= e($val) ?>" <?= $v['producto_fisico'] === $val ? 'checked' : '' ?>>
+                <span class="opt-t" style="font-size:15.5px"><?= e($txt) ?></span>
+              </label>
+            <?php endforeach; ?>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="producto_fisico_cual">Si marcaste “sí” o “podría”, contanos cuál</label>
+          <textarea id="producto_fisico_cual" name="producto_fisico_cual" rows="3"><?= e($v['producto_fisico_cual']) ?></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ============ PASO 5 ============ -->
+      <fieldset class="fstep" data-step="5">
+        <legend>Paso 5 de 6</legend>
+        <h2>Con qué contás hoy</h2>
+        <p class="help">El programa prioriza propuestas que puedan salir a la venta sin necesitar una gran inversión.</p>
+
+        <div class="field">
+          <label class="lbl" for="recursos">¿Con qué contás para arrancar?</label>
+          <p class="hint">Espacio, herramientas, vehículo, equipo de gente, materia prima, tiempo.</p>
+          <textarea id="recursos" name="recursos" rows="4"><?= e($v['recursos']) ?></textarea>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="falta">¿Qué te falta para poder vender esto?</label>
+          <p class="hint">Sé concreto. Saber qué falta es la mitad del trabajo.</p>
+          <textarea id="falta" name="falta" rows="4"><?= e($v['falta']) ?></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ============ PASO 6 ============ -->
+      <fieldset class="fstep" data-step="6">
+        <legend>Paso 6 de 6 · El criterio que más pesa</legend>
+        <h2>Por qué vos</h2>
+        <p class="help">
+          Las ganas y el compromiso pesan tanto como cualquier criterio técnico, a veces más.
+          Una propuesta simple con alguien que le pone todo llega más lejos que una propuesta redonda sin nadie que la empuje.
+        </p>
+
+        <div class="field">
+          <label class="lbl" for="motivacion">¿Por qué querés participar y qué esperás lograr en estas ocho semanas? *</label>
+          <textarea id="motivacion" name="motivacion" rows="6"><?= e($v['motivacion']) ?></textarea>
+          <p class="err" data-err="motivacion"><?= e($errores['motivacion'] ?? '') ?></p>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="equipo">¿Quiénes participarían del proceso además de vos?</label>
+          <input type="text" id="equipo" name="equipo" value="<?= e($v['equipo']) ?>" placeholder="Yo solo/a, un socio, mi familia, dos empleados…">
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="material">Si tenés fotos o material para mostrar, pegá un enlace</label>
+          <p class="hint">Drive, Instagram, lo que tengas. Opcional.</p>
+          <input type="url" id="material" name="material" value="<?= e($v['material']) ?>" placeholder="https://">
+          <p class="err" data-err="material"><?= e($errores['material'] ?? '') ?></p>
+        </div>
+
+        <div class="field" style="margin-top:28px">
+          <label class="check">
+            <input type="checkbox" name="compromiso" <?= $v['compromiso'] === 'on' ? 'checked' : '' ?>>
+            <span>
+              Me comprometo a dedicar un mínimo de <strong>12 horas semanales</strong> al proceso entre el
+              <?= e(fecha_larga(FECHA_INICIO)) ?> y el <?= e(fecha_larga(FECHA_FIN)) ?> de 2026, en caso de ser seleccionado. *
+            </span>
+          </label>
+          <p class="err" data-err="compromiso"><?= e($errores['compromiso'] ?? '') ?></p>
+        </div>
+
+        <div id="revision" hidden>
+          <h3 style="font-size:19px;margin:30px 0 12px">Antes de enviar, un repaso</h3>
+          <dl class="review-list" id="revisionLista"></dl>
+        </div>
+      </fieldset>
+
+      <div class="form-nav">
+        <button type="button" class="btn btn-secondary" id="btnPrev" hidden>← Anterior</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-primary" id="btnNext" hidden>Siguiente →</button>
+        <button type="submit" class="btn btn-primary" id="btnSubmit">Enviar postulación</button>
+      </div>
+    </form>
+
+  <?php endif; ?>
+  </div>
+</section>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>

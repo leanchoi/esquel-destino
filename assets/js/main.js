@@ -1,181 +1,257 @@
-// assets/js/main.js
-// Javascript para el Frontend del Laboratorio de Destino Esquel
-
-document.addEventListener('DOMContentLoaded', () => {
-    initMultiStepForm();
-    initMediaKitCopy();
-});
-
 /**
- * Control del Formulario Multi-Etapa
+ * Esquel LAB — comportamiento del sitio público.
+ *
+ * El formulario funciona sin JavaScript: sin JS es una página larga con todos
+ * los pasos visibles y un botón de envío. Con JS se muestra un paso por vez,
+ * con progreso, guardado automático y revisión final.
  */
-function initMultiStepForm() {
-    const form = document.getElementById('postulacionForm');
-    if (!form) return;
+(function () {
+  'use strict';
 
-    const steps = Array.from(document.querySelectorAll('.form-step'));
-    const dots = Array.from(document.querySelectorAll('.step-dot'));
-    const nextButtons = document.querySelectorAll('.btn-next');
-    const prevButtons = document.querySelectorAll('.btn-prev');
-    let currentStep = 0;
+  // ------------------------------------------------------------ navegación
+  var navToggle = document.getElementById('navToggle');
+  var siteNav = document.getElementById('siteNav');
+  if (navToggle && siteNav) {
+    navToggle.addEventListener('click', function () {
+      var abierto = siteNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    });
+    siteNav.addEventListener('click', function (ev) {
+      if (ev.target.tagName === 'A') {
+        siteNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
-    // Manejo de preguntas condicionales según el programa seleccionado
-    const programRadios = document.querySelectorAll('input[name="program"]');
-    const aceleraFields = document.getElementById('aceleraFields');
-    const raizFields = document.getElementById('raizFields');
+  // -------------------------------------------------------- copiar (prensa)
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var destino = document.querySelector(btn.getAttribute('data-copy'));
+      if (!destino || !navigator.clipboard) return;
+      navigator.clipboard.writeText(destino.innerText.trim()).then(function () {
+        var original = btn.textContent;
+        btn.textContent = 'Copiado';
+        btn.classList.add('ok');
+        setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove('ok');
+        }, 1900);
+      });
+    });
+  });
 
-    function toggleProgramFields() {
-        const selectedProgram = document.querySelector('input[name="program"]:checked')?.value;
-        if (selectedProgram === 'Acelera') {
-            if (aceleraFields) aceleraFields.style.display = 'block';
-            if (raizFields) raizFields.style.display = 'none';
-            // Configurar required para los campos de Acelera
-            setRequiredState(aceleraFields, true);
-            setRequiredState(raizFields, false);
-        } else if (selectedProgram === 'Raiz') {
-            if (aceleraFields) aceleraFields.style.display = 'none';
-            if (raizFields) raizFields.style.display = 'block';
-            // Configurar required para los campos de Raíz
-            setRequiredState(aceleraFields, false);
-            setRequiredState(raizFields, true);
-        }
+  // ------------------------------------------------------------- formulario
+  var form = document.getElementById('formPostulacion');
+  if (!form) return;
+
+  var CLAVE = 'esquellab_borrador_v2';
+  var pasos = Array.prototype.slice.call(form.querySelectorAll('.fstep'));
+  var btnPrev = document.getElementById('btnPrev');
+  var btnNext = document.getElementById('btnNext');
+  var btnSubmit = document.getElementById('btnSubmit');
+  var progreso = document.getElementById('progress');
+  var barra = document.getElementById('progressFill');
+  var etiqueta = document.getElementById('progressLabel');
+  var revision = document.getElementById('revision');
+  var actual = 0;
+
+  // Obligatorios por paso. En el HTML no usamos el atributo `required` para
+  // que sin JS el formulario se pueda enviar igual y lo valide el servidor,
+  // que es la validación que realmente manda.
+  var REQUERIDOS = {
+    1: [{ name: 'program', msg: 'Elegí una de las dos líneas.' }],
+    2: [
+      { name: 'name', msg: 'Poné el nombre de tu proyecto.' },
+      { name: 'contact_name', msg: 'Necesitamos saber con quién hablamos.' },
+      { name: 'email', tipo: 'email', msg: 'Revisá el correo: es por donde te vamos a contactar.' },
+      { name: 'phone', msg: 'Dejanos un teléfono de contacto.' }
+    ],
+    3: [
+      { name: 'descripcion', msg: 'Contanos qué hacés hoy.' },
+      { name: 'diferencial', msg: 'Este campo es de los que más pesan en la evaluación.' }
+    ],
+    6: [
+      { name: 'motivacion', msg: 'Contanos por qué querés participar.' },
+      { name: 'compromiso', msg: 'Confirmá la disponibilidad de 12 horas semanales.' }
+    ]
+  };
+
+  function campo(nombre) {
+    return form.querySelector('[name="' + nombre + '"]');
+  }
+
+  function valor(nombre) {
+    var el = campo(nombre);
+    if (!el) return '';
+    if (el.type === 'radio') {
+      var marcado = form.querySelector('[name="' + nombre + '"]:checked');
+      return marcado ? marcado.value : '';
     }
+    if (el.type === 'checkbox') return el.checked ? 'on' : '';
+    return el.value.trim();
+  }
 
-    function setRequiredState(container, state) {
-        if (!container) return;
-        const inputs = container.querySelectorAll('.form-input, textarea');
-        inputs.forEach(input => {
-            if (state) {
-                input.setAttribute('required', 'required');
-            } else {
-                input.removeAttribute('required');
-            }
-        });
+  function mostrarError(nombre, msg) {
+    var p = form.querySelector('[data-err="' + nombre + '"]');
+    if (p) p.textContent = msg || '';
+    var el = campo(nombre);
+    if (el && el.type !== 'radio' && el.type !== 'checkbox') {
+      el.classList.toggle('is-invalid', !!msg);
     }
+  }
 
-    // Inicializar estado condicional
-    programRadios.forEach(radio => {
-        radio.addEventListener('change', toggleProgramFields);
+  function validarPaso(indice) {
+    var reglas = REQUERIDOS[indice + 1] || [];
+    var ok = true;
+    var primero = null;
+
+    reglas.forEach(function (r) {
+      var val = valor(r.name);
+      var malo = !val;
+      if (!malo && r.tipo === 'email') {
+        malo = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      }
+      if (malo) {
+        ok = false;
+        mostrarError(r.name, r.msg);
+        if (!primero) primero = campo(r.name);
+      } else {
+        mostrarError(r.name, '');
+      }
     });
-    toggleProgramFields();
 
-    // Actualizar vista de etapas
-    function updateFormSteps() {
-        steps.forEach((step, idx) => {
-            step.classList.toggle('active', idx === currentStep);
-        });
-
-        dots.forEach((dot, idx) => {
-            dot.classList.toggle('active', idx === currentStep);
-            dot.classList.toggle('completed', idx < currentStep);
-        });
-        
-        // Auto scroll hacia el inicio del formulario
-        const rect = form.getBoundingClientRect();
-        if (rect.top < 0) {
-            window.scrollTo({
-                top: window.scrollY + rect.top - 100,
-                behavior: 'smooth'
-            });
-        }
+    if (!ok && primero) {
+      primero.focus({ preventScroll: true });
+      primero.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+    return ok;
+  }
 
-    // Validación de la etapa actual
-    function validateStep(stepIdx) {
-        const activeStepEl = steps[stepIdx];
-        const inputs = Array.from(activeStepEl.querySelectorAll('[required]'));
-        
-        let isValid = true;
-        inputs.forEach(input => {
-            if (input.type === 'checkbox') {
-                if (!input.checked) {
-                    isValid = false;
-                    input.classList.add('invalid-input');
-                } else {
-                    input.classList.remove('invalid-input');
-                }
-            } else if (input.type === 'radio') {
-                const name = input.name;
-                const checked = activeStepEl.querySelector(`input[name="${name}"]:checked`);
-                if (!checked) {
-                    isValid = false;
-                    // Resaltar visualmente las opciones de radio
-                    const radioGroup = activeStepEl.querySelector('.form-radio-group');
-                    if (radioGroup) radioGroup.style.borderColor = '#b02a53';
-                } else {
-                    const radioGroup = activeStepEl.querySelector('.form-radio-group');
-                    if (radioGroup) radioGroup.style.borderColor = '';
-                }
-            } else {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = '#b02a53';
-                } else {
-                    input.style.borderColor = '';
-                }
-            }
+  function ir(indice) {
+    actual = indice;
+    pasos.forEach(function (p, i) { p.hidden = i !== indice; });
+
+    if (barra) barra.style.width = (((indice + 1) / pasos.length) * 100) + '%';
+    if (etiqueta) etiqueta.textContent = 'Paso ' + (indice + 1) + ' de ' + pasos.length;
+
+    btnPrev.hidden = indice === 0;
+    var ultimo = indice === pasos.length - 1;
+    btnNext.hidden = ultimo;
+    btnSubmit.hidden = !ultimo;
+    if (revision) revision.hidden = !ultimo;
+    if (ultimo) construirRevision();
+
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function recortar(txt, n) {
+    if (!txt) return '';
+    return txt.length > n ? txt.slice(0, n).trim() + '…' : txt;
+  }
+
+  function construirRevision() {
+    var lista = document.getElementById('revisionLista');
+    if (!lista) return;
+    var linea = valor('program');
+    var filas = [
+      ['Línea', linea === 'Raiz' ? 'Raíz (rural)' : (linea === 'Acelera' ? 'Esquel Acelera (urbano)' : '')],
+      ['Proyecto', valor('name')],
+      ['Responsable', valor('contact_name')],
+      ['Correo', valor('email')],
+      ['Teléfono', valor('phone')],
+      ['Qué hacés hoy', recortar(valor('descripcion'), 150)],
+      ['Qué te hace distinto', recortar(valor('diferencial'), 150)],
+      ['Por qué vos', recortar(valor('motivacion'), 150)],
+      ['Compromiso de 12 hs', valor('compromiso') ? 'Confirmado' : '']
+    ];
+
+    lista.innerHTML = '';
+    filas.forEach(function (f) {
+      var dt = document.createElement('dt');
+      dt.textContent = f[0];
+      var dd = document.createElement('dd');
+      if (f[1]) {
+        dd.textContent = f[1];
+      } else {
+        dd.textContent = 'Sin completar';
+        dd.className = 'empty';
+      }
+      lista.appendChild(dt);
+      lista.appendChild(dd);
+    });
+  }
+
+  // ---------------------------------------------------------- autoguardado
+  function guardar() {
+    try {
+      var datos = {};
+      new FormData(form).forEach(function (val, clave) {
+        if (clave === 'csrf_token' || clave === 'sitio_web') return;
+        datos[clave] = val;
+      });
+      datos.__paso = actual;
+      localStorage.setItem(CLAVE, JSON.stringify(datos));
+    } catch (e) { /* sin localStorage seguimos, solo sin autoguardado */ }
+  }
+
+  function restaurar() {
+    try {
+      var crudo = localStorage.getItem(CLAVE);
+      if (!crudo) return;
+      var datos = JSON.parse(crudo);
+      Object.keys(datos).forEach(function (clave) {
+        if (clave === '__paso') return;
+        var els = form.querySelectorAll('[name="' + clave.replace(/"/g, '') + '"]');
+        Array.prototype.forEach.call(els, function (el) {
+          if (el.type === 'radio') el.checked = el.value === datos[clave];
+          else if (el.type === 'checkbox') el.checked = datos[clave] === 'on';
+          else el.value = datos[clave];
         });
+      });
+      if (typeof datos.__paso === 'number' && datos.__paso >= 0 && datos.__paso < pasos.length) {
+        actual = datos.__paso;
+      }
+    } catch (e) { /* borrador ilegible: arrancamos limpio */ }
+  }
 
-        return isValid;
+  var timer;
+  form.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(guardar, 500);
+  });
+  form.addEventListener('change', guardar);
+
+  btnNext.addEventListener('click', function () {
+    if (!validarPaso(actual)) return;
+    guardar();
+    ir(Math.min(actual + 1, pasos.length - 1));
+  });
+
+  btnPrev.addEventListener('click', function () {
+    ir(Math.max(actual - 1, 0));
+  });
+
+  form.addEventListener('submit', function (ev) {
+    // Validamos todos los pasos, no sólo el visible.
+    for (var i = 0; i < pasos.length; i++) {
+      if (!validarPaso(i)) {
+        ev.preventDefault();
+        ir(i);
+        return;
+      }
     }
+    try { localStorage.removeItem(CLAVE); } catch (e) {}
+  });
 
-    // Listeners botones Siguiente
-    nextButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            if (validateStep(currentStep)) {
-                currentStep++;
-                if (currentStep >= steps.length) currentStep = steps.length - 1;
-                updateFormSteps();
-            } else {
-                // Alerta suave de validación
-                alert('Por favor complete todos los campos obligatorios antes de continuar.');
-            }
-        });
-    });
+  // Si el servidor devolvió errores, los valores ya vienen repoblados desde
+  // PHP: restaurar el borrador encima los pisaría con datos viejos.
+  if (form.getAttribute('data-con-errores') !== '1') {
+    restaurar();
+  }
 
-    // Listeners botones Anterior
-    prevButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            currentStep--;
-            if (currentStep < 0) currentStep = 0;
-            updateFormSteps();
-        });
-    });
-
-    // Validar en el submit final por seguridad
-    form.addEventListener('submit', (e) => {
-        if (!validateStep(currentStep)) {
-            e.preventDefault();
-            alert('Por favor verifique las respuestas antes de enviar la postulación.');
-        }
-    });
-}
-
-/**
- * Copiar Notas de Prensa en el Media Kit
- */
-function initMediaKitCopy() {
-    const copyButtons = document.querySelectorAll('.btn-copy');
-    copyButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            const textEl = document.getElementById(targetId);
-            if (!textEl) return;
-
-            // Seleccionar y copiar texto
-            const textToCopy = textEl.textContent.trim();
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '¡Copiado al portapapeles!';
-                button.style.backgroundColor = '#236f4c';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.backgroundColor = '';
-                }, 2000);
-            }).catch(err => {
-                console.error('Error al copiar texto: ', err);
-            });
-        });
-    });
-}
+  // Recién acá activamos el modo por pasos. Si el JS falla antes de esta
+  // línea, el formulario queda entero y usable.
+  if (progreso) progreso.hidden = false;
+  ir(actual);
+})();

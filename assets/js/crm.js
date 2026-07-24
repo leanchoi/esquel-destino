@@ -1,234 +1,218 @@
-// assets/js/crm.js
-// Script de administración para el CRM de Laboratorio de Destino Esquel
-
-document.addEventListener('DOMContentLoaded', () => {
-    initViewToggles();
-    initCRMDrawer();
-});
-
 /**
- * Alternar entre Vista de Tabla y Vista de Tarjetas (Kanban)
+ * Panel de evaluación — Esquel LAB.
+ * Alterna tabla/tarjetas y maneja el drawer de evaluación de cada postulación.
  */
-function initViewToggles() {
-    const listBtn = document.getElementById('btnListView');
-    const cardBtn = document.getElementById('btnCardView');
-    const listContainer = document.getElementById('listViewContainer');
-    const cardContainer = document.getElementById('cardViewContainer');
+(function () {
+  'use strict';
 
-    if (!listBtn || !cardBtn) return;
+  function leerJSON(id) {
+    var el = document.getElementById(id);
+    if (!el) return null;
+    try { return JSON.parse(el.textContent); } catch (e) { return null; }
+  }
 
-    listBtn.addEventListener('click', () => {
-        listBtn.classList.add('active');
-        cardBtn.classList.remove('active');
-        if (listContainer) listContainer.style.display = 'block';
-        if (cardContainer) cardContainer.style.display = 'none';
-        localStorage.setItem('crm_view', 'list');
+  var APPS = leerJSON('datosApps') || [];
+  var CFG = leerJSON('configCrm') || {};
+  var CRITERIOS = CFG.criterios || {};
+  var ESTADOS = CFG.estados || {};
+  var ETIQUETAS = CFG.etiquetas || {};
+  var PUEDE = !!CFG.puedeEditar;
+
+  // -------------------------------------------------- alternancia de vistas
+  var btnTable = document.getElementById('viewTable');
+  var btnCards = document.getElementById('viewCards');
+  var vTable = document.getElementById('tableView');
+  var vCards = document.getElementById('cardsView');
+
+  function verTabla(esTabla) {
+    if (!vTable || !vCards) return;
+    vTable.hidden = !esTabla;
+    vCards.hidden = esTabla;
+    btnTable.classList.toggle('is-active', esTabla);
+    btnCards.classList.toggle('is-active', !esTabla);
+    try { localStorage.setItem('esquellab_vista', esTabla ? 'tabla' : 'tarjetas'); } catch (e) {}
+  }
+  if (btnTable && btnCards) {
+    btnTable.addEventListener('click', function () { verTabla(true); });
+    btnCards.addEventListener('click', function () { verTabla(false); });
+    try {
+      if (localStorage.getItem('esquellab_vista') === 'tarjetas') verTabla(false);
+    } catch (e) {}
+  }
+
+  // ------------------------------------------------------------- el drawer
+  var drawer = document.getElementById('drawer');
+  var backdrop = document.getElementById('drawerBackdrop');
+  var cerrar = document.getElementById('drawerClose');
+  var cuerpo = document.getElementById('drawerBody');
+  var titulo = document.getElementById('dTitulo');
+  var sub = document.getElementById('dSub');
+  if (!drawer) return;
+
+  var actual = null;
+  var ultimoFoco = null;
+
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s == null ? '' : String(s);
+    return d.innerHTML;
+  }
+
+  function abrir(id) {
+    actual = APPS.filter(function (a) { return Number(a.id) === Number(id); })[0];
+    if (!actual) return;
+    ultimoFoco = document.activeElement;
+    titulo.textContent = actual.name;
+    sub.textContent = actual.contact_name + ' · ' + actual.email + (actual.phone ? ' · ' + actual.phone : '');
+    cuerpo.innerHTML = plantilla(actual);
+    enlazar();
+    drawer.hidden = false;
+    backdrop.hidden = false;
+    document.body.style.overflow = 'hidden';
+    cerrar.focus();
+  }
+
+  function cerrarDrawer() {
+    drawer.hidden = true;
+    backdrop.hidden = true;
+    document.body.style.overflow = '';
+    actual = null;
+    if (ultimoFoco) ultimoFoco.focus();
+  }
+
+  function plantilla(a) {
+    var d = a.detalles || {};
+    var html = '';
+
+    // respuestas del formulario, en el orden de ETIQUETAS
+    html += '<div class="d-section"><h3>Respuestas del formulario</h3>';
+    Object.keys(ETIQUETAS).forEach(function (k) {
+      var val = d[k];
+      html += '<div class="d-answer"><div class="q">' + esc(ETIQUETAS[k]) + '</div>' +
+              '<div class="a' + (val ? '' : ' empty') + '">' + (val ? esc(val) : 'Sin responder') + '</div></div>';
     });
+    html += '</div>';
 
-    cardBtn.addEventListener('click', () => {
-        cardBtn.classList.add('active');
-        listBtn.classList.remove('active');
-        if (cardContainer) cardContainer.style.display = 'grid';
-        if (listContainer) listContainer.style.display = 'none';
-        localStorage.setItem('crm_view', 'card');
+    // evaluación
+    html += '<div class="d-section"><h3>Evaluación</h3>';
+    html += '<div class="score-box"><span class="lbl">Puntaje ponderado</span>' +
+            '<span class="num" id="puntajeVal">' + (a.puntaje == null ? '—' : Number(a.puntaje).toFixed(2)) + '</span></div>';
+
+    Object.keys(CRITERIOS).forEach(function (campo) {
+      var c = CRITERIOS[campo];
+      var val = Number(a[campo] || 0);
+      html += '<div class="crit">' +
+        '<div class="crit-head"><span class="name">' + esc(c.label) + ' <span class="peso">×' + c.peso + '</span></span>' +
+        '<span class="val" data-val="' + campo + '">' + val + '</span></div>' +
+        '<p class="ayuda">' + esc(c.ayuda) + '</p>' +
+        '<input type="range" min="0" max="5" step="1" value="' + val + '" data-crit="' + campo + '"' +
+        (PUEDE ? '' : ' disabled') + '></div>';
     });
+    html += '</div>';
 
-    // Cargar preferencia guardada
-    const savedView = localStorage.getItem('crm_view');
-    if (savedView === 'card') {
-        cardBtn.click();
+    // estado y notas
+    html += '<div class="d-section"><h3>Estado y notas</h3>';
+    html += '<div class="field"><label class="lbl" for="dStage">Estado</label><select id="dStage"' + (PUEDE ? '' : ' disabled') + '>';
+    Object.keys(ESTADOS).forEach(function (k) {
+      html += '<option value="' + esc(k) + '"' + (a.stage === k ? ' selected' : '') + '>' + esc(ESTADOS[k].label) + '</option>';
+    });
+    html += '</select></div>';
+    html += '<div class="field"><label class="lbl" for="dNotes">Notas del equipo</label>' +
+            '<textarea id="dNotes" rows="5"' + (PUEDE ? '' : ' disabled') + '>' + esc(a.notes || '') + '</textarea></div>';
+    html += '</div>';
+
+    if (PUEDE) {
+      html += '<div class="drawer-actions"><button type="button" class="btn btn-primary" id="dGuardar">Guardar</button>' +
+              '<span class="drawer-msg" id="dMsg"></span></div>';
     } else {
-        listBtn.click();
+      html += '<p class="hint">Tu rol es de solo lectura: podés consultar y descargar, pero no modificar la evaluación.</p>';
     }
-}
+    return html;
+  }
 
-/**
- * Cajón Lateral (Drawer) de Detalles e Interacción
- */
-function initCRMDrawer() {
-    const backdrop = document.getElementById('drawerBackdrop');
-    const drawer = document.getElementById('crmDrawer');
-    const closeBtn = document.getElementById('drawerClose');
+  function enlazar() {
+    cuerpo.querySelectorAll('[data-crit]').forEach(function (slider) {
+      slider.addEventListener('input', function () {
+        var destino = cuerpo.querySelector('[data-val="' + slider.getAttribute('data-crit') + '"]');
+        if (destino) destino.textContent = slider.value;
+        actualizarPuntajeLocal();
+      });
+    });
 
-    if (!drawer || !backdrop) return;
+    var guardar = document.getElementById('dGuardar');
+    if (guardar) guardar.addEventListener('click', enviar);
+  }
 
-    // Elementos del Drawer
-    const nameEl = document.getElementById('drawerAppName');
-    const contactEl = document.getElementById('drawerAppContact');
-    const emailEl = document.getElementById('drawerAppEmail');
-    const phoneEl = document.getElementById('drawerAppPhone');
-    const programEl = document.getElementById('drawerAppProgram');
-    const dateEl = document.getElementById('drawerAppDate');
-    const answersContainer = document.getElementById('drawerAnswersContainer');
-    
-    // Controles de evaluación
-    const appStatusSelect = document.getElementById('appStatusSelect');
-    const appNotesTextarea = document.getElementById('appNotesTextarea');
-    const sliders = document.querySelectorAll('.rating-slider');
-    const avgScoreEl = document.getElementById('avgScoreVal');
-    const saveActionsBtn = document.getElementById('btnSaveActions');
+  /** Vista previa del puntaje mientras se mueven los sliders. */
+  function actualizarPuntajeLocal() {
+    var suma = 0, pesos = 0, evaluado = false;
+    Object.keys(CRITERIOS).forEach(function (campo) {
+      var s = cuerpo.querySelector('[data-crit="' + campo + '"]');
+      var v = s ? Number(s.value) : 0;
+      if (v > 0) evaluado = true;
+      suma += v * CRITERIOS[campo].peso;
+      pesos += CRITERIOS[campo].peso;
+    });
+    var el = document.getElementById('puntajeVal');
+    if (el) el.textContent = (!evaluado || !pesos) ? '—' : (suma / pesos).toFixed(2);
+  }
 
-    let activeAppId = null;
-
-    // Función para abrir el cajón lateral con datos
-    window.openAppDrawer = function(appId, appDataString) {
-        try {
-            const data = JSON.parse(decodeURIComponent(appDataString));
-            activeAppId = appId;
-            
-            // Inyectar datos básicos
-            nameEl.textContent = data.name;
-            contactEl.textContent = data.contact_name;
-            emailEl.textContent = data.email;
-            emailEl.href = `mailto:${data.email}`;
-            phoneEl.textContent = data.phone;
-            phoneEl.href = `tel:${data.phone}`;
-            programEl.textContent = data.program === 'Acelera' ? 'Esquel Acelera (Urbano)' : 'Raíz (Rural)';
-            dateEl.textContent = data.submitted_at;
-            
-            // Inyectar respuestas dinámicas
-            answersContainer.innerHTML = '';
-            if (data.details && data.details.length > 0) {
-                data.details.forEach(detail => {
-                    const row = document.createElement('div');
-                    row.className = 'detail-row';
-                    
-                    const label = document.createElement('div');
-                    label.className = 'detail-label';
-                    label.textContent = formatFieldLabel(detail.field_key);
-                    
-                    const val = document.createElement('div');
-                    val.className = 'detail-val';
-                    val.textContent = detail.field_value;
-                    
-                    row.appendChild(label);
-                    row.appendChild(val);
-                    answersContainer.appendChild(row);
-                });
-            } else {
-                answersContainer.innerHTML = '<p class="detail-val" style="font-style:italic; color:var(--color-text-secondary);">No se registraron respuestas específicas.</p>';
-            }
-
-            // Inyectar notas y estados actuales
-            appStatusSelect.value = data.stage;
-            appNotesTextarea.value = data.notes || '';
-
-            // Configurar Sliders
-            document.getElementById('sliderDiferenciacion').value = data.rating_diferenciacion || 0;
-            document.getElementById('sliderImpacto').value = data.rating_impacto || 0;
-            document.getElementById('sliderPerfil').value = data.rating_perfil || 0;
-            document.getElementById('sliderProductoFisico').value = data.rating_producto_fisico || 0;
-            document.getElementById('sliderViabilidad').value = data.rating_viabilidad || 0;
-
-            // Actualizar etiquetas de número de los sliders
-            sliders.forEach(slider => {
-                const badge = document.getElementById(slider.id + 'Val');
-                if (badge) badge.textContent = slider.value;
-            });
-
-            calculateAverage();
-
-            // Mostrar Drawer
-            backdrop.style.display = 'block';
-            setTimeout(() => {
-                backdrop.style.opacity = '1';
-                drawer.classList.add('active');
-            }, 10);
-
-        } catch (e) {
-            console.error("Error al abrir detalles:", e);
-        }
+  function enviar() {
+    if (!actual) return;
+    var msg = document.getElementById('dMsg');
+    var btn = document.getElementById('dGuardar');
+    var payload = {
+      csrf: CFG.csrf,
+      id: actual.id,
+      stage: document.getElementById('dStage').value,
+      notes: document.getElementById('dNotes').value
     };
-
-    // Formatear etiquetas de campo del formulario dinámico
-    function formatFieldLabel(key) {
-        const labels = {
-            'descripcion': 'Descripción del Servicio o Negocio Urbano',
-            'etapa': 'Etapa de Desarrollo Actual',
-            'producto_integracion': 'Integración de Producto Físico (Economía de Recuerdos)',
-            'tipo_establecimiento': 'Tipo de Establecimiento y Ubicación Rural',
-            'proceso_visitable': 'Procesos Productivos / Saberes Visibles',
-            'producto_conector': 'Producto de Campo como Objeto Conector',
-            'motivacion': 'Motivación para Acompañamiento Personalizado',
-            'compromiso_tiempo': 'Compromiso de Dedicación Semanal'
-        };
-        return labels[key] || key;
-    }
-
-    // Cerrar cajón
-    function closeDrawer() {
-        backdrop.style.opacity = '0';
-        drawer.classList.remove('active');
-        setTimeout(() => {
-            backdrop.style.display = 'none';
-        }, 300);
-    }
-
-    closeBtn.addEventListener('click', closeDrawer);
-    backdrop.addEventListener('click', closeDrawer);
-
-    // Calcular promedio en tiempo real
-    sliders.forEach(slider => {
-        slider.addEventListener('input', () => {
-            const badge = document.getElementById(slider.id + 'Val');
-            if (badge) badge.textContent = slider.value;
-            calculateAverage();
-        });
+    Object.keys(CRITERIOS).forEach(function (campo) {
+      var s = cuerpo.querySelector('[data-crit="' + campo + '"]');
+      payload[campo] = s ? Number(s.value) : 0;
     });
 
-    function calculateAverage() {
-        let total = 0;
-        sliders.forEach(slider => {
-            total += parseInt(slider.value);
-        });
-        const avg = (total / sliders.length).toFixed(1);
-        avgScoreEl.textContent = avg;
-    }
+    btn.disabled = true;
+    msg.textContent = 'Guardando…';
+    msg.className = 'drawer-msg';
 
-    // Guardar Acciones / Notas / Evaluaciones por AJAX
-    saveActionsBtn.addEventListener('click', () => {
-        if (!activeAppId) return;
+    fetch('api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (res) {
+        btn.disabled = false;
+        if (!res.ok || !res.body.ok) {
+          msg.textContent = (res.body && res.body.error) || 'No se pudo guardar.';
+          msg.className = 'drawer-msg error';
+          return;
+        }
+        msg.textContent = 'Guardado';
+        msg.className = 'drawer-msg ok';
 
-        saveActionsBtn.setAttribute('disabled', 'disabled');
-        const originalText = saveActionsBtn.textContent;
-        saveActionsBtn.textContent = 'Guardando...';
+        // Reflejamos los cambios en memoria para no tener que recargar.
+        actual.stage = res.body.stage;
+        actual.notes = payload.notes;
+        actual.puntaje = res.body.puntaje;
+        Object.keys(CRITERIOS).forEach(function (c) { actual[c] = payload[c]; });
 
-        const payload = {
-            action: 'update_application',
-            id: activeAppId,
-            stage: appStatusSelect.value,
-            notes: appNotesTextarea.value,
-            rating_diferenciacion: parseInt(document.getElementById('sliderDiferenciacion').value),
-            rating_impacto: parseInt(document.getElementById('sliderImpacto').value),
-            rating_perfil: parseInt(document.getElementById('sliderPerfil').value),
-            rating_producto_fisico: parseInt(document.getElementById('sliderProductoFisico').value),
-            rating_viabilidad: parseInt(document.getElementById('sliderViabilidad').value)
-        };
+        setTimeout(function () { window.location.reload(); }, 700);
+      })
+      .catch(function () {
+        btn.disabled = false;
+        msg.textContent = 'Error de conexión.';
+        msg.className = 'drawer-msg error';
+      });
+  }
 
-        fetch('api.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(response => {
-            if (response.success) {
-                closeDrawer();
-                // Recargar página para reflejar cambios en la tabla/columnas kanban sin lógica compleja de dom
-                window.location.reload();
-            } else {
-                alert('Ocurrió un error al guardar los cambios: ' + response.error);
-                saveActionsBtn.removeAttribute('disabled');
-                saveActionsBtn.textContent = originalText;
-            }
-        })
-        .catch(err => {
-            console.error("Error al actualizar:", err);
-            alert('Error de conexión con el servidor.');
-            saveActionsBtn.removeAttribute('disabled');
-            saveActionsBtn.textContent = originalText;
-        });
-    });
-}
+  document.querySelectorAll('[data-abrir]').forEach(function (el) {
+    el.addEventListener('click', function () { abrir(el.getAttribute('data-abrir')); });
+  });
+  cerrar.addEventListener('click', cerrarDrawer);
+  backdrop.addEventListener('click', cerrarDrawer);
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' && !drawer.hidden) cerrarDrawer();
+  });
+})();

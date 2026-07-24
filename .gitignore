@@ -1,0 +1,8 @@
+# Base de datos con las postulaciones reales — nunca se commitea
+data/database.sqlite
+data/*.sqlite
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
