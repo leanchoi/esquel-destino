@@ -53,9 +53,7 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <figure class="hero-figure">
-      <!-- FOTO REAL PENDIENTE: valle de Esquel con cordillera al fondo, hora dorada.
-           Ver docs/FOTOS-QUE-NECESITAMOS.md -->
-      <img src="assets/images/ilustraciones/hero-valle.svg" alt="Ilustración del valle de Esquel con la cordillera al fondo y dos personas mirando el paisaje">
+      <img src="assets/images/fotos/hero-esquel.jpg" alt="Dos personas de espaldas mirando el valle de Esquel y la cordillera al atardecer">
       <figcaption class="hero-caption">Esquel, puerta del Parque Nacional Los Alerces.</figcaption>
     </figure>
   </div>
@@ -72,7 +70,7 @@ require __DIR__ . '/includes/header.php';
 
     <div class="profile-grid">
       <article class="profile-card">
-        <figure><img src="assets/images/ilustraciones/perfil-gastronomia.svg" alt="Mesa servida con tetera y tazas frente a una ventana con vista a la montaña" loading="lazy"></figure>
+        <figure><img src="assets/images/fotos/perfil-gastronomia.jpg" alt="Persona sirviendo té y torta casera en una mesa de madera con vista a la montaña" loading="lazy"></figure>
         <div class="body">
           <h3>Tenés un negocio que funciona pero no le vende a turistas</h3>
           <p>Una casa de té, una panadería, un taller. La gente pasa, compra y se va. Nunca lo armaste como experiencia.</p>
@@ -80,7 +78,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/ilustraciones/perfil-guia.svg" alt="Guía señalando la montaña a dos visitantes en un sendero" loading="lazy"></figure>
+        <figure><img src="assets/images/fotos/perfil-guia.jpg" alt="Guía señalando un pico nevado a dos visitantes en un sendero de trekking" loading="lazy"></figure>
         <div class="body">
           <h3>Sos guía o prestador y vendés solo por WhatsApp</h3>
           <p>Tenés el servicio. No tenés precio para agencias, ni forma de que te reserven sin escribirte.</p>
@@ -88,7 +86,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/ilustraciones/perfil-chacra.svg" alt="Persona cosechando fruta fina entre hileras de cultivo con un invernadero al fondo" loading="lazy"></figure>
+        <figure><img src="assets/images/fotos/perfil-chacra.jpg" alt="Persona cosechando frambuesas entre hileras de cultivo con un invernadero al fondo" loading="lazy"></figure>
         <div class="body">
           <h3>Tenés campo y no sabés si “eso” se puede visitar</h3>
           <p>La esquila, la cosecha, el proceso del dulce. Para vos es el trabajo de todos los días. Para un visitante es algo que nunca vio.</p>
@@ -96,7 +94,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/ilustraciones/perfil-lana.svg" alt="Persona tejiendo en un telar con madejas de lana teñida colgando" loading="lazy"></figure>
+        <figure><img src="assets/images/fotos/perfil-lana.jpg" alt="Persona tejiendo en un telar con madejas de lana teñida colgando" loading="lazy"></figure>
         <div class="body">
           <h3>Hacés algo con las manos y lo vendés suelto</h3>
           <p>Lana, cerámica, conservas. Sin relato, sin packaging y sin conexión con quien visita Esquel.</p>
