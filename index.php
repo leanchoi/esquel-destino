@@ -102,7 +102,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/ilustraciones/perfil-reabrir.svg" alt="Persona abriendo su local con la persiana a medio subir" loading="lazy"></figure>
+        <figure><img src="assets/images/fotos/perfil-reabrir.jpg" alt="Persona abriendo la persiana de su local, el Almacén de Montaña, con la cordillera de fondo" loading="lazy"></figure>
         <div class="body">
           <h3>Tenés un emprendimiento turístico que se quedó</h3>
           <p>Antes funcionaba y hoy no. Necesitás rearmar el producto, no empezar de cero.</p>
@@ -110,7 +110,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/ilustraciones/perfil-idea.svg" alt="Cuaderno con anotaciones, lápiz y mate sobre una mesa de madera" loading="lazy"></figure>
+        <figure><img src="assets/images/fotos/perfil-idea.jpg" alt="Cuaderno con anotaciones, lápiz y mate sobre una mesa de madera, con la cordillera de fondo" loading="lazy"></figure>
         <div class="body">
           <h3>Tenés una idea y algo con qué arrancar</h3>
           <p>No hace falta que ya esté funcionando. Hace falta que puedas dedicarle tiempo real durante ocho semanas.</p>
@@ -176,8 +176,7 @@ require __DIR__ . '/includes/header.php';
         <p>No es obligatorio para postularse, y no todas las propuestas lo van a tener. Cuando aplica, se trabaja también el envase, la etiqueta y el relato, y se evalúa el vínculo con el sello municipal <strong>“Hecho en Esquel”</strong>.</p>
       </div>
       <figure style="margin:0">
-        <!-- FOTO REAL PENDIENTE: productos locales con etiqueta, sobre madera. -->
-        <img src="assets/images/ilustraciones/economia-recuerdos.svg" alt="Frasco de dulce, botella artesanal, madeja de lana y etiqueta colgante sobre una mesa de madera" style="border-radius:var(--r);border:1px solid var(--line)" loading="lazy">
+        <img src="assets/images/fotos/economia-recuerdos.jpg" alt="Frasco de dulce casero, botella de cerveza artesanal y madeja de lana teñida sobre una mesa de madera" style="border-radius:var(--r);border:1px solid var(--line)" loading="lazy">
       </figure>
     </div>
   </div>
@@ -195,7 +194,7 @@ require __DIR__ . '/includes/header.php';
     <div class="lines-grid">
       <article class="line-card line-acelera">
         <div class="line-figure">
-          <img src="assets/images/ilustraciones/linea-acelera.svg" alt="Calle comercial de Esquel con la cordillera de fondo" loading="lazy">
+          <img src="assets/images/fotos/linea-acelera.jpg" alt="Calle comercial de Esquel con la cordillera de fondo" loading="lazy">
         </div>
         <div class="line-body">
           <img src="assets/images/logo-esquel-acelera.png" alt="Esquel Acelera" class="line-logo">
@@ -212,7 +211,7 @@ require __DIR__ . '/includes/header.php';
 
       <article class="line-card line-raiz">
         <div class="line-figure">
-          <img src="assets/images/ilustraciones/linea-raiz.svg" alt="Campo con ovejas, alambrado y galpón, con la cordillera de fondo" loading="lazy">
+          <img src="assets/images/fotos/linea-raiz.jpg" alt="Campo con ovejas, un perro de trabajo y un galpón, con la cordillera de fondo" loading="lazy">
         </div>
         <div class="line-body">
           <img src="assets/images/logo-esquel-raiz.png" alt="Raíz" class="line-logo">
