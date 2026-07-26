@@ -84,6 +84,24 @@ function migrar(PDO $pdo): void
         FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE CASCADE
     );");
 
+    // Analítica propia. Sin cookies de seguimiento y sin IPs en claro: al
+    // visitante lo identifica un hash que cambia todos los días, así sirve
+    // para contar únicos por jornada pero no para seguir a nadie en el tiempo.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS visitas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ruta TEXT NOT NULL,
+        origen TEXT NOT NULL DEFAULT '',
+        dispositivo TEXT NOT NULL DEFAULT 'escritorio',
+        pais TEXT,
+        visitante TEXT NOT NULL,
+        segundos INTEGER,
+        profundidad INTEGER,
+        paso_form INTEGER,
+        creada_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_visitas_fecha ON visitas (creada_at);");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_visitas_ruta ON visitas (ruta);");
+
     // Rate-limiting de login.
     $pdo->exec("CREATE TABLE IF NOT EXISTS login_attempts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

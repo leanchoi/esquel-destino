@@ -398,6 +398,15 @@ require __DIR__ . '/includes/header.php';
           <p class="err" data-err="compromiso"><?= e($errores['compromiso'] ?? '') ?></p>
         </div>
 
+        <div class="aviso-legal">
+          <p>
+            Al enviar esta postulación aceptás los
+            <a href="terminos.php" target="_blank" rel="noopener">términos y condiciones de participación</a>,
+            que incluyen cómo se selecciona, qué se compromete cada participante y cómo se tratan tus datos personales.
+            Se abren en una pestaña nueva: no vas a perder lo que cargaste.
+          </p>
+        </div>
+
         <div id="revision" hidden>
           <h3 style="font-size:19px;margin:30px 0 12px">Antes de enviar, un repaso</h3>
           <dl class="review-list" id="revisionLista"></dl>

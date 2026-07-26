@@ -71,6 +71,28 @@ body {
 }
 
 img, svg { max-width: 100%; display: block; }
+/* No se puede arrastrar una foto fuera de la página. */
+img { -webkit-user-drag: none; user-drag: none; }
+
+/* ---------- Disuasión de copiado ----------
+   Es disuasión, no protección: el contenido viaja en el HTML y cualquiera
+   puede verlo desde el código fuente. Sirve para que no se levante de un
+   arrastre o de un clic derecho.
+   Las excepciones no son opcionales: el kit de difusión existe justamente
+   para que la gente copie esos textos, el formulario necesita pegar y
+   corregir, y de un documento de términos uno tiene que poder guardarse una
+   copia. El panel /admin queda afuera por completo. */
+body:not(.admin-body) {
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+.release-body, .release-body *,
+.facts-table, .facts-table *,
+.legal, .legal *,
+.footer-col a, .footer-plain,
+input, textarea, select,
+[data-copiable], [data-copiable] * {
+  -webkit-user-select: text; user-select: text; -webkit-touch-callout: default;
+}
 a { color: var(--berry-ink); }
 
 h1, h2, h3, h4 {
@@ -319,20 +341,60 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .hours-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
 @media (max-width: 880px) { .hours-split { grid-template-columns: 1fr; gap: 32px; } }
 
-.hours-list { display: flex; flex-direction: column; gap: 12px; margin: 0 0 20px; padding: 0; list-style: none; }
-.hours-list li { display: flex; gap: 16px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 20px; }
-/* min-width al ancho del más largo ("1 a 2 hs"): si no, cada fila arranca el
-   texto en una sangría distinta. */
-.hours-list .h { font-family: var(--font-display); font-size: 21px; font-weight: 700; color: var(--berry-ink); flex: none; min-width: 92px; }
-.hours-list .t b { display: block; font-size: 15.5px; }
-.hours-list .t span { color: var(--ink-2); font-size: 14.5px; }
+.ayuda-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 860px) { .ayuda-grid { grid-template-columns: 1fr; } }
+.ayuda-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); border-radius: var(--r); padding: 24px 26px; }
+.ayuda-card h3 { font-size: 19px; margin-bottom: 8px; }
+.ayuda-card p { font-size: 15.5px; margin: 0; }
 
-.steps-flow { display: flex; flex-direction: column; }
-.step-row { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding-bottom: 26px; position: relative; }
-.step-row:not(:last-child)::before { content: ""; position: absolute; left: 21px; top: 46px; bottom: 0; width: 2px; background: var(--line); }
-.step-num { width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 2px solid var(--berry); color: var(--berry-ink); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 17px; position: relative; z-index: 1; }
-.step-row h4 { font-size: 18px; margin-bottom: 5px; }
-.step-row p { font-size: 15px; color: var(--ink-2); margin: 0; }
+/* ---------- El camino ----------
+   Línea de tiempo horizontal en escritorio, vertical en pantalla angosta.
+   La línea de color se dibuja al entrar la sección; si no corre JS queda
+   dibujada de entrada (ver la regla .js-reveal de abajo). */
+.camino {
+  --camino-gap: 24px;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--camino-gap);
+}
+
+/* Cada paso dibuja su propio tramo hasta el siguiente, en lugar de una línea
+   única de punta a punta: así termina exactamente en el último círculo y no
+   depende de cuántos pasos haya. El tramo se estira hacia el gap para llegar
+   al borde del círculo que sigue. */
+.camino-paso { position: relative; padding-top: 62px; }
+.camino-paso:not(:last-child)::before,
+.camino-paso:not(:last-child)::after {
+  content: ""; position: absolute;
+  top: 21px; left: 44px; right: calc(-1 * var(--camino-gap)); height: 2px;
+}
+.camino-paso:not(:last-child)::before { background: var(--line); }
+.camino-paso:not(:last-child)::after { background: var(--berry); transform-origin: left center; }
+/* Sin JS el tramo ya está dibujado; solo se anima si main.js lo marcó. */
+.camino-paso.js-reveal:not(:last-child)::after { transform: scaleX(0); }
+.camino-paso.js-reveal.is-in:not(:last-child)::after { transform: scaleX(1); transition: transform .55s ease .1s; }
+.camino-num {
+  position: absolute; top: 0; left: 0;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--berry); color: var(--berry-ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+}
+.camino-paso h4 { font-size: 17.5px; margin-bottom: 6px; }
+.camino-paso p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
+
+@media (max-width: 900px) {
+  .camino { grid-template-columns: 1fr; gap: 0; }
+  .camino-paso { padding: 0 0 32px 64px; }
+  .camino-paso:last-child { padding-bottom: 0; }
+  /* En vertical el tramo va del pie de un círculo al techo del siguiente. */
+  .camino-paso:not(:last-child)::before,
+  .camino-paso:not(:last-child)::after {
+    top: 44px; bottom: -12px; left: 21px; right: auto; width: 2px; height: auto;
+  }
+  .camino-paso:not(:last-child)::after { transform-origin: center top; }
+  .camino-paso.js-reveal:not(:last-child)::after { transform: scaleY(0); }
+  .camino-paso.js-reveal.is-in:not(:last-child)::after { transform: scaleY(1); }
+}
 
 /* ---------- Callout ---------- */
 .callout { background: var(--surface); border: 1px solid var(--line-2); border-left: 4px solid var(--berry); border-radius: 0 var(--r) var(--r) 0; padding: 20px 24px; margin: 24px 0; }
@@ -366,6 +428,15 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .gov-logos { display: flex; justify-content: center; align-items: center; gap: 46px; flex-wrap: wrap; margin: 26px 0; }
 .gov-logos span { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--ink-2); }
 
+/* ---------- Documento legal ---------- */
+.legal { max-width: 760px; }
+.legal h2 { font-size: 22px; margin: 40px 0 12px; padding-top: 20px; border-top: 1px solid var(--line); }
+.legal h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.legal p, .legal li { font-size: 16px; color: var(--ink-2); }
+.legal ul { padding-left: 22px; margin: 0 0 1em; }
+.legal li { margin-bottom: 8px; }
+.legal-fecha { margin-top: 40px; font-size: 14px; color: var(--ink-3); }
+
 /* ---------- Cierre ---------- */
 .cierre { text-align: center; max-width: 620px; }
 .cierre h2 { font-size: clamp(26px, 3.4vw, 34px); }
@@ -374,12 +445,6 @@ p { margin: 0 0 1em; max-width: 66ch; }
 /* ---------- Piezas sobre fondo oscuro ----------
    Valen tanto para "Cómo es el trabajo" como para el bloque cívico del final.
    El color de fondo y el de texto ya los pone .section-dark. */
-.section-dark .hours-list li { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
-.section-dark .hours-list .h { color: #F2AFC6; }
-.section-dark .hours-list .t b { color: #fff; }
-.section-dark .hours-list .t span { color: #C9C2B9; }
-.section-dark .step-num { background: rgba(255,255,255,.06); border-color: #F2AFC6; color: #F2AFC6; }
-.section-dark .step-row:not(:last-child)::before { background: rgba(255,255,255,.18); }
 
 .section-dark .callout { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); border-left-color: var(--berry); }
 .section-dark .callout .lbl { color: #F2AFC6; }
@@ -400,6 +465,9 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 92px; }
 .footer-col a:hover { color: var(--berry-ink); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid var(--line-2); }
 .footer-bottom p { font-size: 13.5px; color: var(--ink-3); margin: 0; }
+.footer-sep { margin: 0 4px; }
+.footer-legal { color: var(--ink-3); text-decoration: underline; text-underline-offset: 2px; }
+.footer-legal:hover { color: var(--berry-ink); }
 .footer-lock { color: var(--ink-3); opacity: .5; transition: opacity .15s; }
 .footer-lock:hover { opacity: 1; }
 
@@ -509,6 +577,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 
 .form-nav { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--line); }
 .form-nav .spacer { flex: 1; }
+
+.aviso-legal { margin-top: 22px; padding: 16px 20px; background: var(--paper-2); border-radius: var(--r); }
+.aviso-legal p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
 
 .review-list { margin: 0 0 24px; padding: 20px 22px; background: var(--paper-2); border-radius: var(--r); }
 .review-list dt { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); font-weight: 700; }

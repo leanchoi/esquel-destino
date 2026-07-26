@@ -6,3 +6,6 @@ data/*.sqlite
 .DS_Store
 Thumbs.db
 *.log
+
+# Sal de la analítica: se genera sola en cada instalación
+data/.sal

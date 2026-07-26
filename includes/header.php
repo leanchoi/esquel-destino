@@ -5,6 +5,10 @@
  */
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/analitica.php';
+
+// Registro de visita. Si la analítica falla devuelve null y la página sigue.
+$visita = registrar_visita((string) (parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/'));
 
 $pageTitle       = $pageTitle ?? SITE_NAME;
 $pageDescription = $pageDescription ?? 'Programa municipal gratuito que acompaña a emprendedores y productores de Esquel a convertir lo que ya hacen en una experiencia turística lista para recibir visitantes.';

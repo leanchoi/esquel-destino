@@ -29,7 +29,11 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 Laboratorio de Destino Esquel · Municipalidad de Esquel</p>
+      <p>
+        &copy; 2026 Laboratorio de Destino Esquel · Municipalidad de Esquel
+        <span class="footer-sep">·</span>
+        <a href="<?= $base ?>terminos.php" class="footer-legal">Términos y condiciones</a>
+      </p>
       <a href="<?= $base ?>admin/login.php" class="footer-lock" aria-label="Acceso del equipo" title="Acceso del equipo">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
       </a>
@@ -37,6 +41,9 @@
   </div>
 </footer>
 
+<?php if (!empty($visita)): ?>
+<script id="datosVisita" type="application/json"><?= json_encode(['id' => $visita[0], 't' => $visita[1], 'url' => $base . 'track.php']) ?></script>
+<?php endif; ?>
 <script src="<?= $base ?><?= asset('assets/js/main.js') ?>"></script>
 </body>
 </html>

@@ -247,71 +247,68 @@ require __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Cómo es el trabajo</span>
-      <h2>12 horas por semana. Así se reparten.</h2>
-      <p>La mayor parte del tiempo es trabajo sobre lo tuyo, no reuniones.</p>
+      <h2>Un equipo puesto a trabajar sobre tu proyecto</h2>
+      <p>No es un curso ni una capacitación general. Es acompañamiento uno a uno, en tu lugar, con recursos concretos y con la obligación de dejar cosas andando.</p>
     </div>
 
-    <div class="hours-split">
-      <div>
-        <ul class="hours-list">
-          <li>
-            <span class="h">2 hs</span>
-            <span class="t"><b>Taller grupal</b><span>Con el resto de la cohorte. Precio, relato, canales de venta.</span></span>
-          </li>
-          <li>
-            <span class="h">1 a 2 hs</span>
-            <span class="t"><b>Reunión individual</b><span>En tu lugar de trabajo, sobre tu proyecto puntual.</span></span>
-          </li>
-          <li>
-            <span class="h">8 a 9 hs</span>
-            <span class="t"><b>Trabajo tuyo</b><span>Costos, fotos, textos, probar la experiencia y corregirla.</span></span>
-          </li>
-        </ul>
-
-        <div class="callout">
-          <span class="lbl">Por qué lo pedimos por escrito</span>
-          <p>Un cupo ocupado por alguien que no puede sostenerlo es un cupo que le sacamos a otro. Si hoy no podés garantizar ese tiempo, va a haber próximas cohortes.</p>
-        </div>
-      </div>
-
-      <div class="steps-flow">
-        <div class="step-row">
-          <div class="step-num">1</div>
-          <div>
-            <h4>Te postulás</h4>
-            <p>Completás el formulario. Te lleva entre 15 y 25 minutos y podés guardarlo a medio hacer.</p>
-          </div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">2</div>
-          <div>
-            <h4>El Cuadro Técnico —municipio y cámaras del sector— evalúa tu postulación</h4>
-            <p>No es por orden de llegada: se puntúa con una matriz de criterios acordada antes de abrir la convocatoria.</p>
-          </div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">3</div>
-          <div>
-            <h4>Vamos a tu lugar</h4>
-            <p>Primera visita de diagnóstico: qué tenés, qué falta y por dónde se empieza.</p>
-          </div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">4</div>
-          <div>
-            <h4>Ocho semanas de trabajo conjunto</h4>
-            <p>Talleres grupales y acompañamiento individual, en paralelo, sobre tu proyecto.</p>
-          </div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">5</div>
-          <div>
-            <h4>Presentás lo que armaste</h4>
-            <p>Ante las agencias receptivas de Esquel y la prensa local, con la experiencia terminada y lista para recibir reservas.</p>
-          </div>
-        </div>
-      </div>
+    <div class="ayuda-grid">
+      <article class="ayuda-card">
+        <h3>Un equipo técnico para tu caso</h3>
+        <p>Gente que sabe de turismo, producto y comercialización, sentada con vos sobre lo tuyo: tu producto, tus costos, tu forma de vender. No sobre un manual que sirve para cualquiera.</p>
+      </article>
+      <article class="ayuda-card">
+        <h3>Recursos técnicos y audiovisuales</h3>
+        <p>Producción de fotos y video de tu experiencia, diseño de etiqueta y de material de venta, y armado de tu presencia digital. Se produce con vos, no te mandamos a conseguirlo.</p>
+      </article>
+      <article class="ayuda-card">
+        <h3>Cosas que quedan funcionando</h3>
+        <p>El precio calculado, un canal donde te reserven, la ficha en manos de las agencias y las cuentas ordenadas. Al final tenés herramientas andando, no un informe con lo que deberías hacer.</p>
+      </article>
     </div>
+
+    <div class="callout">
+      <span class="lbl">Lo único que se pide de tu lado</span>
+      <p>El programa pone el equipo y los recursos; vos ponés tiempo. Alrededor de <strong>12 horas por semana</strong> durante las ocho semanas. Lo confirmás por escrito al postularte porque un cupo ocupado por alguien que no puede sostenerlo es un cupo que le sacamos a otro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EL CAMINO ============================ -->
+<section class="section" id="el-camino">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">El camino</span>
+      <h2>De la postulación al 2 de octubre</h2>
+      <p>Cinco pasos. Esto es lo que va a pasar, en orden, desde que apretás “Postularme”.</p>
+    </div>
+
+    <ol class="camino">
+      <li class="camino-paso">
+        <span class="camino-num">1</span>
+        <h4>Te postulás</h4>
+        <p>Completás el formulario. Te lleva unos 20 minutos y lo podés dejar a medio hacer.</p>
+      </li>
+      <li class="camino-paso">
+        <span class="camino-num">2</span>
+        <h4>Se evalúa tu postulación</h4>
+        <p>El Cuadro Técnico la puntúa con la matriz de criterios acordada antes de abrir. No es por orden de llegada.</p>
+      </li>
+      <li class="camino-paso">
+        <span class="camino-num">3</span>
+        <h4>Vamos a tu lugar</h4>
+        <p>Primera visita de diagnóstico: qué tenés, qué falta y por dónde se empieza.</p>
+      </li>
+      <li class="camino-paso">
+        <span class="camino-num">4</span>
+        <h4>Ocho semanas de trabajo</h4>
+        <p>Talleres grupales y acompañamiento individual, en paralelo, sobre tu proyecto.</p>
+      </li>
+      <li class="camino-paso">
+        <span class="camino-num">5</span>
+        <h4>Presentás lo que armaste</h4>
+        <p>Ante las agencias receptivas y la prensa local, con la experiencia lista para recibir reservas.</p>
+      </li>
+    </ol>
   </div>
 </section>
 

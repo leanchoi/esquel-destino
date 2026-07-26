@@ -41,6 +41,84 @@
     });
   });
 
+  // ------------------------------------------------- disuasión de copiado
+  //
+  // Bloquea clic derecho, copiar y arrastrar en el contenido general. Vale
+  // aclarar qué es y qué no: el texto viaja en el HTML, así que con ver el
+  // código fuente se saca igual. Esto frena el copiado de ocasión, nada más.
+  //
+  // Las zonas exceptuadas están elegidas a propósito: el kit de difusión
+  // existe para que la gente copie esos textos, en el formulario hace falta
+  // pegar y corregir, y de los términos uno tiene derecho a guardarse copia.
+  var ZONAS_COPIABLES = '.release-body, .facts-table, .legal, .footer-col, input, textarea, select, [data-copiable]';
+
+  function sePuedeCopiar(nodo) {
+    while (nodo && nodo.nodeType !== 1) nodo = nodo.parentNode;   // de texto a elemento
+    return !!(nodo && nodo.closest && nodo.closest(ZONAS_COPIABLES));
+  }
+
+  document.addEventListener('contextmenu', function (ev) {
+    if (!sePuedeCopiar(ev.target)) ev.preventDefault();
+  });
+
+  document.addEventListener('copy', function (ev) {
+    var sel = window.getSelection ? window.getSelection() : null;
+    var desde = (sel && sel.anchorNode) || ev.target;
+    if (!sePuedeCopiar(desde)) ev.preventDefault();
+  });
+
+  document.addEventListener('dragstart', function (ev) {
+    if (ev.target && ev.target.tagName === 'IMG') ev.preventDefault();
+  });
+
+  // ------------------------------------------------------------- analítica
+  // Al cerrar la pestaña le avisamos al servidor cuánto duró la visita, hasta
+  // dónde bajó la persona y, en el formulario, hasta qué paso llegó. Sirve
+  // para ver dónde se traba la gente. No manda nada que identifique a nadie.
+  var visita = (function () {
+    var el = document.getElementById('datosVisita');
+    if (!el) return null;
+    try { return JSON.parse(el.textContent); } catch (e) { return null; }
+  })();
+
+  window.esquelPasoForm = 0;   // lo actualiza el controlador del formulario
+
+  if (visita && navigator.sendBeacon) {
+    var arranque = Date.now();
+    var hondo = 0;
+
+    var medirScroll = function () {
+      var alto = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = alto > 0 ? Math.round((window.scrollY / alto) * 100) : 100;
+      if (pct > hondo) hondo = Math.min(100, pct);
+    };
+    window.addEventListener('scroll', medirScroll, { passive: true });
+    medirScroll();
+
+    var yaAvisado = false;
+    var avisar = function () {
+      if (yaAvisado) return;
+      yaAvisado = true;
+      var carga = {
+        id: visita.id,
+        t: visita.t,
+        s: Math.round((Date.now() - arranque) / 1000),
+        p: hondo
+      };
+      if (window.esquelPasoForm > 0) carga.f = window.esquelPasoForm;
+      try {
+        navigator.sendBeacon(visita.url, new Blob([JSON.stringify(carga)], { type: 'application/json' }));
+      } catch (e) { /* si no se puede avisar, no pasa nada */ }
+    };
+
+    // pagehide cubre el cierre y la navegación; visibilitychange cubre el
+    // caso del celular que manda la pestaña al fondo y nunca la cierra.
+    window.addEventListener('pagehide', avisar);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') avisar();
+    });
+  }
+
   // ------------------------------------------------- movimiento (home)
   // Todo lo de acá abajo es decorativo: si el sistema pide menos movimiento
   // no se engancha nada y la página queda igual de usable.
@@ -81,7 +159,7 @@
   //   2. lo que ya está en pantalla al cargar no se oculta nunca;
   //   3. además del observer hay un barrido en el scroll, por si el observer
   //      se queda atrás con un scroll muy rápido.
-  var revelables = document.querySelectorAll('.section-head, .profile-card, .line-card, .date-card, .step-row, .hours-list li, .ba-wrap');
+  var revelables = document.querySelectorAll('.section-head, .profile-card, .line-card, .date-card, .camino-paso, .ayuda-card, .ba-wrap');
   if (revelables.length && !menosMovimiento && 'IntersectionObserver' in window) {
     var ocultos = [];
 
@@ -263,6 +341,9 @@
   function ir(indice) {
     actual = indice;
     pasos.forEach(function (p, i) { p.hidden = i !== indice; });
+
+    // Paso más alto alcanzado: es el dato que dice dónde abandona la gente.
+    if ((indice + 1) > window.esquelPasoForm) window.esquelPasoForm = indice + 1;
 
     if (barra) barra.style.width = (((indice + 1) / pasos.length) * 100) + '%';
     if (etiqueta) etiqueta.textContent = 'Paso ' + (indice + 1) + ' de ' + pasos.length;
