@@ -435,30 +435,24 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- ============================ COMUNIDAD ============================ -->
-<section class="section civic">
-  <div class="container" style="max-width:820px">
-    <span class="eyebrow"><span class="dot"></span> Para la comunidad de Esquel</span>
-    <h2>“Acá no hay nada para hacer” es justo lo que este programa viene a desmentir</h2>
-    <p>
-      Esquel es la puerta al Parque Nacional Los Alerces, a La Trochita y a La Hoya. Lo que falta no es paisaje
-      ni gente con algo para ofrecer: falta que eso se convierta en algo que se pueda vender, con precio, con
-      canal y con quién lo comercialice.
-    </p>
-    <div class="callout">
-      <span class="lbl">Sobre el régimen de inversiones</span>
+<!-- ============================ CIERRE ============================ -->
+<section class="section section-alt">
+  <div class="container cierre">
+    <?php if ($abierta): ?>
+      <h2>Postulate antes del <?= e(fecha_larga(FECHA_CIERRE)) ?></h2>
       <p>
-        Esquel tiene además un Régimen de Promoción de Inversiones Turísticas para proyectos de capital grande,
-        y es una herramienta necesaria. Pero no es la única puerta. Esquel LAB es la que no te pide capital para
-        invertir: te pide que tengas algo para mostrar y ganas de trabajarlo.
+        El formulario lleva unos 20 minutos y lo podés dejar por la mitad y seguir después.
+        Es gratuito y no hace falta monotributo ni habilitación.
       </p>
-    </div>
-    <p>
-      Esta primera cohorte prioriza a quienes hoy pueden dedicarle tiempo real al proceso, porque son quienes
-      pueden mostrar el camino más rápido. De ahí van a salir los aprendizajes para identificar nuevos grupos
-      y diseñar los programas que siguen. No es una convocatoria de una sola vez.
-    </p>
-    <a href="inscribirse.php" class="btn btn-primary btn-lg" style="margin-top:12px">Postularme</a>
+      <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
+    <?php else: ?>
+      <h2>La primera cohorte ya cerró</h2>
+      <p>
+        Las postulaciones cerraron el <?= e(fecha_larga(FECHA_CIERRE)) ?>. Va a haber más convocatorias:
+        escribinos y te avisamos cuando abra la próxima.
+      </p>
+      <a href="mailto:<?= e(EMAIL_PROGRAMA) ?>" class="btn btn-secondary btn-lg">Escribirnos</a>
+    <?php endif; ?>
   </div>
 </section>
 

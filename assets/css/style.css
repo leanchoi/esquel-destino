@@ -172,13 +172,13 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .section-dark.has-topo { background-image: url("../images/patrones/topo-claro.svg"); }
 .has-topo > * { position: relative; z-index: 1; }
 
-/* Secciones oscuras: el bloque de "Cómo es el trabajo" y el cívico del final.
-   Comparten tratamiento para que el sitio tenga un solo modo oscuro. */
-.section-dark, .civic { background-color: var(--ink); color: #EDE9E3; }
-.section-dark h2, .section-dark h3, .section-dark h4, .civic h2 { color: #fff; }
-.section-dark p, .civic p { color: #C9C2B9; }
-.section-dark .eyebrow, .civic .eyebrow { color: #F2AFC6; }
-.section-dark .eyebrow .dot, .civic .eyebrow .dot { background: #7FCB98; box-shadow: 0 0 0 3px rgba(127,203,152,.2); }
+/* Modo oscuro de sección. Hoy lo usa "Cómo es el trabajo", que es el único
+   bloque oscuro de la home y le da el corte visual al medio de la página. */
+.section-dark { background-color: var(--ink); color: #EDE9E3; }
+.section-dark h2, .section-dark h3, .section-dark h4 { color: #fff; }
+.section-dark p { color: #C9C2B9; }
+.section-dark .eyebrow { color: #F2AFC6; }
+.section-dark .eyebrow .dot { background: #7FCB98; box-shadow: 0 0 0 3px rgba(127,203,152,.2); }
 .section-dark a { color: #F2AFC6; }
 
 /* Cordillera que corona las secciones oscuras: los picos suben hacia la
@@ -366,9 +366,14 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .gov-logos { display: flex; justify-content: center; align-items: center; gap: 46px; flex-wrap: wrap; margin: 26px 0; }
 .gov-logos span { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--ink-2); }
 
+/* ---------- Cierre ---------- */
+.cierre { text-align: center; max-width: 620px; }
+.cierre h2 { font-size: clamp(26px, 3.4vw, 34px); }
+.cierre p { color: var(--ink-2); margin: 0 auto 26px; }
+
 /* ---------- Piezas sobre fondo oscuro ----------
    Valen tanto para "Cómo es el trabajo" como para el bloque cívico del final.
-   El color de fondo y el de texto ya los pone .section-dark, .civic. */
+   El color de fondo y el de texto ya los pone .section-dark. */
 .section-dark .hours-list li { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
 .section-dark .hours-list .h { color: #F2AFC6; }
 .section-dark .hours-list .t b { color: #fff; }
@@ -376,9 +381,9 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .section-dark .step-num { background: rgba(255,255,255,.06); border-color: #F2AFC6; color: #F2AFC6; }
 .section-dark .step-row:not(:last-child)::before { background: rgba(255,255,255,.18); }
 
-.section-dark .callout, .civic .callout { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); border-left-color: var(--berry); }
-.section-dark .callout .lbl, .civic .callout .lbl { color: #F2AFC6; }
-.section-dark .callout p, .civic .callout p { color: #DDD6CD; }
+.section-dark .callout { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); border-left-color: var(--berry); }
+.section-dark .callout .lbl { color: #F2AFC6; }
+.section-dark .callout p { color: #DDD6CD; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--paper-2); border-top: 1px solid var(--line); padding: 60px 0 26px; }
