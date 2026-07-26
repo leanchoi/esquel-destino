@@ -5,7 +5,10 @@ iniciar_sesion();
 
 $abierta = convocatoria_abierta();
 $errores = [];
-$enviado = false;
+// El envío se muestra después de redirigir, con la marca puesta en la sesión.
+iniciar_sesion();
+$enviado = !empty($_SESSION['postulacion_enviada']) && isset($_GET['enviada']);
+unset($_SESSION['postulacion_enviada']);
 
 // Campos del formulario. El orden refleja los pasos.
 $campos = [
@@ -97,7 +100,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
                 }
 
                 $pdo->commit();
-                $enviado = true;
+
+                // Redirigir después de guardar (patrón POST-Redirect-GET): si
+                // se re-renderizara la página sobre el POST, un F5 volvería a
+                // enviar el formulario y duplicaría la postulación.
+                iniciar_sesion();
+                $_SESSION['postulacion_enviada'] = true;
+                redirect('inscribirse.php?enviada=1');
             } catch (PDOException $ex) {
                 $pdo->rollBack();
                 error_log('[esquel-lab] error guardando postulación: ' . $ex->getMessage());

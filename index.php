@@ -29,11 +29,10 @@ require __DIR__ . '/includes/header.php';
     <div class="hero-copy">
 <?php /* "Convocatoria abierta" ya lo dice la barra de plazo, acá arriba. */ ?>
       <span class="eyebrow"><span class="dot"></span> Primera cohorte · 2026</span>
-      <h1>Buscamos <em>18 proyectos</em> para las próximas experiencias turísticas de Esquel.</h1>
+      <h1>El municipio pone un equipo a trabajar con <em>hasta 18 proyectos</em> de Esquel</h1>
       <p class="hero-lede">
-        Esquel LAB es un programa municipal gratuito. Durante ocho semanas un equipo trabaja
-        con vos, en tu lugar, para que lo que ya hacés —tu oficio, tu campo, tu servicio—
-        quede listo para recibir visitantes y para que una agencia pueda ofrecerlo.
+        Ocho semanas, sin costo, en tu propio lugar de trabajo. Para que lo que ya hacés pueda
+        recibir visitantes y las agencias de la ciudad puedan ofrecerlo.
       </p>
 
       <?php /* La fecha de cierre no va acá: ya está en la barra de plazo, justo arriba. */ ?>
@@ -47,11 +46,7 @@ require __DIR__ . '/includes/header.php';
         <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
         <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
       </div>
-      <p class="hero-note">
-        Las postulaciones se evalúan con una matriz de criterios que acordamos con las cámaras del
-        sector antes de abrir la convocatoria. Podés presentarte aunque todavía no tengas monotributo
-        ni habilitación.
-      </p>
+      <p class="hero-note">Podés presentarte sin monotributo ni habilitación.</p>
     </div>
 
     <div class="hero-media">
@@ -134,64 +129,46 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- ============================ QUÉ TE LLEVÁS ============================ -->
-<section class="section section-alt" id="que-te-llevas">
+<!-- ============================ QUÉ SE TRABAJA ============================ -->
+<section class="section section-alt" id="que-se-trabaja">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Resultados concretos</span>
-      <h2>El 2 de octubre te vas con esto en la mano</h2>
-      <p>Esta lista es lo que tiene que estar resuelto para esa fecha.</p>
+      <span class="eyebrow">Qué se trabaja</span>
+      <h2>Lo que se arma durante las ocho semanas</h2>
+      <p>El trabajo se ordena alrededor de estos puntos. Cuáles pesan más depende de cada proyecto.</p>
     </div>
 
-    <div class="ba-wrap">
-      <table class="ba-table">
-        <thead>
-          <tr><th>&nbsp;</th><th>Antes</th><th>Después</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="ba-key">Precio</td>
-            <td class="ba-before">“Y… depende, hacemé una oferta.”</td>
-            <td class="ba-after">Precio al público y precio neto para agencias, con tus costos calculados.</td>
-          </tr>
-          <tr>
-            <td class="ba-key">Reservas</td>
-            <td class="ba-before">WhatsApp, cuando te acordás de contestar.</td>
-            <td class="ba-after">Un canal digital donde te reservan y te llega el aviso.</td>
-          </tr>
-          <tr>
-            <td class="ba-key">Cómo lo contás</td>
-            <td class="ba-before">Improvisado, distinto cada vez.</td>
-            <td class="ba-after">Un guión de la experiencia: qué pasa, en qué orden y cuánto dura.</td>
-          </tr>
-          <tr>
-            <td class="ba-key">Fotos</td>
-            <td class="ba-before">Las del celular, cuando salieron bien.</td>
-            <td class="ba-after">Registro fotográfico hecho para promoción.</td>
-          </tr>
-          <tr>
-            <td class="ba-key">Quién lo vende</td>
-            <td class="ba-before">Vos, y nadie más.</td>
-            <td class="ba-after">Tu ficha en manos de las agencias receptivas de Esquel.</td>
-          </tr>
-          <tr>
-            <td class="ba-key">Qué se lleva el visitante</td>
-            <td class="ba-before">Se va con el paseo hecho.</td>
-            <td class="ba-after">Se va con algo tuyo en la mochila, cuando la propuesta da para eso.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="trabajo-split">
+      <ol class="trabajo-lista">
+        <li>
+          <h3>El precio</h3>
+          <p>Al público y para agencias, con los costos sacados y el margen a la vista.</p>
+        </li>
+        <li>
+          <h3>Las reservas</h3>
+          <p>Un lugar donde te reserven y te llegue el aviso, sin depender de que contestes un mensaje.</p>
+        </li>
+        <li>
+          <h3>El relato</h3>
+          <p>Qué pasa en la experiencia, en qué orden y cuánto dura. Escrito, para que salga igual cada vez.</p>
+        </li>
+        <li>
+          <h3>Las fotos y el video</h3>
+          <p>Registro hecho para promoción, que después usás en tus redes y en el material de las agencias.</p>
+        </li>
+        <li>
+          <h3>La ficha comercial</h3>
+          <p>El documento con el que las agencias receptivas de Esquel pueden ofrecer tu experiencia.</p>
+        </li>
+        <li>
+          <h3>El producto, cuando la propuesta da</h3>
+          <p>Un dulce, una madeja, una pieza. Se trabaja el envase, la etiqueta y de dónde viene, y se ve si puede llevar el sello municipal <strong>Hecho en Esquel</strong>. Varias experiencias van a ser solo servicio, y para postularte no hace falta que tengas uno.</p>
+        </li>
+      </ol>
 
-    <div class="bloque-producto">
-      <div>
-        <h3>Que se lleven algo tuyo</h3>
-        <p>Un frasco de dulce con tu etiqueta. Una madeja. Una pieza de cerámica. El visitante lo abre en su casa tres semanas después del viaje y se acuerda de dónde salió. Ahí es cuando te recomienda a alguien.</p>
-        <p>Por eso, cuando la propuesta da para eso, el trabajo incluye también el producto: el envase, la etiqueta, cómo se cuenta de dónde viene. Y se ve si puede llevar el sello municipal <strong>Hecho en Esquel</strong>.</p>
-        <p class="menor">Para postularte no hace falta que tengas uno. Varias de las experiencias que entren van a ser solo servicio.</p>
-      </div>
-      <figure>
+      <figure class="trabajo-foto">
         <img src="assets/images/fotos/economia-recuerdos.jpg" alt="Frasco de dulce casero con etiqueta escrita a mano, botella de cerveza artesanal y madeja de lana teñida sobre una mesa de madera" loading="lazy">
+        <figcaption>El visitante lo abre en su casa tres semanas después del viaje. Ahí es cuando te recomienda a alguien.</figcaption>
       </figure>
     </div>
   </div>
@@ -263,8 +240,8 @@ require __DIR__ . '/includes/header.php';
         <p>Fotos y video de tu experiencia, el diseño de tu etiqueta, los textos con los que la vas a ofrecer y tu presencia en internet. El programa pone los recursos técnicos y audiovisuales, y el material se produce durante el proceso, con vos adentro. Es lo que después vas a usar para vender.</p>
       </article>
       <article class="ayuda-card">
-        <h3>Al 2 de octubre, andando</h3>
-        <p>Precio calculado, un lugar donde te reserven, la ficha en manos de las agencias receptivas y las cuentas ordenadas.</p>
+        <h3>Herramientas que quedan</h3>
+        <p>Lo que se produce en estas semanas te queda a vos: el precio, el material, la ficha comercial y las cuentas ordenadas.</p>
       </article>
     </div>
 
@@ -279,9 +256,9 @@ require __DIR__ . '/includes/header.php';
 <section class="section" id="el-camino">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow">El camino</span>
-      <h2>De la postulación al 2 de octubre</h2>
-      <p>Las fechas de la primera cohorte, en orden.</p>
+      <span class="eyebrow">Cronograma</span>
+      <h2>Qué pasa después de que te postulás</h2>
+      <p>Las fechas de esta primera cohorte.</p>
     </div>
 
     <ol class="camino">

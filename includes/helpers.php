@@ -38,7 +38,24 @@ function iniciar_sesion(): void
     }
 
     session_set_cookie_params($params);
+
+    // Nombre propio, y no el PHPSESSID de fábrica.
+    //
+    // Al empezar a fijar el dominio, la cookie nueva (.esquel.site) y la que
+    // el navegador ya tenía guardada (esquel.site, sin dominio) pasaron a ser
+    // dos entradas distintas con el mismo nombre. El navegador mandaba las
+    // dos, PHP leía la vieja y te devolvía al login con la contraseña bien
+    // puesta. Con un nombre propio no puede volver a chocar.
+    session_name('esquellab_sesion');
     session_start();
+
+    // Y de paso se borra la PHPSESSID heredada, que ya no sirve para nada.
+    if (isset($_COOKIE['PHPSESSID']) && !headers_sent()) {
+        $borrar = $params;
+        $borrar['expires'] = time() - 3600;
+        setcookie('PHPSESSID', '', $borrar);
+        setcookie('PHPSESSID', '', ['expires' => time() - 3600, 'path' => '/']);
+    }
 }
 
 /**
