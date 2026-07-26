@@ -18,8 +18,8 @@ $nav = $nav ?? '';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=2.0">
-<link rel="stylesheet" href="../assets/css/admin.css?v=2.0">
+<link rel="stylesheet" href="../assets/css/style.css?v=3.1">
+<link rel="stylesheet" href="../assets/css/admin.css?v=3.1">
 </head>
 <body class="admin-body">
 

@@ -430,7 +430,7 @@ require __DIR__ . '/includes/header.php';
     <p style="max-width:64ch;margin:0 auto;color:var(--ink-2);font-size:15.5px">
       Estas tres instituciones del sector privado integran el Cuadro Técnico junto a las Subsecretarías de Turismo y de Producción.
       Acuerdan los criterios antes de abrir la convocatoria y participan de la evaluación, para que el proceso no dependa de un solo actor
-      ni beneficie únicamente a los proyectos ya consolidados. <a href="media-kit.php">Cómo funciona la evaluación →</a>
+      ni beneficie únicamente a los proyectos ya consolidados. <a href="media-kit.php#evaluacion">Ver los criterios y cuánto pesa cada uno →</a>
     </p>
   </div>
 </section>
@@ -473,6 +473,7 @@ require __DIR__ . '/includes/header.php';
       <?php endif; ?>
     </p>
     <a href="inscribirse.php" class="btn btn-primary btn-sm">Postularme</a>
+    <button type="button" class="sticky-cta-close" id="stickyCtaClose" aria-label="Ocultar esta barra">&times;</button>
   </div>
 </div>
 <?php endif; ?>

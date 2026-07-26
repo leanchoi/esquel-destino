@@ -105,6 +105,10 @@
   background: var(--surface); border-left: 1px solid var(--line); z-index: 91;
   display: flex; flex-direction: column; box-shadow: var(--shadow-lg);
 }
+/* Estos display le ganan al display:none del atributo hidden, y el panel se
+   quedaba abierto para siempre. style.css ya lo resuelve en general, pero
+   acá va explícito para que no dependa del orden de carga ni del caché. */
+.drawer[hidden], .drawer-backdrop[hidden] { display: none; }
 .drawer-head { display: flex; align-items: flex-start; gap: 16px; padding: 22px 26px 18px; border-bottom: 1px solid var(--line); }
 .drawer-head h2 { font-size: 22px; margin: 0 0 4px; }
 .drawer-head .sub { font-size: 13.5px; color: var(--ink-3); margin: 0; }
@@ -137,6 +141,14 @@
 .hist-row { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--ink-3); }
 
 .drawer-actions { display: flex; gap: 10px; align-items: center; padding-top: 18px; border-top: 1px solid var(--line); position: sticky; bottom: 0; background: var(--surface); }
-.drawer-msg { font-size: 13.5px; font-weight: 700; }
+/* Zona de borrado: se distingue del resto para que no se confunda con las
+   acciones de todos los días. */
+.d-peligro { border: 1px solid rgba(155,44,44,.3); background: var(--danger-soft); border-radius: var(--r); padding: 18px 20px; }
+.d-peligro h3 { color: var(--danger); }
+.d-peligro .ayuda { margin-top: 0; }
+.btn-peligro { background: var(--danger); color: #fff; }
+.btn-peligro:hover:not(:disabled) { background: #7F2323; }
+
+.drawer-msg { font-size: 13.5px; font-weight: 700; margin-left: 10px; }
 .drawer-msg.ok { color: var(--green-ink); }
 .drawer-msg.error { color: var(--danger); }

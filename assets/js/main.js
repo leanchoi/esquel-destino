@@ -125,36 +125,51 @@
     window.addEventListener('resize', pedirBarrido);
   }
 
-  // Barra fija de postulación. Aparece cuando el hero salió de pantalla, pero
-  // se esconde mientras haya un botón de postulación a la vista: si no, la
-  // barra termina tapando justo los botones de Acelera y Raíz.
+  // Barra fija de postulación.
+  //
+  // Depende de una sola cosa: cuánto falta para que termine el hero. Una
+  // versión anterior también se escondía cuando había otro botón de
+  // postulación en pantalla, y como esos botones entran y salen todo el
+  // tiempo al scrollear, la barra parpadeaba. Ahora hay una banda muerta de
+  // 200px entre el punto donde aparece y el punto donde se va, así que no
+  // puede oscilar por más despacio que se scrollee.
   var barraCta = document.getElementById('stickyCta');
   var hero = document.querySelector('.hero');
-  if (barraCta && hero && 'IntersectionObserver' in window) {
-    var heroFuera = false;
-    var ctasALaVista = 0;
+  if (barraCta && hero) {
+    var visible = false;
+    var descartada = false;
+    var pedidoBarra = false;
 
-    var revisarBarra = function () {
-      var mostrar = heroFuera && ctasALaVista === 0;
+    var pintarBarra = function (mostrar) {
+      visible = mostrar;
       barraCta.classList.toggle('is-visible', mostrar);
       barraCta.setAttribute('aria-hidden', mostrar ? 'false' : 'true');
     };
 
-    new IntersectionObserver(function (entradas) {
-      heroFuera = !entradas[0].isIntersecting;
-      revisarBarra();
-    }, { threshold: 0 }).observe(hero);
+    var revisarBarra = function () {
+      pedidoBarra = false;
+      if (descartada) return;
+      var finHero = hero.getBoundingClientRect().bottom;
+      if (!visible && finHero < -80) pintarBarra(true);
+      else if (visible && finHero > 120) pintarBarra(false);
+    };
 
-    var botonesCta = document.querySelectorAll('main a.btn[href^="inscribirse"]');
-    if (botonesCta.length) {
-      var vigilante = new IntersectionObserver(function (entradas) {
-        entradas.forEach(function (entrada) {
-          ctasALaVista += entrada.isIntersecting ? 1 : -1;
-        });
-        ctasALaVista = Math.max(0, ctasALaVista);
-        revisarBarra();
-      }, { threshold: 0 });
-      botonesCta.forEach(function (b) { vigilante.observe(b); });
+    var pedirRevision = function () {
+      if (pedidoBarra) return;
+      pedidoBarra = true;
+      window.requestAnimationFrame(revisarBarra);
+    };
+
+    window.addEventListener('scroll', pedirRevision, { passive: true });
+    window.addEventListener('resize', pedirRevision);
+    revisarBarra();
+
+    var cerrarBarra = document.getElementById('stickyCtaClose');
+    if (cerrarBarra) {
+      cerrarBarra.addEventListener('click', function () {
+        descartada = true;
+        pintarBarra(false);
+      });
     }
   }
 
@@ -300,6 +315,18 @@
   }
 
   // ---------------------------------------------------------- autoguardado
+  var avisoBorrador = document.getElementById('avisoBorrador');
+  var borrarAviso = null;
+
+  /** El formulario es largo: si no se avisa, nadie sabe que se está guardando. */
+  function marcarGuardado() {
+    if (!avisoBorrador) return;
+    avisoBorrador.textContent = 'Borrador guardado en este dispositivo';
+    avisoBorrador.classList.add('is-on');
+    clearTimeout(borrarAviso);
+    borrarAviso = setTimeout(function () { avisoBorrador.classList.remove('is-on'); }, 2600);
+  }
+
   function guardar() {
     try {
       var datos = {};
@@ -309,6 +336,7 @@
       });
       datos.__paso = actual;
       localStorage.setItem(CLAVE, JSON.stringify(datos));
+      marcarGuardado();
     } catch (e) { /* sin localStorage seguimos, solo sin autoguardado */ }
   }
 

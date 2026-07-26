@@ -193,6 +193,7 @@ require __DIR__ . '/_header.php';
     'estados'     => ESTADOS,
     'etiquetas'   => ETIQUETAS_DETALLE,
     'puedeEditar' => puede('editor'),
+    'puedeBorrar' => puede('admin'),
     'csrf'        => csrf_token(),
 ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?></script>
 

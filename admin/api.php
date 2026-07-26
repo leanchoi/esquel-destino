@@ -130,6 +130,41 @@ if ($id <= 0) {
     exit(json_encode(['ok' => false, 'error' => 'Postulación no válida.']));
 }
 
+// ------------------------------------------------------------------ borrado
+// Solo admin. Es destructivo y no hay papelera: las respuestas de esa persona
+// desaparecen. Los detalles y el historial se van por ON DELETE CASCADE.
+if (($data['accion'] ?? '') === 'eliminar') {
+    if (!puede('admin')) {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Solo un administrador puede eliminar postulaciones.']));
+    }
+
+    $stmt = $pdo->prepare('SELECT name FROM applications WHERE id = ?');
+    $stmt->execute([$id]);
+    $nombre = $stmt->fetchColumn();
+    if ($nombre === false) {
+        http_response_code(404);
+        exit(json_encode(['ok' => false, 'error' => 'No encontramos esa postulación.']));
+    }
+
+    // Confirmación del lado del servidor: el nombre del proyecto tiene que
+    // coincidir. Evita que un borrado se dispare por un click de más.
+    if (trim((string) ($data['confirmar'] ?? '')) !== trim((string) $nombre)) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'El nombre no coincide. No se eliminó nada.']));
+    }
+
+    $del = $pdo->prepare('DELETE FROM applications WHERE id = ?');
+    $del->execute([$id]);
+
+    error_log(sprintf(
+        'Esquel LAB: %s (%s) eliminó la postulación #%d "%s".',
+        $u['username'] ?? '?', $u['role'] ?? '?', $id, $nombre
+    ));
+
+    exit(json_encode(['ok' => true, 'eliminada' => $id]));
+}
+
 $stmt = $pdo->prepare('SELECT stage FROM applications WHERE id = ?');
 $stmt->execute([$id]);
 $estadoPrevio = $stmt->fetchColumn();

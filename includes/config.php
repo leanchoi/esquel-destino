@@ -8,6 +8,8 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 const SITE_NAME = 'Esquel LAB';
 const SITE_TAGLINE = 'Laboratorio de Destino Esquel';
+// Dominio sin https://, para los textos que la gente copia y pega.
+const SITE_DOMINIO = 'esquel.site';
 
 // --- Fechas de la cohorte -------------------------------------------------
 const FECHA_APERTURA   = '2026-07-23 00:00:00';

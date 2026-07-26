@@ -17,6 +17,7 @@
   var ESTADOS = CFG.estados || {};
   var ETIQUETAS = CFG.etiquetas || {};
   var PUEDE = !!CFG.puedeEditar;
+  var PUEDE_BORRAR = !!CFG.puedeBorrar;
 
   // -------------------------------------------------- alternancia de vistas
   var btnTable = document.getElementById('viewTable');
@@ -121,6 +122,17 @@
             '<textarea id="dNotes" rows="5"' + (PUEDE ? '' : ' disabled') + '>' + esc(a.notes || '') + '</textarea></div>';
     html += '</div>';
 
+    // Zona de borrado. Solo admin, y pidiendo el nombre del proyecto escrito:
+    // no hay papelera, así que un click de más no puede borrar a nadie.
+    if (PUEDE_BORRAR) {
+      html += '<div class="d-section d-peligro"><h3>Eliminar postulación</h3>' +
+        '<p class="ayuda">Se borra la postulación con todas sus respuestas, su evaluación y su historial. No se puede deshacer.</p>' +
+        '<div class="field"><label class="lbl" for="dConfirmar">Escribí <strong>' + esc(a.name) + '</strong> para habilitar el borrado</label>' +
+        '<input type="text" id="dConfirmar" autocomplete="off" placeholder="Nombre del proyecto"></div>' +
+        '<button type="button" class="btn btn-peligro" id="dEliminar" disabled>Eliminar definitivamente</button>' +
+        '<span class="drawer-msg" id="dMsgDel"></span></div>';
+    }
+
     if (PUEDE) {
       html += '<div class="drawer-actions"><button type="button" class="btn btn-primary" id="dGuardar">Guardar</button>' +
               '<span class="drawer-msg" id="dMsg"></span></div>';
@@ -141,6 +153,47 @@
 
     var guardar = document.getElementById('dGuardar');
     if (guardar) guardar.addEventListener('click', enviar);
+
+    var confirmar = document.getElementById('dConfirmar');
+    var eliminar = document.getElementById('dEliminar');
+    if (confirmar && eliminar) {
+      confirmar.addEventListener('input', function () {
+        eliminar.disabled = confirmar.value.trim() !== String(actual.name).trim();
+      });
+      eliminar.addEventListener('click', function () { borrar(confirmar.value); });
+    }
+  }
+
+  function borrar(confirmacion) {
+    if (!actual) return;
+    var msg = document.getElementById('dMsgDel');
+    var btn = document.getElementById('dEliminar');
+    btn.disabled = true;
+    msg.textContent = 'Eliminando…';
+    msg.className = 'drawer-msg';
+
+    fetch('api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ csrf: CFG.csrf, id: actual.id, accion: 'eliminar', confirmar: confirmacion })
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (res) {
+        if (!res.ok || !res.body.ok) {
+          btn.disabled = false;
+          msg.textContent = (res.body && res.body.error) || 'No se pudo eliminar.';
+          msg.className = 'drawer-msg error';
+          return;
+        }
+        msg.textContent = 'Eliminada';
+        msg.className = 'drawer-msg ok';
+        setTimeout(function () { window.location.reload(); }, 500);
+      })
+      .catch(function () {
+        btn.disabled = false;
+        msg.textContent = 'Error de conexión.';
+        msg.className = 'drawer-msg error';
+      });
   }
 
   /** Vista previa del puntaje mientras se mueven los sliders. */

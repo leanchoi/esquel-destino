@@ -177,7 +177,10 @@ require __DIR__ . '/includes/header.php';
 
     <div class="progress" id="progress" hidden>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <p class="progress-label" id="progressLabel">Paso 1 de 6</p>
+      <div class="progress-row">
+        <p class="progress-label" id="progressLabel">Paso 1 de 6</p>
+        <span class="aviso-borrador" id="avisoBorrador" role="status" aria-live="polite"></span>
+      </div>
     </div>
 
     <form method="post" id="formPostulacion" class="form-card" novalidate data-con-errores="<?= $errores ? '1' : '0' ?>">
@@ -235,25 +238,25 @@ require __DIR__ . '/includes/header.php';
 
         <div class="field">
           <label class="lbl" for="name">Nombre de tu proyecto, emprendimiento u organización *</label>
-          <input type="text" id="name" name="name" value="<?= e($v['name']) ?>" placeholder="Ej.: Casa de Té Las Rosas, Chacra El Ñire, Cerámica del Valle">
+          <input type="text" id="name" name="name" value="<?= e($v['name']) ?>" autocomplete="organization" placeholder="Ej.: Casa de Té Las Rosas, Chacra El Ñire, Cerámica del Valle">
           <p class="err" data-err="name"><?= e($errores['name'] ?? '') ?></p>
         </div>
 
         <div class="field">
           <label class="lbl" for="contact_name">Tu nombre y apellido *</label>
-          <input type="text" id="contact_name" name="contact_name" value="<?= e($v['contact_name']) ?>">
+          <input type="text" id="contact_name" name="contact_name" value="<?= e($v['contact_name']) ?>" autocomplete="name">
           <p class="err" data-err="contact_name"><?= e($errores['contact_name'] ?? '') ?></p>
         </div>
 
         <div class="field-row">
           <div class="field">
             <label class="lbl" for="email">Correo electrónico *</label>
-            <input type="email" id="email" name="email" value="<?= e($v['email']) ?>">
+            <input type="email" id="email" name="email" value="<?= e($v['email']) ?>" autocomplete="email" inputmode="email" spellcheck="false">
             <p class="err" data-err="email"><?= e($errores['email'] ?? '') ?></p>
           </div>
           <div class="field">
             <label class="lbl" for="phone">Teléfono o WhatsApp *</label>
-            <input type="tel" id="phone" name="phone" value="<?= e($v['phone']) ?>" placeholder="2945 123456">
+            <input type="tel" id="phone" name="phone" value="<?= e($v['phone']) ?>" autocomplete="tel" inputmode="tel" placeholder="2945 123456">
             <p class="err" data-err="phone"><?= e($errores['phone'] ?? '') ?></p>
           </div>
         </div>
@@ -280,7 +283,7 @@ require __DIR__ . '/includes/header.php';
       <fieldset class="fstep" data-step="3">
         <legend>Paso 3 de 6</legend>
         <h2>Qué hacés y qué te hace distinto</h2>
-        <p class="help">Este paso es el que más mira el jurado. Tomate el tiempo.</p>
+        <p class="help">Este es el paso que más pesa en la evaluación. Tomate el tiempo: se puntúa lo que contás acá.</p>
 
         <div class="field">
           <label class="lbl" for="descripcion">Contanos qué hacés hoy *</label>
