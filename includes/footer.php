@@ -4,8 +4,9 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="<?= $base ?>assets/images/logo-esquel-lab.png" alt="Esquel LAB" class="footer-logo">
+        <img src="<?= $base ?>assets/images/logo-esquel-lab-horizontal.png" alt="Esquel LAB" class="footer-logo">
         <p>Programa municipal gratuito de desarrollo de experiencias turísticas. Subsecretaría de Turismo y Subsecretaría de Producción de Esquel.</p>
+        <img src="<?= $base ?>assets/images/logo-municipio-esquel.png" alt="Municipio de Esquel" class="footer-muni">
       </div>
       <div class="footer-col">
         <h3>El programa</h3>
@@ -36,6 +37,6 @@
   </div>
 </footer>
 
-<script src="<?= $base ?>assets/js/main.js?v=2.0"></script>
+<script src="<?= $base ?>assets/js/main.js?v=3.0"></script>
 </body>
 </html>

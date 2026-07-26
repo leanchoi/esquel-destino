@@ -41,6 +41,123 @@
     });
   });
 
+  // ------------------------------------------------- movimiento (home)
+  // Todo lo de acá abajo es decorativo: si el sistema pide menos movimiento
+  // no se engancha nada y la página queda igual de usable.
+  var menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Parallax del hero. La foto es 72px más alta que su marco, así que puede
+  // desplazarse ±36px sin descubrir los bordes.
+  var fotoHero = document.querySelector('[data-parallax]');
+  if (fotoHero && !menosMovimiento) {
+    var RECORRIDO = 36;
+    var pendiente = false;
+
+    var moverHero = function () {
+      pendiente = false;
+      var marco = fotoHero.parentElement.getBoundingClientRect();
+      // 0 cuando el marco entra por abajo, 1 cuando terminó de salir por arriba.
+      var avance = (window.innerHeight - marco.top) / (window.innerHeight + marco.height);
+      avance = Math.min(1, Math.max(0, avance));
+      fotoHero.style.transform = 'translate3d(0,' + ((avance - 0.5) * 2 * RECORRIDO).toFixed(1) + 'px,0)';
+    };
+
+    var pedirMovimiento = function () {
+      if (pendiente) return;
+      pendiente = true;
+      window.requestAnimationFrame(moverHero);
+    };
+
+    window.addEventListener('scroll', pedirMovimiento, { passive: true });
+    window.addEventListener('resize', pedirMovimiento);
+    moverHero();
+  }
+
+  // Aparición al scroll.
+  //
+  // Esto es puro adorno, así que está armado para que nunca pueda esconder
+  // contenido de verdad. Tres seguros, en orden:
+  //   1. sin JS no se agrega la clase y todo se ve;
+  //   2. lo que ya está en pantalla al cargar no se oculta nunca;
+  //   3. además del observer hay un barrido en el scroll, por si el observer
+  //      se queda atrás con un scroll muy rápido.
+  var revelables = document.querySelectorAll('.section-head, .profile-card, .line-card, .date-card, .step-row, .hours-list li, .ba-wrap');
+  if (revelables.length && !menosMovimiento && 'IntersectionObserver' in window) {
+    var ocultos = [];
+
+    revelables.forEach(function (el, i) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      el.classList.add('js-reveal');
+      // Escalón corto entre hermanos: da sensación de cascada sin demorar.
+      el.style.transitionDelay = (Math.min(i % 6, 5) * 55) + 'ms';
+      ocultos.push(el);
+    });
+
+    var mostrar = function (el) { el.classList.add('is-in'); };
+
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (entrada) {
+        if (!entrada.isIntersecting) return;
+        mostrar(entrada.target);
+        observador.unobserve(entrada.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px' });
+    ocultos.forEach(function (el) { observador.observe(el); });
+
+    // Barrido de respaldo: cualquier cosa que ya entró en pantalla se muestra,
+    // haya avisado el observer o no.
+    var barriendo = false;
+    var barrer = function () {
+      barriendo = false;
+      ocultos = ocultos.filter(function (el) {
+        if (el.getBoundingClientRect().top > window.innerHeight) return true;
+        mostrar(el);
+        return false;
+      });
+      if (!ocultos.length) window.removeEventListener('scroll', pedirBarrido);
+    };
+    var pedirBarrido = function () {
+      if (barriendo) return;
+      barriendo = true;
+      window.requestAnimationFrame(barrer);
+    };
+    window.addEventListener('scroll', pedirBarrido, { passive: true });
+    window.addEventListener('resize', pedirBarrido);
+  }
+
+  // Barra fija de postulación. Aparece cuando el hero salió de pantalla, pero
+  // se esconde mientras haya un botón de postulación a la vista: si no, la
+  // barra termina tapando justo los botones de Acelera y Raíz.
+  var barraCta = document.getElementById('stickyCta');
+  var hero = document.querySelector('.hero');
+  if (barraCta && hero && 'IntersectionObserver' in window) {
+    var heroFuera = false;
+    var ctasALaVista = 0;
+
+    var revisarBarra = function () {
+      var mostrar = heroFuera && ctasALaVista === 0;
+      barraCta.classList.toggle('is-visible', mostrar);
+      barraCta.setAttribute('aria-hidden', mostrar ? 'false' : 'true');
+    };
+
+    new IntersectionObserver(function (entradas) {
+      heroFuera = !entradas[0].isIntersecting;
+      revisarBarra();
+    }, { threshold: 0 }).observe(hero);
+
+    var botonesCta = document.querySelectorAll('main a.btn[href^="inscribirse"]');
+    if (botonesCta.length) {
+      var vigilante = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (entrada) {
+          ctasALaVista += entrada.isIntersecting ? 1 : -1;
+        });
+        ctasALaVista = Math.max(0, ctasALaVista);
+        revisarBarra();
+      }, { threshold: 0 });
+      botonesCta.forEach(function (b) { vigilante.observe(b); });
+    }
+  }
+
   // ------------------------------------------------------------- formulario
   var form = document.getElementById('formPostulacion');
   if (!form) return;

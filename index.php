@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/helpers.php';
 
-$pageTitle = 'Esquel LAB — Convertí lo que ya hacés en algo que se pueda vender';
-$pageDescription = 'Programa municipal gratuito. Ocho semanas de acompañamiento técnico para que tu servicio, tu campo o tu oficio tenga precio, canal de venta y esté listo para operar. Postulaciones hasta el 9 de agosto de 2026.';
+$pageTitle = 'Esquel LAB — Convocatoria 2026 para nuevas experiencias turísticas';
+$pageDescription = 'Programa municipal gratuito. Ocho semanas de acompañamiento técnico para convertir tu oficio, tu campo o tu servicio en una experiencia turística lista para recibir visitantes. Se seleccionan hasta 18 proyectos. Postulaciones hasta el 9 de agosto de 2026.';
 $activeNav = 'home';
 $abierta = convocatoria_abierta();
 $dias = dias_para_cierre();
@@ -24,48 +24,61 @@ require __DIR__ . '/includes/header.php';
 </div>
 
 <!-- ============================ HERO ============================ -->
-<section class="hero">
+<section class="hero has-topo">
   <div class="container hero-grid">
-    <div>
+    <div class="hero-copy">
+<?php /* "Convocatoria abierta" ya lo dice la barra de plazo, acá arriba. */ ?>
       <span class="eyebrow"><span class="dot"></span> Primera cohorte · 2026</span>
-      <h1>Tenés algo.<br>Te falta <em>poder venderlo</em>.</h1>
+      <h1>Buscamos <em>18 proyectos</em> para las próximas experiencias turísticas de Esquel.</h1>
       <p class="hero-lede">
-        Ocho semanas de trabajo con un equipo que va a tu lugar, para que lo que ya hacés
-        —tu servicio, tu campo, tu oficio— tenga precio, canal de venta y quede listo para
-        que una agencia lo comercialice.
+        Esquel LAB es un programa municipal gratuito. Durante ocho semanas un equipo trabaja
+        con vos, en tu lugar, para que lo que ya hacés —tu oficio, tu campo, tu servicio—
+        quede listo para recibir visitantes y para que una agencia pueda ofrecerlo.
       </p>
 
-      <div class="hero-facts">
-        <span class="fact is-free">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
-          Gratuito
-        </span>
-        <span class="fact">13 a 18 proyectos</span>
-        <span class="fact">10 de agosto al 2 de octubre</span>
-        <span class="fact">12 hs por semana</span>
-      </div>
+      <?php /* La fecha de cierre no va acá: ya está en la barra de plazo, justo arriba. */ ?>
+      <dl class="hero-datos">
+        <div><dt>Costo</dt><dd class="is-free">Gratuito</dd></div>
+        <div><dt>Cupos</dt><dd>13 a 18 proyectos</dd></div>
+        <div><dt>Dedicación</dt><dd>12 hs por semana</dd></div>
+      </dl>
 
       <div class="hero-cta">
         <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
         <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
       </div>
-      <p class="hero-note">No hace falta que tengas monotributo ni habilitación para postularte.</p>
+      <p class="hero-note">
+        Todas las postulaciones se evalúan con una matriz de criterios acordada con las cámaras
+        del sector: no es por orden de llegada. Para postularte no hace falta monotributo ni habilitación.
+      </p>
     </div>
 
-    <figure class="hero-figure">
-      <img src="assets/images/fotos/hero-esquel.jpg" alt="Dos personas de espaldas mirando el valle de Esquel y la cordillera al atardecer">
-      <figcaption class="hero-caption">Esquel, puerta del Parque Nacional Los Alerces.</figcaption>
-    </figure>
+    <div class="hero-media">
+      <figure class="hero-figure">
+        <div class="hero-frame">
+          <img src="assets/images/fotos/hero-esquel.jpg" alt="Dos personas de espaldas mirando el valle de Esquel y la cordillera al atardecer" data-parallax>
+        </div>
+        <figcaption class="hero-caption">Esquel, puerta del Parque Nacional Los Alerces.</figcaption>
+      </figure>
+
+      <div class="hero-org">
+        <span class="hero-org-lbl">Un programa de</span>
+        <div class="hero-org-logos">
+          <img src="assets/images/logo-esquel-lab-horizontal.png" alt="Esquel LAB">
+          <img src="assets/images/logo-municipio-esquel.png" alt="Municipio de Esquel" class="is-muni">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ============================ ¿ES PARA VOS? ============================ -->
-<section class="section" id="para-vos">
+<section class="section section-white" id="para-vos">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">¿Esto es para vos?</span>
-      <h2>Probablemente sí, aunque no te consideres “turístico”</h2>
-      <p>El programa no busca solo empresas de turismo. Busca gente que ya hace algo por lo que un visitante pagaría.</p>
+      <span class="eyebrow">A quién buscamos</span>
+      <h2>No hace falta que seas “turístico”. Hace falta que tengas algo para mostrar.</h2>
+      <p>Muchos de los proyectos que buscamos hoy ni siquiera se presentan como turismo: son oficios, campos y comercios que un visitante pagaría por conocer. Si te reconocés en alguno de estos seis casos, la convocatoria es para vos.</p>
     </div>
 
     <div class="profile-grid">
@@ -183,12 +196,12 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ============================ LÍNEAS ============================ -->
-<section class="section" id="lineas">
+<section class="section has-topo" id="lineas">
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow">Dos líneas, un mismo método</span>
       <h2>Elegí la que es tuya</h2>
-      <p>Comparten equipo, cronograma y forma de trabajo. Lo que cambia es el terreno.</p>
+      <p>Comparten equipo, cronograma y forma de trabajo. Lo que cambia es el terreno. Los cupos se reparten entre las dos.</p>
     </div>
 
     <div class="lines-grid">
@@ -230,11 +243,11 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ============================ CÓMO ES EL TRABAJO ============================ -->
-<section class="section section-alt" id="como-es">
+<section class="section section-dark ridge-top" id="como-es">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Cómo es el trabajo</span>
-      <h2>12 horas por semana. Esto es lo que son.</h2>
+      <h2>12 horas por semana. Así se reparten.</h2>
       <p>La mayor parte del tiempo es trabajo sobre lo tuyo, no reuniones.</p>
     </div>
 
@@ -272,8 +285,8 @@ require __DIR__ . '/includes/header.php';
         <div class="step-row">
           <div class="step-num">2</div>
           <div>
-            <h4>Un jurado con las cámaras de Esquel lee tu postulación</h4>
-            <p>No es por orden de llegada. Se evalúa con una matriz acordada de antemano.</p>
+            <h4>El Cuadro Técnico —municipio y cámaras del sector— evalúa tu postulación</h4>
+            <p>No es por orden de llegada: se puntúa con una matriz de criterios acordada antes de abrir la convocatoria.</p>
           </div>
         </div>
         <div class="step-row">
@@ -294,7 +307,7 @@ require __DIR__ . '/includes/header.php';
           <div class="step-num">5</div>
           <div>
             <h4>Presentás lo que armaste</h4>
-            <p>Ante las agencias receptivas de Esquel y la prensa local, con tu experiencia lista para vender.</p>
+            <p>Ante las agencias receptivas de Esquel y la prensa local, con la experiencia terminada y lista para recibir reservas.</p>
           </div>
         </div>
       </div>
@@ -303,7 +316,7 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ============================ PREGUNTAS ============================ -->
-<section class="section" id="preguntas">
+<section class="section section-white" id="preguntas">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Preguntas frecuentes</span>
@@ -448,5 +461,20 @@ require __DIR__ . '/includes/header.php';
     <a href="inscribirse.php" class="btn btn-primary btn-lg" style="margin-top:12px">Postularme</a>
   </div>
 </section>
+
+<?php if ($abierta): ?>
+<div class="sticky-cta" id="stickyCta" aria-hidden="true">
+  <div class="container">
+    <p>
+      <?php if ($dias > 0): ?>
+        <strong>Quedan <?= (int) $dias ?> día<?= $dias === 1 ? '' : 's' ?></strong> para postularte a la primera cohorte.
+      <?php else: ?>
+        <strong>Último día</strong> para postularte a la primera cohorte.
+      <?php endif; ?>
+    </p>
+    <a href="inscribirse.php" class="btn btn-primary btn-sm">Postularme</a>
+  </div>
+</div>
+<?php endif; ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

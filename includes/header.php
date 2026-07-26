@@ -7,7 +7,7 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/helpers.php';
 
 $pageTitle       = $pageTitle ?? SITE_NAME;
-$pageDescription = $pageDescription ?? 'Programa municipal gratuito que acompaña a emprendedores y productores de Esquel a convertir lo que ya hacen en una experiencia turística lista para vender.';
+$pageDescription = $pageDescription ?? 'Programa municipal gratuito que acompaña a emprendedores y productores de Esquel a convertir lo que ya hacen en una experiencia turística lista para recibir visitantes.';
 $activeNav       = $activeNav ?? '';
 $base            = $base ?? '';
 ?><!doctype html>
@@ -25,7 +25,7 @@ $base            = $base ?? '';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="<?= $base ?>assets/css/style.css?v=2.0">
+<link rel="stylesheet" href="<?= $base ?>assets/css/style.css?v=3.0">
 </head>
 <body>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -33,7 +33,7 @@ $base            = $base ?? '';
 <header class="site-header">
   <div class="container header-inner">
     <a href="<?= $base ?>index.php" class="brand" aria-label="Esquel LAB — inicio">
-      <img src="<?= $base ?>assets/images/logo-esquel-lab.png" alt="Esquel LAB" class="brand-logo">
+      <img src="<?= $base ?>assets/images/logo-esquel-lab-horizontal.png" alt="Esquel LAB" class="brand-logo">
     </a>
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir menú">

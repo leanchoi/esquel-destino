@@ -220,13 +220,20 @@ Conviene tener a alguien sacando fotos desde la primera visita de diagnóstico. 
 
 ## Logos
 
-Los cuatro logos están en `assets/images/`, ya recortados y con los nombres corregidos:
+Los logos están en `assets/images/`, ya recortados y con los nombres corregidos:
 
 | Archivo | Contenido |
 |---|---|
-| `logo-esquel-lab.png` | Esquel LAB, color |
-| `logo-esquel-lab-blanco.png` | Esquel LAB, blanco (para fondos oscuros) |
+| `logo-esquel-lab-horizontal.png` | Esquel LAB horizontal, color — **el que usan el header y el pie** |
+| `logo-esquel-lab-horizontal-blanco.png` | Esquel LAB horizontal, blanco |
+| `logo-esquel-lab.png` | Esquel LAB apilado, color |
+| `logo-esquel-lab-blanco.png` | Esquel LAB apilado, blanco (para fondos oscuros) |
 | `logo-esquel-acelera.png` | Esquel Acelera, color |
 | `logo-esquel-raiz.png` | Raíz, color |
+| `logo-municipio-esquel.png` | Municipio de Esquel, negro |
+| `logo-municipio-esquel-blanco.png` | Municipio de Esquel, blanco |
 
-Falta, si existen: las versiones en blanco de Acelera y Raíz, y los archivos vectoriales (SVG o AI) de los cuatro.
+La versión horizontal es la que va en la barra de arriba: a la misma altura de caja,
+el isologo y la palabra se leen bastante más grandes que en la apilada.
+
+Falta, si existen: las versiones en blanco de Acelera y Raíz, y los archivos vectoriales (SVG o AI).
