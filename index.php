@@ -48,8 +48,9 @@ require __DIR__ . '/includes/header.php';
         <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
       </div>
       <p class="hero-note">
-        Todas las postulaciones se evalúan con una matriz de criterios acordada con las cámaras
-        del sector: no es por orden de llegada. Para postularte no hace falta monotributo ni habilitación.
+        Las postulaciones se evalúan con una matriz de criterios que acordamos con las cámaras del
+        sector antes de abrir la convocatoria. Podés presentarte aunque todavía no tengas monotributo
+        ni habilitación.
       </p>
     </div>
 
@@ -77,8 +78,8 @@ require __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">A quién buscamos</span>
-      <h2>No hace falta que seas “turístico”. Hace falta que tengas algo para mostrar.</h2>
-      <p>Muchos de los proyectos que buscamos hoy ni siquiera se presentan como turismo: son oficios, campos y comercios que un visitante pagaría por conocer. Si te reconocés en alguno de estos seis casos, la convocatoria es para vos.</p>
+      <h2>La mayoría de los que buscamos no trabaja en turismo</h2>
+      <p>Son oficios, campos y comercios de Esquel que un visitante pagaría por conocer, aunque quien está adentro rara vez los mire así. Si te reconocés en alguno de estos seis casos, presentate.</p>
     </div>
 
     <div class="profile-grid">
@@ -118,7 +119,7 @@ require __DIR__ . '/includes/header.php';
         <figure><img src="assets/images/fotos/perfil-reabrir.jpg" alt="Persona abriendo la persiana de su local, el Almacén de Montaña, con la cordillera de fondo" loading="lazy"></figure>
         <div class="body">
           <h3>Tenés un emprendimiento turístico que se quedó</h3>
-          <p>Antes funcionaba y hoy no. Necesitás rearmar el producto, no empezar de cero.</p>
+          <p>Antes funcionaba y hoy no. La idea sigue en pie; lo que hay que rehacer es cómo se ofrece.</p>
         </div>
       </article>
 
@@ -126,7 +127,7 @@ require __DIR__ . '/includes/header.php';
         <figure><img src="assets/images/fotos/perfil-idea.jpg" alt="Cuaderno con anotaciones, lápiz y mate sobre una mesa de madera, con la cordillera de fondo" loading="lazy"></figure>
         <div class="body">
           <h3>Tenés una idea y algo con qué arrancar</h3>
-          <p>No hace falta que ya esté funcionando. Hace falta que puedas dedicarle tiempo real durante ocho semanas.</p>
+          <p>Todavía no abriste, pero ya está el lugar, la receta o el oficio. Falta armarlo y ponerlo a andar.</p>
         </div>
       </article>
     </div>
@@ -139,7 +140,7 @@ require __DIR__ . '/includes/header.php';
     <div class="section-head">
       <span class="eyebrow">Resultados concretos</span>
       <h2>El 2 de octubre te vas con esto en la mano</h2>
-      <p>No con un diagnóstico ni un PDF de recomendaciones. Con la experiencia armada y funcionando.</p>
+      <p>Esta lista es lo que tiene que estar resuelto para esa fecha.</p>
     </div>
 
     <div class="ba-wrap">
@@ -175,21 +176,22 @@ require __DIR__ . '/includes/header.php';
           </tr>
           <tr>
             <td class="ba-key">Qué se lleva el visitante</td>
-            <td class="ba-before">El recuerdo, y nada más.</td>
-            <td class="ba-after">El recuerdo y un producto físico tuyo, con identidad de Esquel.</td>
+            <td class="ba-before">Se va con el paseo hecho.</td>
+            <td class="ba-after">Se va con algo tuyo en la mochila, cuando la propuesta da para eso.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="hours-split" style="margin-top:56px">
+    <div class="bloque-producto">
       <div>
-        <h3 style="font-size:24px">La “Economía de los Recuerdos”, sin vueltas</h3>
-        <p>Un visitante que se lleva algo tuyo a su casa te sigue recordando —y te sigue recomendando— mucho después del viaje. Por eso el programa trabaja, cuando se puede, en asociar a cada experiencia un producto físico con identidad local: un dulce, una madeja, una pieza.</p>
-        <p>No es obligatorio para postularse, y no todas las propuestas lo van a tener. Cuando aplica, se trabaja también el envase, la etiqueta y el relato, y se evalúa el vínculo con el sello municipal <strong>“Hecho en Esquel”</strong>.</p>
+        <h3>Que se lleven algo tuyo</h3>
+        <p>Un frasco de dulce con tu etiqueta. Una madeja. Una pieza de cerámica. El visitante lo abre en su casa tres semanas después del viaje y se acuerda de dónde salió. Ahí es cuando te recomienda a alguien.</p>
+        <p>Por eso, cuando la propuesta da para eso, el trabajo incluye también el producto: el envase, la etiqueta, cómo se cuenta de dónde viene. Y se ve si puede llevar el sello municipal <strong>Hecho en Esquel</strong>.</p>
+        <p class="menor">Para postularte no hace falta que tengas uno. Varias de las experiencias que entren van a ser solo servicio.</p>
       </div>
-      <figure style="margin:0">
-        <img src="assets/images/fotos/economia-recuerdos.jpg" alt="Frasco de dulce casero, botella de cerveza artesanal y madeja de lana teñida sobre una mesa de madera" style="border-radius:var(--r);border:1px solid var(--line)" loading="lazy">
+      <figure>
+        <img src="assets/images/fotos/economia-recuerdos.jpg" alt="Frasco de dulce casero con etiqueta escrita a mano, botella de cerveza artesanal y madeja de lana teñida sobre una mesa de madera" loading="lazy">
       </figure>
     </div>
   </div>
@@ -248,27 +250,27 @@ require __DIR__ . '/includes/header.php';
     <div class="section-head">
       <span class="eyebrow">Cómo es el trabajo</span>
       <h2>Un equipo puesto a trabajar sobre tu proyecto</h2>
-      <p>No es un curso ni una capacitación general. Es acompañamiento uno a uno, en tu lugar, con recursos concretos y con la obligación de dejar cosas andando.</p>
+      <p>El trabajo es uno a uno, en tu lugar, durante ocho semanas.</p>
     </div>
 
     <div class="ayuda-grid">
       <article class="ayuda-card">
-        <h3>Un equipo técnico para tu caso</h3>
-        <p>Gente que sabe de turismo, producto y comercialización, sentada con vos sobre lo tuyo: tu producto, tus costos, tu forma de vender. No sobre un manual que sirve para cualquiera.</p>
+        <h3>Un equipo sentado con vos</h3>
+        <p>Gente con oficio en turismo, producto y comercialización, trabajando sobre tu caso: qué ofrecés, cuánto te cuesta y quién te lo compraría.</p>
       </article>
       <article class="ayuda-card">
-        <h3>Recursos técnicos y audiovisuales</h3>
-        <p>Producción de fotos y video de tu experiencia, diseño de etiqueta y de material de venta, y armado de tu presencia digital. Se produce con vos, no te mandamos a conseguirlo.</p>
+        <h3>El material se produce acá</h3>
+        <p>Fotos y video de tu experiencia, el diseño de tu etiqueta, los textos con los que la vas a ofrecer y tu presencia en internet. El programa pone los recursos técnicos y audiovisuales, y el material se produce durante el proceso, con vos adentro. Es lo que después vas a usar para vender.</p>
       </article>
       <article class="ayuda-card">
-        <h3>Cosas que quedan funcionando</h3>
-        <p>El precio calculado, un canal donde te reserven, la ficha en manos de las agencias y las cuentas ordenadas. Al final tenés herramientas andando, no un informe con lo que deberías hacer.</p>
+        <h3>Al 2 de octubre, andando</h3>
+        <p>Precio calculado, un lugar donde te reserven, la ficha en manos de las agencias receptivas y las cuentas ordenadas.</p>
       </article>
     </div>
 
     <div class="callout">
-      <span class="lbl">Lo único que se pide de tu lado</span>
-      <p>El programa pone el equipo y los recursos; vos ponés tiempo. Alrededor de <strong>12 horas por semana</strong> durante las ocho semanas. Lo confirmás por escrito al postularte porque un cupo ocupado por alguien que no puede sostenerlo es un cupo que le sacamos a otro.</p>
+      <span class="lbl">Lo que se pide de tu lado</span>
+      <p>El programa pone el equipo y los recursos; vos ponés tiempo: alrededor de <strong>12 horas por semana</strong>. Lo confirmás por escrito al postularte, porque un cupo ocupado por alguien que no puede sostenerlo es un cupo que le sacamos a otro.</p>
     </div>
   </div>
 </section>
@@ -279,33 +281,38 @@ require __DIR__ . '/includes/header.php';
     <div class="section-head center">
       <span class="eyebrow">El camino</span>
       <h2>De la postulación al 2 de octubre</h2>
-      <p>Cinco pasos. Esto es lo que va a pasar, en orden, desde que apretás “Postularme”.</p>
+      <p>Las fechas de la primera cohorte, en orden.</p>
     </div>
 
     <ol class="camino">
       <li class="camino-paso">
         <span class="camino-num">1</span>
-        <h4>Te postulás</h4>
-        <p>Completás el formulario. Te lleva unos 20 minutos y lo podés dejar a medio hacer.</p>
+        <span class="camino-fecha">Hasta el <?= e(fecha_larga(FECHA_CIERRE)) ?></span>
+        <h3>Te postulás</h3>
+        <p>El formulario lleva unos 20 minutos. Podés dejarlo por la mitad y volver más tarde.</p>
       </li>
       <li class="camino-paso">
         <span class="camino-num">2</span>
-        <h4>Se evalúa tu postulación</h4>
-        <p>El Cuadro Técnico la puntúa con la matriz de criterios acordada antes de abrir. No es por orden de llegada.</p>
+        <span class="camino-fecha">Julio y agosto</span>
+        <h3>Se evalúa tu postulación</h3>
+        <p>El Cuadro Técnico la puntúa con la matriz acordada antes de abrir. Se lee todo al cierre, así que no es por orden de llegada.</p>
       </li>
       <li class="camino-paso">
         <span class="camino-num">3</span>
-        <h4>Vamos a tu lugar</h4>
-        <p>Primera visita de diagnóstico: qué tenés, qué falta y por dónde se empieza.</p>
+        <span class="camino-fecha"><?= e(fecha_larga(FECHA_INICIO)) ?></span>
+        <h3>Te avisamos</h3>
+        <p>Escribimos a todos los que se postularon, hayan quedado o no.</p>
       </li>
       <li class="camino-paso">
         <span class="camino-num">4</span>
-        <h4>Ocho semanas de trabajo</h4>
-        <p>Talleres grupales y acompañamiento individual, en paralelo, sobre tu proyecto.</p>
+        <span class="camino-fecha">Agosto y septiembre</span>
+        <h3>Ocho semanas de trabajo</h3>
+        <p>Visitas a tu lugar, encuentros con el resto de la cohorte y desarrollo de la experiencia.</p>
       </li>
       <li class="camino-paso">
         <span class="camino-num">5</span>
-        <h4>Presentás lo que armaste</h4>
+        <span class="camino-fecha"><?= e(fecha_larga(FECHA_FIN)) ?></span>
+        <h3>Presentás lo que armaste</h3>
         <p>Ante las agencias receptivas y la prensa local, con la experiencia lista para recibir reservas.</p>
       </li>
     </ol>
@@ -331,8 +338,8 @@ require __DIR__ . '/includes/header.php';
       <details class="faq-item">
         <summary>¿Necesito monotributo, habilitación o estar inscripto en algún registro?</summary>
         <div class="faq-body">
-          <p><strong>Para postularte, no.</strong> Podés participar aunque hoy no estés formalizado.</p>
-          <p>Ahora bien: si tu propuesta necesita alguna habilitación para poder venderse en serio, ordenar eso es parte del camino, y el programa te acompaña a hacerlo. La profesionalización es el objetivo, no el requisito de entrada.</p>
+          <p><strong>Para postularte, no.</strong> Podés presentarte aunque hoy estés trabajando de manera informal.</p>
+          <p>Después es otra cosa: si tu propuesta necesita alguna habilitación para poder venderse en serio, ordenar eso forma parte del trabajo de las ocho semanas y el programa te acompaña en los trámites. Se entra como estás y se sale más formal.</p>
         </div>
       </details>
 
@@ -381,38 +388,6 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- ============================ FECHAS ============================ -->
-<section class="section section-alt" id="fechas">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Cronograma</span>
-      <h2>Las fechas que importan</h2>
-    </div>
-
-    <div class="dates-grid">
-      <div class="date-card <?= $abierta ? 'now' : '' ?>">
-        <div class="d">23 jul — 9 ago</div>
-        <h4>Postulación y evaluación</h4>
-        <p>Recibimos formularios y el Cuadro Técnico los evalúa en paralelo.</p>
-      </div>
-      <div class="date-card">
-        <div class="d">10 de agosto</div>
-        <h4>Aviso y arranque</h4>
-        <p>Avisamos a todos, hayan quedado o no, y empieza el trabajo en territorio.</p>
-      </div>
-      <div class="date-card">
-        <div class="d">Agosto — septiembre</div>
-        <h4>Ocho semanas de trabajo</h4>
-        <p>Talleres grupales, visitas individuales y desarrollo de cada experiencia.</p>
-      </div>
-      <div class="date-card">
-        <div class="d">2 de octubre</div>
-        <h4>Presentación pública</h4>
-        <p>Lanzamiento de las experiencias ante agencias receptivas y prensa.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============================ GOBERNANZA ============================ -->
 <section class="section section-sm section-line">
@@ -438,8 +413,8 @@ require __DIR__ . '/includes/header.php';
     <?php if ($abierta): ?>
       <h2>Postulate antes del <?= e(fecha_larga(FECHA_CIERRE)) ?></h2>
       <p>
-        El formulario lleva unos 20 minutos y lo podés dejar por la mitad y seguir después.
-        Es gratuito y no hace falta monotributo ni habilitación.
+        Son unos 20 minutos y se puede guardar a medio hacer. Si tenés dudas antes de empezar,
+        escribinos a <a href="mailto:<?= e(EMAIL_PROGRAMA) ?>"><?= e(EMAIL_PROGRAMA) ?></a>.
       </p>
       <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
     <?php else: ?>

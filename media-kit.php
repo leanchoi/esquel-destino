@@ -259,9 +259,8 @@ require __DIR__ . '/includes/header.php';
       <details class="faq-item" open>
         <summary>¿Esto es solo para el que ya tiene plata para invertir?</summary>
         <div class="faq-body">
-          <p>No, y es al revés. Esquel LAB no pone plata: pone equipo técnico al lado de gente que ya
-          está trabajando con lo que tiene y necesita ordenar la parte comercial —precio, canal de venta,
-          materiales— para poder vender.</p>
+          <p>No. Esquel LAB pone equipo técnico al lado de gente que ya está trabajando con lo que
+          tiene y necesita ordenar la parte comercial: precio, canal de venta, materiales.</p>
           <p>El municipio tiene aparte un Régimen de Promoción de Inversiones Turísticas, para proyectos
           de otra escala. Son dos herramientas distintas: una moviliza capital, esta acompaña a quien ya
           está haciendo algo.</p>

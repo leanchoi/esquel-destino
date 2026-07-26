@@ -18,7 +18,7 @@
       <div class="footer-col">
         <h3>Postulación</h3>
         <a href="<?= $base ?>inscribirse.php">Formulario</a>
-        <a href="<?= $base ?>index.php#fechas">Fechas y cupos</a>
+        <a href="<?= $base ?>index.php#el-camino">Fechas y cupos</a>
         <a href="<?= $base ?>media-kit.php">Pasá la voz y prensa</a>
       </div>
       <div class="footer-col">
