@@ -37,6 +37,6 @@
   </div>
 </footer>
 
-<script src="<?= $base ?>assets/js/main.js?v=3.0"></script>
+<script src="<?= $base ?><?= asset('assets/js/main.js') ?>"></script>
 </body>
 </html>

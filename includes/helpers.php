@@ -17,14 +17,43 @@ function redirect(string $to): void
 /** Arranca la sesión con cookie endurecida (una sola vez por request). */
 function iniciar_sesion(): void
 {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_set_cookie_params([
-            'httponly' => true,
-            'samesite' => 'Lax',
-            'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
-        ]);
-        session_start();
+    if (session_status() !== PHP_SESSION_NONE) {
+        return;
     }
+
+    $params = [
+        'httponly' => true,
+        'samesite' => 'Lax',
+        'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+    ];
+
+    // Sin dominio explícito la cookie queda atada al host exacto, y entonces
+    // esquel.site y www.esquel.site terminan con sesiones distintas: entrás
+    // por una, abrís un link de la otra y aparecés deslogueado sin motivo.
+    // Fijamos el dominio sin el www para que la sesión valga en las dos.
+    $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
+    $host = (string) preg_replace('/:\d+$/', '', $host);   // fuera el puerto
+    if ($host !== '' && !filter_var($host, FILTER_VALIDATE_IP) && str_contains($host, '.')) {
+        $params['domain'] = (string) preg_replace('/^www\./', '', $host);
+    }
+
+    session_set_cookie_params($params);
+    session_start();
+}
+
+/**
+ * Ruta de un asset con el sello de su última modificación.
+ *
+ * El número de versión puesto a mano ya falló: se cambia el archivo, se
+ * olvida subir el ?v= y el navegador —y el caché del hosting— siguen
+ * sirviendo la copia vieja, así que el arreglo nunca llega al visitante.
+ * Con filemtime la URL cambia sola cada vez que cambia el contenido.
+ */
+function asset(string $ruta): string
+{
+    $absoluta = __DIR__ . '/../' . $ruta;
+    $sello = is_file($absoluta) ? filemtime($absoluta) : false;
+    return $ruta . ($sello ? '?v=' . $sello : '');
 }
 
 // --- CSRF -----------------------------------------------------------------

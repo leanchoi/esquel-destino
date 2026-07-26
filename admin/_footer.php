@@ -1,4 +1,4 @@
 </main>
-<script src="../assets/js/crm.js?v=3.1"></script>
+<script src="../<?= asset('assets/js/crm.js') ?>"></script>
 </body>
 </html>

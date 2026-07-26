@@ -26,7 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     $pdo->prepare('INSERT INTO users (username, password, role, must_change_password) VALUES (?, ?, ?, 1)')
                         ->execute([$nuevo, password_hash($provisoria, PASSWORD_DEFAULT), $rol]);
-                    $msg = ['tipo' => 'ok', 'texto' => "Usuario «$nuevo» creado. Contraseña provisoria: $provisoria — pasásela y va a tener que cambiarla al entrar."];
+                    // Las llaves no son decorativas: PHP acepta bytes UTF-8 en los
+                    // nombres de variable, así que "$nuevo»" busca la variable
+                    // $nuevo» y el nombre del usuario desaparecía del mensaje.
+                    $msg = ['tipo' => 'ok', 'texto' => "Usuario «{$nuevo}» creado. Contraseña provisoria: {$provisoria} — pasásela y va a tener que cambiarla al entrar."];
                 } catch (PDOException $ex) {
                     $msg = ['tipo' => 'error', 'texto' => 'Ese nombre de usuario ya existe.'];
                 }

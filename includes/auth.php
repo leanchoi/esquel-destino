@@ -31,10 +31,51 @@ function requiere_rol(string $minimo): array
 {
     $u = requiere_login();
     if ((ROLES[$u['role']] ?? 0) < (ROLES[$minimo] ?? 99)) {
-        http_response_code(403);
-        exit('No tenés permisos para esta sección.');
+        pagina_sin_permiso($u, $minimo);
     }
     return $u;
+}
+
+/**
+ * Página de "no tenés permiso".
+ *
+ * Antes era un exit() con una línea de texto pelado sobre fondo blanco, que
+ * no se distingue de un sitio roto. Ahora dice con qué usuario entraste, qué
+ * rol tenés, cuál hace falta y cómo salir de ahí.
+ */
+function pagina_sin_permiso(array $u, string $minimo): void
+{
+    http_response_code(403);
+    header('Content-Type: text/html; charset=utf-8');
+    $usuario = e((string) ($u['username'] ?? '—'));
+    $rol     = e((string) ($u['role'] ?? '—'));
+    $falta   = e($minimo);
+    $css     = e(asset('assets/css/style.css'));
+    echo <<<HTML
+<!doctype html>
+<html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sin permiso · Panel Esquel LAB</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../{$css}">
+</head><body>
+<main class="container" style="max-width:560px;padding-top:72px;padding-bottom:72px">
+  <h1 style="font-size:30px">Esta sección es solo para administradores</h1>
+  <p style="color:var(--ink-2)">
+    Entraste como <strong>{$usuario}</strong>, con rol <strong>{$rol}</strong>.
+    Para abrir esta página hace falta el rol <strong>{$falta}</strong>.
+  </p>
+  <p style="color:var(--ink-2)">
+    Si tendrías que tener acceso, pedile a un administrador que te cambie el rol desde <em>Usuarios</em>.
+  </p>
+  <p style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+    <a class="btn btn-primary" href="dashboard.php">Volver a las postulaciones</a>
+    <a class="btn btn-secondary" href="logout.php">Salir y entrar con otro usuario</a>
+  </p>
+</main>
+</body></html>
+HTML;
+    exit;
 }
 
 function puede(string $minimo): bool

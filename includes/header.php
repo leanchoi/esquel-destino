@@ -25,7 +25,7 @@ $base            = $base ?? '';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="<?= $base ?>assets/css/style.css?v=3.0">
+<link rel="stylesheet" href="<?= $base ?><?= asset('assets/css/style.css') ?>">
 </head>
 <body>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
