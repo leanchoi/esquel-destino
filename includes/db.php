@@ -111,23 +111,50 @@ function migrar(PDO $pdo): void
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );");
 
-    // Migración: agregar must_change_password a bases ya creadas.
-    $cols = $pdo->query("PRAGMA table_info(users)")->fetchAll();
-    $tiene = false;
-    foreach ($cols as $c) {
-        if ($c['name'] === 'must_change_password') {
-            $tiene = true;
+    // Migraciones de columnas.
+    //
+    // El CREATE TABLE IF NOT EXISTS de arriba no toca una tabla que ya existe,
+    // así que una base creada por una versión anterior se queda sin las
+    // columnas nuevas para siempre. Eso ya rompió el panel de usuarios: era el
+    // único lugar que leía users.created_at, la columna no estaba, y la página
+    // moría con un 500 mientras el resto del panel andaba bien.
+    //
+    // Por eso la lista es declarativa: agregar una columna nueva es agregar
+    // una línea acá, y las bases viejas se ponen al día solas.
+    $columnas = [
+        'users' => [
+            'must_change_password' => "INTEGER NOT NULL DEFAULT 0",
+            'created_at'           => "DATETIME",
+        ],
+        'applications' => [
+            'notes'        => "TEXT",
+            'submitted_at' => "DATETIME",
+        ],
+    ];
+
+    foreach ($columnas as $tabla => $defs) {
+        $existentes = array_column($pdo->query("PRAGMA table_info($tabla)")->fetchAll(), 'name');
+        if (!$existentes) {
+            continue;                       // la tabla no existe todavía
         }
-    }
-    if (!$tiene) {
-        $pdo->exec("ALTER TABLE users ADD COLUMN must_change_password INTEGER NOT NULL DEFAULT 0");
+        foreach ($defs as $columna => $tipo) {
+            if (in_array($columna, $existentes, true)) {
+                continue;
+            }
+            // SQLite no acepta CURRENT_TIMESTAMP como default al agregar una
+            // columna, así que se agrega vacía y se rellena a continuación.
+            $pdo->exec("ALTER TABLE $tabla ADD COLUMN $columna $tipo");
+            if (str_ends_with($columna, '_at')) {
+                $pdo->exec("UPDATE $tabla SET $columna = datetime('now') WHERE $columna IS NULL");
+            }
+        }
     }
 
     // Usuario semilla. Nace marcado para cambio obligatorio de contraseña:
     // admin/admin123 sirve para el primer ingreso, no para quedarse.
     $count = (int) $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
     if ($count === 0) {
-        $stmt = $pdo->prepare("INSERT INTO users (username, password, role, must_change_password) VALUES (?, ?, 'admin', 1)");
+        $stmt = $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES (?, ?, 'admin', 1, datetime('now'))");
         $stmt->execute(['admin', password_hash('admin123', PASSWORD_DEFAULT)]);
     }
 }

@@ -29,10 +29,10 @@ require __DIR__ . '/includes/header.php';
     <div class="hero-copy">
 <?php /* "Convocatoria abierta" ya lo dice la barra de plazo, acá arriba. */ ?>
       <span class="eyebrow"><span class="dot"></span> Primera cohorte · 2026</span>
-      <h1>El municipio pone un equipo a trabajar con <em>hasta 18 proyectos</em> de Esquel</h1>
+      <h1>Abrimos la convocatoria para que tu proyecto <em>empiece a recibir visitantes</em></h1>
       <p class="hero-lede">
-        Ocho semanas, sin costo, en tu propio lugar de trabajo. Para que lo que ya hacés pueda
-        recibir visitantes y las agencias de la ciudad puedan ofrecerlo.
+        Ocho semanas de trabajo con un equipo del municipio, sin costo, en tu campo, tu taller
+        o tu local. Hay tiempo hasta el <?= e(fecha_larga(FECHA_CIERRE)) ?>.
       </p>
 
       <?php /* La fecha de cierre no va acá: ya está en la barra de plazo, justo arriba. */ ?>

@@ -129,3 +129,47 @@ function cerrar_sesion(): void
     $_SESSION = [];
     session_destroy();
 }
+
+/**
+ * Que un error del panel no salga como pantalla en blanco.
+ *
+ * En el hosting display_errors está apagado, así que un fatal devuelve una
+ * página vacía y desde afuera no se distingue de un sitio caído. Fue
+ * exactamente lo que pasó con el panel de usuarios cuando faltaba una columna:
+ * el resto andaba y esa página estaba en blanco, sin ninguna pista.
+ *
+ * Se registra al cargar este archivo, que es el que incluyen todas las páginas
+ * de /admin. api.php responde JSON, así que ahí el error también sale en JSON.
+ */
+set_exception_handler(function (Throwable $ex): void {
+    error_log('Esquel LAB panel: ' . $ex->getMessage() . ' — ' . $ex->getFile() . ':' . $ex->getLine());
+
+    $esApi = basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) === 'api.php';
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: ' . ($esApi ? 'application/json' : 'text/html') . '; charset=utf-8');
+    }
+
+    if ($esApi) {
+        echo json_encode(['ok' => false, 'error' => 'Error interno del panel. Quedó registrado en el log.']);
+        return;
+    }
+
+    $detalle = e($ex->getMessage() . ' (' . basename($ex->getFile()) . ':' . $ex->getLine() . ')');
+    echo <<<HTML
+<!doctype html><html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error en el panel</title><meta name="robots" content="noindex">
+<style>
+ body{font-family:system-ui,sans-serif;max-width:620px;margin:70px auto;padding:0 24px;color:#1F1D1B;line-height:1.6}
+ h1{font-size:26px;margin:0 0 12px} code{background:#EBE7E0;padding:3px 7px;border-radius:5px;font-size:13.5px;word-break:break-word}
+ a{color:#8A1E47}
+</style></head><body>
+<h1>Se rompió esta página del panel</h1>
+<p>El resto del panel puede seguir funcionando. Esto es lo que falló:</p>
+<p><code>{$detalle}</code></p>
+<p>Pasale ese texto a quien mantiene el sitio: alcanza para ubicar el problema.</p>
+<p><a href="dashboard.php">Volver a las postulaciones</a></p>
+</body></html>
+HTML;
+});

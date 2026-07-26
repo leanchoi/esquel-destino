@@ -47,8 +47,8 @@ $base            = $base ?? '';
     <nav class="site-nav" id="siteNav">
       <a href="<?= $base ?>index.php#para-vos" <?= $activeNav === 'para-vos' ? 'class="is-active"' : '' ?>>¿Es para vos?</a>
       <a href="<?= $base ?>index.php#que-se-trabaja">Qué se trabaja</a>
-      <a href="<?= $base ?>index.php#preguntas">Preguntas</a>
-      <a href="<?= $base ?>media-kit.php" <?= $activeNav === 'prensa' ? 'class="is-active"' : '' ?>>Pasá la voz</a>
+      <a href="<?= $base ?>index.php#preguntas">FAQ</a>
+      <a href="<?= $base ?>media-kit.php" <?= $activeNav === 'prensa' ? 'class="is-active"' : '' ?>>Media kit</a>
       <a href="<?= $base ?>inscribirse.php" class="btn btn-primary btn-sm">Postularme</a>
     </nav>
   </div>

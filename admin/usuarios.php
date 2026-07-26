@@ -24,7 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $provisoria = bin2hex(random_bytes(5));
                 try {
-                    $pdo->prepare('INSERT INTO users (username, password, role, must_change_password) VALUES (?, ?, ?, 1)')
+                    // created_at explícito: en bases migradas la columna se
+                    // agregó con ALTER TABLE y SQLite no acepta ahí un default
+                    // CURRENT_TIMESTAMP, así que sin esto quedaría en NULL.
+                    $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES (?, ?, ?, 1, datetime('now'))")
                         ->execute([$nuevo, password_hash($provisoria, PASSWORD_DEFAULT), $rol]);
                     // Las llaves no son decorativas: PHP acepta bytes UTF-8 en los
                     // nombres de variable, así que "$nuevo»" busca la variable
