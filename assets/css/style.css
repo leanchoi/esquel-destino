@@ -90,7 +90,12 @@ body {
   overflow-x: hidden;
 }
 
-img, svg { max-width: 100%; display: block; }
+/* height:auto no es opcional cuando el <img> trae width y height.
+   Esos atributos existen para que el navegador reserve el espacio antes de
+   cargar, pero también se aplican como medidas CSS: con max-width achicando
+   el ancho y la altura clavada en el valor del atributo, la foto sale
+   aplastada. Con height:auto los atributos quedan solo como proporción. */
+img, svg { max-width: 100%; height: auto; display: block; }
 /* No se puede arrastrar una foto fuera de la página. */
 img { -webkit-user-drag: none; user-drag: none; }
 
