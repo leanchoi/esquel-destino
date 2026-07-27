@@ -600,6 +600,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
    ========================================================================== */
 .page-hero { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
 .page-hero h1 { font-size: clamp(30px, 4.5vw, 46px); max-width: 20ch; }
+/* Bajada del título: más grande que el cuerpo, para que se lea como subtítulo
+   y no como el primer párrafo. */
+.page-sub { font-size: clamp(20px, 2.4vw, 25px); font-family: var(--font-display); color: var(--ink-2); margin: -6px 0 18px; max-width: 30ch; }
 .page-hero .lede { font-size: 18px; color: var(--ink-2); max-width: 62ch; }
 
 .mk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 56px; }

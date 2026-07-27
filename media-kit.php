@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/helpers.php';
 
-$pageTitle = 'Pasá la voz · Esquel LAB — kit de difusión y prensa';
+$pageTitle = 'Media kit · Esquel LAB';
 $pageDescription = 'Textos listos para copiar y compartir sobre Esquel LAB, los datos del programa, cómo se eligen los participantes, gacetilla para medios y logos para descargar.';
 $activeNav = 'prensa';
 $abierta = convocatoria_abierta();
@@ -11,8 +11,9 @@ require __DIR__ . '/includes/header.php';
 
 <section class="page-hero">
   <div class="container">
-    <span class="eyebrow"><span class="dot"></span> Kit de difusión</span>
-    <h1>Ayudanos a que esto llegue a quien le sirve</h1>
+    <span class="eyebrow"><span class="dot"></span> Difusión y prensa</span>
+    <h1>Media kit</h1>
+    <p class="page-sub">Ayudanos a que le llegue a más gente</p>
     <p class="lede">
       La mayoría de la gente que debería postularse no se considera “del turismo”, así que no va a
       buscar esta página sola. Se entera porque alguien se la manda. Acá abajo hay textos escritos
