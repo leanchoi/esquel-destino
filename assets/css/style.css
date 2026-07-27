@@ -172,12 +172,16 @@ p { margin: 0 0 1em; max-width: 66ch; }
 @media (max-width: 480px) { .brand-logo { height: 34px; } }
 
 .site-nav { display: flex; align-items: center; gap: 26px; }
-.site-nav a {
+/* :not(.btn) no es un detalle de estilo, es lo que arregla el botón.
+   Estas reglas son para los links del menú, pero .site-nav a pesa más que .btn
+   por especificidad, así que también le pisaban el relleno al botón de
+   Postularme: quedaba con padding horizontal cero y el texto pegado a los
+   bordes. Excluyendo .btn, cada uno usa el suyo. */
+.site-nav a:not(.btn) {
   color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 700;
   padding: 6px 0; border-bottom: 2px solid transparent;
 }
-.site-nav a:hover, .site-nav a.is-active { color: var(--ink); border-color: var(--berry); }
-.site-nav a.btn { border-bottom: none; color: #fff; }
+.site-nav a:not(.btn):hover, .site-nav a:not(.btn).is-active { color: var(--ink); border-color: var(--berry); }
 
 .nav-toggle { display: none; width: 44px; height: 44px; background: none; border: 1px solid var(--borde-control); border-radius: var(--r-sm); cursor: pointer; padding: 11px 10px; }
 .nav-toggle span { display: block; height: 2px; background: var(--ink); border-radius: 2px; margin-bottom: 4px; }
@@ -191,8 +195,10 @@ p { margin: 0 0 1em; max-width: 66ch; }
     transform: translateY(-10px); opacity: 0; pointer-events: none; transition: .18s;
   }
   .site-nav.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-  .site-nav a { padding: 15px 0; font-size: 17px; border-bottom: 1px solid var(--line); }
-  .site-nav a.btn { margin-top: 14px; }
+  .site-nav a:not(.btn) { padding: 15px 0; font-size: 17px; border-bottom: 1px solid var(--line); }
+  /* En el menú desplegado el botón ocupa todo el ancho: es la acción de la
+     página y ahí no compite con nada. */
+  .site-nav a.btn { margin-top: 16px; width: 100%; }
 }
 
 /* ---------- Botones ----------

@@ -27,6 +27,8 @@ if (!empty($u['must_change'])) {
     exit(json_encode(['ok' => false, 'error' => 'Cambiá la contraseña provisoria antes de operar el panel.']));
 }
 
+registrar_actividad();   // la api también cuenta como uso del panel
+
 $pdo = db();
 
 // ------------------------------------------------------------- exportación
@@ -156,6 +158,14 @@ if (!csrf_valido($data['csrf'] ?? null)) {
 if (!puede('editor')) {
     http_response_code(403);
     exit(json_encode(['ok' => false, 'error' => 'Tu rol es de solo lectura.']));
+}
+
+// Votar es de los evaluadores y de nadie más. Se chequea acá arriba, antes de
+// mirar qué acción es, para que no dependa de que el chequeo esté repetido
+// prolijamente en cada rama de más abajo.
+if (in_array($data['accion'] ?? '', ['voto', 'retirar-voto'], true) && !es_jurado($u)) {
+    http_response_code(403);
+    exit(json_encode(['ok' => false, 'error' => 'Tu rol no emite voto. El jurado son los evaluadores.']));
 }
 
 $id = (int) ($data['id'] ?? 0);

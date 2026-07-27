@@ -30,13 +30,13 @@ $nav = $nav ?? '';
     </a>
     <nav class="admin-nav">
       <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>
-      <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>
       <?php if (puede('admin')): ?>
+        <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>
         <a href="usuarios.php" class="<?= $nav === 'usuarios' ? 'is-active' : '' ?>">Usuarios</a>
       <?php endif; ?>
     </nav>
     <div class="admin-user">
-      <span><strong><?= e($u['username'] ?? '') ?></strong> · <?= e($u['role'] ?? '') ?></span>
+      <span><strong><?= e($u['username'] ?? '') ?></strong> · <?= e(rol_label($u['role'] ?? null)) ?></span>
       <a href="password.php">Contraseña</a>
       <a href="logout.php" class="admin-logout">Salir</a>
     </div>

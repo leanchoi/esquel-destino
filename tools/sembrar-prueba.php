@@ -17,7 +17,8 @@ require_once __DIR__ . '/../includes/jurado.php';
 
 $pdo = db();
 
-foreach (['evaluaciones', 'stage_history', 'application_details', 'applications', 'visitas'] as $t) {
+foreach (['evaluaciones', 'stage_history', 'application_details', 'applications', 'visitas',
+          'sesiones_panel', 'login_attempts'] as $t) {
     $pdo->exec("DELETE FROM $t");
 }
 $pdo->exec("DELETE FROM users WHERE username <> 'admin'");
@@ -179,3 +180,47 @@ echo "  usuarios: admin/admin123 (cambio obligatorio) · ana(admin) · bruno(edi
 echo "  postulaciones: " . count($apps) . "\n";
 echo "  votos: " . $pdo->query('SELECT COUNT(*) FROM evaluaciones')->fetchColumn() . "\n";
 echo "  visitas: " . $pdo->query('SELECT COUNT(*) FROM visitas')->fetchColumn() . "\n";
+
+// Ingresos al panel: cada quien con su horario, para que el gráfico de momentos
+// muestre un patrón y no una nube uniforme.
+$habitos = [
+    'ana'   => ['dias' => 22, 'horas' => [9, 10, 11, 15, 16, 17], 'min' => 900,  'max' => 3400],
+    'bruno' => ['dias' => 14, 'horas' => [20, 21, 22, 23],        'min' => 400,  'max' => 1800],
+    'carla' => ['dias' => 10, 'horas' => [7, 8, 13, 14],          'min' => 600,  'max' => 2200],
+    'diego' => ['dias' => 4,  'horas' => [11, 18],                'min' => 120,  'max' => 700],
+];
+$insL = $pdo->prepare('INSERT INTO login_attempts (username, ip, ok, created_at) VALUES (?, ?, ?, ?)');
+$insS = $pdo->prepare(
+    'INSERT INTO sesiones_panel (user_id, username, inicio, ultima_actividad, pantallas, cerrada) VALUES (?, ?, ?, ?, ?, 1)'
+);
+
+$pdo->beginTransaction();
+foreach ($habitos as $nombre => $h) {
+    for ($i = 0; $i < $h['dias']; $i++) {
+        $dia = random_int(0, 44);
+        $hora = $h['horas'][array_rand($h['horas'])];
+        $inicioLocal = date('Y-m-d', strtotime("-{$dia} days")) . sprintf(' %02d:%02d:00', $hora, random_int(0, 59));
+        if (strtotime($inicioLocal) > time()) {
+            continue;                       // un ingreso con fecha futura no existe
+        }
+        $inicioUtc = gmdate('Y-m-d H:i:s', strtotime($inicioLocal));
+        $dur = random_int($h['min'], $h['max']);
+
+        $insL->execute([$nombre, '181.0.0.' . random_int(2, 250), 1, $inicioUtc]);
+        $insS->execute([
+            $ids[$nombre], $nombre, $inicioUtc,
+            gmdate('Y-m-d H:i:s', strtotime($inicioUtc) + $dur),
+            max(2, (int) round($dur / 90)),
+        ]);
+    }
+}
+// Un par de intentos fallidos, que es lo que se quiere poder detectar.
+foreach ([['bruno', 3], ['carla', 1]] as [$quien, $n]) {
+    for ($i = 0; $i < $n; $i++) {
+        $insL->execute([$quien, '181.0.0.' . random_int(2, 250), 0,
+                        gmdate('Y-m-d H:i:s', strtotime('-' . random_int(1, 20) . ' days'))]);
+    }
+}
+$pdo->commit();
+
+echo "  ingresos al panel: " . $pdo->query('SELECT COUNT(*) FROM login_attempts WHERE ok = 1')->fetchColumn() . "\n";

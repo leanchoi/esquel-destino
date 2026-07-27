@@ -24,6 +24,7 @@ function requiere_login(): array
     if (!empty($u['must_change']) && basename($_SERVER['SCRIPT_NAME']) !== 'password.php') {
         redirect('password.php');
     }
+    registrar_actividad();
     return $u;
 }
 
@@ -84,6 +85,26 @@ function puede(string $minimo): bool
     return $u && (ROLES[$u['role']] ?? 0) >= (ROLES[$minimo] ?? 99);
 }
 
+/**
+ * ¿Este usuario emite voto?
+ *
+ * Se pregunta por rol exacto y no con puede(), que compara jerarquías. El
+ * admin está más arriba que un evaluador en todo lo demás, pero no vota: es
+ * quien mueve las postulaciones de etapa, y quien decide no debería además
+ * estar puntuando. La lista de quién vota vive en ROLES_INFO.
+ */
+function es_jurado(?array $u = null): bool
+{
+    $u = $u ?? usuario_actual();
+    return $u !== null && !empty(ROLES_INFO[$u['role']]['vota']);
+}
+
+/** El nombre del rol tal como se muestra: "Evaluador", no "editor". */
+function rol_label(?string $rol): string
+{
+    return ROLES_INFO[$rol]['label'] ?? (string) $rol;
+}
+
 /** Login con límite de intentos por usuario + IP. */
 function intentar_login(string $username, string $password): array
 {
@@ -120,12 +141,57 @@ function intentar_login(string $username, string $password): array
         'must_change' => (bool) $user['must_change_password'],
     ];
 
+    abrir_sesion_panel((int) $user['id'], $user['username']);
+
     return ['ok' => true, 'must_change' => (bool) $user['must_change_password']];
+}
+
+/** Abre la fila de esta visita al panel y se guarda su id en la sesión. */
+function abrir_sesion_panel(int $id, string $username): void
+{
+    try {
+        $pdo = db();
+        $pdo->prepare(
+            "INSERT INTO sesiones_panel (user_id, username, inicio, ultima_actividad, pantallas)
+             VALUES (?, ?, datetime('now'), datetime('now'), 1)"
+        )->execute([$id, $username]);
+        $_SESSION['panel_sesion'] = (int) $pdo->lastInsertId();
+    } catch (Throwable $e) {
+        error_log('Esquel LAB sesión de panel: ' . $e->getMessage());
+    }
+}
+
+/**
+ * Corre el reloj de la sesión abierta. Una vez por request y nunca fatal:
+ * llevar la cuenta de quién entró no puede tumbar el panel.
+ */
+function registrar_actividad(): void
+{
+    static $hecho = false;
+    if ($hecho || empty($_SESSION['panel_sesion'])) {
+        return;
+    }
+    $hecho = true;
+    try {
+        db()->prepare(
+            "UPDATE sesiones_panel SET ultima_actividad = datetime('now'), pantallas = pantallas + 1 WHERE id = ?"
+        )->execute([(int) $_SESSION['panel_sesion']]);
+    } catch (Throwable $e) {
+        error_log('Esquel LAB actividad de panel: ' . $e->getMessage());
+    }
 }
 
 function cerrar_sesion(): void
 {
     iniciar_sesion();
+    if (!empty($_SESSION['panel_sesion'])) {
+        try {
+            db()->prepare("UPDATE sesiones_panel SET ultima_actividad = datetime('now'), cerrada = 1 WHERE id = ?")
+                ->execute([(int) $_SESSION['panel_sesion']]);
+        } catch (Throwable $e) {
+            error_log('Esquel LAB cierre de sesión: ' . $e->getMessage());
+        }
+    }
     $_SESSION = [];
     session_destroy();
 }

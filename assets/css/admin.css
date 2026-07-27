@@ -281,10 +281,87 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .voto-falta { font-size: 12.5px; color: var(--ink-3); font-style: italic; }
 .estado-fijo { margin: 0 0 8px; }
 
+/* ---------- analítica: el rango ---------- */
+.admin-topbar-analitica { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+.periodo-activo { margin: 4px 0 0; font-size: 13.5px; color: var(--ink-2); }
+.periodo-activo strong { color: var(--ink); }
+/* Con pocos días de datos, 7 / 30 / 90 devuelven lo mismo y parece que los
+   botones no hacen nada. Este aviso dice desde cuándo hay registros. */
+.periodo-aviso { display: block; font-size: 12.5px; color: var(--ink-3); }
+/* El fondo del panel ya es --paper-2, así que el riel del selector tenía que
+   ser otra cosa: sobre el mismo color no se veía que fuera un control. */
+.rango { display: flex; gap: 3px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; flex-wrap: wrap; }
+.rango a, .rango .rango-custom { padding: 8px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 700; color: var(--ink-2); text-decoration: none; border: 0; background: none; font-family: var(--font-body); cursor: pointer; white-space: nowrap; }
+.rango a:hover, .rango .rango-custom:hover { background: var(--paper-2); color: var(--ink); }
+.rango a.is-active, .rango .rango-custom.is-active { background: var(--berry); color: #fff; }
+.rango a.is-active:hover, .rango .rango-custom.is-active:hover { background: var(--berry-ink); color: #fff; }
+.rango-form { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; max-width: 1400px; margin: 12px auto 0; padding: 16px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.rango-form label { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+.rango-form input[type=date] { width: auto; font-family: var(--font-body); font-size: 15px; padding: 10px 12px; min-height: 44px; border: 1.5px solid var(--borde-control); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); }
+
+/* ---------- los gráficos ----------
+   Sin preserveAspectRatio="none": estirar el SVG estira también los círculos
+   —que salen ovalados— y las etiquetas. Con el viewBox solo, escala entero y
+   se mantiene proporcionado a cualquier ancho de panel. */
+.g-wrap { overflow-x: auto; margin-top: 6px; }
+.g-svg { width: 100%; height: auto; display: block; overflow: visible; }
+/* En un celular, un gráfico de 720 de ancho escalado a 350 deja las etiquetas
+   en cinco píxeles. Antes que achicar todo hasta lo ilegible, el gráfico
+   conserva un ancho mínimo y se desliza dentro de su propio recuadro: la
+   página no se mueve, el gráfico sí. */
+@media (max-width: 640px) {
+  .g-svg { min-width: 520px; }
+}
+.g-grid { stroke: var(--line); stroke-width: 1; }
+.g-eje, .g-x { font-family: var(--font-mono); font-size: 11px; fill: var(--ink-3); }
+.g-ahora { stroke: var(--berry); stroke-width: 1; stroke-dasharray: 3 3; opacity: .5; }
+.g-area { opacity: .1; stroke: none; }
+.g-linea { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.g-punto { stroke: var(--surface); stroke-width: 1.5; }
+.g-dot { fill: var(--berry); stroke: var(--surface); stroke-width: 1.2; opacity: .8; }
+.g-dot:hover { opacity: 1; }
+.g-franja { fill: var(--paper); }
+.g-serie { font-family: var(--font-body); font-size: 12px; font-weight: 700; fill: var(--ink); }
+.g-serie-n { font-weight: 400; fill: var(--ink-3); font-size: 11px; }
+
+/* ---------- mapa de calor ---------- */
+.heat { overflow-x: auto; }
+.heat-grid { display: grid; grid-template-columns: 34px repeat(24, minmax(9px, 1fr)); gap: 2px; align-items: center; min-width: 320px; }
+.heat-esq { display: block; }
+.heat-hora, .heat-dia { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); }
+.heat-dia { text-align: right; padding-right: 6px; }
+.heat-c { display: block; aspect-ratio: 1; border-radius: 2px; background: var(--paper-2); min-height: 9px; }
+/* Una sola tinta, de clara a oscura: lo que codifica es cantidad, no identidad. */
+.heat-c.n1 { background: #F0D3DE; }
+.heat-c.n2 { background: #E0A7BE; }
+.heat-c.n3 { background: #CD7A9C; }
+.heat-c.n4 { background: #BC4E7B; }
+.heat-c.n5 { background: #8A1E47; }
+.heat-ref { display: flex; align-items: center; gap: 4px; margin-top: 12px; font-size: 11.5px; color: var(--ink-3); }
+.heat-ref .heat-c { width: 13px; height: 13px; min-height: 0; }
+.heat-ref span:first-child { margin-right: 4px; }
+.heat-ref span:last-child { margin-left: 4px; }
+
+/* ---------- roles ---------- */
+.roles-lista { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.roles-lista dt { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.roles-lista dd { margin: 2px 0 0; font-size: 13px; color: var(--ink-2); }
+.rol-vota { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; background: var(--green-soft); color: var(--green-ink); border-radius: var(--r-sm); padding: 2px 7px; }
+
+/* ---------- actividad de usuarios ---------- */
+.actividad { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.act-card { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 15px 17px; background: var(--paper); }
+.act-card header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.act-punto { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.act-nombre { font-weight: 700; font-size: 15px; }
+.act-rol { font-size: 11.5px; color: var(--ink-3); }
+.act-datos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin: 0; }
+.act-datos dt { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); font-weight: 700; }
+.act-datos dd { margin: 1px 0 0; font-family: var(--font-mono); font-weight: 700; font-size: 16px; }
+.act-pie { font-size: 12px; color: var(--ink-3); margin: 13px 0 0; padding-top: 11px; border-top: 1px solid var(--line); }
+.act-fallidos { display: block; color: var(--danger); font-weight: 700; margin-top: 3px; }
+
 /* ---------- analítica ---------- */
-.rango { display: flex; gap: 4px; background: var(--paper-2); border-radius: 999px; padding: 4px; }
-.rango a { padding: 7px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 700; color: var(--ink-2); text-decoration: none; }
-.rango a.is-active { background: var(--surface); color: var(--berry-ink); box-shadow: var(--shadow); }
 
 /* Gráfico de barras en CSS: no vale la pena cargar una librería para esto. */
 .grafico { display: flex; align-items: flex-end; justify-content: flex-start; gap: 3px; height: 190px; margin-top: 8px; }
@@ -334,7 +411,14 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
   border-radius: 3px 3px 0 0; overflow: hidden; background: linear-gradient(var(--paper-2), var(--paper-2)) bottom / 100% 3px no-repeat; }
 .cal-seg { display: block; width: 100%; min-height: 3px; }
 .cal-acelera { background: var(--berry); }
-.cal-raiz { background: var(--green); }
+/* Raíz lleva trama además de color.
+   Medido con el validador de paletas: el berry y el verde del programa se
+   separan 26 puntos para la vista normal y apenas 2,4 bajo deuteranopia, el
+   daltonismo más común. Para esa persona las dos líneas son el mismo color.
+   Cambiarle el color a Raíz arreglaba la medición y rompía la identidad —en
+   todo el resto del sitio es verde—, así que la diferencia la carga la trama,
+   que se ve igual sin distinguir ningún color. */
+.cal-raiz { background: repeating-linear-gradient(45deg, var(--green) 0 5px, #1A5539 5px 10px); }
 .cal-n { position: absolute; left: 0; right: 0; bottom: 3px; text-align: center; font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: #fff; }
 .cal-fecha { font-size: 9.5px; color: var(--ink-3); margin-top: 6px; white-space: nowrap; font-family: var(--font-mono); }
 /* El día de hoy no se distingue sólo por color: lleva su propia caja. */
@@ -344,13 +428,16 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .cal-leyenda { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 16px; font-size: 12.5px; color: var(--ink-3); }
 .cal-leyenda i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
 .cal-leyenda i.cal-acelera { background: var(--berry); }
-.cal-leyenda i.cal-raiz { background: var(--green); }
+.cal-leyenda i.cal-raiz { background: repeating-linear-gradient(45deg, var(--green) 0 3px, #1A5539 3px 6px); }
 .cal-hoy-ref::before { content: ""; display: inline-block; width: 11px; height: 11px; border: 1.5px solid var(--berry); border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
 
 @media (max-width: 700px) {
-  .calendario { height: 130px; gap: 2px; }
-  .cal-fecha { display: none; }
+  /* Igual que los SVG: antes que espichar veintiséis días en trescientos
+     píxeles, el calendario mantiene tres píxeles por día y se desliza. */
+  .cal-scroll { overflow-x: auto; }
+  .calendario { height: 140px; gap: 2px; min-width: calc(var(--dias) * 14px); }
   .cal-n { display: none; }
+  .cal-fecha { font-size: 8.5px; }
 }
 
 /* ---------- qué se mira ---------- */
@@ -384,4 +471,26 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
   .cons-num .n { font-size: 34px; }
   /* El deslizador con el dedo: el pulgar tiene que encontrar el control. */
   .crit input[type=range] { height: 34px; }
+  .admin-topbar-analitica { flex-direction: column; align-items: stretch; }
+  .rango-form { margin: 12px 16px 0; padding: 14px 16px; }
+  .rango-form label, .rango-form input[type=date], .rango-form .btn { width: 100%; }
 }
+
+/* La tabla de usuarios en un celular se apila.
+   Con cinco columnas el scroll horizontal deja a la vista sólo el nombre, que
+   es justo el dato que ya sabías. Cada fila pasa a ser una ficha y el nombre de
+   la columna viaja en data-col. */
+@media (max-width: 720px) {
+  .tabla-usuarios, .tabla-usuarios thead, .tabla-usuarios tbody,
+  .tabla-usuarios tr, .tabla-usuarios td { display: block; width: auto; min-width: 0; }
+  .tabla-usuarios thead { display: none; }
+  .tabla-usuarios tr { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 10px; background: var(--surface); }
+  .tabla-usuarios td { border: 0; padding: 5px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .tabla-usuarios td::before { content: attr(data-col); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); font-weight: 700; flex: none; }
+  .tabla-usuarios td:first-child::before { content: none; }
+  .tabla-usuarios td.right { justify-content: flex-start; flex-wrap: wrap; padding-top: 10px; }
+  .tabla-usuarios select { width: auto; min-height: 44px; }
+}
+
+/* El selector de rol tiene que entrar entero: "Administrador" salía cortado. */
+.tabla-usuarios select { min-width: 150px; }

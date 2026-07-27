@@ -63,7 +63,7 @@ if ($apps) {
 $jurado   = jurado($pdo);
 $votos    = evaluaciones_de($pdo, array_column($apps, 'id'));
 $miId     = (int) $u['id'];
-$soyJuez  = puede('editor');
+$soyJuez  = es_jurado($u);       // rol exacto: el admin coordina, no vota
 
 foreach ($apps as $i => $a) {
     $vs = $votos[$a['id']] ?? [];

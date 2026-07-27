@@ -1,6 +1,6 @@
 <?php
 /**
- * Analítica del sitio público. Sólo lee: visitas y las fechas de postulación.
+ * Analítica del sitio público. Sólo para el administrador, y sólo de lectura.
  *
  * Todo lo que dice "día" u "hora" acá es hora de Esquel.
  *
@@ -14,79 +14,143 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/analitica.php';
+require_once __DIR__ . '/../includes/graficos.php';
 
-$u = requiere_login();
+$u = requiere_rol('admin');
 $pdo = db();
 
 $offset = (new DateTimeZone(date_default_timezone_get()))->getOffset(new DateTime('now'));
-$LOCAL = sprintf('%d seconds', $offset);   // modificador de SQLite: '-10800 seconds'
+$LOCAL = sprintf('%+d seconds', $offset);   // modificador de SQLite: '-10800 seconds'
+$hoy = date('Y-m-d');
 
-$dias = (int) ($_GET['dias'] ?? 30);
-if (!in_array($dias, [7, 30, 90], true)) {
-    $dias = 30;
-}
-$desde = "-{$dias} days";
+// ------------------------------------------------------------------ el rango
+//
+// El rango se resuelve siempre a dos fechas concretas y de ahí en adelante todo
+// consulta por ese par. Antes se filtraba con "los últimos N días" contra el
+// reloj, y como el sitio tiene pocos días de vida, 7, 30 y 90 devolvían lo
+// mismo: parecía que los botones no hacían nada. Ahora el período que se está
+// mirando está escrito arriba, con sus fechas.
+$PRESETS = [
+    'hoy' => ['label' => 'Hoy',      'dias' => 0],
+    '7'   => ['label' => '7 días',   'dias' => 6],
+    '30'  => ['label' => '30 días',  'dias' => 29],
+    '90'  => ['label' => '90 días',  'dias' => 89],
+    'todo' => ['label' => 'Todo',    'dias' => null],
+];
 
-/** Consulta con el filtro de fecha y el huso local ya aplicados. */
-function q(PDO $pdo, string $sql, string $desde, array $extra = []): array
+$primerDato = $pdo->prepare("SELECT date(MIN(creada_at), ?) FROM visitas");
+$primerDato->execute([$LOCAL]);
+$primerDia = $primerDato->fetchColumn() ?: $hoy;
+
+$rango = (string) ($_GET['r'] ?? '30');
+$desdeF = trim((string) ($_GET['desde'] ?? ''));
+$hastaF = trim((string) ($_GET['hasta'] ?? ''));
+
+/** ¿Es una fecha Y-m-d real? Nada de confiar en el input date del navegador. */
+function fecha_valida(string $f): bool
 {
+    $d = DateTime::createFromFormat('Y-m-d', $f);
+    return $d !== false && $d->format('Y-m-d') === $f;
+}
+
+if ($rango === 'custom' && fecha_valida($desdeF) && fecha_valida($hastaF)) {
+    $desde = min($desdeF, $hastaF);
+    $hasta = max($desdeF, $hastaF);
+} else {
+    if (!array_key_exists($rango, $PRESETS)) {
+        $rango = '30';
+    }
+    $hasta = $hoy;
+    $dias = $PRESETS[$rango]['dias'];
+    $desde = $dias === null ? $primerDia : date('Y-m-d', strtotime("-{$dias} days"));
+    $desdeF = $desde;
+    $hastaF = $hasta;
+}
+
+$diasRango = max(1, (int) ((strtotime($hasta) - strtotime($desde)) / 86400) + 1);
+$P = [$LOCAL, $desde, $hasta];      // los tres parámetros que repite cada consulta
+$FILTRO = "date(creada_at, ?) BETWEEN ? AND ?";
+
+/**
+ * Consulta del período, con el huso y las fechas ya puestos.
+ *
+ * Cuenta los marcadores antes de ejecutar. Pasarle menos valores que ? no da
+ * error en SQLite: los que sobran quedan en NULL, date(x, NULL) devuelve NULL,
+ * el WHERE nunca se cumple y la consulta devuelve cero filas como si de verdad
+ * no hubiera datos. Eso ya vació media página de analítica sin una sola línea
+ * en el log; que reviente fuerte es preferible a que mienta bajito.
+ */
+function q(PDO $pdo, string $sql, array $p, array $extra = []): array
+{
+    $valores = array_merge($p, $extra);
+    $marcadores = substr_count(preg_replace("/'[^']*'/", '', $sql), '?');
+    if ($marcadores !== count($valores)) {
+        throw new RuntimeException(
+            "La consulta tiene $marcadores marcadores y recibió " . count($valores) . ' valores.'
+        );
+    }
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(array_merge([$desde], $extra));
+    $stmt->execute($valores);
     return $stmt->fetchAll();
 }
 
 $totales = $pdo->prepare(
     "SELECT COUNT(*) vistas, COUNT(DISTINCT visitante) unicos,
             AVG(NULLIF(segundos,0)) seg, AVG(NULLIF(profundidad,0)) prof
-       FROM visitas WHERE creada_at >= datetime('now', ?)"
+       FROM visitas WHERE $FILTRO"
 );
-$totales->execute([$desde]);
+$totales->execute($P);
 $tot = $totales->fetch();
 
-$porDia = q($pdo,
-    "SELECT date(creada_at, ?) dia, COUNT(*) vistas, COUNT(DISTINCT visitante) unicos
-       FROM visitas WHERE creada_at >= datetime('now', ?)
-      GROUP BY dia ORDER BY dia", $LOCAL, [$desde]);
+// Ojo con la cuenta de marcadores: el date() del SELECT también lleva uno, así
+// que van cuatro y no los tres de $P. Con tres, PDO devolvía cero filas sin
+// avisar y la página entera se iba por el "no hay visitas en este período"
+// mientras las tarjetas de arriba mostraban mil quinientas.
+$filasDia = q($pdo, "SELECT date(creada_at, ?) dia, COUNT(*) vistas, COUNT(DISTINCT visitante) unicos
+                       FROM visitas WHERE $FILTRO GROUP BY dia ORDER BY dia",
+              [$LOCAL, $LOCAL, $desde, $hasta]);
+$porDia = [];
+foreach ($filasDia as $d) {
+    $porDia[$d['dia']] = ['vistas' => (int) $d['vistas'], 'unicos' => (int) $d['unicos']];
+}
 
-$porPagina = q($pdo,
-    "SELECT ruta, COUNT(*) vistas, COUNT(DISTINCT visitante) unicos,
-            AVG(NULLIF(segundos,0)) seg, AVG(NULLIF(profundidad,0)) prof
-       FROM visitas WHERE creada_at >= datetime('now', ?)
-      GROUP BY ruta ORDER BY vistas DESC LIMIT 20", $desde);
+$porPagina = q($pdo, "SELECT ruta, COUNT(*) vistas, COUNT(DISTINCT visitante) unicos,
+                             AVG(NULLIF(segundos,0)) seg, AVG(NULLIF(profundidad,0)) prof
+                        FROM visitas WHERE $FILTRO GROUP BY ruta ORDER BY vistas DESC LIMIT 20", $P);
 
-$porOrigen = q($pdo,
-    "SELECT CASE WHEN origen = '' THEN 'Directo o guardado' ELSE origen END fuente, COUNT(*) vistas
-       FROM visitas WHERE creada_at >= datetime('now', ?)
-      GROUP BY fuente ORDER BY vistas DESC LIMIT 12", $desde);
+$porOrigen = q($pdo, "SELECT CASE WHEN origen = '' THEN 'Directo o guardado' ELSE origen END fuente, COUNT(*) vistas
+                        FROM visitas WHERE $FILTRO GROUP BY fuente ORDER BY vistas DESC LIMIT 12", $P);
 
-$porDispositivo = q($pdo,
-    "SELECT dispositivo, COUNT(*) vistas FROM visitas
-      WHERE creada_at >= datetime('now', ?) GROUP BY dispositivo ORDER BY vistas DESC", $desde);
+$porDispositivo = q($pdo, "SELECT dispositivo, COUNT(*) vistas FROM visitas
+                            WHERE $FILTRO GROUP BY dispositivo ORDER BY vistas DESC", $P);
 
-$porPais = q($pdo,
-    "SELECT pais, COUNT(*) vistas FROM visitas
-      WHERE creada_at >= datetime('now', ?) AND pais IS NOT NULL
-      GROUP BY pais ORDER BY vistas DESC LIMIT 10", $desde);
+$porPais = q($pdo, "SELECT pais, COUNT(*) vistas FROM visitas
+                     WHERE $FILTRO AND pais IS NOT NULL GROUP BY pais ORDER BY vistas DESC LIMIT 10", $P);
+
+// Mapa de calor día de la semana × hora, sobre el período elegido.
+$celdas = [];
+$topeHeat = 0;
+foreach (q($pdo, "SELECT CAST(strftime('%w', creada_at, ?) AS INTEGER) dsem,
+                         CAST(strftime('%H', creada_at, ?) AS INTEGER) hora, COUNT(*) n
+                    FROM visitas WHERE date(creada_at, ?) BETWEEN ? AND ?
+                   GROUP BY dsem, hora", [$LOCAL, $LOCAL, $LOCAL, $desde, $hasta]) as $c) {
+    $celdas[(int) $c['dsem']][(int) $c['hora']] = (int) $c['n'];
+    $topeHeat = max($topeHeat, (int) $c['n']);
+}
 
 // ---------------------------------------------------------------- hoy, hora a hora
-$hoy = date('Y-m-d');
 $filasHora = $pdo->prepare(
-    "SELECT CAST(strftime('%H', creada_at, ?) AS INTEGER) hora,
-            COUNT(*) vistas, COUNT(DISTINCT visitante) unicos
-       FROM visitas WHERE date(creada_at, ?) = ?
-      GROUP BY hora ORDER BY hora"
+    "SELECT CAST(strftime('%H', creada_at, ?) AS INTEGER) hora, COUNT(*) vistas, COUNT(DISTINCT visitante) unicos
+       FROM visitas WHERE date(creada_at, ?) = ? GROUP BY hora ORDER BY hora"
 );
 $filasHora->execute([$LOCAL, $LOCAL, $hoy]);
-
 $horas = array_fill(0, 24, ['vistas' => 0, 'unicos' => 0]);
 foreach ($filasHora->fetchAll() as $f) {
     $horas[(int) $f['hora']] = ['vistas' => (int) $f['vistas'], 'unicos' => (int) $f['unicos']];
 }
 $horaActual = (int) date('G');
 
-$totHoy = $pdo->prepare(
-    "SELECT COUNT(*) vistas, COUNT(DISTINCT visitante) unicos FROM visitas WHERE date(creada_at, ?) = ?"
-);
+$totHoy = $pdo->prepare("SELECT COUNT(*) vistas, COUNT(DISTINCT visitante) unicos FROM visitas WHERE date(creada_at, ?) = ?");
 $totHoy->execute([$LOCAL, $hoy]);
 $hoyTot = $totHoy->fetch();
 
@@ -94,8 +158,7 @@ $hoyTot = $totHoy->fetch();
 // sin esperar a que termine.
 $ayerHasta = $pdo->prepare(
     "SELECT COUNT(DISTINCT visitante) FROM visitas
-      WHERE date(creada_at, ?) = date(?, '-1 day')
-        AND CAST(strftime('%H', creada_at, ?) AS INTEGER) <= ?"
+      WHERE date(creada_at, ?) = date(?, '-1 day') AND CAST(strftime('%H', creada_at, ?) AS INTEGER) <= ?"
 );
 $ayerHasta->execute([$LOCAL, $hoy, $LOCAL, $horaActual]);
 $ayerAEstaHora = (int) $ayerHasta->fetchColumn();
@@ -104,13 +167,11 @@ $postHoy = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE date(submitted
 $postHoy->execute([$LOCAL, $hoy]);
 $postulacionesHoy = (int) $postHoy->fetchColumn();
 
-// ------------------------------------------------------- postulaciones por día
-$filasPost = $pdo->prepare(
-    "SELECT date(submitted_at, ?) dia, program, COUNT(*) n
-       FROM applications GROUP BY dia, program ORDER BY dia"
-);
-$filasPost->execute([$LOCAL]);
+$ultima = $pdo->query("SELECT MAX(creada_at) FROM visitas")->fetchColumn();
 
+// ------------------------------------------------------- postulaciones por día
+$filasPost = $pdo->prepare("SELECT date(submitted_at, ?) dia, program, COUNT(*) n FROM applications GROUP BY dia, program ORDER BY dia");
+$filasPost->execute([$LOCAL]);
 $postPorDia = [];
 foreach ($filasPost->fetchAll() as $f) {
     $postPorDia[$f['dia']][$f['program']] = (int) $f['n'];
@@ -123,52 +184,40 @@ $finCal = new DateTimeImmutable(date('Y-m-d', strtotime(FECHA_CIERRE)));
 if ($postPorDia) {
     $primera = new DateTimeImmutable(min(array_keys($postPorDia)));
     if ($primera < $inicio) {
-        $inicio = $primera;               // llegó algo antes de abrir: se muestra igual
+        $inicio = $primera;
     }
 }
 $hoyDT = new DateTimeImmutable($hoy);
-$hasta = $hoyDT < $finCal ? $finCal : ($hoyDT > $finCal ? $hoyDT : $finCal);
+$hasta_cal = $hoyDT > $finCal ? $hoyDT : $finCal;
 
 $calendario = [];
 $acumulado = 0;
 $maxPost = 0;
-for ($d = $inicio; $d <= $hasta; $d = $d->modify('+1 day')) {
+for ($d = $inicio; $d <= $hasta_cal; $d = $d->modify('+1 day')) {
     $clave = $d->format('Y-m-d');
     $delDia = $postPorDia[$clave] ?? [];
     $n = array_sum($delDia);
     $acumulado += $n;
     $maxPost = max($maxPost, $n);
     $calendario[] = [
-        'fecha'     => $clave,
-        'dt'        => $d,
-        'total'     => $n,
-        'programas' => $delDia,
-        'acumulado' => $acumulado,
-        'futuro'    => $clave > $hoy,
-        'hoy'       => $clave === $hoy,
+        'fecha' => $clave, 'dt' => $d, 'total' => $n, 'programas' => $delDia,
+        'acumulado' => $acumulado, 'futuro' => $clave > $hoy, 'hoy' => $clave === $hoy,
     ];
 }
 $totalPostulaciones = $acumulado;
 
-// Embudo del formulario: cuántas visitas llegaron a cada paso.
+// Embudo del formulario dentro del período.
 $embudo = [];
-$stmtE = $pdo->prepare(
-    "SELECT COUNT(DISTINCT visitante) n FROM visitas
-      WHERE creada_at >= datetime('now', ?) AND ruta LIKE '%inscribirse.php' AND paso_form >= ?"
-);
+$stmtE = $pdo->prepare("SELECT COUNT(DISTINCT visitante) n FROM visitas
+                         WHERE $FILTRO AND ruta LIKE '%inscribirse.php' AND paso_form >= ?");
 for ($i = 1; $i <= 6; $i++) {
-    $stmtE->execute([$desde, $i]);
+    $stmtE->execute(array_merge($P, [$i]));
     $embudo[$i] = (int) $stmtE->fetchColumn();
 }
 
-$enviadas = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE submitted_at >= datetime('now', ?)");
-$enviadas->execute([$desde]);
+$enviadas = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE date(submitted_at, ?) BETWEEN ? AND ?");
+$enviadas->execute($P);
 $totalEnviadas = (int) $enviadas->fetchColumn();
-
-$maxDia = 0;
-foreach ($porDia as $d) {
-    $maxDia = max($maxDia, (int) $d['vistas']);
-}
 
 $pageTitle = 'Analítica';
 $nav = 'analitica';
@@ -179,85 +228,51 @@ function pct(int $parte, int $total): float
     return $total > 0 ? round($parte * 100 / $total, 1) : 0;
 }
 
-/**
- * Curva de un día en SVG.
- *
- * Se dibuja a mano y no con una librería: son veinticuatro números y el sitio
- * no tiene paso de compilación. El SVG escala solo con el ancho del panel.
- */
-function curva_horaria(array $horas, int $horaActual): string
+/** La misma URL, cambiando sólo el rango. */
+function url_rango(string $r): string
 {
-    $W = 720; $H = 190; $izq = 34; $der = 10; $arriba = 14; $abajo = 26;
-    $ancho = $W - $izq - $der;
-    $alto  = $H - $arriba - $abajo;
-
-    $vals = array_map(fn($h) => $h['vistas'], $horas);
-    $tope = max(1, max($vals));
-    // Techo redondeado para que la línea del eje sea un número legible.
-    $paso = $tope <= 10 ? 2 : ($tope <= 50 ? 10 : ($tope <= 200 ? 25 : 100));
-    $tope = (int) (ceil($tope / $paso) * $paso);
-
-    $x = fn(int $i) => $izq + ($ancho * $i / 23);
-    $y = fn(float $v) => $arriba + $alto - ($alto * $v / $tope);
-
-    // La curva llega hasta la hora en curso y ahí se corta. Dibujar las horas
-    // que todavía no pasaron como una línea en cero sería mostrar como dato lo
-    // que en realidad es futuro: parecería que el tráfico se derrumbó.
-    $puntos = [];
-    for ($i = 0; $i <= $horaActual; $i++) {
-        $puntos[] = round($x($i), 1) . ',' . round($y($vals[$i]), 1);
-    }
-    $linea = 'M' . implode(' L', $puntos);
-    $area  = $linea . ' L' . round($x($horaActual), 1) . ',' . round($y(0), 1)
-                    . ' L' . round($x(0), 1) . ',' . round($y(0), 1) . ' Z';
-
-    $svg = '<svg class="curva" viewBox="0 0 ' . $W . ' ' . $H . '" preserveAspectRatio="none" role="img" '
-         . 'aria-label="Visitas de hoy hora por hora">';
-
-    // grilla y eje
-    for ($g = 0; $g <= 2; $g++) {
-        $v = $tope * $g / 2;
-        $py = round($y($v), 1);
-        $svg .= '<line class="g-linea" x1="' . $izq . '" y1="' . $py . '" x2="' . ($W - $der) . '" y2="' . $py . '"/>';
-        $svg .= '<text class="g-eje" x="' . ($izq - 7) . '" y="' . ($py + 4) . '" text-anchor="end">' . (int) $v . '</text>';
-    }
-
-    // la hora en curso, todavía incompleta
-    $svg .= '<line class="g-ahora" x1="' . round($x($horaActual), 1) . '" y1="' . $arriba
-          . '" x2="' . round($x($horaActual), 1) . '" y2="' . ($arriba + $alto) . '"/>';
-
-    $svg .= '<path class="g-area" d="' . $area . '"/><path class="g-linea-datos" d="' . $linea . '"/>';
-
-    for ($i = 0; $i <= $horaActual; $i++) {
-        if ($vals[$i] === 0) {
-            continue;
-        }
-        $svg .= '<circle class="g-punto" cx="' . round($x($i), 1) . '" cy="' . round($y($vals[$i]), 1) . '" r="3">'
-              . '<title>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . ':00 · ' . $vals[$i] . ' vistas de '
-              . $horas[$i]['unicos'] . ' personas</title></circle>';
-    }
-    for ($i = 0; $i <= 23; $i += 3) {
-        $svg .= '<text class="g-hora" x="' . round($x($i), 1) . '" y="' . ($H - 8) . '" text-anchor="middle">'
-              . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</text>';
-    }
-
-    return $svg . '</svg>';
+    return '?' . http_build_query(['r' => $r]);
 }
 ?>
 
-<div class="admin-topbar">
-  <h1>Analítica del sitio</h1>
+<div class="admin-topbar admin-topbar-analitica">
+  <div>
+    <h1>Analítica del sitio</h1>
+    <p class="periodo-activo">
+      <?php if ($rango === 'hoy'): ?>
+        Hoy, <?= e(fecha_larga($hoy)) ?>
+      <?php else: ?>
+        Del <strong><?= e(fecha_larga($desde)) ?></strong> al <strong><?= e(fecha_larga($hasta)) ?></strong>
+        · <?= $diasRango ?> <?= $diasRango === 1 ? 'día' : 'días' ?>
+      <?php endif; ?>
+      <?php if ($desde < $primerDia): ?>
+        <span class="periodo-aviso">con datos desde el <?= e(fecha_larga($primerDia)) ?>, que es cuando empezó a medirse</span>
+      <?php endif; ?>
+    </p>
+  </div>
   <div class="rango">
-    <?php foreach ([7 => '7 días', 30 => '30 días', 90 => '90 días'] as $d => $lbl): ?>
-      <a href="?dias=<?= $d ?>" class="<?= $dias === $d ? 'is-active' : '' ?>"><?= e($lbl) ?></a>
+    <?php foreach ($PRESETS as $k => $p): $k = (string) $k; ?>
+      <?php // (string) no es cosmético: PHP convierte las claves '7', '30' y '90'
+            // en enteros, así que $rango === $k comparaba '30' con 30 y daba
+            // falso. Ningún preset numérico se marcaba nunca como activo. ?>
+      <a href="<?= e(url_rango($k)) ?>" class="<?= $rango === $k ? 'is-active' : '' ?>"><?= e($p['label']) ?></a>
     <?php endforeach; ?>
+    <button type="button" class="rango-custom <?= $rango === 'custom' ? 'is-active' : '' ?>" id="btnCustom"
+            aria-expanded="<?= $rango === 'custom' ? 'true' : 'false' ?>" aria-controls="formCustom">A medida</button>
   </div>
 </div>
+
+<form method="get" class="rango-form" id="formCustom" <?= $rango === 'custom' ? '' : 'hidden' ?>>
+  <input type="hidden" name="r" value="custom">
+  <label>Desde <input type="date" name="desde" value="<?= e($desdeF) ?>" min="<?= e($primerDia) ?>" max="<?= e($hoy) ?>" required></label>
+  <label>Hasta <input type="date" name="hasta" value="<?= e($hastaF) ?>" min="<?= e($primerDia) ?>" max="<?= e($hoy) ?>" required></label>
+  <button type="submit" class="btn btn-primary btn-sm">Ver ese período</button>
+</form>
 
 <div class="admin-content">
 
   <!-- ---------------- el día de hoy ---------------- -->
-  <div class="panel panel-hoy">
+  <div class="panel">
     <div class="hoy-head">
       <div>
         <h2 class="panel-title">Hoy, hora por hora</h2>
@@ -267,11 +282,9 @@ function curva_horaria(array $horas, int $horaActual): string
         <div class="hc">
           <span class="k">Personas</span>
           <span class="v"><?= (int) $hoyTot['unicos'] ?></span>
-          <?php
-          $delta = (int) $hoyTot['unicos'] - $ayerAEstaHora;
-          if ($ayerAEstaHora > 0):
-            $signo = $delta > 0 ? 'sube' : ($delta < 0 ? 'baja' : 'igual'); ?>
-            <span class="d <?= $signo ?>">
+          <?php $delta = (int) $hoyTot['unicos'] - $ayerAEstaHora; ?>
+          <?php if ($ayerAEstaHora > 0): ?>
+            <span class="d <?= $delta > 0 ? 'sube' : ($delta < 0 ? 'baja' : '') ?>">
               <?= $delta > 0 ? '+' : '' ?><?= $delta ?> vs. ayer a esta hora
             </span>
           <?php else: ?>
@@ -283,12 +296,28 @@ function curva_horaria(array $horas, int $horaActual): string
       </div>
     </div>
     <?php if ((int) $hoyTot['vistas'] === 0): ?>
-      <p class="hint">Todavía no entró nadie hoy. La curva aparece con la primera visita.</p>
-    <?php else: ?>
-      <?= curva_horaria($horas, $horaActual) ?>
       <p class="hint">
-        La línea vertical marca la hora en curso: esa franja todavía se está llenando.
-        Pasá el dedo o el mouse por un punto para ver el detalle.
+        Todavía no entró nadie hoy. La curva aparece con la primera visita.
+        <?php if ($ultima): ?>
+          La última que se registró fue el <?= e(fecha_corta(date('Y-m-d H:i:s', strtotime($ultima) + $offset), true)) ?>.
+        <?php else: ?>
+          <strong>No hay ninguna visita registrada todavía</strong>, ni hoy ni antes: si el sitio ya está publicado,
+          eso quiere decir que la medición no está llegando a la base.
+        <?php endif; ?>
+      </p>
+    <?php else:
+      $etq = [];
+      $tit = [];
+      for ($i = 0; $i < 24; $i++) {
+          $etq[$i] = $i % 3 === 0 ? str_pad((string) $i, 2, '0', STR_PAD_LEFT) : '';
+          $tit[$i] = str_pad((string) $i, 2, '0', STR_PAD_LEFT) . ':00 · ' . $horas[$i]['vistas']
+                   . ' vistas de ' . $horas[$i]['unicos'] . ' personas';
+      }
+      echo svg_curva(array_column($horas, 'vistas'), $etq, $tit, $horaActual);
+    ?>
+      <p class="hint">
+        La línea vertical es la hora en curso: esa franja todavía se está llenando, y de ahí
+        para adelante no se dibuja nada porque todavía no pasó.
       </p>
     <?php endif; ?>
   </div>
@@ -301,6 +330,55 @@ function curva_horaria(array $horas, int $horaActual): string
     <div class="stat ok"><span class="k">Postulaciones</span><span class="v"><?= $totalEnviadas ?></span></div>
   </div>
 
+  <?php if (!$porDia): ?>
+    <div class="empty-state">
+      No hay visitas registradas entre el <?= e(fecha_larga($desde)) ?> y el <?= e(fecha_larga($hasta)) ?>.
+      <?php if ($ultima): ?>
+        La última visita registrada es del <?= e(fecha_corta(date('Y-m-d H:i:s', strtotime($ultima) + $offset))) ?>:
+        probá con un período que la incluya.
+      <?php endif; ?>
+    </div>
+  <?php else: ?>
+
+  <!-- ---------------- visitas por día ---------------- -->
+  <?php
+  // Se dibujan todos los días del período, también los vacíos: un día en cero
+  // es un dato, y salteárselo dibuja una curva que miente sobre el ritmo.
+  $serie = [];
+  $etq = [];
+  $tit = [];
+  $paso = max(1, (int) ceil($diasRango / 8));
+  for ($i = 0; $i < $diasRango; $i++) {
+      $f = date('Y-m-d', strtotime($desde . " +{$i} days"));
+      $d = $porDia[$f] ?? ['vistas' => 0, 'unicos' => 0];
+      $serie[] = $d['vistas'];
+      // El último día siempre se rotula, pero sólo si no queda encima del
+      // rótulo anterior: si no, "26/07" y "27/07" salen uno sobre el otro.
+      $ultimo = $i === $diasRango - 1;
+      $pegado = $ultimo && ($i % $paso) !== 0 && ($i - intdiv($i, $paso) * $paso) < max(2, (int) ($paso / 2));
+      $etq[$i] = (($i % $paso === 0) || ($ultimo && !$pegado)) ? date('d/m', strtotime($f)) : '';
+      $tit[$i] = fecha_larga($f) . ' · ' . $d['vistas'] . ' vistas de ' . $d['unicos'] . ' personas';
+  }
+  ?>
+  <div class="panel">
+    <h2 class="panel-title">Visitas por día</h2>
+    <?php if ($diasRango < 2): ?>
+      <p class="hint">Un solo día no dibuja una curva. Elegí un período más largo para ver la evolución.</p>
+    <?php else: ?>
+      <?= svg_curva($serie, $etq, $tit) ?>
+    <?php endif; ?>
+  </div>
+
+  <!-- ---------------- mapa de calor ---------------- -->
+  <div class="panel">
+    <h2 class="panel-title">A qué hora entra la gente</h2>
+    <p class="hint" style="margin-top:-8px">
+      Cada cuadrito es un día de la semana y una hora, y cuanto más oscuro más visitas.
+      Es el gráfico para decidir a qué hora conviene publicar en redes.
+    </p>
+    <?= heatmap_semana($celdas, $topeHeat) ?>
+  </div>
+
   <!-- ---------------- cuándo se postulan ---------------- -->
   <div class="panel">
     <div class="hoy-head">
@@ -308,9 +386,8 @@ function curva_horaria(array $horas, int $horaActual): string
         <h2 class="panel-title">Cuándo se postulan</h2>
         <p class="hint" style="margin:0">
           Del <?= e(fecha_larga($calendario[0]['fecha'])) ?> al
-          <?= e(fecha_larga($calendario[count($calendario) - 1]['fecha'])) ?>,
-          día por día. Los días vacíos también están dibujados: que no entre nada
-          también es información.
+          <?= e(fecha_larga($calendario[count($calendario) - 1]['fecha'])) ?>, día por día.
+          Este gráfico muestra siempre toda la convocatoria, sin importar el período elegido arriba.
         </p>
       </div>
       <div class="hoy-cifras">
@@ -322,9 +399,9 @@ function curva_horaria(array $horas, int $horaActual): string
     <?php if ($totalPostulaciones === 0): ?>
       <p class="hint">Todavía no entró ninguna postulación. El gráfico se dibuja con la primera.</p>
     <?php else: ?>
+      <div class="cal-scroll">
       <div class="calendario" style="--dias:<?= count($calendario) ?>">
         <?php foreach ($calendario as $d):
-          $alto = $maxPost > 0 ? round($d['total'] * 100 / $maxPost) : 0;
           $titulo = $d['total'] === 0
             ? fecha_larga($d['fecha']) . ' · sin postulaciones'
             : fecha_larga($d['fecha']) . ' · ' . $d['total'] . ($d['total'] === 1 ? ' postulación' : ' postulaciones')
@@ -345,32 +422,18 @@ function curva_horaria(array $horas, int $horaActual): string
           </div>
         <?php endforeach; ?>
       </div>
+      </div>
       <div class="cal-leyenda">
         <span><i class="cal-acelera"></i> <?= e(PROGRAMAS['Acelera']['nombre']) ?></span>
         <span><i class="cal-raiz"></i> <?= e(PROGRAMAS['Raiz']['nombre']) ?></span>
         <span class="cal-hoy-ref">La franja marcada es hoy</span>
       </div>
+      <p class="hint">
+        Raíz va con trama además de con color: medido, los dos colores del programa se
+        distinguen apenas para quien tiene daltonismo rojo-verde, que es una de cada doce
+        personas con ojos de varón. La trama se ve igual sin distinguir ningún color.
+      </p>
     <?php endif; ?>
-  </div>
-
-  <?php if (!$porDia): ?>
-    <div class="empty-state">
-      Todavía no hay visitas registradas en este período. Los datos empiezan a juntarse
-      desde que esta versión del sitio está publicada.
-    </div>
-  <?php else: ?>
-
-  <!-- ---------------- visitas por día ---------------- -->
-  <div class="panel">
-    <h2 class="panel-title">Visitas por día</h2>
-    <div class="grafico">
-      <?php foreach ($porDia as $d): $alto = $maxDia > 0 ? max(2, round($d['vistas'] * 100 / $maxDia)) : 2; ?>
-        <div class="barra" title="<?= e($d['dia']) ?> · <?= (int) $d['vistas'] ?> visitas de <?= (int) $d['unicos'] ?> personas">
-          <span class="col" style="height:<?= $alto ?>%"></span>
-          <span class="fecha"><?= e(date('d/m', strtotime($d['dia']))) ?></span>
-        </div>
-      <?php endforeach; ?>
-    </div>
   </div>
 
   <div class="cols-2">

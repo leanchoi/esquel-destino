@@ -131,6 +131,24 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_visitas_fecha ON visitas (creada_at);");
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_visitas_ruta ON visitas (ruta);");
 
+    // Sesiones del panel: cuándo entró cada quien y cuánto se quedó.
+    //
+    // login_attempts ya guarda el momento de cada ingreso, pero no cuánto duró.
+    // Acá se abre una fila al entrar y se le corre ultima_actividad en cada
+    // pantalla que se abre. La duración es la diferencia entre las dos, así que
+    // no cuenta el rato que alguien pasa leyendo la última pantalla antes de
+    // irse: es un piso, no un cronómetro, y así está dicho en el panel.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS sesiones_panel (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+        inicio DATETIME,
+        ultima_actividad DATETIME,
+        pantallas INTEGER NOT NULL DEFAULT 1,
+        cerrada INTEGER NOT NULL DEFAULT 0
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_sesiones_user ON sesiones_panel (user_id, inicio);");
+
     // Rate-limiting de login.
     $pdo->exec("CREATE TABLE IF NOT EXISTS login_attempts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

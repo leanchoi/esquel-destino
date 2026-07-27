@@ -11,8 +11,19 @@
 
 require_once __DIR__ . '/db.php';
 
-/** Roles que votan. Un viewer entra a mirar, no a evaluar. */
-const ROLES_JURADO = ['editor', 'admin'];
+/**
+ * Los roles que votan, sacados de ROLES_INFO.
+ *
+ * Hoy es sólo el evaluador. El observador entra a mirar, y el admin coordina:
+ * mueve las postulaciones de etapa, así que sumarle además un voto sería darle
+ * dos veces la misma decisión.
+ *
+ * @return string[]
+ */
+function roles_jurado(): array
+{
+    return array_keys(array_filter(ROLES_INFO, fn($r) => !empty($r['vota'])));
+}
 
 /**
  * Los jurados habilitados hoy.
@@ -25,9 +36,13 @@ function jurado(PDO $pdo): array
     if ($cache !== null) {
         return $cache;
     }
-    $marcas = implode(',', array_fill(0, count(ROLES_JURADO), '?'));
+    $roles = roles_jurado();
+    if (!$roles) {
+        return $cache = [];
+    }
+    $marcas = implode(',', array_fill(0, count($roles), '?'));
     $stmt = $pdo->prepare("SELECT id, username, role FROM users WHERE role IN ($marcas) ORDER BY username COLLATE NOCASE");
-    $stmt->execute(ROLES_JURADO);
+    $stmt->execute($roles);
     return $cache = array_map(
         fn($u) => ['id' => (int) $u['id'], 'username' => $u['username'], 'role' => $u['role']],
         $stmt->fetchAll()

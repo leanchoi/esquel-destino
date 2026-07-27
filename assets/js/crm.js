@@ -149,6 +149,20 @@
     });
   }
 
+  // ------------------------------------- el rango a medida de la analítica
+  // Vive acá porque crm.js es el único script del panel. Sin JS el formulario
+  // igual funciona: se muestra siempre y se envía por GET.
+  var btnCustom = document.getElementById('btnCustom');
+  var formCustom = document.getElementById('formCustom');
+  if (btnCustom && formCustom) {
+    btnCustom.addEventListener('click', function () {
+      var abierto = !formCustom.hidden;
+      formCustom.hidden = abierto;
+      btnCustom.setAttribute('aria-expanded', abierto ? 'false' : 'true');
+      if (!abierto) formCustom.querySelector('input[type=date]').focus();
+    });
+  }
+
   // ------------------------------------------------------------- el drawer
   var drawer = document.getElementById('drawer');
   var backdrop = document.getElementById('drawerBackdrop');
@@ -256,9 +270,16 @@
       html += '</ul></div>';
     }
 
-    // Mi voto.
+    // Mi voto, o por qué no lo tengo.
     if (PUEDE_VOTAR) {
       html += miVotoHTML(a);
+    } else {
+      html += '<div class="d-section sin-voto"><h3>Tu rol no vota</h3><p class="ayuda">' +
+        (PUEDE_ESTADO
+          ? 'Como administrador coordinás el proceso: movés las postulaciones de etapa. ' +
+            'El voto queda en los evaluadores, para que quien decide no sea además quien puntúa.'
+          : 'Entrás como observador: ves todo lo que ve el jurado y podés bajar el CSV, pero no emitís voto.') +
+        '</p></div>';
     }
 
     // Los votos del resto, uno por uno.

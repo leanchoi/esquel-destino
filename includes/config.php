@@ -44,6 +44,38 @@ const PROGRAMAS = [
     ],
 ];
 
+// --- Roles del panel ------------------------------------------------------
+/**
+ * Cómo se llama cada rol en pantalla, y qué hace.
+ *
+ * Las claves (viewer / editor / admin) son las que están guardadas en la base
+ * desde la primera versión y no se tocan: renombrarlas obligaría a una
+ * migración que, si sale a medias, deja gente sin poder entrar. Lo que ve el
+ * usuario es la etiqueta.
+ *
+ * "vota" es aparte del escalafón de permisos a propósito. El admin puede más
+ * que un evaluador en todo lo demás, pero no emite voto: coordina el proceso y
+ * mueve las postulaciones de etapa, y quien decide no debería además estar
+ * puntuando. Por eso ser jurado se pregunta por rol exacto y no por jerarquía.
+ */
+const ROLES_INFO = [
+    'viewer' => [
+        'label'  => 'Observador',
+        'ayuda'  => 'Ve las postulaciones y los votos del jurado, y baja el CSV. No vota.',
+        'vota'   => false,
+    ],
+    'editor' => [
+        'label'  => 'Evaluador',
+        'ayuda'  => 'Todo lo anterior y además emite su voto con comentario. Es el jurado.',
+        'vota'   => true,
+    ],
+    'admin' => [
+        'label'  => 'Administrador',
+        'ayuda'  => 'Coordina: mueve de etapa, gestiona usuarios y ve la analítica. No vota.',
+        'vota'   => false,
+    ],
+];
+
 // --- Estados del CRM ------------------------------------------------------
 const ESTADOS = [
     'Pendiente'       => ['label' => 'Pendiente',       'color' => '#8a8178'],

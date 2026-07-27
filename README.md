@@ -60,19 +60,24 @@ Con `CIERRE_DURO = true`, pasada la fecha de cierre el formulario deja de acepta
 
 ## Roles del panel
 
-| Rol | Puede |
-|---|---|
-| `viewer` | Ver las postulaciones, leer los votos del jurado y descargar el CSV |
-| `editor` | Todo lo anterior + emitir **su propio voto** con comentario, y editar la nota compartida |
-| `admin` | Todo lo anterior + **mover de etapa**, eliminar postulaciones y gestionar usuarios |
+| Clave en la base | Se muestra como | Puede |
+|---|---|---|
+| `viewer` | **Observador** | Ver las postulaciones, leer los votos del jurado y descargar el CSV. No vota. |
+| `editor` | **Evaluador** | Todo lo anterior y además emitir **su propio voto** con comentario. Es el jurado. |
+| `admin` | **Administrador** | Todo lo anterior + **mover de etapa**, eliminar postulaciones, gestionar usuarios y ver la analítica. **No vota.** |
 
-Mover una postulación de etapa es una decisión del proceso, no una opinión, y por eso queda sólo en manos del admin: un editor evalúa y comenta, pero no adelanta a nadie de etapa.
+Las claves de la base quedaron como estaban desde la primera versión a propósito: renombrarlas obligaría a una migración que, si sale a medias, deja gente sin poder entrar. Lo que se ve en pantalla es la etiqueta, que sale de `ROLES_INFO` en `includes/config.php`.
+
+Dos cosas que no son un escalafón:
+
+- **El admin no vota.** Es quien mueve las postulaciones de etapa, y quien decide no debería además estar puntuando. Por eso ser jurado se pregunta por rol exacto (`es_jurado()`) y no por jerarquía (`puede()`).
+- **La analítica es sólo del admin.** El evaluador y el observador ven las postulaciones; el tráfico del sitio no.
 
 ## Cómo vota el jurado
 
 Cada evaluador guarda **su propia fila** en la tabla `evaluaciones`, una por jurado y postulación. Nadie pisa el voto de nadie, y el puntaje que se ve en las listas es el promedio de los votos emitidos.
 
-- **El jurado no está escrito en ningún lado.** Son los usuarios con rol `editor` o `admin`, leídos en el momento. Si mañana se suman dos evaluadores más, aparecen solos como pendientes en todas las postulaciones, incluidas las que ya tenían votos.
+- **El jurado no está escrito en ningún lado.** Son los usuarios cuyo rol tiene `vota => true` en `ROLES_INFO` —hoy sólo el evaluador—, leídos en el momento. Si mañana se suman dos evaluadores más, aparecen solos como pendientes en todas las postulaciones, incluidas las que ya tenían votos.
 - **Un voto en cero para todo se rechaza.** Si de verdad no querés puntuar, eso se llama **abstención**: pide un motivo, no entra en el promedio y cuenta como resuelta, así el jurado deja de figurar incompleto. Está para el conflicto de interés, que en un pueblo chico es la regla y no la excepción.
 - **El disenso se marca solo.** Cuando entre el voto más alto y el más bajo hay 1,5 puntos o más, la postulación queda etiquetada. No cambia el promedio: avisa que hay una conversación pendiente.
 - El CSV baja el consolidado y además **una columna por jurado**, con su puntaje y su comentario.
