@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/jurado.php';
 
 $u = requiere_login();
 $pdo = db();
@@ -9,6 +10,7 @@ $filtros = [
     'program' => $_GET['program'] ?? '',
     'stage'   => $_GET['stage'] ?? '',
     'q'       => trim((string) ($_GET['q'] ?? '')),
+    'jurado'  => $_GET['jurado'] ?? '',      // '', 'mio', 'falta', 'completo', 'disenso'
 ];
 
 $sql = 'SELECT * FROM applications WHERE 1=1';
@@ -44,20 +46,113 @@ if ($apps) {
     }
 }
 
+// El historial de etapas de todas las listadas, también de una.
+$historial = [];
+if ($apps) {
+    $h = $pdo->prepare(
+        "SELECT application_id, username, stage_from, stage_to, created_at
+           FROM stage_history WHERE application_id IN ($ph) ORDER BY created_at DESC"
+    );
+    $h->execute($ids);
+    foreach ($h->fetchAll() as $row) {
+        $historial[$row['application_id']][] = $row;
+    }
+}
+
+// El jurado de hoy y todos sus votos, también en una sola consulta.
+$jurado   = jurado($pdo);
+$votos    = evaluaciones_de($pdo, array_column($apps, 'id'));
+$miId     = (int) $u['id'];
+$soyJuez  = puede('editor');
+
+foreach ($apps as $i => $a) {
+    $vs = $votos[$a['id']] ?? [];
+    $apps[$i]['votos']       = $vs;
+    $apps[$i]['consolidado'] = consolidar($vs, $jurado);
+    $apps[$i]['miVoto']      = voto_de($vs, $miId);
+    $apps[$i]['detalles']    = $detalles[$a['id']] ?? [];
+    $apps[$i]['historial']   = $historial[$a['id']] ?? [];
+}
+
+// Filtro por estado del jurado. Va después de la consulta porque se calcula
+// juntando votos, no leyendo una columna.
+if ($filtros['jurado'] !== '') {
+    $apps = array_values(array_filter($apps, function ($a) use ($filtros) {
+        $c = $a['consolidado'];
+        return match ($filtros['jurado']) {
+            'mio'      => $a['miVoto'] === null,
+            'falta'    => !$c['completo'],
+            'completo' => $c['completo'],
+            'disenso'  => $c['disenso'],
+            default    => true,
+        };
+    }));
+}
+
 // Métricas sobre el total, no sobre el filtro activo.
 $tot = $pdo->query("SELECT
     COUNT(*) total,
     SUM(CASE WHEN program='Acelera' THEN 1 ELSE 0 END) acelera,
     SUM(CASE WHEN program='Raiz' THEN 1 ELSE 0 END) raiz,
-    SUM(CASE WHEN stage='Aprobado' THEN 1 ELSE 0 END) aprobados,
-    SUM(CASE WHEN stage='Pendiente' THEN 1 ELSE 0 END) pendientes
+    SUM(CASE WHEN stage='Aprobado' THEN 1 ELSE 0 END) aprobados
     FROM applications")->fetch();
 
+// Cuántas están esperando mi voto y cuántas ya tienen el jurado entero.
+$sinMiVoto = 0;
+$conJuradoCompleto = 0;
+$stmtTodas = $pdo->query('SELECT id FROM applications');
+$idsTodas = array_map('intval', $stmtTodas->fetchAll(PDO::FETCH_COLUMN));
+$votosTodos = evaluaciones_de($pdo, $idsTodas);
+foreach ($idsTodas as $idApp) {
+    $vs = $votosTodos[$idApp] ?? [];
+    if (voto_de($vs, $miId) === null) {
+        $sinMiVoto++;
+    }
+    if (consolidar($vs, $jurado)['completo']) {
+        $conJuradoCompleto++;
+    }
+}
+
 $queryFiltros = http_build_query(array_filter($filtros));
+
+// Ranking: las mismas postulaciones, ordenadas por lo que decidió el jurado.
+// Sin puntaje van al final; entre ellas, la más vieja primero, que es la que
+// lleva más tiempo esperando.
+$ranking = $apps;
+usort($ranking, function ($x, $y) {
+    $px = $x['consolidado']['puntaje'];
+    $py = $y['consolidado']['puntaje'];
+    if ($px === null && $py === null) {
+        return strcmp((string) $x['submitted_at'], (string) $y['submitted_at']);
+    }
+    if ($px === null) return 1;
+    if ($py === null) return -1;
+    return $py <=> $px;
+});
 
 $pageTitle = 'Postulaciones';
 $nav = 'postulaciones';
 require __DIR__ . '/_header.php';
+
+/**
+ * Sello del jurado: cuántos votaron sobre cuántos, y si hay disenso.
+ * Lleva data-sello para que el JS lo repinte tras un voto sin recargar la página.
+ */
+function sello_jurado(array $c, int $id): string
+{
+    $clase = $c['completo'] ? 'is-completo' : ($c['emitidos'] > 0 ? 'is-parcial' : 'is-vacio');
+    $texto = $c['emitidos'] . '/' . max($c['jurados'], $c['emitidos']);
+    $titulo = $c['faltan']
+        ? 'Falta votar: ' . implode(', ', $c['faltan'])
+        : ($c['jurados'] === 0 ? 'No hay jurados cargados' : 'Votó todo el jurado');
+    $html = '<span class="jurado-sello ' . $clase . '" title="' . e($titulo) . '">'
+          . '<span class="js-n">' . e($texto) . '</span></span>';
+    if ($c['disenso']) {
+        $html .= ' <span class="tag-disenso" title="Entre el voto más alto y el más bajo hay '
+               . e(number_format($c['dispersion'], 2)) . ' puntos">disenso</span>';
+    }
+    return '<span class="sello-wrap" data-sello="' . $id . '">' . $html . '</span>';
+}
 ?>
 
 <div class="admin-topbar">
@@ -71,8 +166,16 @@ require __DIR__ . '/_header.php';
     <div class="stat"><span class="k">Total</span><span class="v"><?= (int) $tot['total'] ?></span></div>
     <div class="stat acelera"><span class="k">Acelera</span><span class="v"><?= (int) $tot['acelera'] ?></span></div>
     <div class="stat raiz"><span class="k">Raíz</span><span class="v"><?= (int) $tot['raiz'] ?></span></div>
-    <div class="stat"><span class="k">Sin evaluar</span><span class="v"><?= (int) $tot['pendientes'] ?></span></div>
-    <div class="stat ok"><span class="k">Aprobadas</span><span class="v"><?= (int) $tot['aprobados'] ?></span></div>
+    <?php if ($soyJuez): ?>
+      <a class="stat<?= $sinMiVoto > 0 ? ' alerta' : '' ?>" href="?jurado=mio">
+        <span class="k">Falta tu voto</span><span class="v"><?= $sinMiVoto ?></span>
+      </a>
+    <?php else: ?>
+      <div class="stat"><span class="k">Jurados</span><span class="v"><?= count($jurado) ?></span></div>
+    <?php endif; ?>
+    <a class="stat ok" href="?jurado=completo">
+      <span class="k">Jurado completo</span><span class="v"><?= $conJuradoCompleto ?></span>
+    </a>
   </div>
 
   <form method="get" class="filters">
@@ -88,14 +191,26 @@ require __DIR__ . '/_header.php';
         <option value="<?= e($k) ?>" <?= $filtros['stage'] === $k ? 'selected' : '' ?>><?= e($s['label']) ?></option>
       <?php endforeach; ?>
     </select>
+    <select name="jurado">
+      <option value="">Todo el jurado</option>
+      <?php foreach ([
+        'mio'      => 'Me falta votar',
+        'falta'    => 'Falta algún jurado',
+        'completo' => 'Votó todo el jurado',
+        'disenso'  => 'Con disenso',
+      ] as $k => $lbl): ?>
+        <option value="<?= e($k) ?>" <?= $filtros['jurado'] === $k ? 'selected' : '' ?>><?= e($lbl) ?></option>
+      <?php endforeach; ?>
+    </select>
     <input type="search" name="q" value="<?= e($filtros['q']) ?>" placeholder="Buscar proyecto, persona o correo…">
     <button type="submit" class="btn btn-secondary btn-sm">Filtrar</button>
     <?php if (array_filter($filtros)): ?><a href="dashboard.php" class="clear">Limpiar</a><?php endif; ?>
 
     <span class="grow"></span>
-    <div class="view-toggle">
-      <button type="button" class="is-active" id="viewTable">Tabla</button>
-      <button type="button" id="viewCards">Tarjetas</button>
+    <div class="view-toggle" role="tablist" aria-label="Cómo ver las postulaciones">
+      <button type="button" class="is-active" id="viewTable" role="tab" aria-selected="true">Tabla</button>
+      <button type="button" id="viewRank" role="tab" aria-selected="false">Ranking</button>
+      <button type="button" id="viewCards" role="tab" aria-selected="false">Tablero</button>
     </div>
     <a href="api.php?export=csv&amp;<?= e($queryFiltros) ?>" class="btn btn-secondary btn-sm">Descargar CSV</a>
   </form>
@@ -104,22 +219,23 @@ require __DIR__ . '/_header.php';
     <div class="empty-state">No hay postulaciones que coincidan con estos filtros.</div>
   <?php else: ?>
 
+    <!-- ------------------------------------------------------------ tabla -->
     <div id="tableView" class="panel" style="padding:0;overflow:hidden">
       <div class="table-scroll">
         <table class="crm-table">
           <thead>
             <tr>
               <th>Proyecto</th><th>Responsable</th><th>Línea</th>
-              <th>Recibida</th><th>Estado</th><th>Puntaje</th><th></th>
+              <th>Recibida</th><th>Estado</th><th>Jurado</th><th>Puntaje</th><th></th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($apps as $a):
               $p = programa_info($a['program']);
               $s = estado_info($a['stage']);
-              $pts = puntaje_ponderado($a);
+              $c = $a['consolidado'];
             ?>
-              <tr>
+              <tr<?= $soyJuez && $a['miVoto'] === null ? ' class="sin-mi-voto"' : '' ?>>
                 <td><strong><?= e($a['name']) ?></strong></td>
                 <td>
                   <div><?= e($a['contact_name']) ?></div>
@@ -128,10 +244,11 @@ require __DIR__ . '/_header.php';
                 <td><span class="chip" style="--c:<?= e($p['color']) ?>"><?= e($p['nombre']) ?></span></td>
                 <td class="nowrap sub"><?= e(fecha_corta($a['submitted_at'], true)) ?></td>
                 <td><span class="chip" style="--c:<?= e($s['color']) ?>"><?= e($s['label']) ?></span></td>
-                <td class="score"><?= $pts === null ? '—' : e(number_format($pts, 2)) ?></td>
+                <td class="nowrap"><?= sello_jurado($c, (int) $a['id']) ?></td>
+                <td class="score" data-puntaje="<?= (int) $a['id'] ?>"><?= $c['puntaje'] === null ? '—' : e(number_format($c['puntaje'], 2)) ?></td>
                 <td class="right">
                   <button type="button" class="btn btn-secondary btn-sm" data-abrir="<?= (int) $a['id'] ?>">
-                    <?= puede('editor') ? 'Evaluar' : 'Ver' ?>
+                    <?= $soyJuez ? ($a['miVoto'] === null ? 'Evaluar' : 'Ver / editar') : 'Ver' ?>
                   </button>
                 </td>
               </tr>
@@ -141,29 +258,86 @@ require __DIR__ . '/_header.php';
       </div>
     </div>
 
+    <!-- ---------------------------------------------------------- ranking -->
+    <div id="rankView" class="panel" hidden>
+      <h2 class="panel-title">Ranking del jurado</h2>
+      <p class="hint" style="margin-top:-8px">
+        Ordenado por el promedio de los votos emitidos. Ojo con las que todavía no tienen
+        el jurado completo: un promedio de un solo voto no se compara con uno de cuatro.
+      </p>
+      <ol class="ranking">
+        <?php foreach ($ranking as $i => $a):
+          $c = $a['consolidado'];
+          $p = programa_info($a['program']);
+          $ancho = $c['puntaje'] === null ? 0 : round($c['puntaje'] * 20); ?>
+          <li class="rank-row<?= $c['puntaje'] === null ? ' is-sin-votos' : '' ?>">
+            <span class="rank-pos"><?= $c['puntaje'] === null ? '—' : $i + 1 ?></span>
+            <button type="button" class="rank-main" data-abrir="<?= (int) $a['id'] ?>">
+              <span class="rank-nombre"><?= e($a['name']) ?></span>
+              <span class="rank-meta">
+                <span class="chip" style="--c:<?= e($p['color']) ?>"><?= e($p['nombre']) ?></span>
+                <?= sello_jurado($c, (int) $a['id']) ?>
+              </span>
+            </button>
+            <span class="rank-barra"><span style="width:<?= $ancho ?>%"></span></span>
+            <span class="rank-num"><?= $c['puntaje'] === null ? '—' : e(number_format($c['puntaje'], 2)) ?></span>
+          </li>
+        <?php endforeach; ?>
+      </ol>
+    </div>
+
+    <!-- ---------------------------------------------------------- tablero -->
     <div id="cardsView" class="kanban" hidden>
       <?php foreach (ESTADOS as $slug => $info):
         $col = array_values(array_filter($apps, fn($a) => $a['stage'] === $slug)); ?>
-        <div class="kcol">
+        <div class="kcol" data-estado="<?= e($slug) ?>">
           <div class="kcol-head" style="--c:<?= e($info['color']) ?>">
             <span><?= e($info['label']) ?></span><span class="n"><?= count($col) ?></span>
           </div>
-          <div class="kcol-body">
+          <div class="kcol-body" data-drop="<?= e($slug) ?>">
             <?php foreach ($col as $a):
               $p = programa_info($a['program']);
-              $pts = puntaje_ponderado($a); ?>
-              <button type="button" class="kcard" data-abrir="<?= (int) $a['id'] ?>">
-                <span class="chip" style="--c:<?= e($p['color']) ?>"><?= e($p['nombre']) ?></span>
-                <span class="kcard-t"><?= e($a['name']) ?></span>
-                <span class="kcard-s"><?= e($a['contact_name']) ?></span>
-                <span class="kcard-f"><?= e(fecha_corta($a['submitted_at'])) ?><?= $pts !== null ? ' · ' . e(number_format($pts, 2)) : '' ?></span>
-              </button>
+              $c = $a['consolidado']; ?>
+              <article class="kcard" data-id="<?= (int) $a['id'] ?>"<?= puede('admin') ? ' draggable="true"' : '' ?>>
+                <button type="button" class="kcard-abrir" data-abrir="<?= (int) $a['id'] ?>">
+                  <span class="chip" style="--c:<?= e($p['color']) ?>"><?= e($p['nombre']) ?></span>
+                  <span class="kcard-t"><?= e($a['name']) ?></span>
+                  <span class="kcard-s"><?= e($a['contact_name']) ?></span>
+                  <span class="kcard-f">
+                    <?= sello_jurado($c, (int) $a['id']) ?>
+                    <span class="kcard-pts" data-puntaje="<?= (int) $a['id'] ?>"><?= $c['puntaje'] === null ? 'sin puntaje' : e(number_format($c['puntaje'], 2)) ?></span>
+                  </span>
+                </button>
+                <?php if (puede('admin')): ?>
+                  <label class="kcard-mover">
+                    <span class="sr-only">Mover «<?= e($a['name']) ?>» a otro estado</span>
+                    <select data-mover="<?= (int) $a['id'] ?>">
+                      <?php foreach (ESTADOS as $k => $s): ?>
+                        <option value="<?= e($k) ?>" <?= $a['stage'] === $k ? 'selected' : '' ?>><?= e($s['label']) ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </label>
+                <?php endif; ?>
+              </article>
             <?php endforeach; ?>
             <?php if (!$col): ?><div class="kempty">—</div><?php endif; ?>
           </div>
         </div>
       <?php endforeach; ?>
     </div>
+
+    <?php if (puede('admin')): ?>
+      <p class="hint kanban-ayuda" id="kanbanAyuda" hidden>
+        Arrastrá una tarjeta a otra columna para cambiarle el estado, o usá el selector de
+        abajo de cada tarjeta —que además es el camino en el celular y con el teclado.
+        Cada movimiento queda firmado con tu usuario en el historial.
+      </p>
+    <?php elseif ($soyJuez): ?>
+      <p class="hint kanban-ayuda" id="kanbanAyuda" hidden>
+        El estado lo mueve un administrador. Vos evaluás y comentás: tu voto entra en el
+        promedio del jurado.
+      </p>
+    <?php endif; ?>
 
   <?php endif; ?>
 </div>
@@ -177,22 +351,26 @@ require __DIR__ . '/_header.php';
     </div>
     <button type="button" class="drawer-close" id="drawerClose" aria-label="Cerrar">&times;</button>
   </div>
+  <div class="drawer-tabs" id="drawerTabs" role="tablist">
+    <button type="button" role="tab" data-tab="jurado" class="is-active">Jurado</button>
+    <button type="button" role="tab" data-tab="respuestas">Respuestas</button>
+    <button type="button" role="tab" data-tab="proceso">Proceso</button>
+  </div>
   <div class="drawer-body" id="drawerBody"></div>
 </aside>
 
 <script id="datosApps" type="application/json"><?= json_encode(
-    array_map(function ($a) use ($detalles) {
-        $a['detalles'] = $detalles[$a['id']] ?? [];
-        $a['puntaje'] = puntaje_ponderado($a);
-        return $a;
-    }, $apps),
+    $apps,
     JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
 ) ?></script>
 <script id="configCrm" type="application/json"><?= json_encode([
     'criterios'   => CRITERIOS,
     'estados'     => ESTADOS,
     'etiquetas'   => ETIQUETAS_DETALLE,
-    'puedeEditar' => puede('editor'),
+    'jurado'      => $jurado,
+    'yo'          => ['id' => $miId, 'username' => $u['username'], 'role' => $u['role']],
+    'puedeVotar'  => $soyJuez,
+    'puedeEstado' => puede('admin'),
     'puedeBorrar' => puede('admin'),
     'csrf'        => csrf_token(),
 ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?></script>

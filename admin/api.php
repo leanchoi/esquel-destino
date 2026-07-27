@@ -1,9 +1,17 @@
 <?php
 /**
- * Endpoints del panel: exportación CSV y actualización de la evaluación.
+ * Endpoints del panel.
+ *
+ * Cada acción pide su propio permiso, y no todos son el mismo:
+ *   voto     — editor o admin, y sólo sobre su propia evaluación
+ *   estado   — admin, y nadie más: mover una postulación de columna es la
+ *              decisión del proceso, no una opinión
+ *   notas    — editor o admin (la nota del equipo sí es compartida)
+ *   eliminar — admin, escribiendo el nombre del proyecto
  */
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/jurado.php';
 
 iniciar_sesion();
 $u = usuario_actual();
@@ -55,18 +63,26 @@ if (($_GET['export'] ?? '') === 'csv') {
         }
     }
 
+    $votos = evaluaciones_de($pdo, array_column($apps, 'id'));
+    $jurado = jurado($pdo);
+
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="postulaciones-esquel-lab-' . date('Y-m-d') . '.csv"');
 
     $out = fopen('php://output', 'w');
     fwrite($out, "\xEF\xBB\xBF"); // BOM para que Excel reconozca UTF-8
 
-    // Cabecera: contacto + evaluación + TODAS las respuestas del formulario.
-    $cab = ['ID', 'Recibida', 'Línea', 'Estado', 'Proyecto', 'Responsable', 'Email', 'Teléfono'];
+    // Cabecera: contacto + consolidado del jurado + el voto de cada jurado con
+    // nombre y apellido + TODAS las respuestas del formulario.
+    $cab = ['ID', 'Recibida', 'Línea', 'Estado', 'Proyecto', 'Responsable', 'Email', 'Teléfono',
+            'Puntaje del jurado', 'Votos', 'Abstenciones', 'Jurado completo', 'Falta votar', 'Dispersión'];
     foreach (CRITERIOS as $def) {
-        $cab[] = $def['label'] . ' (0-5)';
+        $cab[] = 'Promedio · ' . $def['label'];
     }
-    $cab[] = 'Puntaje ponderado';
+    foreach ($jurado as $j) {
+        $cab[] = 'Voto · ' . $j['username'];
+        $cab[] = 'Comentario · ' . $j['username'];
+    }
     foreach (ETIQUETAS_DETALLE as $etq) {
         $cab[] = $etq;
     }
@@ -74,6 +90,9 @@ if (($_GET['export'] ?? '') === 'csv') {
     fputcsv($out, $cab);
 
     foreach ($apps as $a) {
+        $vs = $votos[$a['id']] ?? [];
+        $c  = consolidar($vs, $jurado);
+
         $fila = [
             $a['id'],
             fecha_corta($a['submitted_at'], true),
@@ -83,12 +102,27 @@ if (($_GET['export'] ?? '') === 'csv') {
             $a['contact_name'],
             $a['email'],
             $a['phone'],
+            $c['puntaje'] === null ? '' : number_format($c['puntaje'], 2, ',', ''),
+            $c['votos'],
+            $c['abstenciones'],
+            $c['completo'] ? 'sí' : 'no',
+            implode(', ', $c['faltan']),
+            $c['dispersion'] === null ? '' : number_format($c['dispersion'], 2, ',', ''),
         ];
-        foreach (CRITERIOS as $campo => $def) {
-            $fila[] = (int) ($a[$campo] ?? 0);
+        foreach (array_keys(CRITERIOS) as $campo) {
+            $prom = $c['promedios'][$campo] ?? null;
+            $fila[] = $prom === null ? '' : number_format($prom, 2, ',', '');
         }
-        $p = puntaje_ponderado($a);
-        $fila[] = $p === null ? '' : number_format($p, 2, ',', '');
+        foreach ($jurado as $j) {
+            $v = voto_de($vs, $j['id']);
+            if (!$v) {
+                $fila[] = '';
+                $fila[] = '';
+            } else {
+                $fila[] = $v['abstencion'] ? 'se abstuvo' : number_format($v['puntaje'], 2, ',', '');
+                $fila[] = $v['comentario'];
+            }
+        }
         foreach (array_keys(ETIQUETAS_DETALLE) as $key) {
             $fila[] = $detalles[$a['id']][$key] ?? '';
         }
@@ -130,10 +164,37 @@ if ($id <= 0) {
     exit(json_encode(['ok' => false, 'error' => 'Postulación no válida.']));
 }
 
+$accion = (string) ($data['accion'] ?? '');
+
+/** Devuelve el cuadro del jurado ya recalculado, que es lo que la pantalla repinta. */
+function respuesta_jurado(PDO $pdo, int $id, array $u): array
+{
+    $votos  = evaluaciones_de($pdo, [$id])[$id] ?? [];
+    $jurado = jurado($pdo);
+
+    $app = $pdo->prepare('SELECT stage, notes FROM applications WHERE id = ?');
+    $app->execute([$id]);
+    $fila = $app->fetch() ?: ['stage' => '', 'notes' => ''];
+
+    $hist = $pdo->prepare('SELECT username, stage_from, stage_to, created_at FROM stage_history WHERE application_id = ? ORDER BY created_at DESC');
+    $hist->execute([$id]);
+
+    return [
+        'ok'          => true,
+        'id'          => $id,
+        'stage'       => $fila['stage'],
+        'notes'       => $fila['notes'],
+        'votos'       => $votos,
+        'miVoto'      => voto_de($votos, (int) $u['id']),
+        'consolidado' => consolidar($votos, $jurado),
+        'historial'   => $hist->fetchAll(),
+    ];
+}
+
 // ------------------------------------------------------------------ borrado
 // Solo admin. Es destructivo y no hay papelera: las respuestas de esa persona
 // desaparecen. Los detalles y el historial se van por ON DELETE CASCADE.
-if (($data['accion'] ?? '') === 'eliminar') {
+if ($accion === 'eliminar') {
     if (!puede('admin')) {
         http_response_code(403);
         exit(json_encode(['ok' => false, 'error' => 'Solo un administrador puede eliminar postulaciones.']));
@@ -173,52 +234,113 @@ if ($estadoPrevio === false) {
     exit(json_encode(['ok' => false, 'error' => 'No encontramos esa postulación.']));
 }
 
-$estadoNuevo = (string) ($data['stage'] ?? $estadoPrevio);
-if (!array_key_exists($estadoNuevo, ESTADOS)) {
-    $estadoNuevo = $estadoPrevio;
+// -------------------------------------------------------------------- voto
+// Cada jurado escribe únicamente su propia fila. No hay forma de mandar un
+// user_id: sale de la sesión, así que nadie puede votar en nombre de otro.
+if ($accion === 'voto') {
+    $abstencion = !empty($data['abstencion']);
+
+    $valores = [];
+    $total = 0;
+    foreach (array_keys(CRITERIOS) as $campo) {
+        $val = max(0, min(5, (int) ($data[$campo] ?? 0)));
+        $valores[$campo] = $abstencion ? 0 : $val;
+        $total += $valores[$campo];
+    }
+
+    // Un voto en cero para todo baja el promedio del proyecto igual que un voto
+    // pensado, y es lo que sale de abrir la ficha, escribir un comentario y
+    // guardar sin tocar los deslizadores. Si de verdad querés no puntuar, eso
+    // se llama abstención y tiene su propia casilla.
+    if (!$abstencion && $total === 0) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Puntuá al menos un criterio, o marcá que te abstenés.']));
+    }
+
+    $comentario = trim((string) ($data['comentario'] ?? ''));
+    if ($abstencion && $comentario === '') {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Contá por qué te abstenés: el resto del jurado necesita saberlo.']));
+    }
+    if (mb_strlen($comentario) > 4000) {
+        $comentario = mb_substr($comentario, 0, 4000);
+    }
+
+    $campos = array_keys(CRITERIOS);
+    $lista  = implode(', ', $campos);
+    $marcas = implode(', ', array_fill(0, count($campos), '?'));
+    $updates = implode(', ', array_map(fn($c) => "$c = excluded.$c", $campos));
+
+    try {
+        $sql = "INSERT INTO evaluaciones (application_id, user_id, username, $lista, comentario, abstencion, created_at, updated_at)
+                VALUES (?, ?, ?, $marcas, ?, ?, datetime('now'), datetime('now'))
+                ON CONFLICT (application_id, user_id) DO UPDATE SET
+                  $updates, comentario = excluded.comentario,
+                  abstencion = excluded.abstencion, updated_at = datetime('now')";
+        $bind = array_merge(
+            [$id, (int) $u['id'], (string) $u['username']],
+            array_values($valores),
+            [$comentario, $abstencion ? 1 : 0]
+        );
+        $pdo->prepare($sql)->execute($bind);
+    } catch (PDOException $ex) {
+        error_log('[esquel-lab] error guardando el voto: ' . $ex->getMessage());
+        http_response_code(500);
+        exit(json_encode(['ok' => false, 'error' => 'No pudimos guardar tu evaluación.']));
+    }
+
+    exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
 }
 
-$sets = ['stage = :stage', 'notes = :notes'];
-$bind = [
-    ':stage' => $estadoNuevo,
-    ':notes' => trim((string) ($data['notes'] ?? '')),
-    ':id'    => $id,
-];
-foreach (array_keys(CRITERIOS) as $campo) {
-    $val = (int) ($data[$campo] ?? 0);
-    $val = max(0, min(5, $val));
-    $sets[] = "$campo = :$campo";
-    $bind[':' . $campo] = $val;
+// ------------------------------------------------------------- retirar voto
+if ($accion === 'retirar-voto') {
+    $del = $pdo->prepare('DELETE FROM evaluaciones WHERE application_id = ? AND user_id = ?');
+    $del->execute([$id, (int) $u['id']]);
+    exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
 }
 
-try {
-    $pdo->beginTransaction();
-    $pdo->prepare('UPDATE applications SET ' . implode(', ', $sets) . ' WHERE id = :id')->execute($bind);
+// ------------------------------------------------------------------- notas
+// La nota del equipo sí es de todos: es la bitácora compartida del caso.
+if ($accion === 'notas') {
+    $pdo->prepare('UPDATE applications SET notes = ? WHERE id = ?')
+        ->execute([trim((string) ($data['notes'] ?? '')), $id]);
+    exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
+}
+
+// ------------------------------------------------------------------ estado
+// Mover una postulación de columna cierra una etapa del proceso de selección.
+// Es una decisión, no una opinión, y por eso queda en manos del admin: un
+// editor evalúa y comenta, pero no adelanta a nadie de etapa.
+if ($accion === 'estado') {
+    if (!puede('admin')) {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Solo un administrador puede cambiar el estado de una postulación.']));
+    }
+
+    $estadoNuevo = (string) ($data['stage'] ?? '');
+    if (!array_key_exists($estadoNuevo, ESTADOS)) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Ese estado no existe.']));
+    }
 
     if ($estadoNuevo !== $estadoPrevio) {
-        $pdo->prepare(
-            'INSERT INTO stage_history (application_id, user_id, username, stage_from, stage_to) VALUES (?, ?, ?, ?, ?)'
-        )->execute([$id, $u['id'], $u['username'], $estadoPrevio, $estadoNuevo]);
+        try {
+            $pdo->beginTransaction();
+            $pdo->prepare('UPDATE applications SET stage = ? WHERE id = ?')->execute([$estadoNuevo, $id]);
+            $pdo->prepare(
+                'INSERT INTO stage_history (application_id, user_id, username, stage_from, stage_to) VALUES (?, ?, ?, ?, ?)'
+            )->execute([$id, $u['id'], $u['username'], $estadoPrevio, $estadoNuevo]);
+            $pdo->commit();
+        } catch (PDOException $ex) {
+            $pdo->rollBack();
+            error_log('[esquel-lab] error cambiando el estado: ' . $ex->getMessage());
+            http_response_code(500);
+            exit(json_encode(['ok' => false, 'error' => 'No pudimos cambiar el estado.']));
+        }
     }
-    $pdo->commit();
-} catch (PDOException $ex) {
-    $pdo->rollBack();
-    error_log('[esquel-lab] error actualizando postulación: ' . $ex->getMessage());
-    http_response_code(500);
-    exit(json_encode(['ok' => false, 'error' => 'No pudimos guardar los cambios.']));
+
+    exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
 }
 
-// Recalculamos el puntaje con los valores recién guardados.
-$stmt = $pdo->prepare('SELECT * FROM applications WHERE id = ?');
-$stmt->execute([$id]);
-$app = $stmt->fetch();
-
-$hist = $pdo->prepare('SELECT username, stage_from, stage_to, created_at FROM stage_history WHERE application_id = ? ORDER BY created_at DESC');
-$hist->execute([$id]);
-
-echo json_encode([
-    'ok'       => true,
-    'puntaje'  => puntaje_ponderado($app),
-    'stage'    => $app['stage'],
-    'historial' => $hist->fetchAll(),
-], JSON_UNESCAPED_UNICODE);
+http_response_code(400);
+echo json_encode(['ok' => false, 'error' => 'Acción desconocida.']);

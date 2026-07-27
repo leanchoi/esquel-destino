@@ -62,13 +62,34 @@ Con `CIERRE_DURO = true`, pasada la fecha de cierre el formulario deja de acepta
 
 | Rol | Puede |
 |---|---|
-| `viewer` | Ver postulaciones y descargar el CSV |
-| `editor` | Todo lo anterior + puntuar, cambiar estados y dejar notas |
-| `admin` | Todo lo anterior + gestionar usuarios |
+| `viewer` | Ver las postulaciones, leer los votos del jurado y descargar el CSV |
+| `editor` | Todo lo anterior + emitir **su propio voto** con comentario, y editar la nota compartida |
+| `admin` | Todo lo anterior + **mover de etapa**, eliminar postulaciones y gestionar usuarios |
+
+Mover una postulación de etapa es una decisión del proceso, no una opinión, y por eso queda sólo en manos del admin: un editor evalúa y comenta, pero no adelanta a nadie de etapa.
+
+## Cómo vota el jurado
+
+Cada evaluador guarda **su propia fila** en la tabla `evaluaciones`, una por jurado y postulación. Nadie pisa el voto de nadie, y el puntaje que se ve en las listas es el promedio de los votos emitidos.
+
+- **El jurado no está escrito en ningún lado.** Son los usuarios con rol `editor` o `admin`, leídos en el momento. Si mañana se suman dos evaluadores más, aparecen solos como pendientes en todas las postulaciones, incluidas las que ya tenían votos.
+- **Un voto en cero para todo se rechaza.** Si de verdad no querés puntuar, eso se llama **abstención**: pide un motivo, no entra en el promedio y cuenta como resuelta, así el jurado deja de figurar incompleto. Está para el conflicto de interés, que en un pueblo chico es la regla y no la excepción.
+- **El disenso se marca solo.** Cuando entre el voto más alto y el más bajo hay 1,5 puntos o más, la postulación queda etiquetada. No cambia el promedio: avisa que hay una conversación pendiente.
+- El CSV baja el consolidado y además **una columna por jurado**, con su puntaje y su comentario.
 
 ## Criterios de evaluación
 
-Los cinco criterios y **sus pesos** están en `includes/config.php` (`CRITERIOS`). El puntaje que muestra el panel es un promedio ponderado, no simple: hoy *perfil y motivación* pesa 1.5× y *producto físico* 0.5×, según la definición del programa. Cambiar un peso ahí reordena automáticamente el ranking en el panel y en el CSV.
+Los cinco criterios y **sus pesos** están en `includes/config.php` (`CRITERIOS`). El puntaje de cada voto es un promedio ponderado, no simple: hoy *perfil y motivación* pesa 1.5× y *producto físico* 0.5×, según la definición del programa. Cambiar un peso ahí reordena automáticamente el ranking en el panel y en el CSV.
+
+Agregar un criterio nuevo es agregarlo a `CRITERIOS` y nada más: las columnas de `evaluaciones` se generan desde ahí, y las bases que ya existen se ponen al día solas en el primer acceso.
+
+## Base de prueba
+
+```bash
+php tools/sembrar-prueba.php
+```
+
+Escribe `data/database.sqlite` —que está en `.gitignore`— con jurados, postulaciones y votos repartidos a propósito: alguna sin ningún voto, alguna con el jurado completo, una con disenso fuerte y una abstención. Es lo que hace falta para ver si los indicadores del panel dicen la verdad. **No correrlo en producción**: borra todo lo que haya.
 
 ## Regenerar las ilustraciones
 

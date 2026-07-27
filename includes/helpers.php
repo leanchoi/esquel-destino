@@ -148,18 +148,27 @@ function csrf_valido(?string $token): bool
 
 // --- Fechas ---------------------------------------------------------------
 
-function fecha_larga(string $fecha): string
+// Estas dos aceptan null y devuelven una raya.
+//
+// Las fechas salen de la base, y una columna agregada por migración puede tener
+// filas viejas sin rellenar. Que falte una fecha en una fila no puede tumbar la
+// página entera: el panel de postulaciones se cayó justamente así.
+
+function fecha_larga(?string $fecha): string
 {
+    $ts = $fecha === null || $fecha === '' ? false : strtotime($fecha);
+    if ($ts === false) {
+        return '—';
+    }
     $meses = [1 => 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
               'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    $ts = strtotime($fecha);
     return (int) date('j', $ts) . ' de ' . $meses[(int) date('n', $ts)];
 }
 
-function fecha_corta(string $fecha, bool $conHora = false): string
+function fecha_corta(?string $fecha, bool $conHora = false): string
 {
-    $ts = strtotime($fecha);
-    return date($conHora ? 'd/m/Y H:i' : 'd/m/Y', $ts);
+    $ts = $fecha === null || $fecha === '' ? false : strtotime($fecha);
+    return $ts === false ? '—' : date($conHora ? 'd/m/Y H:i' : 'd/m/Y', $ts);
 }
 
 /** ¿La convocatoria acepta postulaciones en este momento? */

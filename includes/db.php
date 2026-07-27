@@ -64,6 +64,35 @@ function migrar(PDO $pdo): void
         submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );");
 
+    // Evaluaciones: un voto por jurado y por postulación.
+    //
+    // Antes los rating_* vivían en la fila de la postulación, así que era una
+    // sola evaluación compartida: el segundo evaluador pisaba lo que había
+    // puesto el primero y nadie se enteraba. Ahora cada jurado tiene su propia
+    // fila, con su comentario, y el puntaje que se muestra es el promedio de
+    // los votos emitidos.
+    //
+    // Las columnas de criterios se generan desde CRITERIOS para que la config
+    // siga siendo la única fuente de verdad. Son constantes del código, no
+    // entrada del usuario, así que interpolarlas es seguro.
+    $colsCriterios = '';
+    foreach (array_keys(CRITERIOS) as $campo) {
+        $colsCriterios .= "        $campo INTEGER NOT NULL DEFAULT 0,\n";
+    }
+    $pdo->exec("CREATE TABLE IF NOT EXISTS evaluaciones (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        application_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+$colsCriterios        comentario TEXT NOT NULL DEFAULT '',
+        abstencion INTEGER NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE (application_id, user_id),
+        FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_eval_app ON evaluaciones (application_id);");
+
     $pdo->exec("CREATE TABLE IF NOT EXISTS application_details (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         application_id INTEGER NOT NULL,
@@ -130,6 +159,11 @@ function migrar(PDO $pdo): void
             'notes'        => "TEXT",
             'submitted_at' => "DATETIME",
         ],
+        // Un criterio nuevo en CRITERIOS aparece solo en las bases que ya existen.
+        'evaluaciones' => array_fill_keys(array_keys(CRITERIOS), "INTEGER NOT NULL DEFAULT 0") + [
+            'comentario' => "TEXT NOT NULL DEFAULT ''",
+            'abstencion' => "INTEGER NOT NULL DEFAULT 0",
+        ],
     ];
 
     foreach ($columnas as $tabla => $defs) {
@@ -150,6 +184,8 @@ function migrar(PDO $pdo): void
         }
     }
 
+    migrar_evaluaciones_viejas($pdo);
+
     // Usuario semilla. Nace marcado para cambio obligatorio de contraseña:
     // admin/admin123 sirve para el primer ingreso, no para quedarse.
     $count = (int) $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
@@ -157,4 +193,60 @@ function migrar(PDO $pdo): void
         $stmt = $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES (?, ?, 'admin', 1, datetime('now'))");
         $stmt->execute(['admin', password_hash('admin123', PASSWORD_DEFAULT)]);
     }
+}
+
+/** id reservado para la evaluación que existía antes de que hubiera votos por jurado. */
+const EVALUADOR_HEREDADO = -1;
+
+/**
+ * Rescata las evaluaciones que quedaron en la fila de la postulación.
+ *
+ * Los rating_* de applications eran una evaluación compartida y sin firma: no
+ * hay forma de saber quién la cargó. Se pasan a evaluaciones bajo un evaluador
+ * heredado con id -1, que no coincide con ningún usuario real. Así el trabajo
+ * hecho no se pierde y, al mismo tiempo, no se le atribuye a nadie un voto que
+ * quizás no emitió: todos los jurados de carne y hueso siguen figurando como
+ * pendientes hasta que voten.
+ *
+ * Corre una sola vez: después de migrar, los rating_* de applications quedan en
+ * cero y la condición deja de encontrar nada.
+ */
+function migrar_evaluaciones_viejas(PDO $pdo): void
+{
+    $campos = array_keys(CRITERIOS);
+
+    $existentes = array_column($pdo->query("PRAGMA table_info(applications)")->fetchAll(), 'name');
+    foreach ($campos as $campo) {
+        if (!in_array($campo, $existentes, true)) {
+            return;                          // base nueva: no hay nada que rescatar
+        }
+    }
+
+    $cond = implode(' + ', $campos);
+    $filas = $pdo->query("SELECT id, " . implode(', ', $campos) . " FROM applications WHERE ($cond) > 0")->fetchAll();
+    if (!$filas) {
+        return;
+    }
+
+    $lista = implode(', ', $campos);
+    $marcas = implode(', ', array_fill(0, count($campos), '?'));
+    $ins = $pdo->prepare(
+        "INSERT OR IGNORE INTO evaluaciones (application_id, user_id, username, $lista, comentario, created_at, updated_at)
+         VALUES (?, ?, ?, $marcas, ?, datetime('now'), datetime('now'))"
+    );
+    $limpiar = $pdo->prepare(
+        'UPDATE applications SET ' . implode(', ', array_map(fn($c) => "$c = 0", $campos)) . ' WHERE id = ?'
+    );
+
+    $pdo->beginTransaction();
+    foreach ($filas as $f) {
+        $valores = [$f['id'], EVALUADOR_HEREDADO, 'Evaluación anterior'];
+        foreach ($campos as $campo) {
+            $valores[] = (int) $f[$campo];
+        }
+        $valores[] = 'Cargada antes de que cada jurado tuviera su propio voto. No quedó registro de quién la hizo.';
+        $ins->execute($valores);
+        $limpiar->execute([$f['id']]);
+    }
+    $pdo->commit();
 }
