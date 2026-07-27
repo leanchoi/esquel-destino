@@ -22,6 +22,11 @@
   --ink-3: #6B6359;
   --line: #DFD9D0;
   --line-2: #C7BEB2;
+  /* Borde de controles. --line-2 daba 1.64:1 contra el papel: WCAG 1.4.11
+     pide 3:1 para que el contorno de un control se distinga del fondo, y el
+     botón secundario parecía deshabilitado. Este da 3.32 sobre papel y 3.71
+     sobre blanco. Solo para bordes de cosas accionables, no para separadores. */
+  --borde-control: #8F8373;
 
   /* Marca — magenta real del isologo */
   --berry: #AB2759;
@@ -165,7 +170,7 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .site-nav a:hover, .site-nav a.is-active { color: var(--ink); border-color: var(--berry); }
 .site-nav a.btn { border-bottom: none; color: #fff; }
 
-.nav-toggle { display: none; width: 44px; height: 44px; background: none; border: 1px solid var(--line-2); border-radius: var(--r-sm); cursor: pointer; padding: 11px 10px; }
+.nav-toggle { display: none; width: 44px; height: 44px; background: none; border: 1px solid var(--borde-control); border-radius: var(--r-sm); cursor: pointer; padding: 11px 10px; }
 .nav-toggle span { display: block; height: 2px; background: var(--ink); border-radius: 2px; margin-bottom: 4px; }
 .nav-toggle span:last-child { margin-bottom: 0; }
 
@@ -181,23 +186,51 @@ p { margin: 0 0 1em; max-width: 66ch; }
   .site-nav a.btn { margin-top: 14px; }
 }
 
-/* ---------- Botones ---------- */
+/* ---------- Botones ----------
+   La forma distingue lo que se puede tocar de lo que solo se lee: los botones
+   son rectángulos de esquina blanda y las píldoras quedan reservadas a las
+   etiquetas (.pill, .line-badge, .chip), que no son accionables. Antes todo
+   era píldora y la diferencia se perdía. De paso, el rectángulo va mejor con
+   una página de serif y afiche que el óvalo completo, que es la forma de
+   botón más genérica que hay. */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   font-family: var(--font-body); font-size: 16px; font-weight: 700;
-  padding: 15px 28px; border-radius: 999px; border: 1.5px solid transparent;
-  cursor: pointer; text-decoration: none; transition: background .15s, border-color .15s, transform .1s;
+  padding: 15px 28px; border-radius: 10px; border: 1.5px solid transparent;
+  cursor: pointer; text-decoration: none;
+  transition: background .16s ease, border-color .16s ease, color .16s ease,
+              transform .16s ease, box-shadow .16s ease;
   /* line-height 1: el 1.6 del body inflaba la caja y el texto quedaba pegado
-     a los bordes de la píldora. */
+     a los bordes. */
   line-height: 1; white-space: nowrap;
 }
-.btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--berry); color: #fff; box-shadow: 0 6px 18px -10px var(--berry-glow); }
-.btn-primary:hover { background: #96204C; }
-.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-2); }
-.btn-secondary:hover { border-color: var(--berry); color: var(--berry-ink); }
-.btn-green { background: var(--green); color: #fff; }
-.btn-green:hover { background: var(--green-ink); }
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); transition-duration: .05s; }
+
+/* Sombra sobria en lugar del halo de color: acompaña al papel y la tinta.
+   El resplandor magenta era de otra familia visual. */
+.btn-primary { background: var(--berry); color: #fff; box-shadow: 0 1px 2px rgba(31,29,27,.16); }
+.btn-primary:hover { background: var(--berry-ink); box-shadow: 0 4px 12px -4px rgba(31,29,27,.28); }
+
+/* El secundario era transparente con un borde de 1.64:1 contra el fondo:
+   por debajo del 3:1 que WCAG pide para el contorno de un control, y a la
+   vista parecía deshabilitado. Ahora tiene superficie propia. */
+.btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--borde-control); box-shadow: 0 1px 2px rgba(31,29,27,.08); }
+.btn-secondary:hover { border-color: var(--berry); color: var(--berry-ink); box-shadow: 0 4px 12px -4px rgba(31,29,27,.18); }
+
+.btn-green { background: var(--green); color: #fff; box-shadow: 0 1px 2px rgba(31,29,27,.16); }
+.btn-green:hover { background: var(--green-ink); box-shadow: 0 4px 12px -4px rgba(31,29,27,.28); }
+
+/* Flecha en los botones que llevan a la postulación, y solo en esos: dice
+   hacia dónde va el click. Se corre un pelo al pasar por encima. */
+a.btn[href^="inscribirse"]::after {
+  content: "→"; font-size: 1.05em; line-height: 1;
+  transition: transform .16s ease;
+}
+a.btn[href^="inscribirse"]:hover::after { transform: translateX(3px); }
+
+/* El foco no puede borrar la sombra del botón: se suman. */
+.btn:focus-visible { box-shadow: var(--ring), 0 4px 12px -4px rgba(31,29,27,.28); }
 .btn-sm { padding: 12px 24px; font-size: 15px; }
 .btn-lg { padding: 19px 36px; font-size: 17.5px; }
 .btn-block { width: 100%; }
@@ -598,7 +631,7 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 92px; }
 
 input[type=text], input[type=email], input[type=tel], input[type=url], input[type=password], select, textarea {
   width: 100%; font-family: var(--font-body); font-size: 16.5px; padding: 13px 15px;
-  border: 1.5px solid var(--line-2); border-radius: var(--r-sm); background: var(--surface); color: var(--ink);
+  border: 1.5px solid var(--borde-control); border-radius: var(--r-sm); background: var(--surface); color: var(--ink);
   transition: border-color .15s, box-shadow .15s;
 }
 textarea { min-height: 120px; line-height: 1.55; resize: vertical; }
@@ -669,8 +702,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 .release-body { font-size: 15.5px; color: var(--ink-2); background: var(--paper); border-radius: var(--r-sm); padding: 18px 20px; margin-bottom: 16px; max-height: 280px; overflow-y: auto; }
 .release-body p { margin-bottom: .9em; }
 .release-body p:last-child { margin-bottom: 0; }
-.copy-btn { border: 1.5px solid var(--line-2); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 9px 18px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: var(--font-body); }
-.copy-btn:hover { border-color: var(--berry); color: var(--berry-ink); }
+.copy-btn { border: 1.5px solid var(--borde-control); background: var(--surface); color: var(--ink-2); border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: var(--font-body); transition: border-color .16s, color .16s, transform .16s; }
+.copy-btn:hover { border-color: var(--berry); color: var(--berry-ink); transform: translateY(-1px); }
 .copy-btn.ok { border-color: var(--green); color: var(--green-ink); background: var(--green-soft); }
 
 .facts-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
