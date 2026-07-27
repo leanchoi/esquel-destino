@@ -27,18 +27,21 @@ require __DIR__ . '/includes/header.php';
 <section class="hero has-topo">
   <div class="container hero-grid">
     <div class="hero-copy">
-<?php /* "Convocatoria abierta" ya lo dice la barra de plazo, acá arriba. */ ?>
-      <span class="eyebrow"><span class="dot"></span> Primera cohorte · 2026</span>
-      <h1>Abrimos la convocatoria para que tu proyecto <em>empiece a recibir visitantes</em></h1>
+<?php /* Estado + nombre del programa: un título que informa no necesita convencer. */ ?>
+      <span class="eyebrow"><span class="dot"></span> Esquel LAB · Primera cohorte 2026</span>
+      <h1><em>Inscripciones abiertas</em> al programa de aceleración turística de Esquel</h1>
       <p class="hero-lede">
-        Ocho semanas de trabajo con un equipo del municipio, sin costo, en tu campo, tu taller
-        o tu local. Hay tiempo hasta el <?= e(fecha_larga(FECHA_CIERRE)) ?>.
+        Ocho semanas de trabajo con un equipo del municipio, en tu campo, tu taller o tu local,
+        sobre lo que hace falta para poder recibir visitantes: el precio, la forma de reservarlo,
+        el material de venta y la ficha con la que las agencias de la ciudad lo ofrecen.
       </p>
 
       <?php /* La fecha de cierre no va acá: ya está en la barra de plazo, justo arriba. */ ?>
       <dl class="hero-datos">
+        <?php /* "Se seleccionan" y no "Cupos": la escasez sale del filtro de
+                 admisión, que es real, y no de un contador que corre. */ ?>
         <div><dt>Costo</dt><dd class="is-free">Gratuito</dd></div>
-        <div><dt>Cupos</dt><dd>13 a 18 proyectos</dd></div>
+        <div><dt>Se seleccionan</dt><dd>13 a 18 proyectos</dd></div>
         <div><dt>Dedicación</dt><dd>12 hs por semana</dd></div>
       </dl>
 
