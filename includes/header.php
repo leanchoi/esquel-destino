@@ -37,7 +37,7 @@ $base            = $base ?? '';
 <header class="site-header">
   <div class="container header-inner">
     <a href="<?= $base ?>index.php" class="brand" aria-label="Esquel LAB — inicio">
-      <img src="<?= $base ?>assets/images/logo-esquel-lab-horizontal.png" alt="Esquel LAB" class="brand-logo">
+      <img src="<?= $base ?>assets/images/web/logo-esquel-lab-horizontal.png" alt="Esquel LAB" class="brand-logo" width="338" height="96">
     </a>
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir menú">

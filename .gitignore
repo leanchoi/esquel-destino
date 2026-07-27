@@ -9,3 +9,5 @@ Thumbs.db
 
 # Sal de la analítica: se genera sola en cada instalación
 data/.sal
+
+# Los .webp y las copias web se generan con los scripts de tools/

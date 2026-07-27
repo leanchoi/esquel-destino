@@ -345,7 +345,9 @@
     // Paso más alto alcanzado: es el dato que dice dónde abandona la gente.
     if ((indice + 1) > window.esquelPasoForm) window.esquelPasoForm = indice + 1;
 
-    if (barra) barra.style.width = (((indice + 1) / pasos.length) * 100) + '%';
+    // scaleX en lugar de width: la barra ocupa el 100% y se escala, así el
+    // navegador la resuelve en el compositor y no rehace layout en cada cuadro.
+    if (barra) barra.style.transform = 'scaleX(' + ((indice + 1) / pasos.length) + ')';
     if (etiqueta) etiqueta.textContent = 'Paso ' + (indice + 1) + ' de ' + pasos.length;
 
     btnPrev.hidden = indice === 0;

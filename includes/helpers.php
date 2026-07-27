@@ -73,6 +73,57 @@ function asset(string $ruta): string
     return $ruta . ($sello ? '?v=' . $sello : '');
 }
 
+/**
+ * Una foto del sitio, en <picture>, al tamaño que realmente se muestra.
+ *
+ * Antes cada foto se servía en su master de 1800 px aunque la tarjeta midiera
+ * 365: cuatro veces los píxeles necesarios, sobre una conexión de celular en
+ * la cordillera. Ahora se sirven las copias de assets/images/fotos/web/, con
+ * WebP primero y el JPEG detrás para el navegador que no lo soporte.
+ *
+ * width y height salen del archivo real: sin eso el navegador no sabe cuánto
+ * espacio reservar y la página salta mientras carga.
+ *
+ * @param string $nombre  nombre del archivo sin extensión, p. ej. 'perfil-lana'
+ * @param array  $attrs   atributos extra para el <img> (class, loading, etc.)
+ */
+function foto(string $nombre, string $alt, array $attrs = []): string
+{
+    $base = 'assets/images/fotos/web/' . $nombre;
+    $jpg = __DIR__ . '/../' . $base . '.jpg';
+
+    // Si todavía no se generó la versión web, se cae al master y no se rompe.
+    if (!is_file($jpg)) {
+        $base = 'assets/images/fotos/' . $nombre;
+        $jpg = __DIR__ . '/../' . $base . '.jpg';
+        if (!is_file($jpg)) {
+            return '';
+        }
+    }
+
+    $extras = '';
+    foreach ($attrs as $k => $v) {
+        $extras .= ' ' . $k . '="' . e((string) $v) . '"';
+    }
+    if (!isset($attrs['loading'])) {
+        $extras .= ' loading="lazy"';        // el hero pasa loading="eager"
+    }
+    if (!isset($attrs['decoding'])) {
+        $extras .= ' decoding="async"';
+    }
+
+    $tam = @getimagesize($jpg);
+    $dim = $tam ? ' width="' . $tam[0] . '" height="' . $tam[1] . '"' : '';
+    $webp = __DIR__ . '/../' . $base . '.webp';
+
+    $html = '<picture>';
+    if (is_file($webp)) {
+        $html .= '<source type="image/webp" srcset="' . e(asset($base . '.webp')) . '">';
+    }
+    $html .= '<img src="' . e(asset($base . '.jpg')) . '" alt="' . e($alt) . '"' . $dim . $extras . '>';
+    return $html . '</picture>';
+}
+
 // --- CSRF -----------------------------------------------------------------
 
 function csrf_token(): string

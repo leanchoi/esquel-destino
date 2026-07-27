@@ -55,7 +55,9 @@ require __DIR__ . '/includes/header.php';
     <div class="hero-media">
       <figure class="hero-figure">
         <div class="hero-frame">
-          <img src="assets/images/fotos/hero-esquel.jpg" alt="Dos personas de espaldas mirando el valle de Esquel y la cordillera al atardecer" data-parallax>
+          <?php /* Es la imagen más grande de la primera pantalla: el navegador
+                   tiene que pedirla antes que el resto, no en orden de aparición. */ ?>
+          <?= foto('hero-esquel', 'Dos personas de espaldas mirando el valle de Esquel y la cordillera al atardecer', ['data-parallax' => '', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
         </div>
         <figcaption class="hero-caption">Esquel, puerta del Parque Nacional Los Alerces.</figcaption>
       </figure>
@@ -63,8 +65,8 @@ require __DIR__ . '/includes/header.php';
       <div class="hero-org">
         <span class="hero-org-lbl">Un programa de</span>
         <div class="hero-org-logos">
-          <img src="assets/images/logo-esquel-lab-horizontal.png" alt="Esquel LAB">
-          <img src="assets/images/logo-municipio-esquel.png" alt="Municipio de Esquel" class="is-muni">
+          <img src="assets/images/web/logo-esquel-lab-horizontal.png" alt="Esquel LAB" width="338" height="96">
+          <img src="assets/images/web/logo-municipio-esquel.png" alt="Municipio de Esquel" class="is-muni" width="459" height="92">
         </div>
       </div>
     </div>
@@ -82,7 +84,7 @@ require __DIR__ . '/includes/header.php';
 
     <div class="profile-grid">
       <article class="profile-card">
-        <figure><img src="assets/images/fotos/perfil-gastronomia.jpg" alt="Persona sirviendo té y torta casera en una mesa de madera con vista a la montaña" loading="lazy"></figure>
+        <figure><?= foto('perfil-gastronomia', 'Persona sirviendo té y torta casera en una mesa de madera con vista a la montaña') ?></figure>
         <div class="body">
           <h3>Tenés un negocio que funciona pero no le vende a turistas</h3>
           <p>Una casa de té, una panadería, un taller. La gente pasa, compra y se va. Nunca lo armaste como experiencia.</p>
@@ -90,7 +92,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/fotos/perfil-guia.jpg" alt="Guía señalando un pico nevado a dos visitantes en un sendero de trekking" loading="lazy"></figure>
+        <figure><?= foto('perfil-guia', 'Guía señalando un pico nevado a dos visitantes en un sendero de trekking') ?></figure>
         <div class="body">
           <h3>Sos guía o prestador y vendés solo por WhatsApp</h3>
           <p>Tenés el servicio. No tenés precio para agencias, ni forma de que te reserven sin escribirte.</p>
@@ -98,7 +100,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/fotos/perfil-chacra.jpg" alt="Persona cosechando frambuesas entre hileras de cultivo con un invernadero al fondo" loading="lazy"></figure>
+        <figure><?= foto('perfil-chacra', 'Persona cosechando frambuesas entre hileras de cultivo con un invernadero al fondo') ?></figure>
         <div class="body">
           <h3>Tenés campo y no sabés si “eso” se puede visitar</h3>
           <p>La esquila, la cosecha, el proceso del dulce. Para vos es el trabajo de todos los días. Para un visitante es algo que nunca vio.</p>
@@ -106,7 +108,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/fotos/perfil-lana.jpg" alt="Persona tejiendo en un telar con madejas de lana teñida colgando" loading="lazy"></figure>
+        <figure><?= foto('perfil-lana', 'Persona tejiendo en un telar con madejas de lana teñida colgando') ?></figure>
         <div class="body">
           <h3>Hacés algo con las manos y lo vendés suelto</h3>
           <p>Lana, cerámica, conservas. Sin relato, sin packaging y sin conexión con quien visita Esquel.</p>
@@ -114,7 +116,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/fotos/perfil-reabrir.jpg" alt="Persona abriendo la persiana de su local, el Almacén de Montaña, con la cordillera de fondo" loading="lazy"></figure>
+        <figure><?= foto('perfil-reabrir', 'Persona abriendo la persiana de su local, el Almacén de Montaña, con la cordillera de fondo') ?></figure>
         <div class="body">
           <h3>Tenés un emprendimiento turístico que se quedó</h3>
           <p>Antes funcionaba y hoy no. La idea sigue en pie; lo que hay que rehacer es cómo se ofrece.</p>
@@ -122,7 +124,7 @@ require __DIR__ . '/includes/header.php';
       </article>
 
       <article class="profile-card">
-        <figure><img src="assets/images/fotos/perfil-idea.jpg" alt="Cuaderno con anotaciones, lápiz y mate sobre una mesa de madera, con la cordillera de fondo" loading="lazy"></figure>
+        <figure><?= foto('perfil-idea', 'Cuaderno con anotaciones, lápiz y mate sobre una mesa de madera, con la cordillera de fondo') ?></figure>
         <div class="body">
           <h3>Tenés una idea y algo con qué arrancar</h3>
           <p>Todavía no abriste, pero ya está el lugar, la receta o el oficio. Falta armarlo y ponerlo a andar.</p>
@@ -170,7 +172,7 @@ require __DIR__ . '/includes/header.php';
       </ol>
 
       <figure class="trabajo-foto">
-        <img src="assets/images/fotos/economia-recuerdos.jpg" alt="Frasco de dulce casero con etiqueta escrita a mano, botella de cerveza artesanal y madeja de lana teñida sobre una mesa de madera" loading="lazy">
+        <?= foto('economia-recuerdos', 'Frasco de dulce casero con etiqueta escrita a mano, botella de cerveza artesanal y madeja de lana teñida sobre una mesa de madera') ?>
         <figcaption>El visitante lo abre en su casa tres semanas después del viaje. Ahí es cuando te recomienda a alguien.</figcaption>
       </figure>
     </div>
@@ -189,10 +191,10 @@ require __DIR__ . '/includes/header.php';
     <div class="lines-grid">
       <article class="line-card line-acelera">
         <div class="line-figure">
-          <img src="assets/images/fotos/linea-acelera.jpg" alt="Calle comercial de Esquel con la cordillera de fondo" loading="lazy">
+          <?= foto('linea-acelera', 'Calle comercial de Esquel con la cordillera de fondo') ?>
         </div>
         <div class="line-body">
-          <img src="assets/images/logo-esquel-acelera.png" alt="Esquel Acelera" class="line-logo">
+          <img src="assets/images/web/logo-esquel-acelera.png" alt="Esquel Acelera" class="line-logo" width="180" height="208">
           <span class="line-badge">Urbano</span>
           <p class="line-for">Si tu proyecto está en la ciudad</p>
           <p>Gastronomía, casas de té, talleres artesanales, comercios con un saber propio, circuitos históricos, guías y actividades urbanas. También negocios que hoy no son turísticos pero podrían serlo.</p>
@@ -206,10 +208,10 @@ require __DIR__ . '/includes/header.php';
 
       <article class="line-card line-raiz">
         <div class="line-figure">
-          <img src="assets/images/fotos/linea-raiz.jpg" alt="Campo con ovejas, un perro de trabajo y un galpón, con la cordillera de fondo" loading="lazy">
+          <?= foto('linea-raiz', 'Campo con ovejas, un perro de trabajo y un galpón, con la cordillera de fondo') ?>
         </div>
         <div class="line-body">
-          <img src="assets/images/logo-esquel-raiz.png" alt="Raíz" class="line-logo">
+          <img src="assets/images/web/logo-esquel-raiz.png" alt="Raíz" class="line-logo" width="165" height="208">
           <span class="line-badge">Rural</span>
           <p class="line-for">Si tu proyecto está en el campo</p>
           <p>Chacras, estancias, crianceros, viñedos y microcervecerías, productores de lana, fruta fina y dulces regionales. Todo lo que tenga un proceso que se pueda mostrar y visitar.</p>
