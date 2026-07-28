@@ -35,16 +35,35 @@ function trama_raiz(): string
 }
 
 /**
+ * Atributos del cuadro flotante de un elemento.
+ *
+ * El <title> de SVG que se usaba antes tarda casi un segundo en aparecer, no se
+ * puede maquetar y en el celular directamente no existe. Estos atributos los
+ * levanta assets/js/analitica.js.
+ *
+ * @param string   $titulo  el encabezado
+ * @param string[] $lineas  el dato y su lectura, una por línea
+ */
+function tt(string $titulo, array $lineas = []): string
+{
+    $lineas = array_values(array_filter($lineas, fn($l) => trim((string) $l) !== ''));
+    return ' data-tt="' . e($titulo) . '"'
+         . ($lineas ? ' data-tt-lineas="' . e(implode('|', $lineas)) . '"' : '');
+}
+
+/**
  * Curva de una serie temporal, con relleno bajo la línea.
  *
- * @param array       $valores  los números, en orden
- * @param array       $etiquetas etiqueta del eje x por punto ('' = no se rotula)
- * @param array       $titulos  texto del tooltip nativo por punto
- * @param int|null    $corte    último punto con datos reales; de ahí no se dibuja
- * @param string      $color
+ * Cada punto lleva además una banda transparente de alto completo que es la que
+ * captura el mouse: acertarle a un círculo de tres píxeles y medio no es una
+ * interacción, es puntería.
+ *
+ * @param array $puntos  cada uno ['v' => int, 'x' => string etiqueta o '', 'tt' => [título, línea…]]
+ * @param int|null $corte  último punto con datos reales; de ahí no se dibuja
  */
-function svg_curva(array $valores, array $etiquetas, array $titulos = [], ?int $corte = null, string $color = COLOR_ACELERA): string
+function svg_curva(array $puntos, ?int $corte = null, string $color = COLOR_ACELERA): string
 {
+    $valores = array_map(fn($p) => (int) ($p['v'] ?? 0), $puntos);
     $n = count($valores);
     if ($n < 2) {
         return '';
@@ -68,11 +87,13 @@ function svg_curva(array $valores, array $etiquetas, array $titulos = [], ?int $
     $x = fn(int $i) => $izq + ($n > 1 ? $ancho * $i / ($n - 1) : 0);
     $y = fn(float $v) => $arriba + $alto - ($alto * $v / $tope);
 
-    $puntos = [];
+    // $coords y no $puntos: así se llama el parámetro, y pisarlo dejaba sin
+    // texto a todos los cuadros flotantes de la curva.
+    $coords = [];
     for ($i = 0; $i <= $corte; $i++) {
-        $puntos[] = round($x($i), 1) . ',' . round($y($valores[$i]), 1);
+        $coords[] = round($x($i), 1) . ',' . round($y($valores[$i]), 1);
     }
-    $linea = 'M' . implode(' L', $puntos);
+    $linea = 'M' . implode(' L', $coords);
     $area  = $linea . ' L' . round($x($corte), 1) . ',' . round($y(0), 1)
                     . ' L' . round($x(0), 1) . ',' . round($y(0), 1) . ' Z';
 
@@ -93,18 +114,32 @@ function svg_curva(array $valores, array $etiquetas, array $titulos = [], ?int $
     $svg .= '<path class="g-area" d="' . $area . '" style="fill:' . e($color) . '"/>'
           . '<path class="g-linea" d="' . $linea . '" style="stroke:' . e($color) . '"/>';
 
+    // La línea de referencia vertical que sigue al mouse. Arranca escondida.
+    $svg .= '<line class="g-cruz" x1="0" y1="' . $arriba . '" x2="0" y2="' . ($arriba + $alto) . '" hidden/>';
+
     for ($i = 0; $i <= $corte; $i++) {
         if ($valores[$i] <= 0) {
             continue;
         }
-        $svg .= '<circle class="g-punto" cx="' . round($x($i), 1) . '" cy="' . round($y($valores[$i]), 1)
-              . '" r="3.4" style="fill:' . e($color) . '"><title>' . e($titulos[$i] ?? '') . '</title></circle>';
+        $svg .= '<circle class="g-punto" data-i="' . $i . '" cx="' . round($x($i), 1) . '" cy="'
+              . round($y($valores[$i]), 1) . '" r="3.4" style="fill:' . e($color) . '"/>';
     }
-    foreach ($etiquetas as $i => $txt) {
-        if ($txt === '' || $i >= $n) {
+
+    // Las bandas de contacto van últimas para quedar por encima de todo.
+    $ancho1 = $n > 1 ? $ancho / ($n - 1) : $ancho;
+    for ($i = 0; $i <= $corte; $i++) {
+        $bx = round($x($i) - $ancho1 / 2, 1);
+        $svg .= '<rect class="g-hit" data-i="' . $i . '" x="' . max($izq - 2, $bx) . '" y="' . $arriba
+              . '" width="' . round($ancho1, 1) . '" height="' . $alto . '"'
+              . tt($puntos[$i]['tt'][0] ?? '', array_slice($puntos[$i]['tt'] ?? [], 1)) . '/>';
+    }
+
+    foreach ($puntos as $i => $p) {
+        if (($p['x'] ?? '') === '' || $i >= $n) {
             continue;
         }
-        $svg .= '<text class="g-x" x="' . round($x($i), 1) . '" y="' . ($H - 10) . '" text-anchor="middle">' . e($txt) . '</text>';
+        $svg .= '<text class="g-x" x="' . round($x($i), 1) . '" y="' . ($H - 10) . '" text-anchor="middle">'
+              . e($p['x']) . '</text>';
     }
 
     return $svg . '</svg></div>';
@@ -125,6 +160,25 @@ function heatmap_semana(array $celdas, int $tope): string
     // Lunes primero: la semana de trabajo se lee mejor así.
     $orden = [1, 2, 3, 4, 5, 6, 0];
 
+    $nombresLargos = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    $total = 0;
+    foreach ($celdas as $fila) {
+        $total += array_sum($fila);
+    }
+
+    // El ranking de franjas se calcula una vez: sirve para decir "es la tercera
+    // hora más activa de la semana", que es lo que uno quiere saber.
+    $planas = [];
+    foreach ($celdas as $d => $fila) {
+        foreach ($fila as $h => $v) {
+            if ($v > 0) {
+                $planas[$d . '-' . $h] = $v;
+            }
+        }
+    }
+    arsort($planas);
+    $puesto = array_flip(array_keys($planas));
+
     $html = '<div class="heat"><div class="heat-grid">';
     $html .= '<span class="heat-esq"></span>';
     for ($h = 0; $h < 24; $h++) {
@@ -137,8 +191,21 @@ function heatmap_semana(array $celdas, int $tope): string
             // Escala en raíz cuadrada: con unas pocas horas pico, la lineal deja
             // todo el resto en blanco y el gráfico no dice nada.
             $i = $tope > 0 && $v > 0 ? max(1, (int) ceil(sqrt($v / $tope) * 5)) : 0;
-            $html .= '<span class="heat-c n' . $i . '" title="' . e($dias[$d] . ' ' . str_pad((string) $h, 2, '0', STR_PAD_LEFT)
-                   . ':00 · ' . $v . ($v === 1 ? ' visita' : ' visitas')) . '"></span>';
+
+            $franja = str_pad((string) $h, 2, '0', STR_PAD_LEFT) . ' a '
+                    . str_pad((string) (($h + 1) % 24), 2, '0', STR_PAD_LEFT) . ' h';
+            $lineas = [$v === 0 ? 'Sin visitas' : $v . ($v === 1 ? ' visita' : ' visitas')];
+            if ($v > 0 && $total > 0) {
+                $lineas[] = round($v * 100 / $total, 1) . '% de todo el período';
+                $p = ($puesto[$d . '-' . $h] ?? 99) + 1;
+                if ($p === 1) {
+                    $lineas[] = 'Es la franja más activa de la semana';
+                } elseif ($p <= 5) {
+                    $lineas[] = 'Está entre las ' . $p . ' franjas más activas';
+                }
+            }
+            $html .= '<span class="heat-c n' . $i . '"'
+                   . tt($nombresLargos[$d] . ', ' . $franja, $lineas) . '></span>';
         }
     }
     $html .= '</div><div class="heat-ref"><span>menos</span>';
@@ -210,7 +277,8 @@ function svg_momentos(array $eventos, string $desde, string $hasta): string
 
         foreach ($suyos as $ev) {
             $svg .= '<circle class="g-dot" cx="' . round($x(strtotime($ev['fecha'] . ' 12:00:00')), 1)
-                  . '" cy="' . round($y($ev['hora']), 1) . '" r="3.6"><title>' . e($ev['titulo']) . '</title></circle>';
+                  . '" cy="' . round($y($ev['hora']), 1) . '" r="5"'
+                  . tt($ev['titulo'], $ev['lineas'] ?? []) . '/>';
         }
         $fila++;
     }

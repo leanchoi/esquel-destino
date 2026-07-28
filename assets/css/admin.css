@@ -81,6 +81,11 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 /* ---------- panel / tabla ---------- */
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px; }
 .panel-title { font-size: 17px; margin-bottom: 16px; }
+/* Cada panel dice de qué período habla. Dos de ellos no cambian nunca con el
+   selector de arriba —el del día en curso y el de la convocatoria entera— y
+   sin decirlo parecían rotos. */
+.panel-periodo { display: inline-block; vertical-align: middle; margin-left: 8px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .02em; text-transform: none; color: var(--berry-ink); background: var(--berry-soft); border-radius: 999px; padding: 3px 9px; }
+.panel-periodo.es-fijo { color: var(--ink-2); background: var(--paper-2); }
 .cols-2 { display: grid; grid-template-columns: 1.7fr 1fr; gap: 20px; align-items: start; }
 @media (max-width: 960px) { .cols-2 { grid-template-columns: 1fr; } }
 
@@ -319,7 +324,30 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .g-linea { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .g-punto { stroke: var(--surface); stroke-width: 1.5; }
 .g-dot { fill: var(--berry); stroke: var(--surface); stroke-width: 1.2; opacity: .8; }
-.g-dot:hover { opacity: 1; }
+.g-dot.tt-activo { opacity: 1; stroke-width: 2; }
+.g-hit { fill: transparent; cursor: crosshair; }
+.g-cruz { stroke: var(--berry); stroke-width: 1; stroke-dasharray: 2 3; opacity: .6; pointer-events: none; }
+.g-punto.es-foco { r: 5.5; stroke-width: 2; }
+
+/* ---------- el cuadro flotante ---------- */
+.tt {
+  position: fixed; top: 0; left: 0; z-index: 200; pointer-events: none;
+  max-width: 280px; background: var(--ink); color: #fff;
+  border-radius: var(--r-sm); padding: 10px 13px; box-shadow: var(--shadow-lg);
+  font-size: 13px; line-height: 1.45; display: flex; flex-direction: column; gap: 2px;
+}
+.tt[hidden] { display: none; }
+.tt-t { font-weight: 700; font-size: 13.5px; }
+/* La primera línea es el dato; las de abajo son la lectura de ese dato, y por
+   eso van más apagadas: se distinguen de un vistazo sin leerlas. */
+.tt-l { color: rgba(255,255,255,.72); font-size: 12.5px; }
+.tt-l:first-of-type { color: #fff; font-family: var(--font-mono); font-size: 13px; }
+.heat-c[data-tt] { cursor: pointer; }
+.heat-c.tt-activo { outline: 2px solid var(--ink); outline-offset: 1px; }
+.cal-dia[data-tt] { cursor: pointer; }
+.cal-dia.tt-activo .cal-barra { outline: 2px solid var(--ink); outline-offset: 2px; }
+.lista-barras li[data-tt], .paginas li[data-tt] { cursor: pointer; }
+.lista-barras li.tt-activo, .paginas li.tt-activo { background: var(--paper-2); border-radius: var(--r-sm); }
 .g-franja { fill: var(--paper); }
 .g-serie { font-family: var(--font-body); font-size: 12px; font-weight: 700; fill: var(--ink); }
 .g-serie-n { font-weight: 400; fill: var(--ink-3); font-size: 11px; }

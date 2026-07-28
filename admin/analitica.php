@@ -233,6 +233,26 @@ function url_rango(string $r): string
 {
     return '?' . http_build_query(['r' => $r]);
 }
+
+/**
+ * El distintivo que dice qué período cubre un panel.
+ *
+ * Es la respuesta a una queja concreta: "cambio de 7 a 30 días y los gráficos
+ * no se ajustan". Dos de ellos efectivamente no se ajustan —el del día en curso
+ * y el de la convocatoria entera— porque no tendría sentido, pero eso no estaba
+ * escrito en ningún lado, así que parecían rotos. Ahora cada panel dice de qué
+ * período está hablando.
+ */
+function sello_periodo(string $texto, bool $fijo = false): string
+{
+    return '<span class="panel-periodo' . ($fijo ? ' es-fijo' : '') . '">' . e($texto) . '</span>';
+}
+
+/** "1.234" con punto de miles, como se escribe acá. */
+function num(int $n): string
+{
+    return number_format($n, 0, ',', '.');
+}
 ?>
 
 <div class="admin-topbar admin-topbar-analitica">
@@ -275,8 +295,8 @@ function url_rango(string $r): string
   <div class="panel">
     <div class="hoy-head">
       <div>
-        <h2 class="panel-title">Hoy, hora por hora</h2>
-        <p class="hint" style="margin:0"><?= e(fecha_larga($hoy)) ?> · hora de Esquel</p>
+        <h2 class="panel-title">Hoy, hora por hora <?= sello_periodo('siempre el día en curso', true) ?></h2>
+        <p class="hint" style="margin:0"><?= e(fecha_larga($hoy)) ?> · hora de Esquel. Este panel no cambia con el período de arriba.</p>
       </div>
       <div class="hoy-cifras">
         <div class="hc">
@@ -306,14 +326,36 @@ function url_rango(string $r): string
         <?php endif; ?>
       </p>
     <?php else:
-      $etq = [];
-      $tit = [];
+      $vistasHoy = array_column($horas, 'vistas');
+      $promHora = $horaActual >= 0 ? array_sum(array_slice($vistasHoy, 0, $horaActual + 1)) / ($horaActual + 1) : 0;
+      $picoHora = max($vistasHoy);
+      $puntosHoy = [];
       for ($i = 0; $i < 24; $i++) {
-          $etq[$i] = $i % 3 === 0 ? str_pad((string) $i, 2, '0', STR_PAD_LEFT) : '';
-          $tit[$i] = str_pad((string) $i, 2, '0', STR_PAD_LEFT) . ':00 · ' . $horas[$i]['vistas']
-                   . ' vistas de ' . $horas[$i]['unicos'] . ' personas';
+          $v = $horas[$i]['vistas'];
+          $lineas = [$v === 0 ? 'Sin visitas' : $v . ($v === 1 ? ' visita' : ' visitas') . ' de '
+                     . $horas[$i]['unicos'] . ($horas[$i]['unicos'] === 1 ? ' persona' : ' personas')];
+          if ($i > $horaActual) {
+              $lineas = ['Todavía no pasó'];
+          } elseif ($v > 0) {
+              if ($v === $picoHora) {
+                  $lineas[] = 'Es la hora más movida del día';
+              } elseif ($promHora > 0) {
+                  $dif = round(($v - $promHora) / $promHora * 100);
+                  $lineas[] = $dif >= 10 ? '+' . $dif . '% sobre el promedio del día'
+                            : ($dif <= -10 ? $dif . '% bajo el promedio del día' : 'En el promedio del día');
+              }
+              if ($i === $horaActual) {
+                  $lineas[] = 'Esta franja todavía se está llenando';
+              }
+          }
+          $puntosHoy[] = [
+              'v'  => $v,
+              'x'  => $i % 3 === 0 ? str_pad((string) $i, 2, '0', STR_PAD_LEFT) : '',
+              'tt' => array_merge([str_pad((string) $i, 2, '0', STR_PAD_LEFT) . ' a '
+                       . str_pad((string) (($i + 1) % 24), 2, '0', STR_PAD_LEFT) . ' h'], $lineas),
+          ];
       }
-      echo svg_curva(array_column($horas, 'vistas'), $etq, $tit, $horaActual);
+      echo svg_curva($puntosHoy, $horaActual);
     ?>
       <p class="hint">
         La línea vertical es la hora en curso: esa franja todavía se está llenando, y de ahí
@@ -344,34 +386,66 @@ function url_rango(string $r): string
   <?php
   // Se dibujan todos los días del período, también los vacíos: un día en cero
   // es un dato, y salteárselo dibuja una curva que miente sobre el ritmo.
-  $serie = [];
-  $etq = [];
-  $tit = [];
-  $paso = max(1, (int) ceil($diasRango / 8));
+  $dias_es = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  $serieDia = [];
   for ($i = 0; $i < $diasRango; $i++) {
       $f = date('Y-m-d', strtotime($desde . " +{$i} days"));
-      $d = $porDia[$f] ?? ['vistas' => 0, 'unicos' => 0];
-      $serie[] = $d['vistas'];
+      $serieDia[$i] = ['f' => $f] + ($porDia[$f] ?? ['vistas' => 0, 'unicos' => 0]);
+  }
+  $promDia = $diasRango > 0 ? array_sum(array_column($serieDia, 'vistas')) / $diasRango : 0;
+  $picoDia = max(array_column($serieDia, 'vistas'));
+
+  $puntosDia = [];
+  $paso = max(1, (int) ceil($diasRango / 8));
+  foreach ($serieDia as $i => $d) {
       // El último día siempre se rotula, pero sólo si no queda encima del
       // rótulo anterior: si no, "26/07" y "27/07" salen uno sobre el otro.
       $ultimo = $i === $diasRango - 1;
       $pegado = $ultimo && ($i % $paso) !== 0 && ($i - intdiv($i, $paso) * $paso) < max(2, (int) ($paso / 2));
-      $etq[$i] = (($i % $paso === 0) || ($ultimo && !$pegado)) ? date('d/m', strtotime($f)) : '';
-      $tit[$i] = fecha_larga($f) . ' · ' . $d['vistas'] . ' vistas de ' . $d['unicos'] . ' personas';
+
+      $lineas = [$d['vistas'] === 0 ? 'Sin visitas'
+                 : $d['vistas'] . ($d['vistas'] === 1 ? ' visita' : ' visitas') . ' de '
+                   . $d['unicos'] . ($d['unicos'] === 1 ? ' persona' : ' personas')];
+      if ($d['vistas'] > 0) {
+          if ($d['vistas'] === $picoDia) {
+              $lineas[] = 'Es el día más movido del período';
+          } elseif ($promDia > 0) {
+              $dif = round(($d['vistas'] - $promDia) / $promDia * 100);
+              $lineas[] = $dif >= 10 ? '+' . $dif . '% sobre el promedio (' . round($promDia) . ' por día)'
+                        : ($dif <= -10 ? $dif . '% bajo el promedio (' . round($promDia) . ' por día)'
+                                       : 'En el promedio del período');
+          }
+          $ayer = $serieDia[$i - 1]['vistas'] ?? null;
+          if ($ayer) {
+              $v = round(($d['vistas'] - $ayer) / $ayer * 100);
+              if (abs($v) >= 10) {
+                  $lineas[] = ($v > 0 ? '+' : '') . $v . '% respecto del día anterior';
+              }
+          }
+      }
+      if (!empty($postPorDia[$d['f']])) {
+          $n = array_sum($postPorDia[$d['f']]);
+          $lineas[] = 'Entraron ' . $n . ($n === 1 ? ' postulación' : ' postulaciones') . ' este día';
+      }
+      $puntosDia[] = [
+          'v'  => $d['vistas'],
+          'x'  => (($i % $paso === 0) || ($ultimo && !$pegado)) ? date('d/m', strtotime($d['f'])) : '',
+          'tt' => array_merge([$dias_es[(int) date('w', strtotime($d['f']))] . ' ' . fecha_larga($d['f'])], $lineas),
+      ];
   }
   ?>
   <div class="panel">
-    <h2 class="panel-title">Visitas por día</h2>
+    <h2 class="panel-title">Visitas por día <?= sello_periodo($rango === 'hoy' ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
     <?php if ($diasRango < 2): ?>
       <p class="hint">Un solo día no dibuja una curva. Elegí un período más largo para ver la evolución.</p>
     <?php else: ?>
-      <?= svg_curva($serie, $etq, $tit) ?>
+      <?= svg_curva($puntosDia) ?>
     <?php endif; ?>
   </div>
 
   <!-- ---------------- mapa de calor ---------------- -->
   <div class="panel">
-    <h2 class="panel-title">A qué hora entra la gente</h2>
+    <h2 class="panel-title">A qué hora entra la gente <?= sello_periodo($rango === 'hoy' ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
     <p class="hint" style="margin-top:-8px">
       Cada cuadrito es un día de la semana y una hora, y cuanto más oscuro más visitas.
       Es el gráfico para decidir a qué hora conviene publicar en redes.
@@ -383,7 +457,7 @@ function url_rango(string $r): string
   <div class="panel">
     <div class="hoy-head">
       <div>
-        <h2 class="panel-title">Cuándo se postulan</h2>
+        <h2 class="panel-title">Cuándo se postulan <?= sello_periodo('toda la convocatoria', true) ?></h2>
         <p class="hint" style="margin:0">
           Del <?= e(fecha_larga($calendario[0]['fecha'])) ?> al
           <?= e(fecha_larga($calendario[count($calendario) - 1]['fecha'])) ?>, día por día.
@@ -401,15 +475,34 @@ function url_rango(string $r): string
     <?php else: ?>
       <div class="cal-scroll">
       <div class="calendario" style="--dias:<?= count($calendario) ?>">
-        <?php foreach ($calendario as $d):
-          $titulo = $d['total'] === 0
-            ? fecha_larga($d['fecha']) . ' · sin postulaciones'
-            : fecha_larga($d['fecha']) . ' · ' . $d['total'] . ($d['total'] === 1 ? ' postulación' : ' postulaciones')
-              . ' (' . implode(', ', array_map(
-                  fn($k, $v) => $v . ' ' . programa_info($k)['nombre'], array_keys($d['programas']), $d['programas'])) . ')'
-              . ' · acumulado ' . $d['acumulado'];
+        <?php
+        $sinNada = 0;
+        foreach ($calendario as $i => $d):
+          $lineas = [];
+          if ($d['futuro']) {
+              $lineas[] = 'Todavía no pasó';
+              $sinNada = 0;
+          } elseif ($d['total'] === 0) {
+              $sinNada++;
+              $lineas[] = 'Sin postulaciones';
+              if ($sinNada > 1) {
+                  $lineas[] = $sinNada . ' días seguidos sin ninguna';
+              }
+          } else {
+              $sinNada = 0;
+              $lineas[] = $d['total'] . ($d['total'] === 1 ? ' postulación' : ' postulaciones') . ': '
+                . implode(', ', array_map(fn($k, $v) => $v . ' ' . programa_info($k)['nombre'],
+                                          array_keys($d['programas']), $d['programas']));
+              if ($d['total'] === $maxPost && $maxPost > 1) {
+                  $lineas[] = 'Es el día de más postulaciones';
+              }
+          }
+          if (!$d['futuro']) {
+              $lineas[] = 'Acumulado: ' . $d['acumulado'] . ' de ' . $totalPostulaciones;
+          }
+          $titulo = $d['hoy'] ? 'Hoy, ' . fecha_larga($d['fecha']) : fecha_larga($d['fecha']);
         ?>
-          <div class="cal-dia<?= $d['hoy'] ? ' es-hoy' : '' ?><?= $d['futuro'] ? ' es-futuro' : '' ?>" title="<?= e($titulo) ?>">
+          <div class="cal-dia<?= $d['hoy'] ? ' es-hoy' : '' ?><?= $d['futuro'] ? ' es-futuro' : '' ?>"<?= tt($titulo, $lineas) ?>>
             <span class="cal-barra">
               <?php foreach (['Acelera', 'Raiz'] as $prog):
                 if (empty($d['programas'][$prog])) continue;
@@ -448,10 +541,24 @@ function url_rango(string $r): string
     }
     ?>
     <div class="panel">
-      <h2 class="panel-title">Qué se mira</h2>
+      <h2 class="panel-title">Qué se mira <?= sello_periodo($rango === 'hoy' ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
       <ul class="paginas">
-        <?php foreach ($porPagina as $p): ?>
-          <li>
+        <?php foreach ($porPagina as $i => $p):
+          $lineas = [(int) $p['vistas'] . ' vistas de ' . (int) $p['unicos'] . ' personas'];
+          if ((int) $tot['vistas'] > 0) {
+              $lineas[] = round($p['vistas'] * 100 / $tot['vistas'], 1) . '% de las visitas del período';
+          }
+          $lineas[] = $i === 0 ? 'Es la página más vista' : 'Puesto ' . ($i + 1) . ' entre las más vistas';
+          if ($p['seg']) {
+              $lineas[] = 'Se quedan ' . round($p['seg']) . ' segundos en promedio';
+          }
+          if ($p['prof']) {
+              $lineas[] = $p['prof'] >= 70 ? 'La bajan casi entera (' . round($p['prof']) . '%)'
+                        : ($p['prof'] <= 35 ? 'Sólo bajan el ' . round($p['prof']) . '%: se van arriba'
+                                            : 'Bajan hasta el ' . round($p['prof']) . '% de la página');
+          }
+        ?>
+          <li<?= tt($p['ruta'], $lineas) ?>>
             <span class="pg-ruta"><?= e($p['ruta']) ?></span>
             <span class="pg-barra"><span style="width:<?= $maxPagina ? round($p['vistas'] * 100 / $maxPagina) : 0 ?>%"></span></span>
             <span class="pg-v"><?= (int) $p['vistas'] ?></span>
@@ -471,10 +578,17 @@ function url_rango(string $r): string
 
     <!-- ---------------- de dónde vienen ---------------- -->
     <div class="panel">
-      <h2 class="panel-title">De dónde llegan</h2>
+      <h2 class="panel-title">De dónde llegan <?= sello_periodo($rango === 'hoy' ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
       <ul class="lista-barras">
-        <?php foreach ($porOrigen as $o): ?>
-          <li>
+        <?php foreach ($porOrigen as $i => $o):
+          $pc = pct((int) $o['vistas'], (int) $tot['vistas']);
+          $lineas = [(int) $o['vistas'] . ' visitas', $pc . '% de todo el período'];
+          if ($i === 0) { $lineas[] = 'Es de donde llega más gente'; }
+          if ($o['fuente'] === 'Directo o guardado') {
+              $lineas[] = 'Escribieron la dirección o la tenían guardada';
+          }
+        ?>
+          <li<?= tt($o['fuente'], $lineas) ?>>
             <span class="lb-n"><?= e($o['fuente']) ?></span>
             <span class="lb-barra"><span style="width:<?= pct((int) $o['vistas'], (int) $tot['vistas']) ?>%"></span></span>
             <span class="lb-v"><?= (int) $o['vistas'] ?></span>
@@ -484,8 +598,14 @@ function url_rango(string $r): string
 
       <h2 class="panel-title" style="margin-top:26px">Con qué entran</h2>
       <ul class="lista-barras">
-        <?php foreach ($porDispositivo as $d): ?>
-          <li>
+        <?php foreach ($porDispositivo as $d):
+          $pc = pct((int) $d['vistas'], (int) $tot['vistas']);
+          $lineas = [(int) $d['vistas'] . ' visitas', $pc . '% de todo el período'];
+          if ($d['dispositivo'] === 'celular' && $pc >= 60) {
+              $lineas[] = 'La mayoría entra desde el teléfono: conviene revisar ahí primero';
+          }
+        ?>
+          <li<?= tt(ucfirst($d['dispositivo']), $lineas) ?>>
             <span class="lb-n"><?= e(ucfirst($d['dispositivo'])) ?></span>
             <span class="lb-barra"><span style="width:<?= pct((int) $d['vistas'], (int) $tot['vistas']) ?>%"></span></span>
             <span class="lb-v"><?= (int) $d['vistas'] ?></span>
@@ -516,7 +636,7 @@ function url_rango(string $r): string
 
   <!-- ---------------- embudo del formulario ---------------- -->
   <div class="panel">
-    <h2 class="panel-title">Dónde se traba la postulación</h2>
+    <h2 class="panel-title">Dónde se traba la postulación <?= sello_periodo($rango === 'hoy' ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
     <p class="hint" style="margin-top:0">
       Cuánta gente distinta llegó a cada paso del formulario. La caída más grande entre
       dos pasos es el lugar donde conviene mirar.
@@ -526,9 +646,24 @@ function url_rango(string $r): string
       $nombres = [1 => 'Paso 1 · Dónde está', 2 => 'Paso 2 · Quién sos', 3 => 'Paso 3 · Qué hacés',
                   4 => 'Paso 4 · Conexiones', 5 => 'Paso 5 · Recursos', 6 => 'Paso 6 · Por qué vos'];
       $base = max(1, $embudo[1]);
+      $peorCaida = 0;
+      for ($k = 2; $k <= 6; $k++) {
+          $c = $embudo[$k - 1] > 0 ? 100 - pct($embudo[$k], $embudo[$k - 1]) : 0;
+          $peorCaida = max($peorCaida, $c);
+      }
       foreach ($nombres as $i => $nombre):
-        $caida = $i > 1 && $embudo[$i - 1] > 0 ? 100 - pct($embudo[$i], $embudo[$i - 1]) : 0; ?>
-        <li>
+        $caida = $i > 1 && $embudo[$i - 1] > 0 ? 100 - pct($embudo[$i], $embudo[$i - 1]) : 0;
+        $lineas = [$embudo[$i] . ($embudo[$i] === 1 ? ' persona llegó' : ' personas llegaron') . ' hasta acá'];
+        if ($i > 1) {
+            $lineas[] = $caida > 0 ? 'Se cayó el ' . round($caida) . '% de los del paso anterior'
+                                   : 'No se cayó nadie desde el paso anterior';
+            $lineas[] = 'Queda el ' . pct($embudo[$i], $base) . '% de los que empezaron';
+            if ($caida > 0 && $caida >= $peorCaida) {
+                $lineas[] = 'Es la caída más grande del formulario: acá conviene mirar';
+            }
+        }
+        ?>
+        <li<?= tt($nombre, $lineas) ?>>
           <span class="lb-n"><?= e($nombre) ?></span>
           <span class="lb-barra"><span style="width:<?= pct($embudo[$i], $base) ?>%"></span></span>
           <span class="lb-v">
@@ -536,7 +671,10 @@ function url_rango(string $r): string
           </span>
         </li>
       <?php endforeach; ?>
-      <li>
+      <li<?= tt('Postulaciones enviadas', [
+        $totalEnviadas . ($totalEnviadas === 1 ? ' postulación completa' : ' postulaciones completas'),
+        'El ' . pct($totalEnviadas, $base) . '% de quienes abrieron el formulario lo terminó',
+      ]) ?>>
         <span class="lb-n"><strong>Postulaciones enviadas</strong></span>
         <span class="lb-barra"><span class="ok" style="width:<?= pct($totalEnviadas, $base) ?>%"></span></span>
         <span class="lb-v"><strong><?= $totalEnviadas ?></strong></span>

@@ -139,13 +139,31 @@ $puntos = $pdo->prepare(
       ORDER BY created_at"
 );
 $puntos->execute([$LOCAL, $LOCAL, $LOCAL, $LOCAL, $LOCAL, $desdeAct, $hoyAct]);
+$diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 $eventos = [];
+$anterior = [];
 foreach ($puntos->fetchAll() as $r) {
+    $h = (float) $r['hora'];
+    $ts = strtotime($r['cuando']);
+    $lineas = [date('H:i', $ts) . ' del ' . strtolower($diasSemana[(int) date('w', $ts)]) . ' ' . fecha_larga($r['fecha'])];
+    // La franja del día en palabras: leer "23:40" y leer "de madrugada" no
+    // cuesta lo mismo cuando lo que se busca es el patrón.
+    $lineas[] = $h < 6 ? 'De madrugada' : ($h < 12 ? 'A la mañana' : ($h < 19 ? 'A la tarde' : 'A la noche'));
+    if (isset($anterior[$r['username']])) {
+        $d = (int) round(($ts - $anterior[$r['username']]) / 86400);
+        $lineas[] = $d <= 0 ? 'Volvió a entrar el mismo día'
+                  : ($d === 1 ? 'Un día después del anterior' : $d . ' días después del anterior');
+    } else {
+        $lineas[] = 'Primer ingreso del período';
+    }
+    $anterior[$r['username']] = $ts;
+
     $eventos[] = [
         'fecha'  => $r['fecha'],
-        'hora'   => (float) $r['hora'],
+        'hora'   => $h,
         'quien'  => $r['username'],
-        'titulo' => $r['username'] . ' · ' . fecha_corta($r['cuando'], true),
+        'titulo' => $r['username'],
+        'lineas' => $lineas,
     ];
 }
 $primerEvento = $eventos ? min(array_column($eventos, 'fecha')) : $hoyAct;
