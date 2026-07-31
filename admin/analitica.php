@@ -138,17 +138,22 @@ foreach (q($pdo, "SELECT CAST(strftime('%w', creada_at, ?) AS INTEGER) dsem,
     $topeHeat = max($topeHeat, (int) $c['n']);
 }
 
-// ---------------------------------------------------------------- hoy, hora a hora
+// -------------------------------------------------------------- por hora
+// Este panel sigue al rango como todos los demás. Con "Hoy" es la curva del
+// día en curso y se corta en la hora actual; con cualquier otro período es el
+// total por hora de todos esos días juntos.
 $filasHora = $pdo->prepare(
     "SELECT CAST(strftime('%H', creada_at, ?) AS INTEGER) hora, COUNT(*) vistas, COUNT(DISTINCT visitante) unicos
-       FROM visitas WHERE date(creada_at, ?) = ? GROUP BY hora ORDER BY hora"
+       FROM visitas WHERE date(creada_at, ?) BETWEEN ? AND ? GROUP BY hora ORDER BY hora"
 );
-$filasHora->execute([$LOCAL, $LOCAL, $hoy]);
+$filasHora->execute([$LOCAL, $LOCAL, $desde, $hasta]);
 $horas = array_fill(0, 24, ['vistas' => 0, 'unicos' => 0]);
 foreach ($filasHora->fetchAll() as $f) {
     $horas[(int) $f['hora']] = ['vistas' => (int) $f['vistas'], 'unicos' => (int) $f['unicos']];
 }
+$esHoy = $rango === 'hoy' || ($desde === $hasta && $desde === $hoy);
 $horaActual = (int) date('G');
+$corteHora = $esHoy ? $horaActual : 23;
 
 $totHoy = $pdo->prepare("SELECT COUNT(*) vistas, COUNT(DISTINCT visitante) unicos FROM visitas WHERE date(creada_at, ?) = ?");
 $totHoy->execute([$LOCAL, $hoy]);
@@ -167,6 +172,51 @@ $postHoy = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE date(submitted
 $postHoy->execute([$LOCAL, $hoy]);
 $postulacionesHoy = (int) $postHoy->fetchColumn();
 
+// ------------------------------------------------------ embudo de conversión
+//
+// Cinco etapas, del que entra a la home al que manda la postulación.
+//
+// Una advertencia que va también en pantalla: las cuatro primeras cuentan
+// personas y la última cuenta postulaciones, y no se pueden enlazar. Al
+// visitante lo identifica un código que se recalcula todos los días —eso es lo
+// que hace que la medición no siga a nadie—, así que quien mira el lunes y se
+// postula el miércoles cuenta como dos personas distintas. El embudo compara
+// volúmenes por etapa dentro del período, no sigue a una misma persona.
+$emb = $pdo->prepare(
+    "SELECT
+        COUNT(DISTINCT CASE WHEN ruta LIKE '%index.php' OR ruta = '/' THEN visitante END) home,
+        COUNT(DISTINCT CASE WHEN ruta LIKE '%inscribirse%' THEN visitante END) form,
+        COUNT(DISTINCT CASE WHEN ruta LIKE '%inscribirse%' AND paso_form >= 2 THEN visitante END) arranca,
+        COUNT(DISTINCT CASE WHEN ruta LIKE '%inscribirse%' AND paso_form >= 6 THEN visitante END) ultimo
+       FROM visitas WHERE $FILTRO"
+);
+$emb->execute($P);
+$E = $emb->fetch();
+
+$enviadas = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE date(submitted_at, ?) BETWEEN ? AND ?");
+$enviadas->execute($P);
+$totalEnviadas = (int) $enviadas->fetchColumn();
+
+// El mismo embudo día por día, para ver la evolución y no sólo el total.
+$embDia = q($pdo,
+    "SELECT date(creada_at, ?) dia,
+            COUNT(DISTINCT CASE WHEN ruta LIKE '%index.php' OR ruta = '/' THEN visitante END) home,
+            COUNT(DISTINCT CASE WHEN ruta LIKE '%inscribirse%' THEN visitante END) form
+       FROM visitas WHERE $FILTRO GROUP BY dia",
+    [$LOCAL, $LOCAL, $desde, $hasta]);
+$porDiaEmbudo = [];
+foreach ($embDia as $r) {
+    $porDiaEmbudo[$r['dia']] = ['home' => (int) $r['home'], 'form' => (int) $r['form']];
+}
+
+$postDia = q($pdo, "SELECT date(submitted_at, ?) dia, COUNT(*) n FROM applications
+                     WHERE date(submitted_at, ?) BETWEEN ? AND ? GROUP BY dia",
+             [$LOCAL, $LOCAL, $desde, $hasta]);
+$enviadasPorDia = [];
+foreach ($postDia as $r) {
+    $enviadasPorDia[$r['dia']] = (int) $r['n'];
+}
+
 $ultima = $pdo->query("SELECT MAX(creada_at) FROM visitas")->fetchColumn();
 
 // ------------------------------------------------------- postulaciones por día
@@ -179,19 +229,35 @@ foreach ($filasPost->fetchAll() as $f) {
 
 // La ventana es toda la convocatoria: un día sin postulaciones también es un
 // dato, y sólo se ve si el día está dibujado aunque esté vacío.
-$inicio = new DateTimeImmutable(date('Y-m-d', strtotime(FECHA_APERTURA)));
-$finCal = new DateTimeImmutable(date('Y-m-d', strtotime(FECHA_CIERRE)));
-if ($postPorDia) {
-    $primera = new DateTimeImmutable(min(array_keys($postPorDia)));
-    if ($primera < $inicio) {
-        $inicio = $primera;
+// Sigue al rango, como todo lo demás. La única excepción es "Todo", que abre
+// la ventana a la convocatoria entera —incluidos los días que faltan— porque
+// ahí lo que se quiere ver es la campaña completa y cuánta pista queda.
+if ($rango === 'todo') {
+    $inicio = new DateTimeImmutable(date('Y-m-d', strtotime(FECHA_APERTURA)));
+    $finCal = new DateTimeImmutable(date('Y-m-d', strtotime(FECHA_CIERRE)));
+    if ($postPorDia) {
+        $primera = new DateTimeImmutable(min(array_keys($postPorDia)));
+        if ($primera < $inicio) {
+            $inicio = $primera;
+        }
     }
+    $hoyDT = new DateTimeImmutable($hoy);
+    $hasta_cal = $hoyDT > $finCal ? $hoyDT : $finCal;
+} else {
+    $inicio = new DateTimeImmutable($desde);
+    $hasta_cal = new DateTimeImmutable($hasta);
 }
-$hoyDT = new DateTimeImmutable($hoy);
-$hasta_cal = $hoyDT > $finCal ? $hoyDT : $finCal;
 
+// El acumulado arranca con lo que ya había entrado antes del período: si no,
+// recortar la ventana haría parecer que la convocatoria empezó de cero.
 $calendario = [];
 $acumulado = 0;
+foreach ($postPorDia as $f => $prog) {
+    if ($f < $inicio->format('Y-m-d')) {
+        $acumulado += array_sum($prog);
+    }
+}
+$previos = $acumulado;
 $maxPost = 0;
 for ($d = $inicio; $d <= $hasta_cal; $d = $d->modify('+1 day')) {
     $clave = $d->format('Y-m-d');
@@ -204,20 +270,8 @@ for ($d = $inicio; $d <= $hasta_cal; $d = $d->modify('+1 day')) {
         'acumulado' => $acumulado, 'futuro' => $clave > $hoy, 'hoy' => $clave === $hoy,
     ];
 }
-$totalPostulaciones = $acumulado;
-
-// Embudo del formulario dentro del período.
-$embudo = [];
-$stmtE = $pdo->prepare("SELECT COUNT(DISTINCT visitante) n FROM visitas
-                         WHERE $FILTRO AND ruta LIKE '%inscribirse.php' AND paso_form >= ?");
-for ($i = 1; $i <= 6; $i++) {
-    $stmtE->execute(array_merge($P, [$i]));
-    $embudo[$i] = (int) $stmtE->fetchColumn();
-}
-
-$enviadas = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE date(submitted_at, ?) BETWEEN ? AND ?");
-$enviadas->execute($P);
-$totalEnviadas = (int) $enviadas->fetchColumn();
+$totalPostulaciones = array_sum(array_map('array_sum', $postPorDia));
+$enElPeriodo = $acumulado - $previos;
 
 $pageTitle = 'Analítica';
 $nav = 'analitica';
@@ -295,29 +349,43 @@ function num(int $n): string
   <div class="panel">
     <div class="hoy-head">
       <div>
-        <h2 class="panel-title">Hoy, hora por hora <?= sello_periodo('siempre el día en curso', true) ?></h2>
-        <p class="hint" style="margin:0"><?= e(fecha_larga($hoy)) ?> · hora de Esquel. Este panel no cambia con el período de arriba.</p>
+        <h2 class="panel-title">
+          <?= $esHoy ? 'Hoy, hora por hora' : 'A qué hora entran' ?>
+          <?= sello_periodo($esHoy ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?>
+        </h2>
+        <p class="hint" style="margin:0">
+          <?= $esHoy
+              ? e(fecha_larga($hoy)) . ' · hora de Esquel'
+              : 'Las ' . $diasRango . ' jornadas del período sumadas hora por hora · hora de Esquel' ?>
+        </p>
       </div>
       <div class="hoy-cifras">
         <div class="hc">
           <span class="k">Personas</span>
-          <span class="v"><?= (int) $hoyTot['unicos'] ?></span>
-          <?php $delta = (int) $hoyTot['unicos'] - $ayerAEstaHora; ?>
-          <?php if ($ayerAEstaHora > 0): ?>
-            <span class="d <?= $delta > 0 ? 'sube' : ($delta < 0 ? 'baja' : '') ?>">
-              <?= $delta > 0 ? '+' : '' ?><?= $delta ?> vs. ayer a esta hora
-            </span>
+          <span class="v"><?= $esHoy ? (int) $hoyTot['unicos'] : (int) $tot['unicos'] ?></span>
+          <?php if ($esHoy): ?>
+            <?php $delta = (int) $hoyTot['unicos'] - $ayerAEstaHora; ?>
+            <?php if ($ayerAEstaHora > 0): ?>
+              <span class="d <?= $delta > 0 ? 'sube' : ($delta < 0 ? 'baja' : '') ?>">
+                <?= $delta > 0 ? '+' : '' ?><?= $delta ?> vs. ayer a esta hora
+              </span>
+            <?php else: ?>
+              <span class="d">sin comparación de ayer</span>
+            <?php endif; ?>
           <?php else: ?>
-            <span class="d">sin comparación de ayer</span>
+            <span class="d"><?= e(number_format($tot['unicos'] / $diasRango, 1, ',', '.')) ?> por día</span>
           <?php endif; ?>
         </div>
-        <div class="hc"><span class="k">Vistas</span><span class="v"><?= (int) $hoyTot['vistas'] ?></span></div>
-        <div class="hc"><span class="k">Postulaciones</span><span class="v"><?= $postulacionesHoy ?></span></div>
+        <div class="hc"><span class="k">Vistas</span>
+          <span class="v"><?= $esHoy ? (int) $hoyTot['vistas'] : num((int) $tot['vistas']) ?></span></div>
+        <div class="hc"><span class="k">Postulaciones</span>
+          <span class="v"><?= $esHoy ? $postulacionesHoy : $totalEnviadas ?></span></div>
       </div>
     </div>
-    <?php if ((int) $hoyTot['vistas'] === 0): ?>
+    <?php if (array_sum(array_column($horas, 'vistas')) === 0): ?>
       <p class="hint">
-        Todavía no entró nadie hoy. La curva aparece con la primera visita.
+        <?= $esHoy ? 'Todavía no entró nadie hoy.' : 'No hay visitas en este período.' ?>
+        La curva aparece con la primera visita.
         <?php if ($ultima): ?>
           La última que se registró fue el <?= e(fecha_corta(date('Y-m-d H:i:s', strtotime($ultima) + $offset), true)) ?>.
         <?php else: ?>
@@ -326,41 +394,53 @@ function num(int $n): string
         <?php endif; ?>
       </p>
     <?php else:
-      $vistasHoy = array_column($horas, 'vistas');
-      $promHora = $horaActual >= 0 ? array_sum(array_slice($vistasHoy, 0, $horaActual + 1)) / ($horaActual + 1) : 0;
-      $picoHora = max($vistasHoy);
-      $puntosHoy = [];
+      $vistasHora = array_column($horas, 'vistas');
+      $hastaAhora = array_slice($vistasHora, 0, $corteHora + 1);
+      $promHora = $hastaAhora ? array_sum($hastaAhora) / count($hastaAhora) : 0;
+      $picoHora = max($vistasHora);
+      $totalHoras = array_sum($vistasHora);
+      $puntosHora = [];
       for ($i = 0; $i < 24; $i++) {
           $v = $horas[$i]['vistas'];
           $lineas = [$v === 0 ? 'Sin visitas' : $v . ($v === 1 ? ' visita' : ' visitas') . ' de '
                      . $horas[$i]['unicos'] . ($horas[$i]['unicos'] === 1 ? ' persona' : ' personas')];
-          if ($i > $horaActual) {
+          if ($i > $corteHora) {
               $lineas = ['Todavía no pasó'];
           } elseif ($v > 0) {
               if ($v === $picoHora) {
-                  $lineas[] = 'Es la hora más movida del día';
+                  $lineas[] = $esHoy ? 'Es la hora más movida del día' : 'Es la hora más movida del período';
               } elseif ($promHora > 0) {
                   $dif = round(($v - $promHora) / $promHora * 100);
-                  $lineas[] = $dif >= 10 ? '+' . $dif . '% sobre el promedio del día'
-                            : ($dif <= -10 ? $dif . '% bajo el promedio del día' : 'En el promedio del día');
+                  $lineas[] = $dif >= 10 ? '+' . $dif . '% sobre el promedio por hora'
+                            : ($dif <= -10 ? $dif . '% bajo el promedio por hora' : 'En el promedio por hora');
               }
-              if ($i === $horaActual) {
+              if ($totalHoras > 0 && !$esHoy) {
+                  $lineas[] = round($v * 100 / $totalHoras, 1) . '% de las visitas del período';
+              }
+              if ($esHoy && $i === $horaActual) {
                   $lineas[] = 'Esta franja todavía se está llenando';
               }
           }
-          $puntosHoy[] = [
+          $puntosHora[] = [
               'v'  => $v,
               'x'  => $i % 3 === 0 ? str_pad((string) $i, 2, '0', STR_PAD_LEFT) : '',
               'tt' => array_merge([str_pad((string) $i, 2, '0', STR_PAD_LEFT) . ' a '
                        . str_pad((string) (($i + 1) % 24), 2, '0', STR_PAD_LEFT) . ' h'], $lineas),
           ];
       }
-      echo svg_curva($puntosHoy, $horaActual);
+      echo svg_curva($puntosHora, $corteHora);
     ?>
-      <p class="hint">
-        La línea vertical es la hora en curso: esa franja todavía se está llenando, y de ahí
-        para adelante no se dibuja nada porque todavía no pasó.
-      </p>
+      <?php if ($esHoy): ?>
+        <p class="hint">
+          La línea vertical es la hora en curso: esa franja todavía se está llenando, y de ahí
+          para adelante no se dibuja nada porque todavía no pasó.
+        </p>
+      <?php else: ?>
+        <p class="hint">
+          Son las <?= $diasRango ?> jornadas del período apiladas: cada punto es el total de
+          visitas que entraron a esa hora, sumando todos los días.
+        </p>
+      <?php endif; ?>
     <?php endif; ?>
   </div>
 
@@ -457,21 +537,30 @@ function num(int $n): string
   <div class="panel">
     <div class="hoy-head">
       <div>
-        <h2 class="panel-title">Cuándo se postulan <?= sello_periodo('toda la convocatoria', true) ?></h2>
+        <h2 class="panel-title">Cuándo se postulan
+          <?= sello_periodo($rango === 'todo' ? 'toda la convocatoria' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?>
+        </h2>
         <p class="hint" style="margin:0">
           Del <?= e(fecha_larga($calendario[0]['fecha'])) ?> al
           <?= e(fecha_larga($calendario[count($calendario) - 1]['fecha'])) ?>, día por día.
-          Este gráfico muestra siempre toda la convocatoria, sin importar el período elegido arriba.
+          <?= $rango === 'todo'
+              ? 'Con «Todo» se abre a la convocatoria completa, incluidos los días que faltan.'
+              : 'Los días vacíos también están dibujados.' ?>
         </p>
       </div>
       <div class="hoy-cifras">
-        <div class="hc"><span class="k">Total</span><span class="v"><?= $totalPostulaciones ?></span></div>
+        <div class="hc"><span class="k"><?= $rango === 'todo' ? 'Total' : 'En el período' ?></span>
+          <span class="v"><?= $rango === 'todo' ? $totalPostulaciones : $enElPeriodo ?></span>
+          <?php if ($rango !== 'todo'): ?><span class="d"><?= $totalPostulaciones ?> en toda la convocatoria</span><?php endif; ?>
+        </div>
         <div class="hc"><span class="k">Faltan</span><span class="v"><?= dias_para_cierre() ?><span class="u">días</span></span></div>
       </div>
     </div>
 
     <?php if ($totalPostulaciones === 0): ?>
       <p class="hint">Todavía no entró ninguna postulación. El gráfico se dibuja con la primera.</p>
+    <?php elseif (!$calendario): ?>
+      <p class="hint">El período elegido no tiene días para dibujar.</p>
     <?php else: ?>
       <div class="cal-scroll">
       <div class="calendario" style="--dias:<?= count($calendario) ?>">
@@ -634,52 +723,104 @@ function num(int $n): string
     </div>
   </div>
 
-  <!-- ---------------- embudo del formulario ---------------- -->
-  <div class="panel">
-    <h2 class="panel-title">Dónde se traba la postulación <?= sello_periodo($rango === 'hoy' ? 'hoy' : fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
-    <p class="hint" style="margin-top:0">
-      Cuánta gente distinta llegó a cada paso del formulario. La caída más grande entre
-      dos pasos es el lugar donde conviene mirar.
-    </p>
-    <ul class="lista-barras embudo">
-      <?php
-      $nombres = [1 => 'Paso 1 · Dónde está', 2 => 'Paso 2 · Quién sos', 3 => 'Paso 3 · Qué hacés',
-                  4 => 'Paso 4 · Conexiones', 5 => 'Paso 5 · Recursos', 6 => 'Paso 6 · Por qué vos'];
-      $base = max(1, $embudo[1]);
-      $peorCaida = 0;
-      for ($k = 2; $k <= 6; $k++) {
-          $c = $embudo[$k - 1] > 0 ? 100 - pct($embudo[$k], $embudo[$k - 1]) : 0;
-          $peorCaida = max($peorCaida, $c);
+  <!-- ---------------- embudo de conversión ---------------- -->
+  <?php
+  $etapas = [
+      ['clave' => 'home',    'nombre' => 'Entraron a la página',   'n' => (int) $E['home'],
+       'nota' => 'personas distintas en la portada'],
+      ['clave' => 'form',    'nombre' => 'Abrieron el formulario', 'n' => (int) $E['form'],
+       'nota' => 'llegaron a inscribirse.php'],
+      ['clave' => 'arranca', 'nombre' => 'Empezaron a completarlo','n' => (int) $E['arranca'],
+       'nota' => 'pasaron del primer paso'],
+      ['clave' => 'ultimo',  'nombre' => 'Llegaron al último paso','n' => (int) $E['ultimo'],
+       'nota' => 'abrieron el paso 6'],
+      ['clave' => 'enviada', 'nombre' => 'Se postularon',          'n' => $totalEnviadas,
+       'nota' => 'postulaciones guardadas'],
+  ];
+  $arriba = max(1, $etapas[0]['n']);
+  foreach ($etapas as $i => $et) {
+      $l = [$et['n'] . ($et['n'] === 1 ? ' persona' : ' personas')];
+      if ($i > 0) {
+          $prev = $etapas[$i - 1]['n'];
+          $l[] = $prev > 0 ? 'De los ' . $prev . ' del paso anterior, siguió el ' . round($et['n'] * 100 / $prev) . '%'
+                           : 'No hubo nadie en el paso anterior';
+          $l[] = 'Es el ' . round($et['n'] * 100 / $arriba, 1) . '% de los que entraron a la página';
       }
-      foreach ($nombres as $i => $nombre):
-        $caida = $i > 1 && $embudo[$i - 1] > 0 ? 100 - pct($embudo[$i], $embudo[$i - 1]) : 0;
-        $lineas = [$embudo[$i] . ($embudo[$i] === 1 ? ' persona llegó' : ' personas llegaron') . ' hasta acá'];
-        if ($i > 1) {
-            $lineas[] = $caida > 0 ? 'Se cayó el ' . round($caida) . '% de los del paso anterior'
-                                   : 'No se cayó nadie desde el paso anterior';
-            $lineas[] = 'Queda el ' . pct($embudo[$i], $base) . '% de los que empezaron';
-            if ($caida > 0 && $caida >= $peorCaida) {
-                $lineas[] = 'Es la caída más grande del formulario: acá conviene mirar';
-            }
+      if ($et['clave'] === 'enviada') {
+          $l[] = 'Acá se cuentan postulaciones, no personas';
+      }
+      $etapas[$i]['tt'] = $l;
+  }
+  $conversion = $arriba > 0 ? round($totalEnviadas * 100 / $arriba, 2) : 0;
+  ?>
+  <div class="panel">
+    <div class="hoy-head">
+      <div>
+        <h2 class="panel-title">Embudo de conversión <?= sello_periodo(fecha_corta($desde) . ' – ' . fecha_corta($hasta)) ?></h2>
+        <p class="hint" style="margin:0">
+          De quien entra a la página a quien manda la postulación. Sigue el período de arriba.
+        </p>
+      </div>
+      <div class="hoy-cifras">
+        <div class="hc">
+          <span class="k">Conversión</span>
+          <span class="v"><?= e(number_format($conversion, $conversion < 10 ? 2 : 1, ',', '.')) ?><span class="u">%</span></span>
+          <span class="d">de la portada a la postulación</span>
+        </div>
+      </div>
+    </div>
+
+    <?= svg_embudo($etapas) ?>
+
+    <?php
+    // Evolución diaria de las tres etapas que importan. Todas cuentan personas,
+    // así que van en un solo eje: dos escalas distintas en el mismo dibujo
+    // inventan una relación que los datos no tienen.
+    $sHome = $sForm = $sEnv = [];
+    $ejeX = $tips = [];
+    $pasoX = max(1, (int) ceil($diasRango / 8));
+    for ($i = 0; $i < $diasRango; $i++) {
+        $f = date('Y-m-d', strtotime($desde . " +{$i} days"));
+        $d = $porDiaEmbudo[$f] ?? ['home' => 0, 'form' => 0];
+        $env = $enviadasPorDia[$f] ?? 0;
+        $sHome[] = $d['home'];
+        $sForm[] = $d['form'];
+        $sEnv[]  = $env;
+        // El último día se rotula sólo si no queda encima del rótulo anterior.
+        $esUltimo = $i === $diasRango - 1;
+        $encima = $esUltimo && ($i % $pasoX) !== 0 && ($i % $pasoX) < max(2, (int) ($pasoX / 2));
+        $ejeX[$i] = ($i % $pasoX === 0 || ($esUltimo && !$encima)) ? date('d/m', strtotime($f)) : '';
+
+        $l = [$d['home'] . ' entraron a la página', $d['form'] . ' abrieron el formulario',
+              $env . ($env === 1 ? ' postulación' : ' postulaciones')];
+        if ($d['home'] > 0) {
+            $l[] = 'Ese día abrió el formulario el ' . round($d['form'] * 100 / $d['home']) . '% de los que entraron';
         }
-        ?>
-        <li<?= tt($nombre, $lineas) ?>>
-          <span class="lb-n"><?= e($nombre) ?></span>
-          <span class="lb-barra"><span style="width:<?= pct($embudo[$i], $base) ?>%"></span></span>
-          <span class="lb-v">
-            <?= $embudo[$i] ?><?php if ($caida >= 15): ?> <em class="caida">−<?= round($caida) ?>%</em><?php endif; ?>
-          </span>
-        </li>
-      <?php endforeach; ?>
-      <li<?= tt('Postulaciones enviadas', [
-        $totalEnviadas . ($totalEnviadas === 1 ? ' postulación completa' : ' postulaciones completas'),
-        'El ' . pct($totalEnviadas, $base) . '% de quienes abrieron el formulario lo terminó',
-      ]) ?>>
-        <span class="lb-n"><strong>Postulaciones enviadas</strong></span>
-        <span class="lb-barra"><span class="ok" style="width:<?= pct($totalEnviadas, $base) ?>%"></span></span>
-        <span class="lb-v"><strong><?= $totalEnviadas ?></strong></span>
-      </li>
-    </ul>
+        $tips[$i] = array_merge([fecha_larga($f)], $l);
+    }
+    ?>
+    <?php if ($diasRango >= 2): ?>
+      <h3 class="panel-title" style="margin-top:26px">Día por día</h3>
+      <?= svg_series([
+          ['nombre' => 'Página',      'color' => '#AB2759', 'valores' => $sHome],
+          ['nombre' => 'Formulario',  'color' => '#0B6B99', 'valores' => $sForm],
+          ['nombre' => 'Postularon',  'color' => '#B5651D', 'valores' => $sEnv],
+      ], $ejeX, $tips) ?>
+      <div class="cal-leyenda">
+        <span><i style="background:#AB2759"></i> Entraron a la página</span>
+        <span><i style="background:#0B6B99"></i> Abrieron el formulario</span>
+        <span><i style="background:#B5651D"></i> Se postularon</span>
+      </div>
+    <?php endif; ?>
+
+    <p class="hint" style="margin-top:18px">
+      <strong>Cómo leerlo.</strong> Las cuatro primeras etapas cuentan personas y la última cuenta
+      postulaciones, y no se pueden enlazar entre sí: al visitante lo identifica un código que se
+      recalcula todos los días —eso es justamente lo que hace que la medición no siga a nadie—, así
+      que quien mira el lunes y se postula el miércoles figura como dos personas distintas. El
+      embudo compara el volumen de cada etapa dentro del período; no persigue a una misma persona
+      de punta a punta.
+    </p>
   </div>
 
   <?php endif; ?>

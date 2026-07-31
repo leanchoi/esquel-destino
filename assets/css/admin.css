@@ -408,7 +408,29 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .lb-barra span.ok { background: var(--green); }
 .lb-v { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .caida { color: var(--danger); font-style: normal; font-size: 12px; font-weight: 700; }
-.embudo li { font-size: 14.5px; }
+
+/* ---------- embudo de conversión ---------- */
+.embudo { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; counter-reset: paso; }
+.emb-paso { padding: 12px 14px; border-radius: var(--r-sm); cursor: pointer; }
+.emb-paso.tt-activo { background: var(--paper-2); }
+.emb-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-bottom: 7px; }
+.emb-n { font-size: 14.5px; font-weight: 700; counter-increment: paso; }
+.emb-n::before { content: counter(paso) ". "; color: var(--ink-3); font-family: var(--font-mono); font-size: 12.5px; }
+.emb-v { font-family: var(--font-mono); font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
+.emb-barra { background: var(--paper-2); border-radius: var(--r-sm); height: 22px; overflow: hidden; }
+.emb-barra span { display: block; height: 100%; background: var(--berry); border-radius: var(--r-sm); min-width: 2px;
+  /* Sin animación de entrada: el ancho es el dato, y verlo crecer no lo explica
+     mejor — sólo obliga a esperar para leerlo. */ }
+.emb-pie { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: 6px; font-size: 12.5px; }
+.emb-pasan { font-weight: 700; color: var(--green-ink); }
+.emb-cae { color: #7A4E06; }
+/* Una caída de más de la mitad no es un matiz del embudo, es el problema. */
+.emb-cae.es-fuerte { color: var(--danger); font-weight: 700; }
+.emb-base, .emb-nota { color: var(--ink-3); }
+.emb-nota { margin-left: auto; }
+@media (max-width: 560px) { .emb-nota { margin-left: 0; width: 100%; } }
+
+.g-fin { font-family: var(--font-body); font-size: 11px; font-weight: 700; }
 
 /* ---------- el día de hoy ---------- */
 .hoy-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 22px; flex-wrap: wrap; margin-bottom: 12px; }

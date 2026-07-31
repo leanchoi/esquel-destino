@@ -146,6 +146,119 @@ function svg_curva(array $puntos, ?int $corte = null, string $color = COLOR_ACEL
 }
 
 /**
+ * Varias series sobre el mismo eje, con referencia.
+ *
+ * Un solo cuadro flotante por columna, con el valor de todas las series a la
+ * vez: es lo que se quiere comparar. Las tres tintas están medidas con el
+ * validador de paletas y se distinguen también con daltonismo (ΔE 12,4 en el
+ * peor par bajo deuteranopia), y además cada línea lleva su nombre escrito en
+ * la punta, así el color no es el único dato.
+ *
+ * Nunca dos ejes: son todas personas, se miden con la misma regla.
+ *
+ * @param array $series  [['nombre'=>, 'color'=>, 'valores'=>int[]], …]
+ * @param array $ejeX    etiqueta por posición ('' = no se rotula)
+ * @param array $tips    por posición: [título, línea…]
+ */
+function svg_series(array $series, array $ejeX, array $tips): string
+{
+    if (!$series || count($series[0]['valores']) < 2) {
+        return '';
+    }
+    $n = count($series[0]['valores']);
+
+    $W = 720; $H = 220; $izq = 38; $der = 74; $arriba = 14; $abajo = 30;
+    $ancho = $W - $izq - $der;
+    $alto  = $H - $arriba - $abajo;
+
+    $tope = 1;
+    foreach ($series as $s) {
+        $tope = max($tope, max($s['valores']));
+    }
+    $paso = $tope <= 10 ? 2 : ($tope <= 50 ? 10 : ($tope <= 200 ? 20 : ($tope <= 1000 ? 100 : 500)));
+    $tope = (int) (ceil($tope / $paso) * $paso);
+    if (($tope / $paso) % 2 !== 0) {
+        $tope += $paso;
+    }
+
+    $x = fn(int $i) => $izq + ($n > 1 ? $ancho * $i / ($n - 1) : 0);
+    $y = fn(float $v) => $arriba + $alto - ($alto * $v / $tope);
+
+    $svg = '<div class="g-wrap"><svg class="g-svg" viewBox="0 0 ' . $W . ' ' . $H . '" role="img">';
+
+    for ($g = 0; $g <= 2; $g++) {
+        $v = $tope * $g / 2;
+        $py = round($y($v), 1);
+        $svg .= '<line class="g-grid" x1="' . $izq . '" y1="' . $py . '" x2="' . ($W - $der) . '" y2="' . $py . '"/>'
+              . '<text class="g-eje" x="' . ($izq - 8) . '" y="' . ($py + 4) . '" text-anchor="end">' . (int) $v . '</text>';
+    }
+    $svg .= '<line class="g-cruz" x1="0" y1="' . $arriba . '" x2="0" y2="' . ($arriba + $alto) . '" hidden />';
+
+    foreach ($series as $k => $s) {
+        $coords = [];
+        for ($i = 0; $i < $n; $i++) {
+            $coords[] = round($x($i), 1) . ',' . round($y($s['valores'][$i]), 1);
+        }
+        $svg .= '<path class="g-linea" d="M' . implode(' L', $coords) . '" style="stroke:' . e($s['color']) . '"/>';
+        foreach ($s['valores'] as $i => $v) {
+            if ($v > 0) {
+                $svg .= '<circle class="g-punto s' . $k . '" data-i="' . $i . '" cx="' . round($x($i), 1)
+                      . '" cy="' . round($y($v), 1) . '" r="2.6" style="fill:' . e($s['color']) . '"/>';
+            }
+        }
+        // El nombre en la punta de la línea: identidad sin depender del color.
+        $svg .= '<text class="g-fin" x="' . ($W - $der + 6) . '" y="'
+              . round($y($s['valores'][$n - 1]) + 3.5, 1) . '" style="fill:' . e($s['color']) . '">'
+              . e($s['nombre']) . '</text>';
+    }
+
+    $ancho1 = $n > 1 ? $ancho / ($n - 1) : $ancho;
+    for ($i = 0; $i < $n; $i++) {
+        $svg .= '<rect class="g-hit" data-i="' . $i . '" x="' . round(max($izq - 2, $x($i) - $ancho1 / 2), 1)
+              . '" y="' . $arriba . '" width="' . round($ancho1, 1) . '" height="' . $alto . '"'
+              . tt($tips[$i][0] ?? '', array_slice($tips[$i] ?? [], 1)) . '/>';
+    }
+    foreach ($ejeX as $i => $txt) {
+        if ($txt === '' || $i >= $n) {
+            continue;
+        }
+        $svg .= '<text class="g-x" x="' . round($x($i), 1) . '" y="' . ($H - 10) . '" text-anchor="middle">' . e($txt) . '</text>';
+    }
+
+    return $svg . '</svg></div>';
+}
+
+/**
+ * Embudo de conversión: cada etapa con lo que sobrevive de la anterior.
+ *
+ * @param array $etapas  [['nombre'=>, 'n'=>int, 'nota'=>string, 'tt'=>[…]], …]
+ */
+function svg_embudo(array $etapas): string
+{
+    $tope = max(1, (int) ($etapas[0]['n'] ?? 1));
+    $html = '<ol class="embudo">';
+    foreach ($etapas as $i => $et) {
+        $ancho = round($et['n'] * 100 / $tope, 1);
+        $previa = $i > 0 ? (int) $etapas[$i - 1]['n'] : null;
+        $pasan = $previa > 0 ? round($et['n'] * 100 / $previa) : null;
+        $cae   = $pasan === null ? null : 100 - $pasan;
+
+        $html .= '<li class="emb-paso"' . tt($et['nombre'], $et['tt'] ?? []) . '>'
+            . '<div class="emb-cab"><span class="emb-n">' . $et['nombre'] . '</span>'
+            . '<span class="emb-v">' . number_format($et['n'], 0, ',', '.') . '</span></div>'
+            . '<div class="emb-barra"><span style="width:' . $ancho . '%"></span></div>'
+            . '<div class="emb-pie">'
+            . ($pasan === null
+                ? '<span class="emb-base">el 100% del embudo arranca acá</span>'
+                : '<span class="emb-pasan">pasa el ' . $pasan . '%</span>'
+                  . ($cae > 0 ? '<span class="emb-cae' . ($cae >= 50 ? ' es-fuerte' : '') . '">se va el ' . $cae . '%</span>' : ''))
+            . ($et['nota'] ? '<span class="emb-nota">' . e($et['nota']) . '</span>' : '')
+            . '</div></li>';
+    }
+    return $html . '</ol>';
+}
+
+/**
  * Mapa de calor día de la semana × hora.
  *
  * Es el gráfico que contesta una pregunta que ningún otro contesta: a qué hora
