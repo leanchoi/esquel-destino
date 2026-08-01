@@ -269,23 +269,21 @@
   // Obligatorios por paso. En el HTML no usamos el atributo `required` para
   // que sin JS el formulario se pueda enviar igual y lo valide el servidor,
   // que es la validación que realmente manda.
-  var REQUERIDOS = {
-    1: [{ name: 'program', msg: 'Elegí una de las dos líneas.' }],
-    2: [
-      { name: 'name', msg: 'Poné el nombre de tu proyecto.' },
-      { name: 'contact_name', msg: 'Necesitamos saber con quién hablamos.' },
-      { name: 'email', tipo: 'email', msg: 'Revisá el correo: es por donde te vamos a contactar.' },
-      { name: 'phone', msg: 'Dejanos un teléfono de contacto.' }
-    ],
-    3: [
-      { name: 'descripcion', msg: 'Contanos qué hacés hoy.' },
-      { name: 'diferencial', msg: 'Este campo es de los que más pesan en la evaluación.' }
-    ],
-    6: [
-      { name: 'motivacion', msg: 'Contanos por qué querés participar.' },
-      { name: 'compromiso', msg: 'Confirmá la disponibilidad de 12 horas semanales.' }
-    ]
-  };
+  // Las reglas vienen del servidor, de REQUERIDOS_POR_PASO en config.php.
+  //
+  // Antes esta lista estaba escrita acá a mano y era una copia parcial de la
+  // que valida el envío: la pantalla dejaba pasar campos que el servidor
+  // después rechazaba, y el visitante volvía al principio del formulario sin
+  // entender por qué. Con una sola lista eso no puede volver a pasar.
+  var REQUERIDOS = {};
+  try {
+    var crudo = JSON.parse((document.getElementById('camposRequeridos') || {}).textContent || '{}');
+    Object.keys(crudo).forEach(function (paso) {
+      REQUERIDOS[paso] = Object.keys(crudo[paso]).map(function (nombre) {
+        return { name: nombre, msg: crudo[paso][nombre], tipo: nombre === 'email' ? 'email' : '' };
+      });
+    });
+  } catch (e) {}
 
   function campo(nombre) {
     return form.querySelector('[name="' + nombre + '"]');

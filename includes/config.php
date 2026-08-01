@@ -44,6 +44,69 @@ const PROGRAMAS = [
     ],
 ];
 
+// --- Qué pide el formulario -----------------------------------------------
+/**
+ * Campos obligatorios, agrupados por paso. Una sola lista para los dos lados:
+ * inscribirse.php la usa para validar en el servidor y main.js la recibe en
+ * JSON para frenar al visitante en el paso donde falta algo.
+ *
+ * Antes había dos listas parecidas —una en PHP y otra escrita a mano en el
+ * JavaScript— y se desincronizaron: la pantalla dejaba pasar campos que el
+ * servidor después rechazaba, y el visitante volvía al principio sin entender
+ * por qué.
+ *
+ * Quedan fuera a propósito: 'redes', porque hay gente que no tiene ninguna y
+ * exigirla la dejaría afuera por no estar en internet; 'material', que es un
+ * enlace opcional; y 'producto_fisico_cual', que sólo se pide si antes dijiste
+ * que sí y por eso se valida aparte.
+ */
+const REQUERIDOS_POR_PASO = [
+    1 => [
+        'program'   => 'Elegí una de las dos líneas.',
+        'situacion' => 'Contanos en qué situación estás.',
+    ],
+    2 => [
+        'name'         => 'Poné el nombre de tu proyecto.',
+        'contact_name' => 'Necesitamos saber con quién hablamos.',
+        'email'        => 'Revisá el correo: es por donde te vamos a contactar.',
+        'phone'        => 'Dejanos un teléfono de contacto.',
+        'barrio'       => 'Decinos de qué barrio o paraje sos.',
+        'antiguedad'   => 'Contanos hace cuánto estás en esto.',
+        'ubicacion'    => 'Contanos dónde está tu proyecto.',
+    ],
+    3 => [
+        'descripcion' => 'Contanos qué hacés hoy. Sin esto no podemos evaluar la propuesta.',
+        'diferencial' => 'Este campo es de los que más pesan en la evaluación.',
+        'visitable'   => 'Contanos qué podría ver, hacer o probar un visitante.',
+    ],
+    4 => [
+        'conexiones'      => 'Contanos con qué otros lugares o personas de Esquel se conecta.',
+        'producto_fisico' => 'Decinos si hay un producto físico asociado.',
+    ],
+    5 => [
+        'recursos' => 'Contanos con qué contás hoy.',
+        'falta'    => 'Contanos qué te falta para poder vender.',
+    ],
+    6 => [
+        'motivacion' => 'Contanos por qué querés participar. Es el criterio de mayor peso.',
+        'equipo'     => 'Contanos quiénes participarían.',
+        'compromiso' => 'Necesitamos que confirmes la disponibilidad de 12 horas semanales.',
+    ],
+];
+
+// --- Barrios --------------------------------------------------------------
+/**
+ * Sugerencias para el campo de barrio. Van en un <datalist>, no en un <select>:
+ * la lista ordena las respuestas de la mayoría sin dejar afuera al que vive en
+ * un paraje que no está acá. Escribir libre sigue siendo válido.
+ */
+const BARRIOS = [
+    'Centro', 'Ceferino', 'Estación', 'Badén', 'Bella Vista', 'Don Bosco',
+    'Ideal', 'Km 4', 'Km 5', 'Las Américas', 'Malvinas Argentinas', 'Mutual',
+    'Padre Juan', 'Roca', 'San Martín', 'Valle Chico', 'Villa Ayelén',
+    'Zona rural', 'Trevelin', 'Otro',
+];
+
 // --- Roles del panel ------------------------------------------------------
 /**
  * Cómo se llama cada rol en pantalla, y qué hace.
@@ -74,6 +137,31 @@ const ROLES_INFO = [
         'ayuda'  => 'Coordina: mueve de etapa, gestiona usuarios y ve la analítica. No vota.',
         'vota'   => false,
     ],
+];
+
+// --- El comentario del jurado ---------------------------------------------
+/**
+ * Mínimo de caracteres del comentario de una evaluación.
+ *
+ * El puntaje ordena; el comentario es lo único que después explica por qué. Al
+ * cerrar la selección hay que poder decirle a cada persona que se postuló qué
+ * se vio en su propuesta, y un "muy bueno" no alcanza para eso. Trescientos
+ * caracteres son unas cuatro o cinco líneas: incómodo de escribir de apuro,
+ * razonable si de verdad se miró la postulación.
+ */
+const MIN_COMENTARIO = 300;
+
+/**
+ * Disparadores para el comentario. No es un formulario dentro del formulario:
+ * son preguntas a la vista mientras se escribe, para que el jurado no se quede
+ * en el juicio general y baje al caso concreto.
+ */
+const PISTAS_COMENTARIO = [
+    'Qué tiene esta propuesta que no tenga otra de las que leíste.',
+    'Qué le falta concretamente para poder recibir visitantes.',
+    'Qué te hace dudar, si algo te hace dudar.',
+    'Qué preguntarías en una entrevista.',
+    'Con qué otro proyecto de Esquel lo ves conectado.',
 ];
 
 // --- Estados del CRM ------------------------------------------------------

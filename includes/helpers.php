@@ -228,6 +228,7 @@ function puntaje_ponderado(array $app): ?float
 /** Etiquetas legibles de las respuestas guardadas en application_details. */
 const ETIQUETAS_DETALLE = [
     'situacion'             => 'Situación actual',
+    'barrio'                => 'Barrio o paraje',
     'ubicacion'             => 'Dónde está',
     'antiguedad'            => 'Hace cuánto',
     'redes'                 => 'Redes / web',
@@ -247,4 +248,35 @@ const ETIQUETAS_DETALLE = [
 function etiqueta_detalle(string $key): string
 {
     return ETIQUETAS_DETALLE[$key] ?? ucfirst(str_replace('_', ' ', $key));
+}
+
+/**
+ * Todas las claves que hay que mostrar de una postulación.
+ *
+ * Primero las del formulario de hoy, en su orden, y después cualquier otra que
+ * la postulación traiga guardada.
+ *
+ * Esa segunda parte no es un detalle. application_details guarda clave-valor,
+ * así que una respuesta no se borra nunca cuando la pregunta sale del
+ * formulario: se queda en la base. Pero el panel mostraba sólo las claves de
+ * ETIQUETAS_DETALLE, con lo cual, al sacar una pregunta, lo que había
+ * contestado la gente dejaba de verse aunque siguiera ahí. Ahora se listan
+ * todas, y las que ya no se preguntan quedan marcadas como tales en vez de
+ * desaparecer.
+ *
+ * @param array $detalles  clave => valor de esa postulación
+ * @return array           clave => ['label' => string, 'vigente' => bool]
+ */
+function claves_detalle(array $detalles): array
+{
+    $out = [];
+    foreach (ETIQUETAS_DETALLE as $k => $label) {
+        $out[$k] = ['label' => $label, 'vigente' => true];
+    }
+    foreach (array_keys($detalles) as $k) {
+        if (!isset($out[$k])) {
+            $out[$k] = ['label' => etiqueta_detalle($k), 'vigente' => false];
+        }
+    }
+    return $out;
 }

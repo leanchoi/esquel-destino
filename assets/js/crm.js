@@ -24,6 +24,9 @@
   var YO = CFG.yo || { id: 0, username: '' };
   var PUEDE_VOTAR = !!CFG.puedeVotar;
   var PUEDE_ESTADO = !!CFG.puedeEstado;
+  var VE_VOTOS = !!CFG.puedeVerVotos;      // sólo el admin ve quién puso qué
+  var MIN_COM = CFG.minComentario || 300;
+  var PISTAS = CFG.pistas || [];
   var PUEDE_BORRAR = !!CFG.puedeBorrar;
 
   function esc(s) {
@@ -282,23 +285,35 @@
         '</p></div>';
     }
 
-    // Los votos del resto, uno por uno.
-    html += '<div class="d-section"><h3>Lo que votó cada jurado</h3>';
-    var otros = (a.votos || []).filter(function (v) { return v.user_id !== YO.id; });
-    var pendientes = JURADO.filter(function (j) {
-      return j.id !== YO.id && !(a.votos || []).some(function (v) { return v.user_id === j.id; });
-    });
-
-    if (!otros.length && !pendientes.length) {
-      html += '<p class="hint">Sos el único jurado cargado en el panel.</p>';
+    // Los votos del resto. Sólo el admin los ve uno por uno: entre evaluadores
+    // el voto es secreto, porque leer lo que puso el otro antes de terminar el
+    // propio deja de ser una evaluación independiente.
+    if (VE_VOTOS) {
+      html += '<div class="d-section"><h3>Lo que votó cada jurado</h3>';
+      var otros = (a.votos || []).filter(function (v) { return v.user_id !== YO.id; });
+      var pendientes = JURADO.filter(function (j) {
+        return j.id !== YO.id && !(a.votos || []).some(function (v) { return v.user_id === j.id; });
+      });
+      if (!otros.length && !pendientes.length) {
+        html += '<p class="hint">No hay más jurados cargados en el panel.</p>';
+      }
+      otros.forEach(function (v) { html += votoHTML(v); });
+      pendientes.forEach(function (j) {
+        html += '<div class="voto voto-pendiente">' +
+          '<div class="voto-head"><span class="voto-quien">' + esc(j.username) + '</span>' +
+          '<span class="voto-falta">todavía no votó</span></div></div>';
+      });
+      html += '</div>';
+    } else if (c.jurados > 1) {
+      html += '<div class="d-section"><h3>El resto del jurado</h3>' +
+        '<div class="voto-secreto">' +
+        '<p><strong>' + (c.emitidos - (a.miVoto ? 1 : 0)) + ' de ' + (c.jurados - 1) +
+        '</strong> ' + (c.jurados - 1 === 1 ? 'jurado ya votó' : 'jurados ya votaron') +
+        ' además de vos.</p>' +
+        '<p class="ayuda">Ves cuántos votaron y el promedio de todos, pero no qué puso cada uno: ' +
+        'leer el voto ajeno antes de cerrar el propio deja de ser una evaluación independiente. ' +
+        'El detalle completo lo ve la administración.</p></div></div>';
     }
-    otros.forEach(function (v) { html += votoHTML(v); });
-    pendientes.forEach(function (j) {
-      html += '<div class="voto voto-pendiente">' +
-        '<div class="voto-head"><span class="voto-quien">' + esc(j.username) + '</span>' +
-        '<span class="voto-falta">todavía no votó</span></div></div>';
-    });
-    html += '</div>';
 
     return html;
   }
@@ -375,10 +390,17 @@
       '<span class="num" id="miPuntaje">' + (mio && !abst ? num(mio.puntaje) : '—') + '</span></div>';
     html += '</div>';
 
-    html += '<div class="field"><label class="lbl" for="miComentario">Tu comentario</label>' +
-      '<textarea id="miComentario" rows="4" maxlength="4000" placeholder="Qué viste, qué te preocupa, qué preguntarías en la entrevista.">' +
-      esc(mio ? mio.comentario : '') + '</textarea>' +
-      '<p class="ayuda">Lo lee el resto del jurado. No lo ve quien se postuló.</p></div>';
+    var comentario = mio ? (mio.comentario || '') : '';
+    html += '<div class="field mi-comentario">' +
+      '<label class="lbl" for="miComentario">Tu comentario <span class="req">obligatorio</span></label>' +
+      '<p class="ayuda">Es lo único que después explica el puntaje. Cuando cierre la selección hay que ' +
+      'poder decirle a cada persona qué se vio en su propuesta, y para eso un número no alcanza.</p>' +
+      (PISTAS.length ? '<ul class="pistas">' + PISTAS.map(function (p) {
+        return '<li>' + esc(p) + '</li>';
+      }).join('') + '</ul>' : '') +
+      '<textarea id="miComentario" rows="8" maxlength="8000" placeholder="Escribí sobre esta postulación en particular.">' +
+      esc(comentario) + '</textarea>' +
+      '<p class="contador" id="miContador"></p></div>';
 
     html += '<label class="check-abst"><input type="checkbox" id="miAbstencion"' + (abst ? ' checked' : '') + '> ' +
       '<span>Me abstengo en esta postulación<em>Por conocer a quien se postula o cualquier otro conflicto de interés. ' +
@@ -396,13 +418,35 @@
   // --------------------------------------------------- pestaña: respuestas
   function tabRespuestas(a) {
     var d = a.detalles || {};
+    // a.claves lo arma el servidor: primero las preguntas de hoy y después
+    // cualquier otra que esta postulación traiga guardada de una versión
+    // anterior del formulario. Nada de lo que alguien contestó desaparece de
+    // la vista porque la pregunta se haya dado de baja.
+    var claves = a.claves || {};
     var html = '<div class="d-section"><h3>Respuestas del formulario</h3>';
-    Object.keys(ETIQUETAS).forEach(function (k) {
+
+    Object.keys(claves).forEach(function (k) {
       var val = d[k];
-      html += '<div class="d-answer"><div class="q">' + esc(ETIQUETAS[k]) + '</div>' +
-        '<div class="a' + (val ? '' : ' empty') + '">' + (val ? esc(val) : 'Sin responder') + '</div></div>';
+      var info = claves[k];
+      html += '<div class="d-answer' + (info.vigente ? '' : ' es-vieja') + '">' +
+        '<div class="q">' + esc(info.label) +
+        (info.vigente ? '' : ' <span class="tag-vieja">ya no se pregunta</span>') + '</div>';
+      if (val) {
+        html += '<div class="a">' + esc(val) + '</div>';
+      } else if (PUEDE_ESTADO) {
+        // El admin puede completar a mano lo que falta: una postulación vieja
+        // no trae el barrio porque cuando se envió la pregunta no existía.
+        html += '<div class="a empty">Sin responder</div>' +
+          '<div class="completar"><input type="text" data-completar="' + esc(k) +
+          '" placeholder="Completar ' + esc(info.label.toLowerCase()) + '"' +
+          (k === 'barrio' ? ' list="listaBarrios"' : '') + '>' +
+          '<button type="button" class="btn btn-secondary btn-sm" data-guardar-detalle="' + esc(k) + '">Guardar</button></div>';
+      } else {
+        html += '<div class="a empty">Sin responder</div>';
+      }
+      html += '</div>';
     });
-    return html + '</div>';
+    return html + '<span class="drawer-msg" id="dMsgDetalle"></span></div>';
   }
 
   // ------------------------------------------------------ pestaña: proceso
@@ -480,11 +524,29 @@
         if (cuerpoVoto) cuerpoVoto.toggleAttribute('data-apagado', abst.checked);
         cuerpo.querySelectorAll('[data-crit]').forEach(function (s) { s.disabled = abst.checked; });
         previaPuntaje();
+        contarComentario();
       });
+    }
+
+    // Contador del comentario, en vivo. El botón queda inhabilitado hasta que
+    // llega al mínimo, y dice cuánto falta en vez de rebotar recién al guardar.
+    var com = document.getElementById('miComentario');
+    if (com) {
+      com.addEventListener('input', contarComentario);
+      contarComentario();
     }
 
     var gv = document.getElementById('dGuardarVoto');
     if (gv) gv.addEventListener('click', guardarVoto);
+
+    cuerpo.querySelectorAll('[data-guardar-detalle]').forEach(function (btn) {
+      btn.addEventListener('click', function () { guardarDetalle(btn.getAttribute('data-guardar-detalle')); });
+    });
+    cuerpo.querySelectorAll('[data-completar]').forEach(function (inp) {
+      inp.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter') { ev.preventDefault(); guardarDetalle(inp.getAttribute('data-completar')); }
+      });
+    });
 
     var rv = document.getElementById('dRetirar');
     if (rv) rv.addEventListener('click', retirarVoto);
@@ -503,6 +565,30 @@
       });
       eliminar.addEventListener('click', function () { borrar(confirmar.value); });
     }
+  }
+
+  /** Cuántos caracteres van, cuántos faltan, y si ya se puede guardar. */
+  function contarConMinimo() {
+    var abst = document.getElementById('miAbstencion');
+    return abst && abst.checked ? 40 : MIN_COM;
+  }
+
+  function contarComentario() {
+    var com = document.getElementById('miComentario');
+    var out = document.getElementById('miContador');
+    var btn = document.getElementById('dGuardarVoto');
+    if (!com || !out) return;
+    var n = com.value.trim().length;
+    var min = contarConMinimo();
+    var falta = min - n;
+    if (falta > 0) {
+      out.textContent = 'Faltan ' + falta + (falta === 1 ? ' caracter' : ' caracteres') + ' (mínimo ' + min + ')';
+      out.className = 'contador es-corto';
+    } else {
+      out.textContent = n + ' caracteres';
+      out.className = 'contador es-ok';
+    }
+    if (btn) btn.disabled = falta > 0;
   }
 
   /** Vista previa del puntaje propio mientras se mueven los deslizadores. */
@@ -591,6 +677,26 @@
       render();
       decir('dMsg', 'Voto retirado', 'ok');
     }).catch(function () { decir('dMsg', 'Error de conexión.', 'error'); });
+  }
+
+  /** El admin completa a mano una respuesta que la postulación no trae. */
+  function guardarDetalle(clave) {
+    if (!actual) return;
+    var inp = cuerpo.querySelector('[data-completar="' + clave + '"]');
+    if (!inp) return;
+    decir('dMsgDetalle', 'Guardando…');
+    pedir({ accion: 'detalle', id: actual.id, clave: clave, valor: inp.value })
+      .then(function (res) {
+        if (!res.ok) { decir('dMsgDetalle', res.body.error || 'No se pudo guardar.', 'error'); return; }
+        aplicar(res.body);
+        if (res.body.detalles) {
+          actual.detalles = res.body.detalles;
+          actual.claves = actual.claves || {};
+        }
+        render();
+        decir('dMsgDetalle', 'Respuesta cargada', 'ok');
+      })
+      .catch(function () { decir('dMsgDetalle', 'Error de conexión.', 'error'); });
   }
 
   function guardarNotas() {

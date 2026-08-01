@@ -13,7 +13,7 @@ unset($_SESSION['postulacion_enviada']);
 // Campos del formulario. El orden refleja los pasos.
 $campos = [
     'program', 'situacion',
-    'name', 'contact_name', 'email', 'phone', 'ubicacion', 'antiguedad', 'redes',
+    'name', 'contact_name', 'email', 'phone', 'barrio', 'ubicacion', 'antiguedad', 'redes',
     'descripcion', 'diferencial', 'visitable',
     'conexiones', 'producto_fisico', 'producto_fisico_cual',
     'recursos', 'falta',
@@ -42,13 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
         if (!array_key_exists($v['program'], PROGRAMAS)) {
             $errores['program'] = 'Elegí una de las dos líneas.';
         }
-        if ($v['name'] === '')          $errores['name'] = 'Poné el nombre de tu proyecto.';
-        if ($v['contact_name'] === '')  $errores['contact_name'] = 'Necesitamos saber con quién hablamos.';
+        // Todas las preguntas son obligatorias. Una postulación a medias no se
+        // puede evaluar contra las que sí están completas, y dejar campos
+        // opcionales terminaba premiando a quien contestaba menos.
+        //
+        // Las dos excepciones no son un olvido: 'redes' porque hay gente que no
+        // tiene ninguna y exigirla la dejaría afuera por no estar en internet,
+        // y 'producto_fisico_cual' porque sólo aplica si antes dijiste que sí.
+        foreach (REQUERIDOS_POR_PASO as $delPaso) {
+            foreach ($delPaso as $campo => $mensaje) {
+                if (($v[$campo] ?? '') === '' && $campo !== 'compromiso') {
+                    $errores[$campo] = $mensaje;
+                }
+            }
+        }
         if (!filter_var($v['email'], FILTER_VALIDATE_EMAIL)) $errores['email'] = 'Revisá el correo: es por donde te vamos a contactar.';
-        if ($v['phone'] === '')         $errores['phone'] = 'Dejanos un teléfono de contacto.';
-        if ($v['descripcion'] === '')   $errores['descripcion'] = 'Contanos qué hacés hoy. Sin esto no podemos evaluar la propuesta.';
-        if ($v['diferencial'] === '')   $errores['diferencial'] = 'Este campo es de los que más pesan en la evaluación.';
-        if ($v['motivacion'] === '')    $errores['motivacion'] = 'Contanos por qué querés participar. Es el criterio de mayor peso.';
+        if ($v['producto_fisico'] === '') {
+            $errores['producto_fisico'] = 'Decinos si hay un producto físico asociado.';
+        // 'Si' sin tilde: es el valor que emite el radio, no la etiqueta que se
+        // lee en pantalla. Comparando contra 'Sí' la condición nunca se cumplía
+        // y se podía marcar que hay un producto sin contar cuál es.
+        } elseif ($v['producto_fisico'] === 'Si' && $v['producto_fisico_cual'] === '') {
+            $errores['producto_fisico_cual'] = 'Contanos cuál es ese producto.';
+        }
         if ($v['compromiso'] !== 'on')  $errores['compromiso'] = 'Necesitamos que confirmes la disponibilidad de 12 horas semanales.';
         if ($v['material'] !== '' && !filter_var($v['material'], FILTER_VALIDATE_URL)) {
             $errores['material'] = 'Ese enlace no parece válido. Revisalo o dejalo vacío.';
@@ -76,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
                 // usa ETIQUETAS_DETALLE para mostrarlo y exportarlo.
                 $detalles = [
                     'situacion' => $v['situacion'],
+                    'barrio' => $v['barrio'],
                     'ubicacion' => $v['ubicacion'],
                     'antiguedad' => $v['antiguedad'],
                     'redes' => $v['redes'],
@@ -192,6 +209,11 @@ require __DIR__ . '/includes/header.php';
       </div>
     </div>
 
+    <?php // La misma lista que valida el servidor, para que la pantalla frene
+          // exactamente donde va a frenar el envío y no en otro lado. ?>
+    <script id="camposRequeridos" type="application/json"><?= json_encode(
+        REQUERIDOS_POR_PASO, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+    ) ?></script>
     <form method="post" id="formPostulacion" class="form-card" novalidate data-con-errores="<?= $errores ? '1' : '0' ?>">
       <?= csrf_field() ?>
       <input type="text" name="sitio_web" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true">
@@ -205,12 +227,12 @@ require __DIR__ . '/includes/header.php';
         <div class="field">
           <div class="opt-grid">
             <label class="opt">
-              <input type="radio" name="program" value="Acelera" <?= $v['program'] === 'Acelera' ? 'checked' : '' ?>>
+              <input type="radio" name="program" required value="Acelera" <?= $v['program'] === 'Acelera' ? 'checked' : '' ?>>
               <span class="opt-t">Esquel Acelera <span class="opt-tag">Urbano</span></span>
               <span class="opt-d">En la ciudad: gastronomía, talleres, comercios, circuitos, guías, oficios.</span>
             </label>
             <label class="opt opt-raiz">
-              <input type="radio" name="program" value="Raiz" <?= $v['program'] === 'Raiz' ? 'checked' : '' ?>>
+              <input type="radio" name="program" required value="Raiz" <?= $v['program'] === 'Raiz' ? 'checked' : '' ?>>
               <span class="opt-t">Raíz <span class="opt-tag">Rural</span></span>
               <span class="opt-d">En el campo: chacras, estancias, crianceros, viñedos, lana, fruta fina.</span>
             </label>
@@ -231,11 +253,12 @@ require __DIR__ . '/includes/header.php';
             ];
             foreach ($situaciones as $val => $txt): ?>
               <label class="opt">
-                <input type="radio" name="situacion" value="<?= e($val) ?>" <?= $v['situacion'] === $val ? 'checked' : '' ?>>
+                <input type="radio" name="situacion" required value="<?= e($val) ?>" <?= $v['situacion'] === $val ? 'checked' : '' ?>>
                 <span class="opt-t" style="font-size:15.5px"><?= e($txt) ?></span>
               </label>
             <?php endforeach; ?>
           </div>
+          <p class="err" data-err="situacion"><?= e($errores['situacion'] ?? '') ?></p>
         </div>
       </fieldset>
 
@@ -247,38 +270,53 @@ require __DIR__ . '/includes/header.php';
 
         <div class="field">
           <label class="lbl" for="name">Nombre de tu proyecto, emprendimiento u organización *</label>
-          <input type="text" id="name" name="name" value="<?= e($v['name']) ?>" autocomplete="organization" placeholder="Ej.: Casa de Té Las Rosas, Chacra El Ñire, Cerámica del Valle">
+          <input type="text" id="name" name="name" required value="<?= e($v['name']) ?>" autocomplete="organization" placeholder="Ej.: Casa de Té Las Rosas, Chacra El Ñire, Cerámica del Valle">
           <p class="err" data-err="name"><?= e($errores['name'] ?? '') ?></p>
         </div>
 
         <div class="field">
           <label class="lbl" for="contact_name">Tu nombre y apellido *</label>
-          <input type="text" id="contact_name" name="contact_name" value="<?= e($v['contact_name']) ?>" autocomplete="name">
+          <input type="text" id="contact_name" name="contact_name" required value="<?= e($v['contact_name']) ?>" autocomplete="name">
           <p class="err" data-err="contact_name"><?= e($errores['contact_name'] ?? '') ?></p>
         </div>
 
         <div class="field-row">
           <div class="field">
             <label class="lbl" for="email">Correo electrónico *</label>
-            <input type="email" id="email" name="email" value="<?= e($v['email']) ?>" autocomplete="email" inputmode="email" spellcheck="false">
+            <input type="email" id="email" name="email" required value="<?= e($v['email']) ?>" autocomplete="email" inputmode="email" spellcheck="false">
             <p class="err" data-err="email"><?= e($errores['email'] ?? '') ?></p>
           </div>
           <div class="field">
             <label class="lbl" for="phone">Teléfono o WhatsApp *</label>
-            <input type="tel" id="phone" name="phone" value="<?= e($v['phone']) ?>" autocomplete="tel" inputmode="tel" placeholder="2945 123456">
+            <input type="tel" id="phone" name="phone" required value="<?= e($v['phone']) ?>" autocomplete="tel" inputmode="tel" placeholder="2945 123456">
             <p class="err" data-err="phone"><?= e($errores['phone'] ?? '') ?></p>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label class="lbl" for="ubicacion">¿Dónde está?</label>
-            <input type="text" id="ubicacion" name="ubicacion" value="<?= e($v['ubicacion']) ?>" placeholder="Barrio, paraje o zona">
+            <label class="lbl" for="barrio">¿De qué barrio o paraje sos? *</label>
+            <input type="text" id="barrio" name="barrio" value="<?= e($v['barrio']) ?>" required
+                   list="barriosEsquel" placeholder="Ej.: Ceferino, Estación, Zona rural">
+            <datalist id="barriosEsquel">
+              <?php foreach (BARRIOS as $b): ?><option value="<?= e($b) ?>"><?php endforeach; ?>
+            </datalist>
+            <p class="err" data-err="barrio"><?= e($errores['barrio'] ?? '') ?></p>
           </div>
           <div class="field">
-            <label class="lbl" for="antiguedad">¿Hace cuánto estás en esto?</label>
-            <input type="text" id="antiguedad" name="antiguedad" value="<?= e($v['antiguedad']) ?>" placeholder="Ej.: 3 años, recién arranco, toda la vida">
+            <label class="lbl" for="antiguedad">¿Hace cuánto estás en esto? *</label>
+            <input type="text" id="antiguedad" name="antiguedad" value="<?= e($v['antiguedad']) ?>" required
+                   placeholder="Ej.: 3 años, recién arranco, toda la vida">
+            <p class="err" data-err="antiguedad"><?= e($errores['antiguedad'] ?? '') ?></p>
           </div>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="ubicacion">¿Dónde está exactamente? *</label>
+          <p class="hint">La dirección, el paraje o cómo se llega. Sirve para organizar las visitas.</p>
+          <input type="text" id="ubicacion" name="ubicacion" value="<?= e($v['ubicacion']) ?>" required
+                 placeholder="Calle y número, o referencia para llegar">
+          <p class="err" data-err="ubicacion"><?= e($errores['ubicacion'] ?? '') ?></p>
         </div>
 
         <div class="field">
@@ -297,21 +335,22 @@ require __DIR__ . '/includes/header.php';
         <div class="field">
           <label class="lbl" for="descripcion">Contanos qué hacés hoy *</label>
           <p class="hint">Qué ofrecés, cómo es tu lugar, a quién le vendés ahora. No hace falta que ya sea turismo.</p>
-          <textarea id="descripcion" name="descripcion"><?= e($v['descripcion']) ?></textarea>
+          <textarea id="descripcion" name="descripcion" required><?= e($v['descripcion']) ?></textarea>
           <p class="err" data-err="descripcion"><?= e($errores['descripcion'] ?? '') ?></p>
         </div>
 
         <div class="field">
           <label class="lbl" for="diferencial">¿Qué tiene tu propuesta que no tenga ninguna otra en Esquel? *</label>
           <p class="hint">Contanos la historia, no solo el dato. Un saber familiar, una receta, un lugar, una forma de hacer las cosas.</p>
-          <textarea id="diferencial" name="diferencial"><?= e($v['diferencial']) ?></textarea>
+          <textarea id="diferencial" name="diferencial" required><?= e($v['diferencial']) ?></textarea>
           <p class="err" data-err="diferencial"><?= e($errores['diferencial'] ?? '') ?></p>
         </div>
 
         <div class="field">
-          <label class="lbl" for="visitable">¿Qué podría ver, hacer o probar un visitante?</label>
+          <label class="lbl" for="visitable">¿Qué podría ver, hacer o probar un visitante? *</label>
           <p class="hint">Ej.: ver la esquila, amasar, recorrer la chacra, participar de la cosecha, entrar al taller.</p>
-          <textarea id="visitable" name="visitable" rows="4"><?= e($v['visitable']) ?></textarea>
+          <textarea id="visitable" name="visitable" required rows="4"><?= e($v['visitable']) ?></textarea>
+          <p class="err" data-err="visitable"><?= e($errores['visitable'] ?? '') ?></p>
         </div>
       </fieldset>
 
@@ -322,9 +361,10 @@ require __DIR__ . '/includes/header.php';
         <p class="help">Nos interesa que tu propuesta sume a la oferta del destino, no que quede aislada.</p>
 
         <div class="field">
-          <label class="lbl" for="conexiones">¿Con qué otros lugares, personas o negocios de Esquel se podría conectar?</label>
+          <label class="lbl" for="conexiones">¿Con qué otros lugares, personas o negocios de Esquel se podría conectar? *</label>
           <p class="hint">Otros prestadores, agencias, alojamientos, productores. Si trabajás con alguien hoy, contanos con quién.</p>
-          <textarea id="conexiones" name="conexiones" rows="4"><?= e($v['conexiones']) ?></textarea>
+          <textarea id="conexiones" name="conexiones" required rows="4"><?= e($v['conexiones']) ?></textarea>
+          <p class="err" data-err="conexiones"><?= e($errores['conexiones'] ?? '') ?></p>
         </div>
 
         <div class="field">
@@ -337,7 +377,7 @@ require __DIR__ . '/includes/header.php';
                 'No' => 'No lo veo por ahora',
             ] as $val => $txt): ?>
               <label class="opt">
-                <input type="radio" name="producto_fisico" value="<?= e($val) ?>" <?= $v['producto_fisico'] === $val ? 'checked' : '' ?>>
+                <input type="radio" name="producto_fisico" required value="<?= e($val) ?>" <?= $v['producto_fisico'] === $val ? 'checked' : '' ?>>
                 <span class="opt-t" style="font-size:15.5px"><?= e($txt) ?></span>
               </label>
             <?php endforeach; ?>
@@ -347,6 +387,8 @@ require __DIR__ . '/includes/header.php';
         <div class="field">
           <label class="lbl" for="producto_fisico_cual">Si marcaste “sí” o “podría”, contanos cuál</label>
           <textarea id="producto_fisico_cual" name="producto_fisico_cual" rows="3"><?= e($v['producto_fisico_cual']) ?></textarea>
+          <p class="err" data-err="producto_fisico"><?= e($errores['producto_fisico'] ?? '') ?></p>
+          <p class="err" data-err="producto_fisico_cual"><?= e($errores['producto_fisico_cual'] ?? '') ?></p>
         </div>
       </fieldset>
 
@@ -359,13 +401,15 @@ require __DIR__ . '/includes/header.php';
         <div class="field">
           <label class="lbl" for="recursos">¿Con qué contás para arrancar?</label>
           <p class="hint">Espacio, herramientas, vehículo, equipo de gente, materia prima, tiempo.</p>
-          <textarea id="recursos" name="recursos" rows="4"><?= e($v['recursos']) ?></textarea>
+          <textarea id="recursos" name="recursos" required rows="4"><?= e($v['recursos']) ?></textarea>
+          <p class="err" data-err="recursos"><?= e($errores['recursos'] ?? '') ?></p>
         </div>
 
         <div class="field">
           <label class="lbl" for="falta">¿Qué te falta para poder vender esto?</label>
           <p class="hint">Sé concreto. Saber qué falta es la mitad del trabajo.</p>
-          <textarea id="falta" name="falta" rows="4"><?= e($v['falta']) ?></textarea>
+          <textarea id="falta" name="falta" required rows="4"><?= e($v['falta']) ?></textarea>
+          <p class="err" data-err="falta"><?= e($errores['falta'] ?? '') ?></p>
         </div>
       </fieldset>
 
@@ -380,13 +424,14 @@ require __DIR__ . '/includes/header.php';
 
         <div class="field">
           <label class="lbl" for="motivacion">¿Por qué querés participar y qué esperás lograr en estas ocho semanas? *</label>
-          <textarea id="motivacion" name="motivacion" rows="6"><?= e($v['motivacion']) ?></textarea>
+          <textarea id="motivacion" name="motivacion" required rows="6"><?= e($v['motivacion']) ?></textarea>
           <p class="err" data-err="motivacion"><?= e($errores['motivacion'] ?? '') ?></p>
         </div>
 
         <div class="field">
           <label class="lbl" for="equipo">¿Quiénes participarían del proceso además de vos?</label>
-          <input type="text" id="equipo" name="equipo" value="<?= e($v['equipo']) ?>" placeholder="Yo solo/a, un socio, mi familia, dos empleados…">
+          <input type="text" id="equipo" name="equipo" required value="<?= e($v['equipo']) ?>" placeholder="Yo solo/a, un socio, mi familia, dos empleados…">
+          <p class="err" data-err="equipo"><?= e($errores['equipo'] ?? '') ?></p>
         </div>
 
         <div class="field">
@@ -398,7 +443,7 @@ require __DIR__ . '/includes/header.php';
 
         <div class="field" style="margin-top:28px">
           <label class="check">
-            <input type="checkbox" name="compromiso" <?= $v['compromiso'] === 'on' ? 'checked' : '' ?>>
+            <input type="checkbox" name="compromiso" required <?= $v['compromiso'] === 'on' ? 'checked' : '' ?>>
             <span>
               Me comprometo a dedicar un mínimo de <strong>12 horas semanales</strong> al proceso entre el
               <?= e(fecha_larga(FECHA_INICIO)) ?> y el <?= e(fecha_larga(FECHA_FIN)) ?> de 2026, en caso de ser seleccionado. *

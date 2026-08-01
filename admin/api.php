@@ -267,13 +267,29 @@ if ($accion === 'voto') {
         exit(json_encode(['ok' => false, 'error' => 'Puntuá al menos un criterio, o marcá que te abstenés.']));
     }
 
+    // El comentario es obligatorio y tiene piso.
+    //
+    // El puntaje ordena, pero cuando se cierre la selección hay que poder
+    // decirle a cada persona qué se vio en su propuesta, y un "muy bueno" no
+    // sirve para eso. El mínimo se valida acá y no sólo en la pantalla: la
+    // validación del navegador se saltea con dos clics.
     $comentario = trim((string) ($data['comentario'] ?? ''));
-    if ($abstencion && $comentario === '') {
+    $largo = mb_strlen($comentario);
+
+    if ($abstencion) {
+        if ($largo < 40) {
+            http_response_code(400);
+            exit(json_encode(['ok' => false, 'error' => 'Contá por qué te abstenés: el resto del jurado necesita saberlo.']));
+        }
+    } elseif ($largo < MIN_COMENTARIO) {
         http_response_code(400);
-        exit(json_encode(['ok' => false, 'error' => 'Contá por qué te abstenés: el resto del jurado necesita saberlo.']));
+        exit(json_encode(['ok' => false, 'error' => sprintf(
+            'Tu comentario tiene %d caracteres y hacen falta %d. Es lo único que después explica el puntaje.',
+            $largo, MIN_COMENTARIO
+        )]));
     }
-    if (mb_strlen($comentario) > 4000) {
-        $comentario = mb_substr($comentario, 0, 4000);
+    if ($largo > 8000) {
+        $comentario = mb_substr($comentario, 0, 8000);
     }
 
     $campos = array_keys(CRITERIOS);
@@ -315,6 +331,55 @@ if ($accion === 'notas') {
     $pdo->prepare('UPDATE applications SET notes = ? WHERE id = ?')
         ->execute([trim((string) ($data['notes'] ?? '')), $id]);
     exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
+}
+
+// ------------------------------------------------------------- una respuesta
+// Sólo el admin. Sirve para completar a mano lo que una postulación vieja no
+// trae porque la pregunta no existía cuando se envió —el barrio, por ejemplo—
+// sin tener que pedirle a la persona que cargue todo de nuevo.
+if ($accion === 'detalle') {
+    if (!puede('admin')) {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Sólo un administrador puede completar las respuestas.']));
+    }
+
+    $clave = trim((string) ($data['clave'] ?? ''));
+    if (!preg_match('/^[a-z0-9_]{2,40}$/', $clave)) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Ese campo no existe.']));
+    }
+    $valor = trim((string) ($data['valor'] ?? ''));
+    if (mb_strlen($valor) > 4000) {
+        $valor = mb_substr($valor, 0, 4000);
+    }
+
+    try {
+        $pdo->beginTransaction();
+        $pdo->prepare('DELETE FROM application_details WHERE application_id = ? AND field_key = ?')
+            ->execute([$id, $clave]);
+        if ($valor !== '') {
+            $pdo->prepare('INSERT INTO application_details (application_id, field_key, field_value) VALUES (?, ?, ?)')
+                ->execute([$id, $clave, $valor]);
+        }
+        $pdo->commit();
+    } catch (PDOException $ex) {
+        $pdo->rollBack();
+        error_log('[esquel-lab] error guardando un detalle: ' . $ex->getMessage());
+        http_response_code(500);
+        exit(json_encode(['ok' => false, 'error' => 'No pudimos guardar esa respuesta.']));
+    }
+
+    error_log(sprintf('Esquel LAB: %s completó "%s" en la postulación #%d.',
+        $u['username'] ?? '?', $clave, $id));
+
+    $r = respuesta_jurado($pdo, $id, $u);
+    $det = $pdo->prepare('SELECT field_key, field_value FROM application_details WHERE application_id = ?');
+    $det->execute([$id]);
+    $r['detalles'] = [];
+    foreach ($det->fetchAll() as $row) {
+        $r['detalles'][$row['field_key']] = $row['field_value'];
+    }
+    exit(json_encode($r, JSON_UNESCAPED_UNICODE));
 }
 
 // ------------------------------------------------------------------ estado

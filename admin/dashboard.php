@@ -64,6 +64,9 @@ $jurado   = jurado($pdo);
 $votos    = evaluaciones_de($pdo, array_column($apps, 'id'));
 $miId     = (int) $u['id'];
 $soyJuez  = es_jurado($u);       // rol exacto: el admin coordina, no vota
+// Sólo el admin ve quién votó qué. Entre evaluadores el voto es secreto: saber
+// lo que puso el otro antes de terminar el propio contamina la evaluación.
+$puedeVerVotos = puede('admin');
 
 foreach ($apps as $i => $a) {
     $vs = $votos[$a['id']] ?? [];
@@ -71,7 +74,16 @@ foreach ($apps as $i => $a) {
     $apps[$i]['consolidado'] = consolidar($vs, $jurado);
     $apps[$i]['miVoto']      = voto_de($vs, $miId);
     $apps[$i]['detalles']    = $detalles[$a['id']] ?? [];
+    $apps[$i]['claves']      = claves_detalle($detalles[$a['id']] ?? []);
     $apps[$i]['historial']   = $historial[$a['id']] ?? [];
+
+    // El voto es secreto entre pares: un evaluador ve el suyo, cuántos votaron
+    // y el promedio, pero no quién puso qué. Se filtra acá, del lado del
+    // servidor, y no en la pantalla: lo que no se manda no se puede espiar
+    // mirando el código de la página.
+    if (!$puedeVerVotos) {
+        $apps[$i]['votos'] = $apps[$i]['miVoto'] ? [$apps[$i]['miVoto']] : [];
+    }
 }
 
 // Filtro por estado del jurado. Va después de la consulta porque se calcula
@@ -299,10 +311,18 @@ function sello_jurado(array $c, int $id): string
               $p = programa_info($a['program']);
               $c = $a['consolidado']; ?>
               <article class="kcard" data-id="<?= (int) $a['id'] ?>"<?= puede('admin') ? ' draggable="true"' : '' ?>>
-                <button type="button" class="kcard-abrir" data-abrir="<?= (int) $a['id'] ?>">
-                  <span class="chip" style="--c:<?= e($p['color']) ?>"><?= e($p['nombre']) ?></span>
+                <button type="button" class="kcard-abrir" data-abrir="<?= (int) $a['id'] ?>" title="<?= e($a['name']) ?>">
+                  <?php // El nombre va primero y es lo más grande de la tarjeta.
+                        // Antes arrancaba con la píldora de color de la línea, que
+                        // por ser lo único con color se llevaba la mirada y dejaba
+                        // al título de segundo: en un tablero uno busca el proyecto,
+                        // no la línea. La línea ahora es un punto al lado del
+                        // responsable, que alcanza para distinguirla. ?>
                   <span class="kcard-t"><?= e($a['name']) ?></span>
-                  <span class="kcard-s"><?= e($a['contact_name']) ?></span>
+                  <span class="kcard-s">
+                    <span class="kcard-linea" style="--c:<?= e($p['color']) ?>"><?= e($p['nombre']) ?></span>
+                    <span class="kcard-resp"><?= e($a['contact_name']) ?></span>
+                  </span>
                   <span class="kcard-f">
                     <?= sello_jurado($c, (int) $a['id']) ?>
                     <span class="kcard-pts" data-puntaje="<?= (int) $a['id'] ?>"><?= $c['puntaje'] === null ? 'sin puntaje' : e(number_format($c['puntaje'], 2)) ?></span>
@@ -342,6 +362,12 @@ function sello_jurado(array $c, int $id): string
   <?php endif; ?>
 </div>
 
+<?php if (puede('admin')): ?>
+  <datalist id="listaBarrios">
+    <?php foreach (BARRIOS as $b): ?><option value="<?= e($b) ?>"><?php endforeach; ?>
+  </datalist>
+<?php endif; ?>
+
 <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-label="Detalle de la postulación">
   <div class="drawer-head">
@@ -367,9 +393,12 @@ function sello_jurado(array $c, int $id): string
     'criterios'   => CRITERIOS,
     'estados'     => ESTADOS,
     'etiquetas'   => ETIQUETAS_DETALLE,
+    'minComentario' => MIN_COMENTARIO,
+    'pistas'      => PISTAS_COMENTARIO,
     'jurado'      => $jurado,
     'yo'          => ['id' => $miId, 'username' => $u['username'], 'role' => $u['role']],
     'puedeVotar'  => $soyJuez,
+    'puedeVerVotos' => $puedeVerVotos,
     'puedeEstado' => puede('admin'),
     'puedeBorrar' => puede('admin'),
     'csrf'        => csrf_token(),
