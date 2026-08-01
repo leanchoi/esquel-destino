@@ -115,6 +115,14 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .kcol-head { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; font-size: 12.5px; font-weight: 700; color: var(--c); background: color-mix(in srgb, var(--c) 9%, transparent); border-bottom: 1px solid var(--line); }
 .kcol-head .n { background: var(--surface); border-radius: 999px; padding: 1px 9px; font-size: 11px; }
 .kcol-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; max-height: 66vh; overflow-y: auto; }
+/* flex: none, o las tarjetas se aplastan.
+   La columna es un contenedor flex con altura tope, y en un flex los hijos
+   achican por defecto para entrar. Con doce postulaciones en una columna, cada
+   tarjeta pedía 96 px y quedaba en 39: se veía el principio del título y nada
+   más —ni la línea, ni el responsable, ni el puntaje—. Con flex none cada una
+   mide lo que tiene que medir y la columna scrollea, que es para lo que tiene
+   el overflow. */
+.kcol-body > * { flex: 0 0 auto; }
 .kcard { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; width: 100%; text-align: left; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; cursor: pointer; font-family: var(--font-body); transition: border-color .15s, transform .1s; }
 .kcard:hover { border-color: var(--berry); transform: translateY(-1px); }
 .kcard-f { font-size: 11.5px; color: var(--ink-3); font-family: var(--font-mono); }
