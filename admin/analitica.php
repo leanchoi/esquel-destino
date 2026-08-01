@@ -273,6 +273,79 @@ for ($d = $inicio; $d <= $hasta_cal; $d = $d->modify('+1 day')) {
 $totalPostulaciones = array_sum(array_map('array_sum', $postPorDia));
 $enElPeriodo = $acumulado - $previos;
 
+// ------------------------------------------------------- tablero de luces
+//
+// Los umbrales están en UMBRALES (config.php) y cada tarjeta dice contra qué
+// compara: un semáforo que no muestra su vara es un semáforo al que hay que
+// creerle.
+
+/** Verde, ámbar o rojo según dos cortes. Más alto es mejor. */
+function luz(float $valor, float $ok, float $alerta): string
+{
+    return $valor >= $ok ? 'ok' : ($valor >= $alerta ? 'alerta' : 'mal');
+}
+
+$U = UMBRALES;
+
+// 1. Conversión de punta a punta.
+$convPct = (int) $E['home'] > 0 ? $totalEnviadas * 100 / (int) $E['home'] : 0.0;
+$luzConv = (int) $E['home'] === 0 ? 'neutro' : luz($convPct, $U['conversion']['ok'], $U['conversion']['alerta']);
+
+// 2. De los que abren el formulario, cuántos lo terminan.
+$termPct = (int) $E['form'] > 0 ? $totalEnviadas * 100 / (int) $E['form'] : 0.0;
+$luzTerm = (int) $E['form'] === 0 ? 'neutro' : luz($termPct, $U['terminacion']['ok'], $U['terminacion']['alerta']);
+
+// 3. Ritmo: ¿el promedio diario alcanza para llegar al objetivo antes del cierre?
+$cupoMax = 0;
+foreach (PROGRAMAS as $prog) {
+    if (preg_match_all('/\d+/', $prog['cupo'], $m)) {
+        $cupoMax += (int) max($m[0]);
+    }
+}
+$objetivo = (int) ceil($cupoMax * $U['candidatos_por_cupo']);
+$totalHoy = (int) $pdo->query('SELECT COUNT(*) FROM applications')->fetchColumn();
+$diasCorridos = max(1, (int) ceil((time() - strtotime(FECHA_APERTURA)) / 86400));
+$porDiaPost = $totalHoy / $diasCorridos;
+$restan = dias_para_cierre();
+$proyeccion = (int) round($totalHoy + $porDiaPost * $restan);
+$ritmoPct = $objetivo > 0 ? $proyeccion * 100 / $objetivo : 0.0;
+$luzRitmo = $totalHoy === 0 ? 'neutro' : luz($ritmoPct, $U['ritmo']['ok'], $U['ritmo']['alerta']);
+
+// 4. Cada línea contra su propio cupo: no alcanza con el total si una queda vacía.
+$porLinea = [];
+foreach ($pdo->query('SELECT program, COUNT(*) n FROM applications GROUP BY program') as $r) {
+    $porLinea[$r['program']] = (int) $r['n'];
+}
+$luces_linea = [];
+foreach (PROGRAMAS as $slug => $prog) {
+    preg_match_all('/\d+/', $prog['cupo'], $m);
+    $min = $m[0] ? (int) min($m[0]) : 0;
+    $max = $m[0] ? (int) max($m[0]) : 0;
+    $n = $porLinea[$slug] ?? 0;
+    $necesita = (int) ceil($max * $U['candidatos_por_cupo']);
+    $luces_linea[] = [
+        'nombre' => $prog['nombre'],
+        'n' => $n,
+        'estado' => $n === 0 ? 'mal' : ($n >= $necesita ? 'ok' : ($n >= $min ? 'alerta' : 'mal')),
+        'lectura' => $n === 0
+            ? 'Todavía no se postuló nadie de esta línea'
+            : ($n >= $necesita
+                ? 'Alcanza para elegir entre varios'
+                : ($n >= $min ? 'Da para cubrir el cupo, pero sin margen para elegir'
+                              : 'No alcanza ni para el cupo mínimo de ' . $min)),
+        'referencia' => 'Cupo: ' . $prog['cupo'] . ' · para elegir de verdad harían falta ' . $necesita,
+    ];
+}
+
+// 5. Tráfico contra el período anterior del mismo largo.
+$antesDesde = date('Y-m-d', strtotime($desde . ' -' . $diasRango . ' days'));
+$antesHasta = date('Y-m-d', strtotime($desde . ' -1 day'));
+$prev = $pdo->prepare("SELECT COUNT(DISTINCT visitante) FROM visitas WHERE date(creada_at, ?) BETWEEN ? AND ?");
+$prev->execute([$LOCAL, $antesDesde, $antesHasta]);
+$unicosAntes = (int) $prev->fetchColumn();
+$varTrafico = $unicosAntes > 0 ? ((int) $tot['unicos'] - $unicosAntes) * 100 / $unicosAntes : 0.0;
+$luzTrafico = $unicosAntes === 0 ? 'neutro' : luz($varTrafico, $U['trafico']['ok'], $U['trafico']['alerta']);
+
 $pageTitle = 'Analítica';
 $nav = 'analitica';
 require __DIR__ . '/_header.php';
@@ -344,6 +417,49 @@ function num(int $n): string
 </form>
 
 <div class="admin-content">
+
+  <!-- ---------------- cómo venimos ---------------- -->
+  <h2 class="panel-title bloque-t">Cómo venimos <?= sello_periodo('la convocatoria', true) ?></h2>
+  <div class="luces">
+    <?= semaforo('Ritmo de postulaciones',
+        $totalHoy . ' <span class="u">de ' . $objetivo . '</span>',
+        $luzRitmo,
+        $totalHoy === 0 ? 'Todavía no entró ninguna.'
+          : ($restan === 0 ? 'La convocatoria ya cerró.'
+            : 'Al ritmo de hoy (' . number_format($porDiaPost, 1, ',', '') . ' por día) se llegaría a ' . $proyeccion
+              . ' para el cierre.'),
+        'Objetivo: ' . $objetivo . ' postulaciones, ' . UMBRALES['candidatos_por_cupo'] . ' por cada uno de los ' . $cupoMax . ' cupos') ?>
+
+    <?= semaforo('Conversión',
+        number_format($convPct, 2, ',', '') . '<span class="u">%</span>',
+        $luzConv,
+        (int) $E['home'] === 0 ? 'Sin visitas a la portada en el período.'
+          : 'De ' . num((int) $E['home']) . ' personas que entraron, se postularon ' . $totalEnviadas . '.',
+        'Verde desde ' . UMBRALES['conversion']['ok'] . '%, ámbar desde ' . UMBRALES['conversion']['alerta'] . '%') ?>
+
+    <?= semaforo('Terminan el formulario',
+        number_format($termPct, 1, ',', '') . '<span class="u">%</span>',
+        $luzTerm,
+        (int) $E['form'] === 0 ? 'Nadie abrió el formulario en el período.'
+          : 'Lo abrieron ' . num((int) $E['form']) . ' y lo terminaron ' . $totalEnviadas . '.',
+        'Verde desde ' . UMBRALES['terminacion']['ok'] . '%, ámbar desde ' . UMBRALES['terminacion']['alerta'] . '%') ?>
+
+    <?= semaforo('Tráfico',
+        ($varTrafico > 0 ? '+' : '') . number_format($varTrafico, 0, ',', '') . '<span class="u">%</span>',
+        $luzTrafico,
+        $unicosAntes === 0 ? 'No hay período anterior con el que comparar.'
+          : num((int) $tot['unicos']) . ' personas contra ' . num($unicosAntes) . ' del período anterior.',
+        'Compara con los ' . $diasRango . ' días previos al período elegido') ?>
+
+    <?php foreach ($luces_linea as $l): ?>
+      <?= semaforo($l['nombre'], (string) $l['n'] . ' <span class="u">postulaciones</span>',
+          $l['estado'], $l['lectura'], $l['referencia']) ?>
+    <?php endforeach; ?>
+  </div>
+  <p class="hint luces-pie">
+    Los umbrales están en <code>UMBRALES</code>, dentro de <code>includes/config.php</code>: son
+    valores de referencia para discutir, no verdades. Cada tarjeta dice contra qué compara.
+  </p>
 
   <!-- ---------------- el día de hoy ---------------- -->
   <div class="panel">
@@ -777,6 +893,7 @@ function num(int $n): string
     // así que van en un solo eje: dos escalas distintas en el mismo dibujo
     // inventan una relación que los datos no tienen.
     $sHome = $sForm = $sEnv = [];
+    $serieEmbudo = [];
     $ejeX = $tips = [];
     $pasoX = max(1, (int) ceil($diasRango / 8));
     for ($i = 0; $i < $diasRango; $i++) {
@@ -786,6 +903,7 @@ function num(int $n): string
         $sHome[] = $d['home'];
         $sForm[] = $d['form'];
         $sEnv[]  = $env;
+        $serieEmbudo[] = ['f' => $f, 'home' => $d['home'], 'form' => $d['form'], 'env' => $env];
         // El último día se rotula sólo si no queda encima del rótulo anterior.
         $esUltimo = $i === $diasRango - 1;
         $encima = $esUltimo && ($i % $pasoX) !== 0 && ($i % $pasoX) < max(2, (int) ($pasoX / 2));
@@ -810,6 +928,50 @@ function num(int $n): string
         <span><i style="background:#AB2759"></i> Entraron a la página</span>
         <span><i style="background:#0B6B99"></i> Abrieron el formulario</span>
         <span><i style="background:#B5651D"></i> Se postularon</span>
+      </div>
+
+      <?php
+      // La conversión sola, a su propia escala. En el gráfico de arriba queda
+      // pegada al cero: al lado de cien visitas, dos postulaciones no se mueven.
+      // La tendencia se calcula sumando primero y dividiendo después: las
+      // postulaciones de los últimos siete días sobre las personas de esos
+      // mismos siete días.
+      //
+      // Promediar los porcentajes diarios —que es lo que uno hace de primera—
+      // está mal acá: le da el mismo peso a un día de tres visitas que a uno de
+      // cien, y con estos números eso deforma la curva hasta dejarla pegada al
+      // cero mientras el dato diario pega saltos del 5%.
+      $VENTANA = 7;
+      $tasas = $tendencia = $tipsTasa = [];
+      foreach ($serieEmbudo as $i => $d) {
+          $tasas[] = $d['home'] > 0 ? round($d['env'] * 100 / $d['home'], 2) : 0.0;
+
+          $a = max(0, $i - intdiv($VENTANA, 2));
+          $b = min(count($serieEmbudo) - 1, $i + intdiv($VENTANA, 2));
+          $tramo = array_slice($serieEmbudo, $a, $b - $a + 1);
+          $vis = array_sum(array_column($tramo, 'home'));
+          $env = array_sum(array_column($tramo, 'env'));
+          $tendencia[] = $vis > 0 ? round($env * 100 / $vis, 2) : 0.0;
+
+          $tipsTasa[$i] = [
+              fecha_larga($d['f']),
+              $d['home'] === 0 ? 'Nadie entró ese día'
+                : number_format(end($tasas), 2, ',', '') . '% ese día',
+              $d['env'] . ($d['env'] === 1 ? ' postulación' : ' postulaciones') . ' sobre ' . $d['home']
+                . ($d['home'] === 1 ? ' persona' : ' personas'),
+          ];
+      }
+      ?>
+      <h3 class="panel-title" style="margin-top:30px">Tasa de conversión, día por día</h3>
+      <p class="hint" style="margin-top:-8px">
+        La misma conversión de arriba pero sola y a su escala, para que se vean las variaciones.
+        La línea fina es el dato de cada día; la gruesa es la tendencia de siete días, calculada
+        sumando primero las postulaciones y las visitas de esa semana y dividiendo después.
+      </p>
+      <?= svg_tasa($tasas, $tendencia, $ejeX, $tipsTasa) ?>
+      <div class="cal-leyenda">
+        <span><i class="ref-fina"></i> Cada día</span>
+        <span><i class="ref-gruesa"></i> Tendencia de 7 días</span>
       </div>
     <?php endif; ?>
 

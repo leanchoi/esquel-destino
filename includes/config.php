@@ -44,6 +44,28 @@ const PROGRAMAS = [
     ],
 ];
 
+// --- Umbrales del tablero de indicadores ----------------------------------
+/**
+ * Dónde se pone en verde, en ámbar y en rojo cada indicador de la analítica.
+ *
+ * Son valores de referencia, no verdades: están acá para que se puedan discutir
+ * y cambiar en un solo lugar, y para que el tablero pueda decir en pantalla
+ * contra qué está comparando. Un semáforo que no dice su umbral es un semáforo
+ * que hay que creerle.
+ *
+ * 'candidatos_por_cupo' es el que más conviene revisar. Dice cuántas
+ * postulaciones hacen falta por cada cupo para que haya selección de verdad:
+ * con 18 cupos y 18 postulaciones no se elige nada, se acepta a todos. Dos por
+ * cupo es un piso razonable para un programa que recién arranca.
+ */
+const UMBRALES = [
+    'conversion'          => ['ok' => 2.0, 'alerta' => 1.0],   // % de visitantes que se postulan
+    'terminacion'         => ['ok' => 20.0, 'alerta' => 10.0], // % que termina el formulario tras abrirlo
+    'candidatos_por_cupo' => 2.0,
+    'ritmo'               => ['ok' => 100.0, 'alerta' => 70.0], // % del objetivo que proyecta el ritmo actual
+    'trafico'             => ['ok' => 0.0, 'alerta' => -15.0],  // variación % contra el período anterior
+];
+
 // --- Qué pide el formulario -----------------------------------------------
 /**
  * Campos obligatorios, agrupados por paso. Una sola lista para los dos lados:

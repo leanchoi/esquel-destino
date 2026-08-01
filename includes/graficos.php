@@ -52,6 +52,69 @@ function tt(string $titulo, array $lineas = []): string
 }
 
 /**
+ * Une los puntos con una curva en vez de con segmentos rectos.
+ *
+ * Usa interpolación cúbica monótona (Fritsch–Carlson), y no una spline
+ * cualquiera, por una razón que importa: una spline común se pasa de largo en
+ * los cambios bruscos e inventa picos y valles que en los datos no están. Si un
+ * día hubo 0 postulaciones y al siguiente 3, una curva mal armada dibuja un
+ * pozo por debajo de cero antes de subir. Ésta no puede: entre dos puntos la
+ * curva se queda siempre entre esos dos valores.
+ *
+ * @param array $pts  [[x, y], …] en coordenadas del SVG
+ */
+function path_suave(array $pts): string
+{
+    $n = count($pts);
+    if ($n < 2) {
+        return $n === 1 ? 'M' . $pts[0][0] . ',' . $pts[0][1] : '';
+    }
+    if ($n === 2) {
+        return 'M' . $pts[0][0] . ',' . $pts[0][1] . ' L' . $pts[1][0] . ',' . $pts[1][1];
+    }
+
+    // Pendiente de cada tramo.
+    $d = [];
+    for ($i = 0; $i < $n - 1; $i++) {
+        $dx = $pts[$i + 1][0] - $pts[$i][0];
+        $d[$i] = $dx == 0.0 ? 0.0 : ($pts[$i + 1][1] - $pts[$i][1]) / $dx;
+    }
+
+    // Tangente en cada punto: el promedio de los tramos que llegan y salen.
+    $m = [$d[0]];
+    for ($i = 1; $i < $n - 1; $i++) {
+        $m[$i] = ($d[$i - 1] * $d[$i] <= 0) ? 0.0 : ($d[$i - 1] + $d[$i]) / 2;
+    }
+    $m[$n - 1] = $d[$n - 2];
+
+    // Y acá se recortan las tangentes para que la curva no se pase de largo.
+    for ($i = 0; $i < $n - 1; $i++) {
+        if ($d[$i] == 0.0) {
+            $m[$i] = 0.0;
+            $m[$i + 1] = 0.0;
+            continue;
+        }
+        $a = $m[$i] / $d[$i];
+        $b = $m[$i + 1] / $d[$i];
+        $s = $a * $a + $b * $b;
+        if ($s > 9) {
+            $t = 3 / sqrt($s);
+            $m[$i] = $t * $a * $d[$i];
+            $m[$i + 1] = $t * $b * $d[$i];
+        }
+    }
+
+    $path = 'M' . round($pts[0][0], 1) . ',' . round($pts[0][1], 1);
+    for ($i = 0; $i < $n - 1; $i++) {
+        $dx = ($pts[$i + 1][0] - $pts[$i][0]) / 3;
+        $path .= ' C' . round($pts[$i][0] + $dx, 1) . ',' . round($pts[$i][1] + $m[$i] * $dx, 1)
+               . ' ' . round($pts[$i + 1][0] - $dx, 1) . ',' . round($pts[$i + 1][1] - $m[$i + 1] * $dx, 1)
+               . ' ' . round($pts[$i + 1][0], 1) . ',' . round($pts[$i + 1][1], 1);
+    }
+    return $path;
+}
+
+/**
  * Curva de una serie temporal, con relleno bajo la línea.
  *
  * Cada punto lleva además una banda transparente de alto completo que es la que
@@ -226,6 +289,110 @@ function svg_series(array $series, array $ejeX, array $tips): string
     }
 
     return $svg . '</svg></div>';
+}
+
+/**
+ * Una sola tasa, a su propia escala, con la tendencia encima.
+ *
+ * Existe porque en el gráfico de tres líneas la conversión queda pegada al cero:
+ * al lado de cien visitas, dos postulaciones no se mueven. Acá el eje arranca en
+ * lo que hay, así que las variaciones se ven.
+ *
+ * La línea fina es el día a día y la gruesa es el promedio de siete días. Con
+ * números chicos —dos postulaciones sobre ochenta visitas— el dato diario salta
+ * de 0 a 4% y de vuelta a 0 sin que haya pasado nada: el promedio móvil es el
+ * que muestra hacia dónde va, y por eso es el que se dibuja fuerte.
+ *
+ * @param array $valores  la tasa cruda de cada día
+ * @param array $media    la tendencia ya calculada, día por día
+ * @param array $ejeX     etiqueta por posición ('' = no se rotula)
+ * @param array $tips     por posición: [título, línea…]
+ */
+function svg_tasa(array $valores, array $media, array $ejeX, array $tips, string $color = '#B5651D'): string
+{
+    $n = count($valores);
+    if ($n < 2) {
+        return '';
+    }
+
+    $W = 720; $H = 200; $izq = 42; $der = 12; $arriba = 16; $abajo = 30;
+    $ancho = $W - $izq - $der;
+    $alto  = $H - $arriba - $abajo;
+
+    $tope = max(0.5, max(max($valores), max($media)));
+    $paso = $tope <= 2 ? 0.5 : ($tope <= 5 ? 1 : ($tope <= 20 ? 5 : 10));
+    $tope = ceil($tope / $paso) * $paso;
+    if (fmod($tope / $paso, 2) != 0) {
+        $tope += $paso;
+    }
+
+    $x = fn(int $i) => $izq + $ancho * $i / ($n - 1);
+    $y = fn(float $v) => $arriba + $alto - ($alto * $v / $tope);
+
+    $svg = '<div class="g-wrap"><svg class="g-svg" viewBox="0 0 ' . $W . ' ' . $H . '" role="img">';
+    for ($g = 0; $g <= 2; $g++) {
+        $v = $tope * $g / 2;
+        $py = round($y($v), 1);
+        $svg .= '<line class="g-grid" x1="' . $izq . '" y1="' . $py . '" x2="' . ($W - $der) . '" y2="' . $py . '"/>'
+              . '<text class="g-eje" x="' . ($izq - 8) . '" y="' . ($py + 4) . '" text-anchor="end">'
+              . rtrim(rtrim(number_format($v, 1, ',', ''), '0'), ',') . '%</text>';
+    }
+    $svg .= '<line class="g-cruz" x1="0" y1="' . $arriba . '" x2="0" y2="' . ($arriba + $alto) . '" hidden />';
+
+    $ptsDia = $ptsMedia = [];
+    for ($i = 0; $i < $n; $i++) {
+        $ptsDia[] = [$x($i), $y($valores[$i])];
+        $ptsMedia[] = [$x($i), $y($media[$i])];
+    }
+    $svg .= '<path class="g-tasa-dia" d="' . path_suave($ptsDia) . '" style="stroke:' . e($color) . '"/>'
+          . '<path class="g-tasa-media" d="' . path_suave($ptsMedia) . '" style="stroke:' . e($color) . '"/>';
+
+    for ($i = 0; $i < $n; $i++) {
+        if ($valores[$i] > 0) {
+            $svg .= '<circle class="g-punto" data-i="' . $i . '" cx="' . round($x($i), 1) . '" cy="'
+                  . round($y($valores[$i]), 1) . '" r="2.6" style="fill:' . e($color) . '"/>';
+        }
+    }
+    $ancho1 = $ancho / ($n - 1);
+    for ($i = 0; $i < $n; $i++) {
+        $extra = ['Tendencia de esos días: ' . number_format($media[$i], 2, ',', '') . '%'];
+        $svg .= '<rect class="g-hit" data-i="' . $i . '" x="' . round(max($izq - 2, $x($i) - $ancho1 / 2), 1)
+              . '" y="' . $arriba . '" width="' . round($ancho1, 1) . '" height="' . $alto . '"'
+              . tt($tips[$i][0] ?? '', array_merge(array_slice($tips[$i] ?? [], 1), $extra)) . '/>';
+    }
+    foreach ($ejeX as $i => $txt) {
+        if ($txt === '' || $i >= $n) {
+            continue;
+        }
+        $svg .= '<text class="g-x" x="' . round($x($i), 1) . '" y="' . ($H - 10) . '" text-anchor="middle">' . e($txt) . '</text>';
+    }
+    return $svg . '</svg></div>';
+}
+
+/**
+ * Un indicador con su luz.
+ *
+ * El color nunca va solo: cada tarjeta dice con letras cómo viene ("Bien",
+ * "Atención", "Flojo") además de pintarse. Una de cada doce personas con ojos
+ * de varón no distingue el verde del rojo, y un tablero que sólo cambia de
+ * color no le dice nada.
+ *
+ * @param string $estado  'ok' | 'alerta' | 'mal' | 'neutro'
+ */
+function semaforo(string $titulo, string $valor, string $estado, string $lectura, string $referencia = ''): string
+{
+    $palabras = ['ok' => 'Bien', 'alerta' => 'Atención', 'mal' => 'Flojo', 'neutro' => 'Sin datos'];
+    // El valor lleva marcado para la unidad; en el cuadro flotante va en texto
+    // plano, que si no se lee el <span> escrito tal cual.
+    $plano = trim(preg_replace('/\s+/', ' ', strip_tags($valor)));
+    return '<article class="luz luz-' . e($estado) . '"'
+        . tt($titulo, array_filter([$plano . ' · ' . ($palabras[$estado] ?? ''), $lectura, $referencia])) . '>'
+        . '<header><span class="luz-t">' . e($titulo) . '</span>'
+        . '<span class="luz-e">' . e($palabras[$estado] ?? '') . '</span></header>'
+        . '<p class="luz-v">' . $valor . '</p>'
+        . '<p class="luz-l">' . e($lectura) . '</p>'
+        . ($referencia ? '<p class="luz-r">' . e($referencia) . '</p>' : '')
+        . '</article>';
 }
 
 /**

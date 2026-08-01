@@ -447,6 +447,49 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .lb-v { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .caida { color: var(--danger); font-style: normal; font-size: 12px; font-weight: 700; }
 
+/* ---------- tablero de indicadores ----------
+   El color no viaja solo: cada tarjeta dice con letras cómo viene, y el borde
+   cambia de grosor además de tono. Una de cada doce personas con ojos de varón
+   no separa el verde del rojo, y un tablero que sólo cambia de color no le
+   dice nada. */
+.bloque-t { font-size: 20px; margin: 4px 0 14px; }
+.luces { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 12px; }
+.luz { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 15px 17px; cursor: pointer; }
+.luz header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+.luz-t { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+.luz-e { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border-radius: 999px; padding: 3px 9px; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.luz-e::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.luz-v { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1.05; margin: 0; font-variant-numeric: tabular-nums; }
+.luz-v .u { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--ink-3); margin-left: 3px; }
+.luz-l { font-size: 12.5px; color: var(--ink-2); margin: 7px 0 0; }
+.luz-r { font-size: 11.5px; color: var(--ink-3); margin: 6px 0 0; padding-top: 6px; border-top: 1px solid var(--line); }
+
+.luz-ok { border-color: rgba(35,111,76,.4); }
+.luz-ok .luz-e { color: var(--green-ink); background: var(--green-soft); }
+.luz-ok .luz-v { color: var(--green-ink); }
+.luz-alerta { border-color: rgba(166,101,14,.45); }
+.luz-alerta .luz-e { color: #7A4E06; background: rgba(166,101,14,.11); }
+.luz-alerta .luz-v { color: #7A4E06; }
+.luz-mal { border-color: rgba(155,44,44,.45); border-width: 1.5px; }
+.luz-mal .luz-e { color: var(--danger); background: var(--danger-soft); }
+.luz-mal .luz-v { color: var(--danger); }
+.luz-neutro .luz-e { color: var(--ink-3); background: var(--paper-2); }
+.luz-neutro .luz-v { color: var(--ink-3); }
+.luz.tt-activo { box-shadow: var(--shadow); }
+.luces-pie { margin: 14px 0 26px; max-width: 80ch; }
+.luces-pie code { background: var(--paper-2); border-radius: 4px; padding: 2px 6px; font-size: 12px; }
+
+/* ---------- la tasa sola ---------- */
+/* La fina es el dato crudo y la gruesa la tendencia. La diferencia de grosor
+   hace el trabajo: son la misma tinta, así que no hay dos cosas que aprender. */
+.g-tasa-dia { fill: none; stroke-width: 1.2; opacity: .45; vector-effect: non-scaling-stroke; }
+.g-tasa-media { fill: none; stroke-width: 2.6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+/* Estos dos son muestras de línea, no acentos: reproducen el grosor exacto con
+   el que se dibuja cada trazo en el gráfico. El detector de estilo los marca
+   como borde de acento porque no puede saber que la raya *es* el dato. */
+.cal-leyenda i.ref-fina { width: 18px; height: 0; border-top: 1.5px solid #B5651D; opacity: .5; border-radius: 0; }
+.cal-leyenda i.ref-gruesa { width: 18px; height: 0; border-top: 3px solid #B5651D; border-radius: 0; }
+
 /* ---------- embudo de conversión ---------- */
 .embudo { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; counter-reset: paso; }
 .emb-paso { padding: 12px 14px; border-radius: var(--r-sm); cursor: pointer; }
