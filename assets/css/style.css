@@ -344,15 +344,20 @@ a.btn[href^="inscribirse"]:hover::after { transform: translateX(3px); }
 .hero-caption { margin: 12px 2px 0; font-size: 13.5px; color: var(--ink-3); }
 
 /* Franja institucional debajo de la foto. */
-.hero-org { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
-.hero-org-lbl { display: block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-3); margin-bottom: 14px; }
-.hero-org-logos { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; }
-.hero-org-logos img { height: 46px; width: auto; }
-.hero-org-logos img.is-muni { height: 34px; }
+/* Dos grupos y no una fila de tres cosas: a la izquierda de quién es el
+   programa, a la derecha quién lo acompaña, con su rótulo arriba. Puestos
+   todos en una sola línea, el rótulo terminaba encimado al logo del municipio
+   y la frase no se leía en ningún orden claro. */
+.hero-org { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
+  display: flex; align-items: center; gap: 34px; flex-wrap: wrap; }
+.hero-org-marca { height: 46px; width: auto; }
+.hero-org-apoyo { display: flex; flex-direction: column; gap: 7px; }
+.hero-org-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+.hero-org-apoyo img.is-muni { height: 30px; width: auto; }
 @media (max-width: 420px) {
-  .hero-org-logos { gap: 20px; }
-  .hero-org-logos img { height: 36px; }
-  .hero-org-logos img.is-muni { height: 27px; }
+  .hero-org { gap: 20px; }
+  .hero-org-marca { height: 36px; }
+  .hero-org-apoyo img.is-muni { height: 25px; }
 }
 
 /* ---------- Barra de plazo ---------- */
@@ -547,6 +552,9 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 92px; }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .footer-logo { height: 46px; width: auto; margin-bottom: 16px; }
 .footer-brand p { font-size: 14.5px; color: var(--ink-2); max-width: 34ch; }
+/* La leyenda de acompañamiento: presente y legible, pero por debajo del nombre
+   del programa. Quién apoya se lee después de qué es. */
+.footer-apoyo { font-size: 13px; color: var(--ink-3); margin-top: -6px; max-width: 46ch; }
 .footer-muni { height: 30px; width: auto; margin-top: 20px; opacity: .75; }
 .footer-col h3 { font-size: 12.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); margin-bottom: 14px; font-family: var(--font-body); font-weight: 700; }
 /* Los enlaces del pie medían 24px de alto en celular. Con padding llegan al

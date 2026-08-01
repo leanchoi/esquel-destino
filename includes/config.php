@@ -20,6 +20,35 @@ const FECHA_FIN        = '2026-10-02 00:00:00';
 // Cierre duro confirmado: pasado FECHA_CIERRE el formulario se bloquea solo.
 const CIERRE_DURO = true;
 
+// --- Quién organiza y quién acompaña --------------------------------------
+/**
+ * Cómo se nombra al programa y a quienes lo respaldan.
+ *
+ * Esquel LAB se presenta como una iniciativa con apoyo institucional y no como
+ * una dependencia del municipio. Es una diferencia de posicionamiento y no de
+ * los hechos: las Subsecretarías siguen acompañando, financiando e integrando
+ * el Cuadro Técnico, y eso está dicho en el sitio en todos lados. Lo que cambia
+ * es de quién es el programa.
+ *
+ * Está acá arriba y no repartido por las páginas porque en algún momento la
+ * titularidad puede cambiar de manos, y cuando pase tiene que ser una edición
+ * en un archivo y no una cacería por veinte plantillas.
+ *
+ * Ojo con una cosa que estas constantes NO resuelven: en terminos.php hay
+ * cláusulas —quién recibe los datos personales, de quién son los materiales—
+ * que nombran a una parte responsable. Eso es una definición legal, no una de
+ * redacción, y tiene que confirmarla el área legal del municipio antes de que
+ * la titularidad se mueva. Un aviso de privacidad que nombra al responsable
+ * equivocado no es un detalle de estilo.
+ */
+const ORGANIZA = 'Esquel LAB';
+const APOYO_INSTITUCION = 'Municipalidad de Esquel';
+const APOYO_AREAS = 'las Subsecretarías de Turismo y de Producción';
+/** La leyenda completa, para pies de página y fichas. */
+const LEYENDA_APOYO = 'Con el acompañamiento de la ' . APOYO_INSTITUCION . ', a través de ' . APOYO_AREAS . '.';
+/** La versión corta, para cuando va dentro de una frase. */
+const LEYENDA_APOYO_CORTA = 'con el apoyo de la ' . APOYO_INSTITUCION;
+
 // --- Contacto -------------------------------------------------------------
 const EMAIL_PRENSA = 'comunicacionesquel25@gmail.com';
 const EMAIL_PROGRAMA = 'comunicacionesquel25@gmail.com';

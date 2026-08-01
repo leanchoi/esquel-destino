@@ -39,7 +39,7 @@ require __DIR__ . '/includes/header.php';
       <span class="tag">Para un grupo de WhatsApp o una historia</span>
       <h3>El corto: se lee de una pasada</h3>
       <div class="release-body" id="txtCorto">
-        <p>¿Viste esto? El municipio abrió <strong>Esquel LAB</strong>: ocho semanas de acompañamiento
+        <p>¿Viste esto? Abrió <strong>Esquel LAB</strong>: ocho semanas de acompañamiento
         gratuito para convertir lo que ya hacés en algo que un visitante pueda comprar. Sirve para casas
         de té, chacras, talleres, guías, artesanos, comercios con algo propio.</p>
         <p>No hace falta monotributo ni habilitación para anotarse. Entran hasta 18 proyectos y cierra
@@ -53,7 +53,7 @@ require __DIR__ . '/includes/header.php';
       <h3>El personal: cuando ya sabés quién tendría que anotarse</h3>
       <div class="release-body" id="txtPersonal">
         <p>Te mando esto porque me acordé de vos.</p>
-        <p>Es un programa del municipio y es gratis. Durante ocho semanas un equipo va a tu lugar
+        <p>Es gratis. Durante ocho semanas un equipo va a tu lugar
         —tu local, tu campo, tu taller— y te ayuda a armar lo que hacés como una experiencia para
         visitantes: ponerle precio, ordenar cómo se cuenta, tener dónde te reserven y dejarla lista
         para que las agencias de Esquel la ofrezcan.</p>
@@ -70,7 +70,7 @@ require __DIR__ . '/includes/header.php';
       <span class="tag">Para leer al aire · unos 40 segundos</span>
       <h3>El hablado: radio, altoparlante, reunión de vecinos</h3>
       <div class="release-body" id="txtRadio">
-        <p>La Municipalidad de Esquel abrió la convocatoria a Esquel LAB, un programa gratuito para
+        <p>Abrió la convocatoria a Esquel LAB, un programa gratuito para
         emprendedores y productores, de la ciudad y del campo.</p>
         <p>Durante ocho semanas un equipo trabaja en el lugar de cada participante para convertir lo
         que ya hace en una experiencia turística: con precio, con una forma clara de reservarla y
@@ -101,9 +101,9 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <table class="facts-table">
-      <tr><td>Qué es</td><td>Un programa municipal que acompaña a emprendedores y productores a convertir lo que ya hacen en una experiencia turística lista para operar</td></tr>
-      <tr><td>Cuánto cuesta</td><td>Nada. Es gratuito, financiado por el municipio</td></tr>
-      <tr><td>Quién lo hace</td><td>Subsecretarías de Turismo y de Producción de Esquel</td></tr>
+      <tr><td>Qué es</td><td>Un programa que acompaña a emprendedores y productores a convertir lo que ya hacen en una experiencia turística lista para operar</td></tr>
+      <tr><td>Cuánto cuesta</td><td>Nada. Es gratuito, con el apoyo de la <?= e(APOYO_INSTITUCION) ?></td></tr>
+      <tr><td>Quién lo acompaña</td><td><?= e(APOYO_INSTITUCION) ?>, a través de <?= e(APOYO_AREAS) ?></td></tr>
       <tr><td>Las dos líneas</td><td>Esquel Acelera (proyectos en la ciudad) y Raíz (proyectos en el campo)</td></tr>
       <tr><td>Cuántos entran</td><td>13 a 18 proyectos: 8 a 10 urbanos y 5 a 8 rurales</td></tr>
       <tr><td>Hasta cuándo se anota</td><td><?= e(fecha_larga(FECHA_APERTURA)) ?> al <?= e(fecha_larga(FECHA_CIERRE)) ?> de 2026. Es cierre real: pasada esa fecha el formulario se cierra solo</td></tr>
@@ -111,7 +111,7 @@ require __DIR__ . '/includes/header.php';
       <tr><td>Cuánto tiempo hay que ponerle</td><td>Unas 12 horas por semana: 2 de taller grupal, 1 o 2 de reunión en tu lugar y el resto trabajo propio</td></tr>
       <tr><td>Qué hace falta para postularse</td><td>Ni monotributo ni habilitación. Si tu propuesta después necesita habilitarse, el programa te acompaña a hacerlo</td></tr>
       <tr><td>Con qué se termina</td><td>Precio al público y para agencias, guión de la experiencia, canal de reservas, fotos y una ficha en manos de las agencias receptivas</td></tr>
-      <tr><td>Quién elige</td><td>Un Cuadro Técnico mixto: el municipio más CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial Esquel</td></tr>
+      <tr><td>Quién elige</td><td>Un Cuadro Técnico mixto: las Subsecretarías más CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial Esquel</td></tr>
       <tr><td>Dónde se anota</td><td><a href="inscribirse.php"><?= e(SITE_DOMINIO) ?>/inscribirse.php</a></td></tr>
     </table>
   </div>
@@ -124,7 +124,7 @@ require __DIR__ . '/includes/header.php';
       <span class="eyebrow">Cómo se elige</span>
       <h2>No es por orden de llegada, y los criterios se publicaron antes de abrir</h2>
       <p>
-        La selección no la hace solo el municipio. Un <strong>Cuadro Técnico</strong> —las Subsecretarías
+        La selección no la hace una sola parte. Un <strong>Cuadro Técnico</strong> —las Subsecretarías
         de Turismo y de Producción junto a CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA
         Filial Esquel— acordó estos cinco criterios <em>antes</em> de abrir la convocatoria, para que el
         proceso no dependa de un solo actor ni favorezca únicamente a los proyectos que ya están armados.
@@ -170,8 +170,9 @@ require __DIR__ . '/includes/header.php';
       <span class="tag">Gacetilla</span>
       <h3>Esquel abre la convocatoria a un programa gratuito para convertir oficios locales en experiencias turísticas</h3>
       <div class="release-body" id="gacetilla">
-        <p>ESQUEL, CHUBUT · La Municipalidad de Esquel abrió la convocatoria a la primera cohorte de
-        Esquel LAB, un programa gratuito de las Subsecretarías de Turismo y de Producción que acompaña
+        <p>ESQUEL, CHUBUT · Abrió la convocatoria a la primera cohorte de
+        Esquel LAB, un programa gratuito —con el acompañamiento de la <?= e(APOYO_INSTITUCION) ?>, a
+        través de <?= e(APOYO_AREAS) ?>— que acompaña
         a emprendedores urbanos y productores rurales a convertir lo que ya hacen en experiencias
         turísticas listas para operar.</p>
 
@@ -185,7 +186,7 @@ require __DIR__ . '/includes/header.php';
         previa para postularse: la formalización, cuando hace falta, forma parte del acompañamiento. La
         contrapartida que sí se pide es tiempo, unas 12 horas semanales durante las ocho semanas.</p>
 
-        <p>La selección está a cargo de un Cuadro Técnico mixto que integran el municipio y tres cámaras
+        <p>La selección está a cargo de un Cuadro Técnico mixto que integran las Subsecretarías y tres cámaras
         del sector privado —CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial
         Esquel—, que acordaron los criterios de evaluación antes de abrir la inscripción y los
         publicaron junto con la convocatoria. La ponderación da mayor peso al perfil y la motivación de
@@ -204,12 +205,12 @@ require __DIR__ . '/includes/header.php';
       <span class="tag">Párrafo de contexto</span>
       <h3>Para cerrar una nota</h3>
       <div class="release-body" id="boilerplate">
-        <p>Esquel LAB (Laboratorio de Destino Esquel) es un programa municipal gratuito de las
-        Subsecretarías de Turismo y de Producción que acompaña a emprendedores urbanos y productores
+        <p>Esquel LAB (Laboratorio de Destino Esquel) es un programa gratuito, con el acompañamiento
+        de la <?= e(APOYO_INSTITUCION) ?> a través de <?= e(APOYO_AREAS) ?>, que acompaña a emprendedores urbanos y productores
         rurales a convertir servicios y saberes que ya existen en experiencias turísticas comercializables.
         Se organiza en dos líneas —Esquel Acelera, urbana, y Raíz, rural— y trabaja ocho semanas con cada
         cohorte, con talleres grupales y acompañamiento individual en el lugar de trabajo de cada
-        participante. La selección está a cargo de un Cuadro Técnico integrado por el municipio y tres
+        participante. La selección está a cargo de un Cuadro Técnico integrado por las Subsecretarías y tres
         cámaras del sector privado local.</p>
       </div>
       <button class="copy-btn" data-copy="#boilerplate">Copiar párrafo</button>
@@ -225,7 +226,7 @@ require __DIR__ . '/includes/header.php';
           <a href="assets/images/logo-esquel-lab-blanco.png" download class="btn btn-secondary btn-sm">Esquel LAB (blanco)</a>
           <a href="assets/images/logo-esquel-acelera.png" download class="btn btn-secondary btn-sm">Esquel Acelera</a>
           <a href="assets/images/logo-esquel-raiz.png" download class="btn btn-secondary btn-sm">Raíz</a>
-          <a href="assets/images/logo-municipio-esquel.png" download class="btn btn-secondary btn-sm">Municipio de Esquel</a>
+          <a href="assets/images/logo-municipio-esquel.png" download class="btn btn-secondary btn-sm"><?= e(APOYO_INSTITUCION) ?></a>
         </div>
       </div>
 
@@ -239,7 +240,7 @@ require __DIR__ . '/includes/header.php';
 
       <div class="mk-card">
         <h3>Entrevistas</h3>
-        <p>Para coordinar con el municipio o con las cámaras que integran el Cuadro Técnico.</p>
+        <p>Para coordinar con las Subsecretarías o con las cámaras que integran el Cuadro Técnico.</p>
         <div class="dl">
           <a href="mailto:<?= e(EMAIL_PRENSA) ?>" class="btn btn-primary btn-sm">Escribir a prensa</a>
         </div>
@@ -262,7 +263,7 @@ require __DIR__ . '/includes/header.php';
         <div class="faq-body">
           <p>No. Esquel LAB pone equipo técnico al lado de gente que ya está trabajando con lo que
           tiene y necesita ordenar la parte comercial: precio, canal de venta, materiales.</p>
-          <p>El municipio tiene aparte un Régimen de Promoción de Inversiones Turísticas, para proyectos
+          <p>La <?= e(APOYO_INSTITUCION) ?> tiene aparte un Régimen de Promoción de Inversiones Turísticas, para proyectos
           de otra escala. Son dos herramientas distintas: una moviliza capital, esta acompaña a quien ya
           está haciendo algo.</p>
         </div>

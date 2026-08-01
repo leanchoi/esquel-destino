@@ -11,7 +11,7 @@ require_once __DIR__ . '/analitica.php';
 $visita = registrar_visita((string) (parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/'));
 
 $pageTitle       = $pageTitle ?? SITE_NAME;
-$pageDescription = $pageDescription ?? 'Programa municipal gratuito que acompaña a emprendedores y productores de Esquel a convertir lo que ya hacen en una experiencia turística lista para recibir visitantes.';
+$pageDescription = $pageDescription ?? 'Programa gratuito que acompaña a emprendedores y productores de Esquel a convertir lo que ya hacen en una experiencia turística lista para recibir visitantes.';
 $activeNav       = $activeNav ?? '';
 $base            = $base ?? '';
 ?><!doctype html>

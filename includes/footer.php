@@ -5,8 +5,9 @@
     <div class="footer-top">
       <div class="footer-brand">
         <img src="<?= $base ?>assets/images/web/logo-esquel-lab-horizontal.png" alt="Esquel LAB" class="footer-logo" width="338" height="96">
-        <p>Programa municipal gratuito de desarrollo de experiencias turísticas. Subsecretaría de Turismo y Subsecretaría de Producción de Esquel.</p>
-        <img src="<?= $base ?>assets/images/web/logo-municipio-esquel.png" alt="Municipio de Esquel" class="footer-muni" width="459" height="92">
+        <p>Programa gratuito de desarrollo de experiencias turísticas en Esquel, Chubut.</p>
+        <p class="footer-apoyo"><?= e(LEYENDA_APOYO) ?></p>
+        <img src="<?= $base ?>assets/images/web/logo-municipio-esquel.png" alt="<?= e(APOYO_INSTITUCION) ?>" class="footer-muni" width="459" height="92">
       </div>
       <div class="footer-col">
         <h3>El programa</h3>
@@ -30,7 +31,7 @@
 
     <div class="footer-bottom">
       <p>
-        &copy; 2026 Laboratorio de Destino Esquel · Municipalidad de Esquel
+        &copy; 2026 Laboratorio de Destino Esquel
         <span class="footer-sep">·</span>
         <a href="<?= $base ?>terminos.php" class="footer-legal">Términos y condiciones</a>
       </p>

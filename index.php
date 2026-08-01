@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/helpers.php';
 
 $pageTitle = 'Esquel LAB — Convocatoria 2026 para nuevas experiencias turísticas';
-$pageDescription = 'Programa municipal gratuito. Ocho semanas de acompañamiento técnico para convertir tu oficio, tu campo o tu servicio en una experiencia turística lista para recibir visitantes. Se seleccionan hasta 18 proyectos. Postulaciones hasta el 9 de agosto de 2026.';
+$pageDescription = 'Programa gratuito. Ocho semanas de acompañamiento técnico para convertir tu oficio, tu campo o tu servicio en una experiencia turística lista para recibir visitantes. Se seleccionan hasta 18 proyectos. Postulaciones hasta el 9 de agosto de 2026.';
 $activeNav = 'home';
 $abierta = convocatoria_abierta();
 $dias = dias_para_cierre();
@@ -31,7 +31,7 @@ require __DIR__ . '/includes/header.php';
       <span class="eyebrow"><span class="dot"></span> Esquel LAB · Primera cohorte 2026</span>
       <h1><em>Inscripciones abiertas</em> al programa de aceleración turística de Esquel</h1>
       <p class="hero-lede">
-        Ocho semanas de trabajo con un equipo del municipio, en tu campo, tu taller o tu local,
+        Ocho semanas de trabajo con un equipo, en tu campo, tu taller o tu local,
         sobre lo que hace falta para poder recibir visitantes: el precio, la forma de reservarlo,
         el material de venta y la ficha con la que las agencias de la ciudad lo ofrecen.
       </p>
@@ -63,10 +63,10 @@ require __DIR__ . '/includes/header.php';
       </figure>
 
       <div class="hero-org">
-        <span class="hero-org-lbl">Un programa de</span>
-        <div class="hero-org-logos">
-          <img src="assets/images/web/logo-esquel-lab-horizontal.png" alt="Esquel LAB" width="338" height="96">
-          <img src="assets/images/web/logo-municipio-esquel.png" alt="Municipio de Esquel" class="is-muni" width="459" height="92">
+        <img src="<?= asset('assets/images/web/logo-esquel-lab-horizontal.png') ?>" alt="Esquel LAB" class="hero-org-marca" width="338" height="96">
+        <div class="hero-org-apoyo">
+          <span class="hero-org-lbl">Con el acompañamiento de</span>
+          <img src="<?= asset('assets/images/web/logo-municipio-esquel.png') ?>" alt="<?= e(APOYO_INSTITUCION) ?>" class="is-muni" width="459" height="92">
         </div>
       </div>
     </div>
@@ -313,7 +313,7 @@ require __DIR__ . '/includes/header.php';
       <details class="faq-item" open>
         <summary>¿Cuánto cuesta?</summary>
         <div class="faq-body">
-          <p>Nada. El programa es <strong>gratuito</strong>. Está financiado por el municipio a través de las Subsecretarías de Turismo y de Producción.</p>
+          <p>Nada. El programa es <strong>gratuito</strong>. Lo hace posible el apoyo de la <?= e(APOYO_INSTITUCION) ?>, a través de <?= e(APOYO_AREAS) ?>.</p>
         </div>
       </details>
 
@@ -375,14 +375,14 @@ require __DIR__ . '/includes/header.php';
 <section class="section section-sm section-line">
   <div class="container" style="text-align:center">
     <span class="eyebrow" style="justify-content:center">Quién decide</span>
-    <h2 style="font-size:26px">La selección no la hace solo el municipio</h2>
+    <h2 style="font-size:26px">La selección no la hace una sola parte</h2>
     <div class="gov-logos">
       <span>CAMOCH</span>
       <span>Cámara de Prestadores Turísticos de Esquel</span>
       <span>FEHGRA Filial Esquel</span>
     </div>
     <p style="max-width:64ch;margin:0 auto;color:var(--ink-2);font-size:15.5px">
-      Estas tres instituciones del sector privado integran el Cuadro Técnico junto a las Subsecretarías de Turismo y de Producción.
+      Estas tres instituciones del sector privado integran el Cuadro Técnico junto a <?= e(APOYO_AREAS) ?>.
       Acuerdan los criterios antes de abrir la convocatoria y participan de la evaluación, para que el proceso no dependa de un solo actor
       ni beneficie únicamente a los proyectos ya consolidados. <a href="media-kit.php#evaluacion">Ver los criterios y cuánto pesa cada uno →</a>
     </p>

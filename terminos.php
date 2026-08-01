@@ -6,6 +6,21 @@
  * programa. Antes de publicarlo como documento vinculante conviene que lo
  * revise el área legal del municipio, sobre todo los puntos de datos
  * personales, uso de imagen y propiedad de lo producido.
+ *
+ * Y una advertencia aparte, para cuando cambie la titularidad del programa.
+ *
+ * En el resto del sitio Esquel LAB ya no se presenta como un programa
+ * municipal sino como una iniciativa con acompañamiento institucional. Acá no
+ * se hizo lo mismo con todo: los puntos 7, 8 y 9 —datos personales, uso de
+ * imagen y propiedad de lo producido— siguen nombrando a la Municipalidad de
+ * Esquel como parte responsable, y eso es a propósito.
+ *
+ * Esas cláusulas no son una forma de decir las cosas: dicen quién responde
+ * legalmente si algo pasa con los datos de una persona. Cambiarlas por
+ * redacción, sin que haya detrás una figura que efectivamente asuma esa
+ * responsabilidad, deja un aviso de privacidad que nombra a un responsable
+ * equivocado. Cuando la titularidad se mueva, esos tres puntos los tiene que
+ * rehacer el área legal, no el sitio.
  */
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/helpers.php';
@@ -32,9 +47,10 @@ require __DIR__ . '/includes/header.php';
 
     <h2>1. Qué es Esquel LAB</h2>
     <p>
-      Esquel LAB (Laboratorio de Destino Esquel) es un programa de la Municipalidad de Esquel, ejecutado por las
-      Subsecretarías de Turismo y de Producción. Acompaña técnicamente a emprendedores y productores locales para
-      convertir actividades que ya realizan en experiencias turísticas en condiciones de ser ofrecidas al público.
+      Esquel LAB (Laboratorio de Destino Esquel) es un programa de acompañamiento técnico a emprendedores y
+      productores locales, para convertir actividades que ya realizan en experiencias turísticas en condiciones de
+      ser ofrecidas al público. Se desarrolla con el acompañamiento de la <?= e(APOYO_INSTITUCION) ?>,
+      a través de <?= e(APOYO_AREAS) ?>, que además integran el Cuadro Técnico de selección.
     </p>
     <p>
       El programa se organiza en dos líneas: <strong>Esquel Acelera</strong>, para proyectos urbanos, y
@@ -46,13 +62,13 @@ require __DIR__ . '/includes/header.php';
       <li>Personas mayores de 18 años, o personas jurídicas, con un proyecto que se desarrolle en el ejido de Esquel o su zona de influencia.</li>
       <li>No se exige inscripción en monotributo, habilitación comercial ni registro previo para postularse.</li>
       <li>Se puede presentar más de un proyecto, cargando una postulación separada por cada uno.</li>
-      <li>No pueden postularse quienes integren el Cuadro Técnico ni el personal municipal afectado directamente a la ejecución del programa.</li>
+      <li>No pueden postularse quienes integren el Cuadro Técnico ni quienes estén afectados directamente a la ejecución del programa.</li>
     </ul>
 
     <h2>3. Cómo se seleccionan los proyectos</h2>
     <p>
-      La selección está a cargo del <strong>Cuadro Técnico</strong>, integrado por las Subsecretarías de Turismo y de
-      Producción junto a CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial Esquel.
+      La selección está a cargo del <strong>Cuadro Técnico</strong>, integrado por <?= e(APOYO_AREAS) ?>
+      junto a CAMOCH, la Cámara de Prestadores Turísticos de Esquel y FEHGRA Filial Esquel.
     </p>
     <ul>
       <li>Las postulaciones se puntúan con una matriz de criterios acordada antes de la apertura y publicada junto con la convocatoria. <a href="media-kit.php#evaluacion">Se puede consultar acá</a>.</li>
@@ -140,7 +156,7 @@ require __DIR__ . '/includes/header.php';
       <p>Escribinos a <a href="mailto:<?= e(EMAIL_PROGRAMA) ?>"><?= e(EMAIL_PROGRAMA) ?></a> y te respondemos antes de que te postules.</p>
     </div>
 
-    <p class="legal-fecha">Última actualización: <?= e(fecha_larga(FECHA_APERTURA)) ?> de 2026 · Municipalidad de Esquel, Chubut.</p>
+    <p class="legal-fecha">Última actualización: <?= e(fecha_larga(FECHA_APERTURA)) ?> de 2026 · Esquel, Chubut.</p>
   </div>
 </section>
 
