@@ -562,19 +562,28 @@ a.btn[href^="inscribirse"]:hover::after { transform: translateX(3px); }
    borde. El recorrido es ±52px (data-parallax en el HTML), así que 64px de
    más arriba y abajo dejan margen. En porcentaje no servía: 4% de un bloque
    de 528px son 21px, menos de la mitad de lo que se mueve. */
-.cierre-fondo { position: absolute; inset: -64px 0; z-index: 0; will-change: transform; }
+.cierre-fondo { position: absolute; inset: -64px 0; z-index: 0; overflow: hidden; will-change: transform; }
 .cierre-fondo picture, .cierre-fondo img { display: block; width: 100%; height: 100%; }
 .cierre-fondo img { object-fit: cover; object-position: center 58%; }
 
-/* El iframe de YouTube no entiende object-fit, así que se agranda hasta tapar
-   el bloque por los dos lados y se centra: el que sobra se recorta. */
-.cierre-frame { position: absolute; inset: 0; overflow: hidden; opacity: 0; transition: opacity .9s ease; }
+/* El video va acá adentro, encima de la foto, para que el parallax lo arrastre
+   a él también. */
+.cierre-frame { position: absolute; inset: 0; z-index: 1; overflow: hidden;
+  container-type: size; opacity: 0; transition: opacity .9s ease; }
 .cierre-frame.is-visible { opacity: 1; }
+
+/* El iframe no entiende object-fit: hay que agrandarlo a mano hasta tapar la
+   caja y centrarlo, y lo que sobra se recorta.
+   Las medidas van en unidades de contenedor (cq) y no en vw/vh. Con vh la
+   cuenta se hacía contra el alto de la ventana, que no es el de este bloque:
+   en 1280x900 daba 1600x720 para un video 16:9, o sea 25% estirado a lo
+   ancho. cqw y cqh miden el marco, que es lo que hay que tapar. */
 .cierre-frame iframe {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 100vw; height: 56.25vw;          /* 16:9 tomando el ancho  */
-  min-width: 177.78vh; min-height: 100%;  /* 16:9 tomando el alto   */
   border: 0; pointer-events: none;
+  width: 100%; height: 100%;                  /* respaldo si no hay soporte cq */
+  width: max(100cqw, 100cqh * 16 / 9);
+  height: max(100cqh, 100cqw * 9 / 16);
 }
 
 /* El velo es lo que sostiene el contraste del texto. El video es impredecible

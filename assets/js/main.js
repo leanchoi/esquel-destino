@@ -167,48 +167,102 @@
   var ahorrando = !!(conexion && (conexion.saveData || /^(slow-)?2g$/.test(conexion.effectiveType || '')));
 
   if (bloqueVideo && !menosMovimiento && !ahorrando && 'IntersectionObserver' in window) {
-    var armarVideo = function () {
-      var id = bloqueVideo.getAttribute('data-video');
-      var desde = parseInt(bloqueVideo.getAttribute('data-video-desde'), 10) || 0;
-      if (!id || bloqueVideo.querySelector('.cierre-frame')) return;
+    // Se usa la API oficial de YouTube y no un iframe armado a mano. La
+    // primera versión le mandaba a YouTube un saludo postMessage para que
+    // avisara cuándo arrancaba, y lo mandaba al cargar el iframe: o sea, antes
+    // de que el reproductor estuviera listo para escuchar. El saludo se perdía,
+    // el aviso no llegaba nunca y el video se quedaba reproduciendo con
+    // opacidad 0. Se veía sólo la foto.
+    var pedidosAPI = [];
+    var cargandoAPI = false;
 
+    var conAPI = function (cb) {
+      if (window.YT && window.YT.Player) { cb(); return; }
+      pedidosAPI.push(cb);
+      if (cargandoAPI) return;
+      cargandoAPI = true;
+      // La API avisa por una función global; se respeta la que ya hubiera.
+      var previa = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        if (typeof previa === 'function') previa();
+        for (var i = 0; i < pedidosAPI.length; i++) pedidosAPI[i]();
+        pedidosAPI = [];
+      };
+      var script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(script);
+    };
+
+    var armado = false;
+    var armarVideo = function () {
+      if (armado) return;
+      armado = true;
+
+      var id = bloqueVideo.getAttribute('data-video');
+      var fondo = bloqueVideo.querySelector('.cierre-fondo');
+      if (!id || !fondo) return;
+      var desde = parseInt(bloqueVideo.getAttribute('data-video-desde'), 10) || 0;
+
+      // El video va adentro del fondo para que el parallax lo mueva a él
+      // también, y no sólo a la foto.
       var marco = document.createElement('div');
       marco.className = 'cierre-frame';
+      var hueco = document.createElement('div');
+      marco.appendChild(hueco);
+      fondo.appendChild(marco);
 
-      var iframe = document.createElement('iframe');
-      // loop necesita playlist con el mismo id: es la forma que tiene YouTube
-      // de repetir un video suelto. mute es condición para autoplay.
-      iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
-        '?autoplay=1&mute=1&loop=1&playlist=' + encodeURIComponent(id) +
-        '&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0' +
-        '&iv_load_policy=3&enablejsapi=1&start=' + desde;
-      iframe.title = 'Esquel en video';
-      iframe.setAttribute('tabindex', '-1');
-      iframe.setAttribute('aria-hidden', 'true');
-      iframe.allow = 'autoplay; encrypted-media';
-      iframe.setAttribute('frameborder', '0');
-
-      // El handshake deja al player mandando avisos de estado.
-      iframe.addEventListener('load', function () {
-        try {
-          iframe.contentWindow.postMessage('{"event":"listening","id":"cierre"}', '*');
-        } catch (e) { /* sin handshake el video igual se reproduce, sólo que no avisa */ }
-      });
-
-      marco.appendChild(iframe);
-      bloqueVideo.insertBefore(marco, bloqueVideo.firstChild);
-
-      // Recién se muestra cuando está reproduciendo de verdad. Si el navegador
-      // bloqueó el autoplay nunca llega este aviso y queda la foto, que es
-      // mejor que un cartel de play gigante encima del texto.
-      window.addEventListener('message', function (ev) {
-        if (ev.origin !== 'https://www.youtube-nocookie.com' &&
-            ev.origin !== 'https://www.youtube.com') return;
-        var dato;
-        try { dato = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data; } catch (e) { return; }
-        if (dato && dato.event === 'onStateChange' && dato.info === 1) {
-          marco.classList.add('is-visible');
-        }
+      conAPI(function () {
+        new window.YT.Player(hueco, {
+          host: 'https://www.youtube-nocookie.com',
+          videoId: id,
+          playerVars: {
+            autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: id,
+            playsinline: 1, modestbranding: 1, rel: 0, disablekb: 1, fs: 0,
+            iv_load_policy: 3, start: desde, origin: window.location.origin
+          },
+          events: {
+            onReady: function (ev) {
+              var f = ev.target.getIframe();
+              f.setAttribute('tabindex', '-1');
+              f.setAttribute('aria-hidden', 'true');
+              f.setAttribute('title', 'Esquel en video');
+              // Sin silenciar, el navegador no lo deja arrancar solo.
+              ev.target.mute();
+              ev.target.playVideo();
+              // Si el reproductor quedó listo pero nunca llega a reproducir,
+              // el autoplay está bloqueado. Queda la foto, pero conviene que
+              // en la consola diga por qué y no que parezca que falló el sitio.
+              setTimeout(function () {
+                if (!marco.classList.contains('is-visible')) {
+                  console.info('[cierre] El video cargó pero el navegador no lo dejó arrancar solo. Queda la foto.');
+                }
+              }, 6000);
+            },
+            onStateChange: function (ev) {
+              var E = window.YT.PlayerState;
+              // Aparece recién cuando reproduce de verdad: si el navegador
+              // bloqueó el autoplay queda la foto, que es mejor que un cartel
+              // de play gigante encima del texto.
+              if (ev.data === E.PLAYING) marco.classList.add('is-visible');
+              // loop+playlist no siempre repite cuando el reproductor lo maneja
+              // la API, así que al terminar se rebobina a mano.
+              if (ev.data === E.ENDED) { ev.target.seekTo(desde); ev.target.playVideo(); }
+            },
+            // Sin video no hay nada que mostrar: se saca el marco y queda la
+            // foto. El código dice por qué, que es lo único que después
+            // permite arreglarlo sin adivinar.
+            onError: function (ev) {
+              var motivo = { 2: 'el ID del video es inválido',
+                5: 'el reproductor HTML5 no puede con este video',
+                100: 'el video no existe o es privado (privado no es lo mismo que oculto)',
+                101: 'el dueño no permite incrustarlo en otros sitios',
+                150: 'el dueño no permite incrustarlo en otros sitios' };
+              console.warn('[cierre] YouTube rechazó el video (código ' + (ev && ev.data) + '): ' +
+                (motivo[ev && ev.data] || 'motivo desconocido') + '. Queda la foto.');
+              if (marco.parentNode) marco.parentNode.removeChild(marco);
+            }
+          }
+        });
       });
     };
 
