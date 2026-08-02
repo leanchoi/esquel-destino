@@ -53,6 +53,18 @@ const LEYENDA_APOYO_CORTA = 'con el apoyo de la ' . APOYO_INSTITUCION;
 const EMAIL_PRENSA = 'comunicacionesquel25@gmail.com';
 const EMAIL_PROGRAMA = 'comunicacionesquel25@gmail.com';
 
+// --- Video de fondo del cierre --------------------------------------------
+// Va el ID solo, no la URL entera: de https://youtu.be/sX_Wcj130pE el ID es
+// sX_Wcj130pE. Dejarlo vacío apaga el video y el bloque queda con la foto
+// sola. La foto no es un plan B: es la base. Es lo que se ve mientras el
+// video carga, en los celulares que no autoreproducen, y cuando el sistema
+// pide menos movimiento. El video se le suma arriba cuando se puede.
+const CIERRE_VIDEO_YT = 'sX_Wcj130pE';
+/** Desde qué segundo arranca, para saltear placas o logos del comienzo. */
+const CIERRE_VIDEO_DESDE = 0;
+/** Sin extensión: al lado se sirven .webp y .jpg. */
+const CIERRE_VIDEO_POSTER = 'assets/images/fotos/web/linea-acelera';
+
 // --- Programas ------------------------------------------------------------
 const PROGRAMAS = [
     'Acelera' => [

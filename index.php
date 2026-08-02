@@ -390,16 +390,41 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ============================ CIERRE ============================ -->
-<section class="section section-alt">
+<?php /*
+  El cierre va en oscuro y con el video de Esquel de fondo. Antes era del
+  mismo color que el pie de página —los dos #EBE7E0— y separados sólo por una
+  línea de 1px, así que los dos juntos parecían un pie larguísimo: no se veía
+  dónde terminaba la página y empezaba la letra chica. El contraste corta eso.
+
+  El video se carga recién cuando el bloque se acerca a la pantalla, para no
+  cobrarle un iframe de YouTube a alguien que nunca baja hasta acá.
+*/ ?>
+<section class="section section-dark cierre-video"
+  <?php if (CIERRE_VIDEO_YT !== ''): ?>data-video="<?= e(CIERRE_VIDEO_YT) ?>" data-video-desde="<?= (int) CIERRE_VIDEO_DESDE ?>"<?php endif; ?>>
+
+  <div class="cierre-fondo" data-parallax="52">
+    <picture>
+      <source srcset="<?= asset(CIERRE_VIDEO_POSTER . '.webp') ?>" type="image/webp">
+      <img src="<?= asset(CIERRE_VIDEO_POSTER . '.jpg') ?>" alt="" width="1120" height="475" loading="lazy" decoding="async">
+    </picture>
+  </div>
+  <div class="cierre-velo"></div>
+
   <div class="container cierre">
     <?php if ($abierta): ?>
+      <span class="eyebrow">
+        <span class="dot"></span>
+        <?= $dias > 0 ? 'Quedan ' . (int) $dias . ' día' . ($dias === 1 ? '' : 's') : 'Último día' ?>
+      </span>
       <h2>Postulate antes del <?= e(fecha_larga(FECHA_CIERRE)) ?></h2>
       <p>
         Son unos 20 minutos y se puede guardar a medio hacer. Si tenés dudas antes de empezar,
         escribinos a <a href="mailto:<?= e(EMAIL_PROGRAMA) ?>"><?= e(EMAIL_PROGRAMA) ?></a>.
       </p>
       <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
+      <p class="cierre-nota">Podés presentarte sin monotributo ni habilitación.</p>
     <?php else: ?>
+      <span class="eyebrow"><span class="dot"></span> Convocatoria cerrada</span>
       <h2>La primera cohorte ya cerró</h2>
       <p>
         Las postulaciones cerraron el <?= e(fecha_larga(FECHA_CIERRE)) ?>. Va a haber más convocatorias:

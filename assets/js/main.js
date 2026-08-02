@@ -124,31 +124,100 @@
   // no se engancha nada y la página queda igual de usable.
   var menosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Parallax del hero. La foto es 72px más alta que su marco, así que puede
-  // desplazarse ±36px sin descubrir los bordes.
-  var fotoHero = document.querySelector('[data-parallax]');
-  if (fotoHero && !menosMovimiento) {
-    var RECORRIDO = 36;
+  // Parallax. Cada pieza declara cuánto se puede mover en data-parallax: el
+  // hero 36px, porque su foto es 72px más alta que el marco, y el fondo del
+  // cierre 52px. Nunca más que el sobrante, o asoman los bordes.
+  var conParallax = [].slice.call(document.querySelectorAll('[data-parallax]'));
+  if (conParallax.length && !menosMovimiento) {
     var pendiente = false;
 
-    var moverHero = function () {
+    var mover = function () {
       pendiente = false;
-      var marco = fotoHero.parentElement.getBoundingClientRect();
-      // 0 cuando el marco entra por abajo, 1 cuando terminó de salir por arriba.
-      var avance = (window.innerHeight - marco.top) / (window.innerHeight + marco.height);
-      avance = Math.min(1, Math.max(0, avance));
-      fotoHero.style.transform = 'translate3d(0,' + ((avance - 0.5) * 2 * RECORRIDO).toFixed(1) + 'px,0)';
+      for (var i = 0; i < conParallax.length; i++) {
+        var pieza = conParallax[i];
+        var recorrido = parseFloat(pieza.getAttribute('data-parallax')) || 36;
+        var marco = pieza.parentElement.getBoundingClientRect();
+        // Fuera de pantalla no hay nada que recalcular.
+        if (marco.bottom < -80 || marco.top > window.innerHeight + 80) continue;
+        // 0 cuando el marco entra por abajo, 1 cuando terminó de salir por arriba.
+        var avance = (window.innerHeight - marco.top) / (window.innerHeight + marco.height);
+        avance = Math.min(1, Math.max(0, avance));
+        pieza.style.transform = 'translate3d(0,' + ((avance - 0.5) * 2 * recorrido).toFixed(1) + 'px,0)';
+      }
     };
 
     var pedirMovimiento = function () {
       if (pendiente) return;
       pendiente = true;
-      window.requestAnimationFrame(moverHero);
+      window.requestAnimationFrame(mover);
     };
 
     window.addEventListener('scroll', pedirMovimiento, { passive: true });
     window.addEventListener('resize', pedirMovimiento);
-    moverHero();
+    mover();
+  }
+
+  // ------------------------------------------------- video de fondo (cierre)
+  // El iframe de YouTube pesa, así que se arma recién cuando el bloque está
+  // por entrar en pantalla. Y no se arma nunca si el sistema pide menos
+  // movimiento o si el navegador avisa que el usuario está ahorrando datos:
+  // en esos casos queda la foto, que es la base del bloque.
+  var bloqueVideo = document.querySelector('[data-video]');
+  var conexion = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var ahorrando = !!(conexion && (conexion.saveData || /^(slow-)?2g$/.test(conexion.effectiveType || '')));
+
+  if (bloqueVideo && !menosMovimiento && !ahorrando && 'IntersectionObserver' in window) {
+    var armarVideo = function () {
+      var id = bloqueVideo.getAttribute('data-video');
+      var desde = parseInt(bloqueVideo.getAttribute('data-video-desde'), 10) || 0;
+      if (!id || bloqueVideo.querySelector('.cierre-frame')) return;
+
+      var marco = document.createElement('div');
+      marco.className = 'cierre-frame';
+
+      var iframe = document.createElement('iframe');
+      // loop necesita playlist con el mismo id: es la forma que tiene YouTube
+      // de repetir un video suelto. mute es condición para autoplay.
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+        '?autoplay=1&mute=1&loop=1&playlist=' + encodeURIComponent(id) +
+        '&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0' +
+        '&iv_load_policy=3&enablejsapi=1&start=' + desde;
+      iframe.title = 'Esquel en video';
+      iframe.setAttribute('tabindex', '-1');
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.allow = 'autoplay; encrypted-media';
+      iframe.setAttribute('frameborder', '0');
+
+      // El handshake deja al player mandando avisos de estado.
+      iframe.addEventListener('load', function () {
+        try {
+          iframe.contentWindow.postMessage('{"event":"listening","id":"cierre"}', '*');
+        } catch (e) { /* sin handshake el video igual se reproduce, sólo que no avisa */ }
+      });
+
+      marco.appendChild(iframe);
+      bloqueVideo.insertBefore(marco, bloqueVideo.firstChild);
+
+      // Recién se muestra cuando está reproduciendo de verdad. Si el navegador
+      // bloqueó el autoplay nunca llega este aviso y queda la foto, que es
+      // mejor que un cartel de play gigante encima del texto.
+      window.addEventListener('message', function (ev) {
+        if (ev.origin !== 'https://www.youtube-nocookie.com' &&
+            ev.origin !== 'https://www.youtube.com') return;
+        var dato;
+        try { dato = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data; } catch (e) { return; }
+        if (dato && dato.event === 'onStateChange' && dato.info === 1) {
+          marco.classList.add('is-visible');
+        }
+      });
+    };
+
+    var vigia = new IntersectionObserver(function (entradas) {
+      for (var i = 0; i < entradas.length; i++) {
+        if (entradas[i].isIntersecting) { armarVideo(); vigia.disconnect(); return; }
+      }
+    }, { rootMargin: '300px 0px' });
+    vigia.observe(bloqueVideo);
   }
 
   // Aparición al scroll.

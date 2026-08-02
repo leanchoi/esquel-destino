@@ -275,7 +275,9 @@ a.btn[href^="inscribirse"]:hover::after { transform: translateX(3px); }
 .section-dark p { color: #C9C2B9; }
 .section-dark .eyebrow { color: #F2AFC6; }
 .section-dark .eyebrow .dot { background: #7FCB98; box-shadow: 0 0 0 3px rgba(127,203,152,.2); }
-.section-dark a { color: #F2AFC6; }
+/* El botón queda afuera: tiene su propio color y este lo pisaba, dejándolo con
+   texto rosa sobre fondo berry en vez de blanco. */
+.section-dark a:not(.btn) { color: #F2AFC6; }
 
 /* Cordillera que corona las secciones oscuras: los picos suben hacia la
    sección clara de arriba. Decorativa, fuera del flujo. */
@@ -546,6 +548,55 @@ a.btn[href^="inscribirse"]:hover::after { transform: translateX(3px); }
 .cierre h2 { font-size: clamp(26px, 3.4vw, 34px); }
 .cierre p { color: var(--ink-2); margin: 0 auto 26px; }
 
+/* ---------- Cierre con video de fondo ----------
+   Este bloque tenía el mismo #EBE7E0 que el pie de página, con una línea de
+   1px como única frontera: los dos juntos se leían como un pie interminable.
+   Ahora va oscuro y con video, y el corte contra el pie claro es inmediato.
+
+   Tres capas apiladas: foto (siempre), video (si carga) y velo (siempre
+   arriba de las dos). El texto va en una cuarta, con position relative. */
+.cierre-video { overflow: hidden; isolation: isolate; padding: 108px 0; }
+.cierre-video .container { position: relative; z-index: 2; }
+
+/* El sobrante tiene que ser mayor que el recorrido del parallax o asoma el
+   borde. El recorrido es ±52px (data-parallax en el HTML), así que 64px de
+   más arriba y abajo dejan margen. En porcentaje no servía: 4% de un bloque
+   de 528px son 21px, menos de la mitad de lo que se mueve. */
+.cierre-fondo { position: absolute; inset: -64px 0; z-index: 0; will-change: transform; }
+.cierre-fondo picture, .cierre-fondo img { display: block; width: 100%; height: 100%; }
+.cierre-fondo img { object-fit: cover; object-position: center 58%; }
+
+/* El iframe de YouTube no entiende object-fit, así que se agranda hasta tapar
+   el bloque por los dos lados y se centra: el que sobra se recorta. */
+.cierre-frame { position: absolute; inset: 0; overflow: hidden; opacity: 0; transition: opacity .9s ease; }
+.cierre-frame.is-visible { opacity: 1; }
+.cierre-frame iframe {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 100vw; height: 56.25vw;          /* 16:9 tomando el ancho  */
+  min-width: 177.78vh; min-height: 100%;  /* 16:9 tomando el alto   */
+  border: 0; pointer-events: none;
+}
+
+/* El velo es lo que sostiene el contraste del texto. El video es impredecible
+   —puede venir un cielo blanco— así que no alcanza con oscurecer un poco: la
+   base opaca garantiza el piso y el degradado le devuelve profundidad. */
+.cierre-velo {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(15,14,13,.86) 0%, rgba(15,14,13,.68) 44%, rgba(15,14,13,.84) 100%),
+    radial-gradient(140% 95% at 50% 46%, rgba(15,14,13,.26) 0%, rgba(15,14,13,.72) 100%);
+}
+
+.cierre-video .cierre h2 { color: #fff; }
+.cierre-video .cierre p { color: #DAD4CC; }
+.cierre-video .cierre a:not(.btn) { color: #F2AFC6; }
+.cierre-video .cierre .btn-primary { box-shadow: 0 10px 30px -10px rgba(0,0,0,.7); }
+/* Aclarada junto con el velo: es el texto más flojo del bloque y por lo tanto
+   el que fija cuánto se puede levantar el velo sin perder el 4.5:1. */
+.cierre-nota { margin-top: 20px !important; margin-bottom: 0 !important; font-size: 14.5px; color: #C8C1B8 !important; }
+
+@media (max-width: 700px) { .cierre-video { padding: 72px 0; } }
+
 /* ---------- Piezas sobre fondo oscuro ----------
    Valen tanto para "Cómo es el trabajo" como para el bloque cívico del final.
    El color de fondo y el de texto ya los pone .section-dark. */
@@ -573,7 +624,11 @@ body:has(.sticky-cta) .site-footer { padding-bottom: 92px; }
    mínimo táctil de 44px sin que el bloque crezca de más. */
 .footer-col a, .footer-plain { display: block; color: var(--ink-2); text-decoration: none; font-size: 15px; padding: 6px 0; }
 .footer-col a { min-height: 44px; display: flex; align-items: center; }
-.footer-brand a, .cierre a, .callout a { display: inline-block; padding: 4px 0; }
+/* :not(.btn) otra vez, por lo mismo que en el menú: esto es para los enlaces
+   de texto, pero pesa más que .btn y le venía pisando el relleno al botón del
+   cierre, que quedaba con padding 4px 0 —o sea, sin margen a los costados— y
+   display inline-block en lugar de flex. */
+.footer-brand a:not(.btn), .cierre a:not(.btn), .callout a:not(.btn) { display: inline-block; padding: 4px 0; }
 .footer-col a[href^="mailto"] { min-height: 44px; }
 @media (min-width: 881px) { .footer-col a { min-height: 0; display: block; padding: 4px 0; } }
 .footer-col a:hover { color: var(--berry-ink); }
