@@ -349,15 +349,27 @@ a.btn[href^="inscribirse"]:hover::after { transform: translateX(3px); }
    todos en una sola línea, el rótulo terminaba encimado al logo del municipio
    y la frase no se leía en ningún orden claro. */
 .hero-org { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
-  display: flex; align-items: center; gap: 34px; flex-wrap: wrap; }
-.hero-org-marca { height: 46px; width: auto; }
-.hero-org-apoyo { display: flex; flex-direction: column; gap: 7px; }
+  display: flex; align-items: center; gap: 30px; flex-wrap: wrap; }
+.hero-org-marca { height: 50px; width: auto; }
+/* En una columna flex el hijo se estira al ancho de la columna, y para un <img>
+   eso pisa el width:auto: el logo del municipio salía a lo ancho del rótulo
+   (209px con 30px de alto, o sea 7:1 cuando el archivo es 5:1) y se veía
+   aplastado. align-items evita el estirón; el width:auto vuelve a mandar. */
+.hero-org-apoyo { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .hero-org-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
-.hero-org-apoyo img.is-muni { height: 30px; width: auto; }
-@media (max-width: 420px) {
-  .hero-org { gap: 20px; }
-  .hero-org-marca { height: 36px; }
-  .hero-org-apoyo img.is-muni { height: 25px; }
+/* Los dos lockups tienen proporciones distintas —Esquel LAB es 3,5:1 y el
+   municipio 5:1— así que igualar la altura los desbalancea. Igualamos el ancho
+   óptico (50px de alto dan 176px; 36px dan 180px) y el municipio queda más
+   bajo, que es lo que corresponde a quien acompaña. */
+.hero-org-apoyo img.is-muni { height: 36px; width: auto; max-width: 100%; }
+@media (max-width: 560px) {
+  .hero-org { gap: 22px; }
+  .hero-org-marca { height: 42px; }
+  .hero-org-apoyo img.is-muni { height: 30px; }
+}
+@media (max-width: 380px) {
+  .hero-org-marca { height: 38px; }
+  .hero-org-apoyo img.is-muni { height: 27px; }
 }
 
 /* ---------- Barra de plazo ---------- */
