@@ -211,6 +211,35 @@
       marco.appendChild(hueco);
       fondo.appendChild(marco);
 
+      var reproductor = null;
+      var reproduciendo = false;
+      var temporizadorEsconder = null;
+
+      var insistir = function () {
+        if (!reproductor || reproduciendo) return;
+        // Silenciar de nuevo en cada intento: sin mute no hay autoplay que
+        // valga, y el reproductor a veces vuelve a subir el volumen solo.
+        try { reproductor.mute(); reproductor.playVideo(); } catch (e) { /* todavía no está listo */ }
+      };
+
+      // El desbloqueo por gesto. En el celular el navegador puede negarse a
+      // arrancar solo, pero después del primer toque real deja. Scrollear no
+      // cuenta como toque en iOS; touchend y click sí.
+      var GESTOS = ['touchend', 'click', 'pointerup', 'keydown'];
+      var alGesto = function () { insistir(); };
+      var soltarGestos = function () {
+        for (var i = 0; i < GESTOS.length; i++) {
+          document.removeEventListener(GESTOS[i], alGesto);
+        }
+      };
+      for (var g = 0; g < GESTOS.length; g++) {
+        document.addEventListener(GESTOS[g], alGesto, { passive: true });
+      }
+      // Si la pestaña estaba en segundo plano no arranca; al volver, se insiste.
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') insistir();
+      });
+
       conAPI(function () {
         new window.YT.Player(hueco, {
           host: 'https://www.youtube-nocookie.com',
@@ -222,31 +251,45 @@
           },
           events: {
             onReady: function (ev) {
+              reproductor = ev.target;
               var f = ev.target.getIframe();
               f.setAttribute('tabindex', '-1');
               f.setAttribute('aria-hidden', 'true');
               f.setAttribute('title', 'Esquel en video');
-              // Sin silenciar, el navegador no lo deja arrancar solo.
-              ev.target.mute();
-              ev.target.playVideo();
-              // Si el reproductor quedó listo pero nunca llega a reproducir,
-              // el autoplay está bloqueado. Queda la foto, pero conviene que
-              // en la consola diga por qué y no que parezca que falló el sitio.
+              insistir();
+              // En el celular el reproductor suele quedar listo antes de poder
+              // arrancar, y un solo intento se pierde. Se reintenta un rato.
+              [250, 800, 2000, 4000].forEach(function (ms) { setTimeout(insistir, ms); });
               setTimeout(function () {
-                if (!marco.classList.contains('is-visible')) {
+                if (!reproduciendo) {
                   console.info('[cierre] El video cargó pero el navegador no lo dejó arrancar solo. Queda la foto.');
                 }
-              }, 6000);
+              }, 7000);
             },
             onStateChange: function (ev) {
               var E = window.YT.PlayerState;
-              // Aparece recién cuando reproduce de verdad: si el navegador
-              // bloqueó el autoplay queda la foto, que es mejor que un cartel
-              // de play gigante encima del texto.
-              if (ev.data === E.PLAYING) marco.classList.add('is-visible');
+              if (ev.data === E.PLAYING) {
+                reproduciendo = true;
+                soltarGestos();
+                clearTimeout(temporizadorEsconder);
+                marco.classList.add('is-visible');
+                return;
+              }
               // loop+playlist no siempre repite cuando el reproductor lo maneja
               // la API, así que al terminar se rebobina a mano.
-              if (ev.data === E.ENDED) { ev.target.seekTo(desde); ev.target.playVideo(); }
+              if (ev.data === E.ENDED) { ev.target.seekTo(desde); ev.target.playVideo(); return; }
+              if (ev.data === E.BUFFERING) return;   // está cargando, no es que se frenó
+
+              // Pausado, sin arrancar o en cola. Se insiste, y si no arranca se
+              // vuelve a esconder: es exactamente lo que pasaba en el celular,
+              // el video quedaba pausado y dejaba el botón de play de YouTube
+              // encima del texto y del botón de postularse.
+              reproduciendo = false;
+              insistir();
+              clearTimeout(temporizadorEsconder);
+              temporizadorEsconder = setTimeout(function () {
+                if (!reproduciendo) marco.classList.remove('is-visible');
+              }, 1100);
             },
             // Sin video no hay nada que mostrar: se saca el marco y queda la
             // foto. El código dice por qué, que es lo único que después
