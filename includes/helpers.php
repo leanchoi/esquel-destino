@@ -228,6 +228,7 @@ function puntaje_ponderado(array $app): ?float
 /** Etiquetas legibles de las respuestas guardadas en application_details. */
 const ETIQUETAS_DETALLE = [
     'situacion'             => 'Situación actual',
+    'dni'                   => 'DNI',
     'barrio'                => 'Barrio o paraje',
     'ubicacion'             => 'Dónde está',
     'antiguedad'            => 'Hace cuánto',
@@ -279,4 +280,41 @@ function claves_detalle(array $detalles): array
         }
     }
     return $out;
+}
+
+/**
+ * Deja el DNI en dígitos pelados.
+ *
+ * La gente lo escribe como lo tiene en la cabeza: con puntos, con espacios, a
+ * veces con "DNI" adelante. Guardar eso tal cual significa que después el
+ * mismo documento aparece de tres formas distintas y no se puede buscar ni
+ * cruzar. Se normaliza al entrar, una sola vez.
+ */
+function normalizar_dni(string $crudo): string
+{
+    return preg_replace('/\D+/', '', $crudo) ?? '';
+}
+
+/**
+ * Si el número puede ser un DNI argentino, devuelve ''. Si no, el motivo.
+ *
+ * El rango va de 7 a 9 dígitos a propósito. Los que se emiten hoy tienen 8,
+ * pero alguien de 70 años puede tener 7, y el DNI de un residente extranjero
+ * —en Esquel hay chilenos con años en la ciudad— llega a 9. Apretar esto a 8
+ * dígitos deja afuera gente que tiene todo el derecho a postularse. Lo que sí
+ * atrapa es el error de tipeo, que es para lo que sirve validar.
+ */
+function error_dni(string $dni): string
+{
+    if ($dni === '') {
+        return 'Poné tu DNI, sin puntos.';
+    }
+    $largo = strlen($dni);
+    if ($largo < 7 || $largo > 9) {
+        return 'Ese DNI no parece completo. Van entre 7 y 9 números, sin puntos ni espacios.';
+    }
+    if ((int) $dni === 0) {
+        return 'Revisá el DNI.';
+    }
+    return '';
 }

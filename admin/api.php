@@ -33,6 +33,16 @@ $pdo = db();
 
 // ------------------------------------------------------------- exportación
 if (($_GET['export'] ?? '') === 'csv') {
+    // Sólo el admin. El CSV trae una columna de voto y otra de comentario por
+    // cada jurado, con nombre y apellido: es exactamente lo que no puede ver un
+    // evaluador de otro. Alcanzaba con estar logueado para bajarlo, así que el
+    // voto secreto tenía la puerta de atrás abierta. Y ahora además va el DNI.
+    if (!puede('admin')) {
+        http_response_code(403);
+        header('Content-Type: text/plain; charset=utf-8');
+        exit('Sólo un administrador puede exportar las postulaciones.');
+    }
+
     $filtros = [
         'program' => $_GET['program'] ?? '',
         'stage'   => $_GET['stage'] ?? '',
@@ -189,13 +199,24 @@ function respuesta_jurado(PDO $pdo, int $id, array $u): array
     $hist = $pdo->prepare('SELECT username, stage_from, stage_to, created_at FROM stage_history WHERE application_id = ? ORDER BY created_at DESC');
     $hist->execute([$id]);
 
+    $mio = voto_de($votos, (int) $u['id']);
+
+    // El consolidado se calcula con TODOS los votos —promedio, cuántos votaron,
+    // quién falta— y recién después se recorta lo que se manda.
+    //
+    // Esto faltaba. El tablero ya filtraba los votos ajenos del lado del
+    // servidor, pero esta respuesta los devolvía enteros: cada vez que un
+    // evaluador guardaba su voto, la respuesta le traía de regalo el voto y el
+    // comentario de todos los demás. El secreto se caía por acá.
+    $visibles = puede('admin') ? $votos : ($mio ? [$mio] : []);
+
     return [
         'ok'          => true,
         'id'          => $id,
         'stage'       => $fila['stage'],
         'notes'       => $fila['notes'],
-        'votos'       => $votos,
-        'miVoto'      => voto_de($votos, (int) $u['id']),
+        'votos'       => $visibles,
+        'miVoto'      => $mio,
         'consolidado' => consolidar($votos, $jurado),
         'historial'   => $hist->fetchAll(),
     ];

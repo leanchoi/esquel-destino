@@ -73,8 +73,17 @@ foreach ($apps as $i => $a) {
     $apps[$i]['votos']       = $vs;
     $apps[$i]['consolidado'] = consolidar($vs, $jurado);
     $apps[$i]['miVoto']      = voto_de($vs, $miId);
-    $apps[$i]['detalles']    = $detalles[$a['id']] ?? [];
-    $apps[$i]['claves']      = claves_detalle($detalles[$a['id']] ?? []);
+    // El DNI no dice nada del proyecto: no sirve para evaluarlo. Lo ve quien
+    // hace la parte administrativa y nadie más. Se saca acá, en el servidor,
+    // para que no le llegue a la pantalla de quien no tiene por qué verlo.
+    $misDetalles = $detalles[$a['id']] ?? [];
+    if (!$puedeVerVotos) {
+        foreach (DETALLES_SOLO_ADMIN as $reservada) {
+            unset($misDetalles[$reservada]);
+        }
+    }
+    $apps[$i]['detalles']    = $misDetalles;
+    $apps[$i]['claves']      = claves_detalle($misDetalles);
     $apps[$i]['historial']   = $historial[$a['id']] ?? [];
 
     // El voto es secreto entre pares: un evaluador ve el suyo, cuántos votaron
@@ -224,7 +233,11 @@ function sello_jurado(array $c, int $id): string
       <button type="button" id="viewRank" role="tab" aria-selected="false">Ranking</button>
       <button type="button" id="viewCards" role="tab" aria-selected="false">Tablero</button>
     </div>
-    <a href="api.php?export=csv&amp;<?= e($queryFiltros) ?>" class="btn btn-secondary btn-sm">Descargar CSV</a>
+    <?php /* El CSV lleva el voto y el comentario de cada jurado con nombre y
+             apellido, y el DNI de cada postulante: es del admin. */ ?>
+    <?php if (puede('admin')): ?>
+      <a href="api.php?export=csv&amp;<?= e($queryFiltros) ?>" class="btn btn-secondary btn-sm">Descargar CSV</a>
+    <?php endif; ?>
   </form>
 
   <?php if (!$apps): ?>

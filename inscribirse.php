@@ -13,7 +13,7 @@ unset($_SESSION['postulacion_enviada']);
 // Campos del formulario. El orden refleja los pasos.
 $campos = [
     'program', 'situacion',
-    'name', 'contact_name', 'email', 'phone', 'barrio', 'ubicacion', 'antiguedad', 'redes',
+    'name', 'contact_name', 'dni', 'email', 'phone', 'barrio', 'ubicacion', 'antiguedad', 'redes',
     'descripcion', 'diferencial', 'visitable',
     'conexiones', 'producto_fisico', 'producto_fisico_cual',
     'recursos', 'falta',
@@ -32,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
         $v[$c] = trim((string) ($_POST[$c] ?? ''));
     }
     $v['compromiso'] = isset($_POST['compromiso']) ? 'on' : '';
+    // El DNI se guarda en dígitos pelados venga como venga escrito, para que el
+    // mismo documento no quede cargado de tres formas distintas.
+    $v['dni'] = normalizar_dni($v['dni']);
 
     if (!csrf_valido($_POST['csrf_token'] ?? null)) {
         $errores['general'] = 'La sesión expiró mientras completabas el formulario. Revisá los datos y volvé a enviarlo.';
@@ -57,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
             }
         }
         if (!filter_var($v['email'], FILTER_VALIDATE_EMAIL)) $errores['email'] = 'Revisá el correo: es por donde te vamos a contactar.';
+        if ($v['dni'] !== '' && ($malDni = error_dni($v['dni'])) !== '') $errores['dni'] = $malDni;
         if ($v['producto_fisico'] === '') {
             $errores['producto_fisico'] = 'Decinos si hay un producto físico asociado.';
         // 'Si' sin tilde: es el valor que emite el radio, no la etiqueta que se
@@ -92,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $abierta) {
                 // usa ETIQUETAS_DETALLE para mostrarlo y exportarlo.
                 $detalles = [
                     'situacion' => $v['situacion'],
+                    'dni' => $v['dni'],
                     'barrio' => $v['barrio'],
                     'ubicacion' => $v['ubicacion'],
                     'antiguedad' => $v['antiguedad'],
@@ -274,10 +279,23 @@ require __DIR__ . '/includes/header.php';
           <p class="err" data-err="name"><?= e($errores['name'] ?? '') ?></p>
         </div>
 
-        <div class="field">
-          <label class="lbl" for="contact_name">Tu nombre y apellido *</label>
-          <input type="text" id="contact_name" name="contact_name" required value="<?= e($v['contact_name']) ?>" autocomplete="name">
-          <p class="err" data-err="contact_name"><?= e($errores['contact_name'] ?? '') ?></p>
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl" for="contact_name">Tu nombre y apellido *</label>
+            <input type="text" id="contact_name" name="contact_name" required value="<?= e($v['contact_name']) ?>" autocomplete="name">
+            <p class="err" data-err="contact_name"><?= e($errores['contact_name'] ?? '') ?></p>
+          </div>
+          <div class="field">
+            <label class="lbl" for="dni">Tu DNI *</label>
+            <?php /* inputmode numeric abre el teclado de números en el celular;
+                     el type sigue siendo text porque number pone flechitas de
+                     subir y bajar, que en un documento no tienen sentido. */ ?>
+            <input type="text" id="dni" name="dni" required value="<?= e($v['dni']) ?>"
+                   inputmode="numeric" autocomplete="off" maxlength="11"
+                   placeholder="Sin puntos: 30123456">
+            <p class="hint">No se publica ni se comparte fuera del programa.</p>
+            <p class="err" data-err="dni"><?= e($errores['dni'] ?? '') ?></p>
+          </div>
         </div>
 
         <div class="field-row">

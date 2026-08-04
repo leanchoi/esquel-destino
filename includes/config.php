@@ -131,6 +131,7 @@ const REQUERIDOS_POR_PASO = [
     2 => [
         'name'         => 'Poné el nombre de tu proyecto.',
         'contact_name' => 'Necesitamos saber con quién hablamos.',
+        'dni'          => 'Poné tu DNI, sin puntos.',
         'email'        => 'Revisá el correo: es por donde te vamos a contactar.',
         'phone'        => 'Dejanos un teléfono de contacto.',
         'barrio'       => 'Decinos de qué barrio o paraje sos.',
@@ -156,6 +157,20 @@ const REQUERIDOS_POR_PASO = [
         'compromiso' => 'Necesitamos que confirmes la disponibilidad de 12 horas semanales.',
     ],
 ];
+
+// --- Respuestas que no ve todo el panel -----------------------------------
+/**
+ * Claves de application_details que sólo puede ver un administrador.
+ *
+ * El DNI no sirve para evaluar: no dice nada del proyecto. Se pide para poder
+ * identificar a la persona en lo administrativo, y por eso lo ve quien hace esa
+ * parte y nadie más. Un número de documento en manos de más gente de la
+ * necesaria es un riesgo sin contrapartida.
+ *
+ * El filtro se aplica en el servidor, igual que con los votos: lo que no se
+ * manda a la pantalla no se puede espiar mirando el código de la página.
+ */
+const DETALLES_SOLO_ADMIN = ['dni'];
 
 // --- Barrios --------------------------------------------------------------
 /**
