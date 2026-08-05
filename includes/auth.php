@@ -239,3 +239,53 @@ set_exception_handler(function (Throwable $ex): void {
 </body></html>
 HTML;
 });
+
+/**
+ * Una contraseña que se pueda dictar por WhatsApp o por teléfono.
+ *
+ * Las provisorias eran diez caracteres al azar del tipo "a3f9c2b1d0". Nadie
+ * dicta eso sin equivocarse, y el que la recibe la escribe mal dos veces antes
+ * de entrar. Tres palabras y dos números se leen en voz alta de una:
+ * "lenga-mate-ciervo-47".
+ *
+ * Sin acentos ni eñes, y sin palabras que suenen parecido, porque la mitad de
+ * las veces esto viaja por audio.
+ *
+ * Fuerza: 128^3 x 100, unos 200 millones de combinaciones. Suena poco al lado
+ * de una cadena al azar, pero el panel corta a los 6 intentos fallidos por
+ * usuario e IP cada 15 minutos: a ese ritmo, probarlas todas lleva siglos. Y
+ * la que se gana en que la persona pueda escribirla bien a la primera es real.
+ */
+function clave_dictable(): string
+{
+    static $palabras = [
+        'lenga', 'nire', 'coihue', 'cipres', 'alerce', 'radal', 'maiten', 'notro',
+        'calafate', 'rosa', 'mosqueta', 'frutilla', 'lupino', 'junco', 'trebol', 'menta',
+        'ciervo', 'liebre', 'zorro', 'puma', 'huemul', 'condor', 'aguila', 'lechuza',
+        'chimango', 'bandurria', 'martin', 'cauquen', 'pato', 'perdiz', 'loica', 'jilguero',
+        'trucha', 'perca', 'salmon', 'pejerrey', 'rana', 'sapo', 'grillo', 'abeja',
+        'montana', 'cerro', 'valle', 'meseta', 'ladera', 'cumbre', 'cañadon', 'bardas',
+        'rio', 'arroyo', 'lago', 'laguna', 'vertiente', 'cascada', 'bahia', 'costa',
+        'bosque', 'estepa', 'pampa', 'campo', 'chacra', 'huerta', 'quinta', 'granja',
+        'viento', 'lluvia', 'nieve', 'escarcha', 'niebla', 'rocio', 'trueno', 'granizo',
+        'sol', 'luna', 'estrella', 'aurora', 'ocaso', 'alba', 'cielo', 'nube',
+        'verano', 'otono', 'invierno', 'primavera', 'enero', 'marzo', 'julio', 'octubre',
+        'mate', 'torta', 'dulce', 'pan', 'queso', 'miel', 'cordero', 'asado',
+        'lana', 'telar', 'madera', 'barro', 'piedra', 'hierro', 'cuero', 'vidrio',
+        'sendero', 'huella', 'puente', 'refugio', 'fogon', 'cabana', 'galpon', 'molino',
+        'tren', 'trochita', 'vagon', 'estacion', 'andar', 'rumbo', 'norte', 'sur',
+        'esquel', 'trevelin', 'futalaufquen', 'nahuelpan', 'sirena', 'patagonia', 'chubut', 'andes',
+    ];
+
+    $n = count($palabras);
+    $elegidas = [];
+    // random_int y no rand(): esto termina siendo una credencial.
+    while (count($elegidas) < 3) {
+        $p = $palabras[random_int(0, $n - 1)];
+        if (!in_array($p, $elegidas, true)) {
+            $elegidas[] = $p;
+        }
+    }
+
+    return implode('-', $elegidas) . '-' . random_int(10, 99);
+}

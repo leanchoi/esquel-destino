@@ -2,9 +2,10 @@
  * Panel de evaluación — Esquel LAB.
  *
  * La evaluación es de a varios: cada jurado guarda su propio voto y su propio
- * comentario, todos ven los de todos, y el puntaje que se muestra en las listas
- * es el promedio de los votos emitidos. Mover una postulación de columna es
- * otra cosa —una decisión del proceso— y queda reservado al admin.
+ * comentario. Entre evaluadores el voto es secreto —cada uno ve el suyo— y el
+ * promedio general se libera recién cuando votó todo el jurado. El admin ve
+ * todo, y mover una postulación de columna es sólo suyo: es una decisión del
+ * proceso, no una opinión sobre el proyecto.
  */
 (function () {
   'use strict';
@@ -14,6 +15,23 @@
     if (!el) return null;
     try { return JSON.parse(el.textContent); } catch (e) { return null; }
   }
+
+  // Copiar al portapapeles. Vive acá arriba y no dentro del tablero porque lo
+  // usan otras pantallas del panel —la contraseña recién generada, sin ir más
+  // lejos— y crm.js se carga en todas.
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('[data-copiar]');
+    if (!btn) return;
+    var destino = document.getElementById(btn.getAttribute('data-copiar'));
+    if (!destino || !navigator.clipboard) return;
+    var texto = destino.value !== undefined ? destino.value : destino.textContent;
+    navigator.clipboard.writeText(String(texto).trim()).then(function () {
+      var antes = btn.textContent;
+      btn.textContent = 'Copiado';
+      btn.classList.add('ok');
+      setTimeout(function () { btn.textContent = antes; btn.classList.remove('ok'); }, 1900);
+    });
+  });
 
   var APPS = leerJSON('datosApps') || [];
   var CFG = leerJSON('configCrm') || {};

@@ -686,3 +686,31 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .score-reservado { color: var(--ink-3); letter-spacing: .12em; cursor: help; }
 .consolidado.is-reservado { border-color: var(--line-2); background: var(--paper); }
 .consolidado .n-reservado { color: var(--ink-3); letter-spacing: .08em; }
+
+/* ---------- Contraseña recién generada ----------
+   Se muestra una sola vez. No es un aviso que se lee y se va: hay que poder
+   copiarla antes de salir de la pantalla, así que va destacada y con su botón,
+   y no como una línea más del mensaje de arriba. */
+.clave-nueva {
+  background: var(--surface); border: 2px solid var(--berry);
+  border-radius: var(--r); padding: 20px 22px; margin-bottom: 22px;
+}
+.clave-nueva h2 { font-size: 17px; margin: 0 0 6px; }
+.clave-aviso { font-size: 14px; color: var(--ink-2); margin: 0 0 14px; }
+.clave-caja {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--paper); border: 1px solid var(--line-2);
+  border-radius: var(--r-sm); padding: 12px 14px;
+}
+.clave-caja code {
+  font-family: var(--font-mono); font-size: 19px; font-weight: 700;
+  letter-spacing: .01em; color: var(--ink); user-select: all; word-break: break-all;
+}
+.clave-wa { margin-top: 14px; }
+.clave-wa summary { font-size: 14px; font-weight: 700; cursor: pointer; color: var(--berry-ink); }
+.clave-wa textarea {
+  width: 100%; margin-top: 10px; font-size: 14px; font-family: var(--font-body);
+  border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: 10px 12px; resize: vertical;
+}
+.clave-pie { font-size: 13.5px; color: var(--ink-3); margin: 14px 0 0; }
+.btn.ok { background: var(--green-soft); color: var(--green-ink); border-color: var(--green); }

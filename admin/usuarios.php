@@ -7,6 +7,8 @@ $u = requiere_rol('admin');
 $pdo = db();
 
 $msg = null;
+// La contraseña recién generada, para mostrarla una sola vez en esta página.
+$claveNueva = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_valido($_POST['csrf_token'] ?? null)) {
@@ -23,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif (!preg_match('/^[a-zA-Z0-9._-]{3,30}$/', $nuevo)) {
                 $msg = ['tipo' => 'error', 'texto' => 'El usuario admite entre 3 y 30 caracteres: letras, números, punto, guión y guión bajo.'];
             } else {
-                $provisoria = bin2hex(random_bytes(5));
+                $provisoria = clave_dictable();
                 try {
                     // created_at explícito: en bases migradas la columna se
                     // agregó con ALTER TABLE y SQLite no acepta ahí un default
@@ -48,11 +50,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $msg = ['tipo' => 'ok', 'texto' => 'Rol actualizado.'];
             }
         } elseif ($accion === 'reset') {
+            // La contraseña que la persona tenía no se puede recuperar, ni acá
+            // ni en ningún lado: se guarda el hash y de un hash no se vuelve.
+            // Lo que sí se puede es poner una nueva y mostrarla una vez, ahora,
+            // mientras existe en memoria. Después de esta pantalla no queda en
+            // ningún lado más que en la cabeza de quien la use.
+            //
+            // Por defecto NO obliga a cambiarla al entrar: la idea es que el
+            // evaluador la reciba y entre, sin un trámite más en el medio. La
+            // casilla está por si alguna vez se quiere lo contrario.
             $id = (int) ($_POST['id'] ?? 0);
-            $provisoria = bin2hex(random_bytes(5));
-            $pdo->prepare('UPDATE users SET password = ?, must_change_password = 1 WHERE id = ?')
-                ->execute([password_hash($provisoria, PASSWORD_DEFAULT), $id]);
-            $msg = ['tipo' => 'ok', 'texto' => "Contraseña reseteada. Nueva provisoria: $provisoria"];
+            $obligarCambio = !empty($_POST['obligar_cambio']) ? 1 : 0;
+            $nueva = clave_dictable();
+
+            $quien = $pdo->prepare('SELECT username FROM users WHERE id = ?');
+            $quien->execute([$id]);
+            $nombreUsuario = (string) ($quien->fetchColumn() ?: '');
+
+            if ($nombreUsuario === '') {
+                $msg = ['tipo' => 'error', 'texto' => 'Ese usuario ya no existe.'];
+            } else {
+                $pdo->prepare('UPDATE users SET password = ?, must_change_password = ? WHERE id = ?')
+                    ->execute([password_hash($nueva, PASSWORD_DEFAULT), $obligarCambio, $id]);
+                // Va aparte del $msg común: esto no es un aviso que se lee y se
+                // va, hay que poder copiarlo antes de salir de la pantalla.
+                $claveNueva = [
+                    'usuario'  => $nombreUsuario,
+                    'clave'    => $nueva,
+                    'obligada' => (bool) $obligarCambio,
+                ];
+            }
         } elseif ($accion === 'borrar') {
             $id = (int) ($_POST['id'] ?? 0);
             if ($id === (int) $u['id']) {
@@ -196,6 +223,39 @@ require __DIR__ . '/_header.php';
     </div>
   <?php endif; ?>
 
+  <?php if ($claveNueva): ?>
+    <?php
+      $mensajeWa = 'Hola! Te dejo tu acceso al panel de Esquel LAB.' . "\n\n"
+                 . 'Usuario: ' . $claveNueva['usuario'] . "\n"
+                 . 'Contraseña: ' . $claveNueva['clave'] . "\n\n"
+                 . 'Entrás desde https://' . SITE_DOMINIO . '/admin/';
+    ?>
+    <div class="clave-nueva" id="claveNueva">
+      <h2>Contraseña nueva de <?= e($claveNueva['usuario']) ?></h2>
+      <p class="clave-aviso">
+        Anotala o copiala <strong>ahora</strong>. Se guarda cifrada, así que si salís de esta
+        pantalla no hay manera de volver a verla: habría que generar otra.
+      </p>
+
+      <div class="clave-caja">
+        <code id="claveValor"><?= e($claveNueva['clave']) ?></code>
+        <button type="button" class="btn btn-secondary btn-sm" data-copiar="claveValor">Copiar</button>
+      </div>
+
+      <details class="clave-wa">
+        <summary>Mensaje listo para mandarle</summary>
+        <textarea id="claveMensaje" rows="6" readonly><?= e($mensajeWa) ?></textarea>
+        <button type="button" class="btn btn-secondary btn-sm" data-copiar="claveMensaje">Copiar el mensaje</button>
+      </details>
+
+      <p class="clave-pie">
+        <?= $claveNueva['obligada']
+            ? 'Va a tener que cambiarla la primera vez que entre.'
+            : 'Puede entrar directamente con esta contraseña, sin cambiar nada.' ?>
+      </p>
+    </div>
+  <?php endif; ?>
+
   <div class="cols-2">
     <div class="panel" style="padding:0;overflow:hidden">
       <div class="table-scroll">
@@ -226,11 +286,11 @@ require __DIR__ . '/_header.php';
                       : '<span class="sub">no</span>' ?></td>
                 <td class="sub" data-col="Estado"><?= $usr['must_change_password'] ? 'Contraseña provisoria' : 'Activo' ?></td>
                 <td class="right nowrap">
-                  <form method="post" class="inline" onsubmit="return confirm('¿Resetear la contraseña de <?= e($usr['username']) ?>?')">
+                  <form method="post" class="inline" onsubmit="return confirm('Se le pone una contraseña nueva a <?= e($usr['username']) ?> y la vas a ver una sola vez, en pantalla, para pasársela. La que tenía deja de funcionar. ¿Vamos?')">
                     <?= csrf_field() ?>
                     <input type="hidden" name="accion" value="reset">
                     <input type="hidden" name="id" value="<?= (int) $usr['id'] ?>">
-                    <button class="btn btn-secondary btn-sm">Resetear</button>
+                    <button class="btn btn-secondary btn-sm">Contraseña nueva</button>
                   </form>
                   <?php if ((int) $usr['id'] !== (int) $u['id']): ?>
                     <form method="post" class="inline" onsubmit="return confirm('¿Eliminar a <?= e($usr['username']) ?>?')">
