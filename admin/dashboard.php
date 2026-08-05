@@ -394,6 +394,10 @@ function sello_jurado(array $c, int $id): string
     <button type="button" role="tab" data-tab="jurado" class="is-active">Jurado</button>
     <button type="button" role="tab" data-tab="respuestas">Respuestas</button>
     <button type="button" role="tab" data-tab="proceso">Proceso</button>
+    <?php /* Un evaluador ve acá su propio historial y puede volver a una
+             versión anterior. El admin ve el de todo el jurado, con el detalle
+             de qué se sacó y qué se agregó en cada guardado. */ ?>
+    <button type="button" role="tab" data-tab="cambios">Cambios</button>
   </div>
   <div class="drawer-body" id="drawerBody"></div>
 </aside>

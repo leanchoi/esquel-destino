@@ -93,6 +93,35 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
     );");
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_eval_app ON evaluaciones (application_id);");
 
+    // Historial de cada evaluación.
+    //
+    // La tabla de arriba guarda cómo quedó el voto; ésta, cómo fue quedando.
+    // Un jurado puede volver sobre su evaluación cuantas veces quiera —y está
+    // bien que pueda: leer diez propuestas cambia la vara con la que se miró
+    // la primera—, pero entonces el puntaje de hoy puede no ser el de ayer, y
+    // sin registro no hay manera de saberlo ni de explicarlo después.
+    //
+    // Se guarda la foto entera y no el cambio. Ocupa más, pero volver a una
+    // versión es copiar una fila en vez de rehacer una cadena de parches, y
+    // una cadena de parches con un eslabón roto se lleva puesta toda la
+    // historia que venga después.
+    //
+    // origen dice de dónde salió la fila: 'guardado' es el jurado guardando,
+    // 'restaurado' es el jurado volviendo a una versión anterior, y 'retirado'
+    // es el voto dado de baja, que también es parte de la historia.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS evaluacion_versiones (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        application_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+$colsCriterios        comentario TEXT NOT NULL DEFAULT '',
+        abstencion INTEGER NOT NULL DEFAULT 0,
+        origen TEXT NOT NULL DEFAULT 'guardado',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_ver_app_user ON evaluacion_versiones (application_id, user_id, id);");
+
     $pdo->exec("CREATE TABLE IF NOT EXISTS application_details (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         application_id INTEGER NOT NULL,

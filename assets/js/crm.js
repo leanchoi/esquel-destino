@@ -217,6 +217,7 @@
     cuerpo.scrollTop = 0;
     if (pestania === 'respuestas') cuerpo.innerHTML = tabRespuestas(actual);
     else if (pestania === 'proceso') cuerpo.innerHTML = tabProceso(actual);
+    else if (pestania === 'cambios') { cuerpo.innerHTML = tabCambios(); pedirVersiones(actual.id); }
     else cuerpo.innerHTML = tabJurado(actual);
     enlazar();
   }
@@ -449,6 +450,201 @@
     return html + '<span class="drawer-msg" id="dMsgDetalle"></span></div>';
   }
 
+  // ------------------------------------------------------ pestaña: cambios
+  //
+  // Dos lecturas distintas del mismo historial. El evaluador ve lo suyo como
+  // una lista de versiones para volver atrás si se arrepiente; el
+  // administrador ve las de todo el jurado y, sobre todo, qué cambió en cada
+  // una: dos textos completos uno al lado del otro no son un historial, son
+  // tarea para el que mira.
+  var cacheVersiones = {};
+
+  /** ¿Este rol tiene algún historial para mirar? */
+  function hayHistorialParaMi() {
+    return VE_VOTOS || PUEDE_VOTAR;
+  }
+
+  function tabCambios() {
+    // El observador no vota, así que no tiene versiones propias, y las de los
+    // demás son del administrador. Se dice y listo: pedirlas a la API sólo
+    // servía para cosechar un 403 y mostrar un error que no es un error.
+    if (!hayHistorialParaMi()) {
+      return '<div class="d-section"><h3>Cambios en las evaluaciones</h3>' +
+        '<p class="hint">Entrás como observador: no emitís voto, así que no tenés versiones propias. ' +
+        'El historial de lo que cambió cada evaluador lo ve la administración.</p></div>';
+    }
+    var guardado = cacheVersiones[actual.id];
+    if (guardado) return cambiosHTML(guardado);
+    return '<div class="d-section"><h3>Cambios en las evaluaciones</h3>' +
+      '<p class="hint" id="cargandoVers">Buscando el historial…</p></div>';
+  }
+
+  function pedirVersiones(id) {
+    if (cacheVersiones[id] || !hayHistorialParaMi()) return;
+    pedir({ accion: 'versiones', id: id }).then(function (res) {
+      if (!res.ok) {
+        var p = document.getElementById('cargandoVers');
+        if (p) p.textContent = res.body.error || 'No se pudo leer el historial.';
+        return;
+      }
+      cacheVersiones[id] = res.body;
+      if (actual && actual.id === id && pestania === 'cambios') {
+        cuerpo.innerHTML = cambiosHTML(res.body);
+        enlazar();
+      }
+    }).catch(function () {
+      var p = document.getElementById('cargandoVers');
+      if (p) p.textContent = 'Error de conexión.';
+    });
+  }
+
+  function cambiosHTML(datos) {
+    var jurados = datos.historial || [];
+    if (!jurados.length) {
+      var vacio = datos.verTodos
+        ? 'Todavía no votó nadie, así que no hay nada que comparar.'
+        : (PUEDE_VOTAR
+            ? 'Todavía no guardaste ninguna evaluación de esta postulación.'
+            : 'Tu rol no emite voto, así que no tenés versiones propias. El historial de los evaluadores lo ve la administración.');
+      return '<div class="d-section"><h3>Cambios en las evaluaciones</h3>' +
+        '<p class="hint">' + vacio + '</p></div>';
+    }
+    return datos.verTodos ? cambiosAdminHTML(jurados) : cambiosMiosHTML(jurados[0]);
+  }
+
+  // ---- la mía: una lista y un botón para volver
+  function cambiosMiosHTML(mio) {
+    var vs = (mio.versiones || []).slice().reverse();   // la última arriba
+    var html = '<div class="d-section"><h3>Tus versiones</h3>' +
+      '<p class="ayuda">Podés volver a tu evaluación cuando quieras y cambiarla las veces que haga falta. ' +
+      'Cada vez que guardás queda una versión, así que volver atrás siempre es posible.</p>';
+
+    html += '<ol class="vers">';
+    vs.forEach(function (v, i) {
+      var esActual = i === 0;
+      html += '<li class="ver' + (esActual ? ' ver-actual' : '') + '">' +
+        '<div class="ver-head">' +
+          '<span class="ver-n">Versión ' + v.n + (esActual ? ' <em>· la que está puesta ahora</em>' : '') + '</span>' +
+          '<span class="ver-pts">' + (v.abstencion ? 'te abstuviste' : num(v.puntaje)) + '</span>' +
+        '</div>' +
+        '<p class="ver-fecha">' + esc(fechaCorta(v.created_at)) + motivoVersion(v.origen) + '</p>' +
+        '<p class="ver-com">' + esc(recorte(v.comentario, 260)) + '</p>' +
+        (esActual ? '' :
+          '<button type="button" class="btn btn-secondary btn-sm" data-volver="' + v.id + '">Volver a esta versión</button>') +
+        '</li>';
+    });
+    html += '</ol><span class="drawer-msg" id="dMsgVers"></span></div>';
+    return html;
+  }
+
+  // ---- las de todos: qué se sacó y qué se sumó en cada guardado
+  function cambiosAdminHTML(jurados) {
+    var html = '<div class="d-section"><h3>Cambios en las evaluaciones</h3>' +
+      '<p class="ayuda">Cada jurado puede editar su evaluación cuando quiera. Acá queda registrado ' +
+      'qué cambió en cada guardado: <del>lo que sacó</del> y <ins>lo que sumó</ins>.</p></div>';
+
+    jurados.forEach(function (j) {
+      var vs = (j.versiones || []).slice().reverse();
+      html += '<div class="d-section vers-jurado"><h3>' + esc(j.username) +
+        ' <span class="vers-cuenta">' + vs.length + (vs.length === 1 ? ' versión' : ' versiones') + '</span></h3>';
+
+      vs.forEach(function (v, i) {
+        html += '<div class="ver' + (i === 0 ? ' ver-actual' : '') + '">' +
+          '<div class="ver-head">' +
+            '<span class="ver-n">Versión ' + v.n + (i === 0 ? ' <em>· la vigente</em>' : '') + '</span>' +
+            '<span class="ver-pts">' + (v.abstencion ? 'se abstuvo' : num(v.puntaje)) + '</span>' +
+          '</div>' +
+          '<p class="ver-fecha">' + esc(fechaCorta(v.created_at)) + motivoVersion(v.origen) + '</p>' +
+          cambioHTML(v) + '</div>';
+      });
+      html += '</div>';
+    });
+    return html;
+  }
+
+  function motivoVersion(origen) {
+    if (origen === 'restaurado') return ' · volvió a una versión anterior';
+    if (origen === 'retirado') return ' · retiró el voto';
+    return '';
+  }
+
+  /** El detalle de una versión: qué se movió respecto de la anterior. */
+  function cambioHTML(v) {
+    if (!v.cambios) {
+      return '<p class="ver-primera">Primera evaluación.</p>' +
+        '<p class="ver-com">' + esc(recorte(v.comentario, 400)) + '</p>';
+    }
+    var c = v.cambios;
+    var html = '';
+
+    if (c.abstencion_antes !== c.abstencion_despues) {
+      html += '<p class="ver-nota">' + (c.abstencion_despues
+        ? 'Pasó a abstenerse.' : 'Dejó de abstenerse y volvió a puntuar.') + '</p>';
+    }
+
+    var criterios = Object.keys(c.puntajes || {});
+    if (criterios.length) {
+      html += '<ul class="ver-pts-lista">';
+      criterios.forEach(function (k) {
+        var p = c.puntajes[k];
+        var subio = p.delta > 0;
+        html += '<li><span>' + esc(p.label) + '</span>' +
+          '<b class="' + (subio ? 'sube' : 'baja') + '">' + p.antes + ' → ' + p.despues +
+          ' <span class="delta">' + (subio ? '▲ +' : '▼ ') + p.delta + '</span></b></li>';
+      });
+      html += '</ul>';
+    }
+
+    var r = c.resumen || {};
+    if (!r.hubo) {
+      if (!criterios.length && c.abstencion_antes === c.abstencion_despues) {
+        html += '<p class="ver-nota">Guardó de nuevo sin cambiar nada.</p>';
+      } else {
+        html += '<p class="ver-nota">El comentario quedó igual.</p>';
+      }
+    } else {
+      html += '<p class="ver-resumen">Comentario: ' +
+        (r.mas ? '<ins>sumó ' + r.mas + (r.mas === 1 ? ' palabra' : ' palabras') + '</ins>' : '') +
+        (r.mas && r.menos ? ' y ' : '') +
+        (r.menos ? '<del>sacó ' + r.menos + (r.menos === 1 ? ' palabra' : ' palabras') + '</del>' : '') +
+        '.</p>';
+      html += '<div class="ver-diff">' + diffHTML(c.texto) + '</div>';
+    }
+    return html;
+  }
+
+  /** El texto con lo borrado tachado y lo agregado subrayado. */
+  function diffHTML(tramos) {
+    return (tramos || []).map(function (t) {
+      var texto = esc(t.texto);
+      // Un espacio que cambió se marcaba igual que una palabra, y quedaban
+      // rayitas tachadas sueltas entre medio del texto que no querían decir
+      // nada. El espacio va sin marca: el cambio se ve igual en las palabras.
+      if (!/\S/.test(t.texto)) return texto;
+      if (t.t === 'mas')   return '<ins>' + texto + '</ins>';
+      if (t.t === 'menos') return '<del>' + texto + '</del>';
+      return texto;
+    }).join('');
+  }
+
+  function recorte(s, n) {
+    s = String(s || '');
+    return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : (s || 'Sin comentario.');
+  }
+
+  function volverAVersion(versionId) {
+    if (!actual) return;
+    if (!window.confirm('¿Volvés a esa versión? Tu evaluación actual queda guardada en el historial, así que podés deshacerlo.')) return;
+    decir('dMsgVers', 'Volviendo…');
+    pedir({ accion: 'restaurar-version', id: actual.id, version: Number(versionId) }).then(function (res) {
+      if (!res.ok) { decir('dMsgVers', res.body.error || 'No se pudo.', 'error'); return; }
+      delete cacheVersiones[actual.id];
+      aplicar(res.body);
+      render();
+      decir('dMsgVers', 'Listo: volviste a esa versión', 'ok');
+    }).catch(function () { decir('dMsgVers', 'Error de conexión.', 'error'); });
+  }
+
   // ------------------------------------------------------ pestaña: proceso
   function tabProceso(a) {
     var html = '';
@@ -538,6 +734,10 @@
 
     var gv = document.getElementById('dGuardarVoto');
     if (gv) gv.addEventListener('click', guardarVoto);
+
+    cuerpo.querySelectorAll('[data-volver]').forEach(function (b) {
+      b.addEventListener('click', function () { volverAVersion(b.getAttribute('data-volver')); });
+    });
 
     cuerpo.querySelectorAll('[data-guardar-detalle]').forEach(function (btn) {
       btn.addEventListener('click', function () { guardarDetalle(btn.getAttribute('data-guardar-detalle')); });
@@ -629,6 +829,9 @@
   function aplicar(res) {
     var a = buscar(res.id);
     if (!a) return;
+    // Guardar, retirar o restaurar suma una versión: el historial que estuviera
+    // en memoria ya quedó viejo.
+    delete cacheVersiones[res.id];
     a.votos = res.votos;
     a.miVoto = res.miVoto;
     a.consolidado = res.consolidado;

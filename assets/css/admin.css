@@ -625,3 +625,55 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 
 /* El selector de rol tiene que entrar entero: "Administrador" salía cortado. */
 .tabla-usuarios select { min-width: 150px; }
+
+/* ---------- Historial de las evaluaciones ----------
+   Un jurado puede rehacer su evaluación cuantas veces quiera. Acá se ve qué
+   cambió en cada guardado.
+
+   Lo tachado y lo subrayado no son adorno: hacen que el cambio se lea sin
+   depender del color. Alguien que no distingue rojo de verde —y es una de cada
+   doce personas con cromosoma Y— tiene que poder leer esto igual, y en una
+   impresión en blanco y negro también. El color acompaña, la forma informa. */
+.vers { list-style: none; margin: 0; padding: 0; }
+.ver {
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 13px 15px; margin-bottom: 10px; background: var(--surface);
+}
+.ver-actual { border-color: var(--berry); box-shadow: 0 0 0 1px var(--berry); }
+.ver-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.ver-n { font-weight: 700; font-size: 14px; }
+.ver-n em { font-style: normal; font-weight: 400; color: var(--berry-ink); font-size: 12.5px; }
+.ver-pts { font-family: var(--font-mono); font-size: 15px; font-weight: 700; }
+.ver-fecha { font-size: 12.5px; color: var(--ink-3); margin: 3px 0 9px; }
+.ver-com {
+  font-size: 13.5px; white-space: pre-wrap; margin: 0 0 10px;
+  padding-left: 11px; border-left: 2px solid var(--line-2); color: var(--ink-2);
+}
+.ver-primera, .ver-nota { font-size: 13px; color: var(--ink-3); margin: 0 0 8px; font-style: italic; }
+.ver-resumen { font-size: 13px; margin: 0 0 8px; }
+.vers-jurado h3 { display: flex; align-items: baseline; gap: 9px; }
+.vers-cuenta { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-3); font-size: 12px; }
+
+/* Cómo se movió cada puntaje. La flecha dice la dirección sin el color. */
+.ver-pts-lista { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 4px; }
+.ver-pts-lista li { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.ver-pts-lista span { color: var(--ink-2); }
+.ver-pts-lista b { font-family: var(--font-mono); white-space: nowrap; }
+.ver-pts-lista .delta { font-size: 12px; }
+.ver-pts-lista .sube { color: var(--green-ink); }
+.ver-pts-lista .baja { color: var(--danger); }
+
+/* El texto con las diferencias. */
+.ver-diff {
+  font-size: 13.5px; line-height: 1.65; white-space: pre-wrap;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 11px 13px; max-height: 320px; overflow-y: auto;
+}
+.ver-diff ins, .ver-resumen ins, .d-section .ayuda ins {
+  background: #DFF0E4; color: #14532D; text-decoration: underline;
+  text-decoration-thickness: 2px; text-underline-offset: 2px; padding: 0 1px;
+}
+.ver-diff del, .ver-resumen del, .d-section .ayuda del {
+  background: #FBE3E3; color: #7F1D1D; text-decoration: line-through;
+  text-decoration-thickness: 2px; padding: 0 1px;
+}

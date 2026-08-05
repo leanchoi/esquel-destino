@@ -172,3 +172,115 @@ function voto_de(array $votos, int $userId): ?array
     }
     return null;
 }
+
+// --- Historial de las evaluaciones ----------------------------------------
+
+/**
+ * Guarda una foto del voto tal como quedó.
+ *
+ * Se llama después de escribir en evaluaciones, no antes: así la versión N es
+ * "cómo quedó en el guardado N" y no "cómo estaba antes de". Esa diferencia
+ * importa cuando alguien quiere volver atrás, porque lo que se restaura es un
+ * estado que existió, no uno que se deduce.
+ *
+ * @param array  $valores  criterio => puntaje
+ * @param string $origen   guardado | restaurado | retirado
+ */
+function guardar_version(PDO $pdo, int $appId, int $userId, string $username, array $valores, string $comentario, bool $abstencion, string $origen = 'guardado'): void
+{
+    $campos = array_keys(CRITERIOS);
+    $lista  = implode(', ', $campos);
+    $marcas = implode(', ', array_fill(0, count($campos), '?'));
+
+    $sql = "INSERT INTO evaluacion_versiones
+            (application_id, user_id, username, $lista, comentario, abstencion, origen, created_at)
+            VALUES (?, ?, ?, $marcas, ?, ?, ?, datetime('now'))";
+
+    $bind = array_merge(
+        [$appId, $userId, $username],
+        array_map(fn($c) => (int) ($valores[$c] ?? 0), $campos),
+        [$comentario, $abstencion ? 1 : 0, $origen]
+    );
+
+    $pdo->prepare($sql)->execute($bind);
+}
+
+/**
+ * Las versiones de una postulación, de la más vieja a la más nueva.
+ *
+ * Con $userId trae sólo las de esa persona, que es lo que ve un evaluador de
+ * lo suyo. Sin $userId las trae todas, y eso es del administrador: el filtro
+ * lo pone quien llama, y api.php nunca lo deja abierto para un evaluador.
+ *
+ * @return array<int, array>
+ */
+function versiones_de(PDO $pdo, int $appId, ?int $userId = null): array
+{
+    $sql = 'SELECT * FROM evaluacion_versiones WHERE application_id = ?';
+    $bind = [$appId];
+    if ($userId !== null) {
+        $sql .= ' AND user_id = ?';
+        $bind[] = $userId;
+    }
+    $sql .= ' ORDER BY id ASC';
+
+    $st = $pdo->prepare($sql);
+    $st->execute($bind);
+
+    $filas = [];
+    foreach ($st->fetchAll() as $f) {
+        foreach (array_keys(CRITERIOS) as $c) {
+            $f[$c] = (int) $f[$c];
+        }
+        $f['id']         = (int) $f['id'];
+        $f['user_id']    = (int) $f['user_id'];
+        $f['abstencion'] = (int) $f['abstencion'];
+        $f['puntaje']    = $f['abstencion'] ? null : round(puntaje_voto($f), 2);
+        $filas[] = $f;
+    }
+    return $filas;
+}
+
+/**
+ * Las versiones agrupadas por jurado y ya numeradas, con lo que cambió en cada
+ * una respecto de la anterior del mismo jurado.
+ *
+ * El número de versión se cuenta por jurado y no global: para quien mira, la
+ * tercera vez que Ana guardó es "la 3 de Ana", sin importar cuántas veces
+ * guardó Pedro en el medio.
+ *
+ * @return array<int, array{username:string, versiones:array}>  user_id => ...
+ */
+function historial_por_jurado(PDO $pdo, int $appId, ?int $userId = null): array
+{
+    require_once __DIR__ . '/diferencias.php';
+
+    $porJurado = [];
+    foreach (versiones_de($pdo, $appId, $userId) as $v) {
+        $porJurado[$v['user_id']]['username'] = $v['username'];
+        $porJurado[$v['user_id']]['versiones'][] = $v;
+    }
+
+    foreach ($porJurado as $uid => $datos) {
+        $previa = null;
+        foreach ($datos['versiones'] as $i => $v) {
+            $v['n'] = $i + 1;
+            if ($previa === null) {
+                $v['cambios'] = null;   // la primera no cambió nada: es el punto de partida
+            } else {
+                $texto = diff_palabras($previa['comentario'], $v['comentario']);
+                $v['cambios'] = [
+                    'texto'    => $texto,
+                    'resumen'  => resumen_diff($texto),
+                    'puntajes' => diff_puntajes($previa, $v),
+                    'abstencion_antes'   => (bool) $previa['abstencion'],
+                    'abstencion_despues' => (bool) $v['abstencion'],
+                ];
+            }
+            $porJurado[$uid]['versiones'][$i] = $v;
+            $previa = $v;
+        }
+    }
+
+    return $porJurado;
+}

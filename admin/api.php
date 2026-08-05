@@ -330,6 +330,14 @@ if ($accion === 'voto') {
             [$comentario, $abstencion ? 1 : 0]
         );
         $pdo->prepare($sql)->execute($bind);
+        // Y queda la foto de cómo quedó. Un jurado puede volver sobre su
+        // evaluación cuantas veces quiera; el historial es lo que después
+        // permite explicar por qué el puntaje de hoy no es el de ayer.
+        guardar_version(
+            $pdo, $id, (int) $u['id'], (string) $u['username'],
+            $valores, $comentario, (bool) $abstencion,
+            ($data['origen'] ?? '') === 'restaurado' ? 'restaurado' : 'guardado'
+        );
     } catch (PDOException $ex) {
         error_log('[esquel-lab] error guardando el voto: ' . $ex->getMessage());
         http_response_code(500);
@@ -341,8 +349,99 @@ if ($accion === 'voto') {
 
 // ------------------------------------------------------------- retirar voto
 if ($accion === 'retirar-voto') {
+    // Se anota antes de borrar: dar de baja el voto también es parte de la
+    // historia, y si no queda registro el voto desaparece sin dejar rastro.
+    $previo = $pdo->prepare('SELECT * FROM evaluaciones WHERE application_id = ? AND user_id = ?');
+    $previo->execute([$id, (int) $u['id']]);
+    if ($fila = $previo->fetch()) {
+        guardar_version(
+            $pdo, $id, (int) $u['id'], (string) $u['username'],
+            $fila, (string) $fila['comentario'], (bool) $fila['abstencion'], 'retirado'
+        );
+    }
+
     $del = $pdo->prepare('DELETE FROM evaluaciones WHERE application_id = ? AND user_id = ?');
     $del->execute([$id, (int) $u['id']]);
+    exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
+}
+
+// --------------------------------------------------------------- versiones
+// Quién ve qué: un evaluador ve su propio historial y nada más; el
+// administrador ve el de todo el jurado. Es la misma regla que con los votos,
+// y el filtro va acá y no en la pantalla.
+if ($accion === 'versiones') {
+    $soloMio = puede('admin') ? null : (int) $u['id'];
+    $historial = historial_por_jurado($pdo, $id, $soloMio);
+
+    exit(json_encode([
+        'ok'        => true,
+        'id'        => $id,
+        'yo'        => (int) $u['id'],
+        'verTodos'  => puede('admin'),
+        'historial' => array_values(array_map(
+            fn($uid, $d) => ['user_id' => $uid, 'username' => $d['username'], 'versiones' => $d['versiones']],
+            array_keys($historial),
+            $historial
+        )),
+    ], JSON_UNESCAPED_UNICODE));
+}
+
+// ------------------------------------------------------- volver a una versión
+// Cada uno vuelve sobre lo suyo. Ni siquiera el administrador restaura el voto
+// de otro: puede leer toda la historia, pero la evaluación de un jurado la
+// cambia ese jurado, o deja de ser suya.
+if ($accion === 'restaurar-version') {
+    if (!es_jurado($u)) {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Tu rol no emite voto.']));
+    }
+
+    $versionId = (int) ($data['version'] ?? 0);
+    $st = $pdo->prepare('SELECT * FROM evaluacion_versiones WHERE id = ? AND application_id = ? AND user_id = ?');
+    $st->execute([$versionId, $id, (int) $u['id']]);
+    $ver = $st->fetch();
+
+    if (!$ver) {
+        http_response_code(404);
+        exit(json_encode(['ok' => false, 'error' => 'Esa versión no es tuya o ya no existe.']));
+    }
+
+    $campos = array_keys(CRITERIOS);
+    $lista  = implode(', ', $campos);
+    $marcas = implode(', ', array_fill(0, count($campos), '?'));
+    $updates = implode(', ', array_map(fn($c) => "$c = excluded.$c", $campos));
+    $valores = [];
+    foreach ($campos as $c) {
+        $valores[$c] = (int) $ver[$c];
+    }
+
+    try {
+        $pdo->prepare(
+            "INSERT INTO evaluaciones (application_id, user_id, username, $lista, comentario, abstencion, created_at, updated_at)
+             VALUES (?, ?, ?, $marcas, ?, ?, datetime('now'), datetime('now'))
+             ON CONFLICT (application_id, user_id) DO UPDATE SET
+               $updates, comentario = excluded.comentario,
+               abstencion = excluded.abstencion, updated_at = datetime('now')"
+        )->execute(array_merge(
+            [$id, (int) $u['id'], (string) $u['username']],
+            array_values($valores),
+            [(string) $ver['comentario'], (int) $ver['abstencion']]
+        ));
+
+        // Volver atrás es un cambio más, y como tal se anota. El historial no
+        // se reescribe ni se poda: si no, "volví a la 2" borraría la 3 y la
+        // pregunta de después —¿qué decía antes de volver?— quedaría sin
+        // respuesta.
+        guardar_version(
+            $pdo, $id, (int) $u['id'], (string) $u['username'],
+            $valores, (string) $ver['comentario'], (bool) $ver['abstencion'], 'restaurado'
+        );
+    } catch (PDOException $ex) {
+        error_log('[esquel-lab] error restaurando versión: ' . $ex->getMessage());
+        http_response_code(500);
+        exit(json_encode(['ok' => false, 'error' => 'No pudimos volver a esa versión.']));
+    }
+
     exit(json_encode(respuesta_jurado($pdo, $id, $u), JSON_UNESCAPED_UNICODE));
 }
 
