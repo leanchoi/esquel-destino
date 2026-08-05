@@ -162,6 +162,36 @@ function consolidar(array $votos, array $jurado): array
     ];
 }
 
+/**
+ * El consolidado tal como puede verlo quien lo pide.
+ *
+ * El promedio se libera cuando votó todo el jurado, y no antes. Mientras
+ * falte alguien, un evaluador ve su propio voto, cuántos votaron y quiénes
+ * faltan, pero no el número general: si lo ve, la evaluación que todavía no
+ * emitió deja de ser independiente. Con dos jurados es peor todavía, porque
+ * el promedio y el voto propio alcanzan para despejar el ajeno con una resta.
+ *
+ * Se van también los promedios por criterio y la dispersión, que son el mismo
+ * dato contado de otra manera: con el desglose por criterio y el voto propio
+ * se reconstruye el del otro igual.
+ *
+ * Queda 'liberado' para que la pantalla pueda explicar por qué no hay número,
+ * en vez de mostrar un guion que se lee como error.
+ */
+function consolidado_para(array $c, bool $esAdmin): array
+{
+    $c['liberado'] = $esAdmin || $c['completo'];
+    if ($c['liberado']) {
+        return $c;
+    }
+
+    $c['puntaje']    = null;
+    $c['promedios']  = array_map(fn() => null, $c['promedios']);
+    $c['dispersion'] = null;
+    $c['disenso']    = false;
+    return $c;
+}
+
 /** El voto de un jurado dentro de la lista de votos de una postulación. */
 function voto_de(array $votos, int $userId): ?array
 {

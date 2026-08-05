@@ -677,3 +677,12 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
   background: #FBE3E3; color: #7F1D1D; text-decoration: line-through;
   text-decoration-thickness: 2px; padding: 0 1px;
 }
+
+/* ---------- Promedio todavía no liberado ----------
+   Mientras falte votar alguien, un evaluador no ve el número general. Los tres
+   puntos no son un error ni un "no hay datos": dicen que el número existe y
+   todavía no se muestra. Una raya se lee como "no la evaluó nadie", que es
+   otra cosa completamente distinta. */
+.score-reservado { color: var(--ink-3); letter-spacing: .12em; cursor: help; }
+.consolidado.is-reservado { border-color: var(--line-2); background: var(--paper); }
+.consolidado .n-reservado { color: var(--ink-3); letter-spacing: .08em; }

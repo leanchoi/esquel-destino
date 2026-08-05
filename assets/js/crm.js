@@ -250,6 +250,21 @@
           ? 'No hay jurados cargados en el panel.'
           : 'El jurado son ' + c.jurados + ' personas: ' + esc(c.faltan.join(', ')) + '.') +
         '</span></div></div>';
+    } else if (c.liberado === false) {
+      // Todavía falta votar alguien. El promedio no se muestra: verlo antes de
+      // que esté completo condiciona al que todavía no votó, y con un jurado
+      // chico el promedio más el voto propio despejan el ajeno con una resta.
+      html += '<div class="consolidado is-reservado">' +
+        '<div class="cons-num"><span class="n n-reservado">···</span>' +
+        '<span class="cons-de">' + (c.votos === 1 ? '1 voto' : c.votos + ' votos') +
+        (c.abstenciones ? ' · ' + c.abstenciones + (c.abstenciones === 1 ? ' abstención' : ' abstenciones') : '') +
+        '</span></div>' +
+        '<div class="cons-estado"><span class="je je-falta">El promedio se libera cuando vote todo el jurado</span>' +
+        '<span class="cons-sub">' + (c.faltan.length
+          ? 'Falta ' + esc(c.faltan.join(', ')) + '.'
+          : 'Falta que vote el resto del jurado.') +
+        ' Tu voto ya está guardado y lo ves completo más abajo.</span></div>' +
+      '</div>';
     } else {
       html += '<div class="consolidado' + (c.completo ? ' is-completo' : '') + '">' +
         '<div class="cons-num"><span class="n">' + (c.puntaje == null ? '—' : num(c.puntaje)) + '</span>' +
@@ -261,7 +276,8 @@
     }
 
     // Promedio por criterio: dónde el jurado coincide y dónde no.
-    if (c.votos > 0) {
+    // Es el mismo dato desglosado, así que se libera junto con el promedio.
+    if (c.votos > 0 && c.liberado !== false) {
       html += '<div class="d-section"><h3>Promedio por criterio</h3><ul class="crit-prom">';
       Object.keys(CRITERIOS).forEach(function (campo) {
         var v = c.promedios[campo];

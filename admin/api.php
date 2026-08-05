@@ -217,7 +217,10 @@ function respuesta_jurado(PDO $pdo, int $id, array $u): array
         'notes'       => $fila['notes'],
         'votos'       => $visibles,
         'miVoto'      => $mio,
-        'consolidado' => consolidar($votos, $jurado),
+        // El promedio se libera recién cuando votó todo el jurado. Acá importa
+        // especialmente: es la respuesta que llega justo después de votar, que
+        // es el momento en que más tienta mirar cómo viene el resto.
+        'consolidado' => consolidado_para(consolidar($votos, $jurado), puede('admin')),
         'historial'   => $hist->fetchAll(),
     ];
 }

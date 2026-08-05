@@ -71,7 +71,10 @@ $puedeVerVotos = puede('admin');
 foreach ($apps as $i => $a) {
     $vs = $votos[$a['id']] ?? [];
     $apps[$i]['votos']       = $vs;
-    $apps[$i]['consolidado'] = consolidar($vs, $jurado);
+    // El promedio se libera cuando votó todo el jurado. Hasta entonces un
+    // evaluador ve el suyo, cuántos votaron y quiénes faltan, pero no el
+    // número general: verlo antes de emitir el propio ya no es evaluar solo.
+    $apps[$i]['consolidado'] = consolidado_para(consolidar($vs, $jurado), $puedeVerVotos);
     $apps[$i]['miVoto']      = voto_de($vs, $miId);
     // El DNI no dice nada del proyecto: no sirve para evaluarlo. Lo ve quien
     // hace la parte administrativa y nadie más. Se saca acá, en el servidor,
@@ -139,6 +142,13 @@ $queryFiltros = http_build_query(array_filter($filtros));
 // Ranking: las mismas postulaciones, ordenadas por lo que decidió el jurado.
 // Sin puntaje van al final; entre ellas, la más vieja primero, que es la que
 // lleva más tiempo esperando.
+//
+// Ojo con esto: ordena por el puntaje YA filtrado, y tiene que seguir siendo
+// así. Para un evaluador, las que todavía no liberaron promedio llegan con
+// puntaje null y caen todas juntas al final, ordenadas por fecha. Si se
+// ordenara por el puntaje real y sólo se escondiera el número, el orden
+// cantaría igual quién va ganando: esconder la cifra y dejar la fila en su
+// posición no esconde nada.
 $ranking = $apps;
 usort($ranking, function ($x, $y) {
     $px = $x['consolidado']['puntaje'];
@@ -173,6 +183,22 @@ function sello_jurado(array $c, int $id): string
                . e(number_format($c['dispersion'], 2)) . ' puntos">disenso</span>';
     }
     return '<span class="sello-wrap" data-sello="' . $id . '">' . $html . '</span>';
+}
+
+/**
+ * El puntaje del jurado, o por qué todavía no se muestra.
+ *
+ * Una raya cuando en realidad hay votos se lee como "no la miró nadie", que es
+ * otra cosa. Los tres puntos dicen que el número existe pero no está liberado,
+ * y el title lo explica al pasar por encima.
+ */
+function puntaje_jurado(array $c): string
+{
+    if (($c['liberado'] ?? true) === false && $c['emitidos'] > 0) {
+        $falta = $c['faltan'] ? 'Falta votar: ' . implode(', ', $c['faltan']) . '.' : 'Falta que vote el resto del jurado.';
+        return '<span class="score-reservado" title="' . e($falta . ' El promedio se libera cuando esté completo.') . '">···</span>';
+    }
+    return $c['puntaje'] === null ? '—' : e(number_format($c['puntaje'], 2));
 }
 ?>
 
@@ -214,12 +240,20 @@ function sello_jurado(array $c, int $id): string
     </select>
     <select name="jurado">
       <option value="">Todo el jurado</option>
-      <?php foreach ([
+      <?php
+      // "Con disenso" mide la distancia entre el voto más alto y el más bajo,
+      // así que es información sobre los votos ajenos: va sólo para el admin.
+      // Y si se ofreciera igual, para un evaluador no devolvería nunca nada,
+      // que es la peor forma de esconder algo: parece que el panel falla.
+      $opcionesJurado = [
         'mio'      => 'Me falta votar',
         'falta'    => 'Falta algún jurado',
         'completo' => 'Votó todo el jurado',
-        'disenso'  => 'Con disenso',
-      ] as $k => $lbl): ?>
+      ];
+      if ($puedeVerVotos) {
+          $opcionesJurado['disenso'] = 'Con disenso';
+      }
+      foreach ($opcionesJurado as $k => $lbl): ?>
         <option value="<?= e($k) ?>" <?= $filtros['jurado'] === $k ? 'selected' : '' ?>><?= e($lbl) ?></option>
       <?php endforeach; ?>
     </select>
@@ -270,7 +304,7 @@ function sello_jurado(array $c, int $id): string
                 <td class="nowrap sub"><?= e(fecha_corta($a['submitted_at'], true)) ?></td>
                 <td><span class="chip" style="--c:<?= e($s['color']) ?>"><?= e($s['label']) ?></span></td>
                 <td class="nowrap"><?= sello_jurado($c, (int) $a['id']) ?></td>
-                <td class="score" data-puntaje="<?= (int) $a['id'] ?>"><?= $c['puntaje'] === null ? '—' : e(number_format($c['puntaje'], 2)) ?></td>
+                <td class="score" data-puntaje="<?= (int) $a['id'] ?>"><?= puntaje_jurado($c) ?></td>
                 <td class="right">
                   <button type="button" class="btn btn-secondary btn-sm" data-abrir="<?= (int) $a['id'] ?>">
                     <?= $soyJuez ? ($a['miVoto'] === null ? 'Evaluar' : 'Ver / editar') : 'Ver' ?>
@@ -305,7 +339,7 @@ function sello_jurado(array $c, int $id): string
               </span>
             </button>
             <span class="rank-barra"><span style="width:<?= $ancho ?>%"></span></span>
-            <span class="rank-num"><?= $c['puntaje'] === null ? '—' : e(number_format($c['puntaje'], 2)) ?></span>
+            <span class="rank-num"><?= puntaje_jurado($c) ?></span>
           </li>
         <?php endforeach; ?>
       </ol>
@@ -338,7 +372,7 @@ function sello_jurado(array $c, int $id): string
                   </span>
                   <span class="kcard-f">
                     <?= sello_jurado($c, (int) $a['id']) ?>
-                    <span class="kcard-pts" data-puntaje="<?= (int) $a['id'] ?>"><?= $c['puntaje'] === null ? 'sin puntaje' : e(number_format($c['puntaje'], 2)) ?></span>
+                    <span class="kcard-pts" data-puntaje="<?= (int) $a['id'] ?>"><?= ($c['liberado'] ?? true) === false && $c['emitidos'] > 0 ? '···' : ($c['puntaje'] === null ? 'sin puntaje' : e(number_format($c['puntaje'], 2))) ?></span>
                   </span>
                 </button>
                 <?php if (puede('admin')): ?>
