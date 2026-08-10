@@ -417,6 +417,147 @@
     }
   }
 
+  // ------------------------------------------------ la línea de cohortes
+  // Se anima al entrar en pantalla. Si no hay IntersectionObserver o el sistema
+  // pide menos movimiento, se muestra el estado final directamente: el dibujo
+  // ya dice todo, la animación es sólo cómo llega.
+  var linea = document.querySelector('[data-coh]');
+  if (linea) {
+    if (menosMovimiento || !('IntersectionObserver' in window)) {
+      linea.classList.add('is-dentro');
+    } else {
+      var vigiaLinea = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (en) {
+          if (en.isIntersecting) { linea.classList.add('is-dentro'); vigiaLinea.disconnect(); }
+        });
+      }, { threshold: 0.25 });
+      vigiaLinea.observe(linea);
+      // Si ya estaba a la vista al cargar, el observer igual dispara, pero por
+      // las dudas de un scroll restaurado muy abajo se fuerza a los 2 segundos.
+      setTimeout(function () { linea.classList.add('is-dentro'); }, 2000);
+    }
+  }
+
+  // ------------------------------------------------------------- el pop-up
+  //
+  // Se muestra una vez y no vuelve. Si alguien lo cerró ya contestó que no, y
+  // volver a aparecer en cada visita no convence a nadie: molesta.
+  //
+  // El <form> de adentro funciona sin JavaScript —apunta a avisame.php— así que
+  // todo esto es mejora, no requisito.
+  var modal = document.getElementById('modalAvisame');
+  if (modal) {
+    var CLAVE_POPUP = 'esquellab_avisame_v1';
+    var vistoAntes = function () {
+      try { return localStorage.getItem(CLAVE_POPUP); } catch (e) { return null; }
+    };
+    var marcar = function (valor) {
+      try { localStorage.setItem(CLAVE_POPUP, valor); } catch (e) { /* modo privado: paciencia */ }
+    };
+
+    var focoPrevio = null;
+    var abierto = false;
+
+    var foqueables = function () {
+      return modal.querySelectorAll('a[href], button:not([disabled]), input:not([type="hidden"]), select, textarea');
+    };
+
+    var abrir = function (origen) {
+      if (abierto) return;
+      abierto = true;
+      focoPrevio = document.activeElement;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      var campoOrigen = document.getElementById('avisameOrigen');
+      if (campoOrigen && origen) campoOrigen.value = origen;
+      var primero = modal.querySelector('input:not([type="hidden"]):not([tabindex="-1"])');
+      if (primero) primero.focus();
+    };
+
+    var cerrar = function () {
+      if (!abierto) return;
+      abierto = false;
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      marcar('cerrado');
+      // El foco vuelve de donde salió: si no, quien navega con teclado queda
+      // parado al principio de la página sin saber por qué.
+      if (focoPrevio && focoPrevio.focus) focoPrevio.focus();
+    };
+
+    // Cualquier botón de la página que pida abrirlo.
+    document.addEventListener('click', function (ev) {
+      var pedir = ev.target.closest('[data-abrir-avisame]');
+      if (pedir) { ev.preventDefault(); abrir(pedir.getAttribute('data-abrir-avisame')); return; }
+      if (ev.target.closest('[data-cerrar-avisame]')) { ev.preventDefault(); cerrar(); }
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (!abierto) return;
+      if (ev.key === 'Escape') { cerrar(); return; }
+      // El foco no se escapa del diálogo mientras está abierto.
+      if (ev.key !== 'Tab') return;
+      var lista = foqueables();
+      if (!lista.length) return;
+      var primero = lista[0], ultimo = lista[lista.length - 1];
+      if (ev.shiftKey && document.activeElement === primero) { ev.preventDefault(); ultimo.focus(); }
+      else if (!ev.shiftKey && document.activeElement === ultimo) { ev.preventDefault(); primero.focus(); }
+    });
+
+    // La aparición sola: cuando pasó medio scroll de la página, y nunca antes
+    // de 12 segundos. Aparecer de entrada, sin que la persona haya visto nada,
+    // es pedirle el correo a alguien que todavía no sabe qué le estás ofreciendo.
+    if (!vistoAntes()) {
+      var desde = Date.now();
+      var quizasAbrir = function () {
+        if (abierto || vistoAntes()) return;
+        if (Date.now() - desde < 12000) return;
+        var alto = document.body.scrollHeight - window.innerHeight;
+        if (alto > 0 && window.scrollY / alto < 0.45) return;
+        window.removeEventListener('scroll', quizasAbrir);
+        abrir('auto');
+      };
+      window.addEventListener('scroll', quizasAbrir, { passive: true });
+    }
+
+    // Envío sin recargar. Si algo falla, el formulario sigue estando y se puede
+    // mandar de la forma común.
+    var formAviso = document.getElementById('formAvisame');
+    if (formAviso) {
+      formAviso.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var btn = formAviso.querySelector('button[type="submit"]');
+        var error = document.getElementById('avisameError');
+        if (error) { error.hidden = true; error.textContent = ''; }
+        if (btn) { btn.disabled = true; btn.textContent = 'Mandando…'; }
+
+        fetch('avisame.php', {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'fetch' },
+          body: new FormData(formAviso)
+        }).then(function (r) {
+          return r.json().then(function (j) { return { ok: r.ok && j.ok, j: j }; });
+        }).then(function (res) {
+          if (btn) { btn.disabled = false; btn.textContent = 'Avisame'; }
+          if (!res.ok) {
+            var errs = res.j.errores || {};
+            var texto = errs.general || errs.email || errs.nombre || 'Revisá los datos y probá de nuevo.';
+            if (error) { error.textContent = texto; error.hidden = false; }
+            return;
+          }
+          marcar('anotado');
+          document.getElementById('modalAvisameCuerpo').hidden = true;
+          document.getElementById('modalAvisameGracias').hidden = false;
+          var cerrarGracias = document.querySelector('#modalAvisameGracias [data-cerrar-avisame]');
+          if (cerrarGracias) cerrarGracias.focus();
+        }).catch(function () {
+          if (btn) { btn.disabled = false; btn.textContent = 'Avisame'; }
+          if (error) { error.textContent = 'No pudimos conectar. Probá de nuevo.'; error.hidden = false; }
+        });
+      });
+    }
+  }
+
   // ------------------------------------------------------------- formulario
   var form = document.getElementById('formPostulacion');
   if (!form) return;
@@ -646,4 +787,5 @@
   // línea, el formulario queda entero y usable.
   if (progreso) progreso.hidden = false;
   ir(actual);
+
 })();

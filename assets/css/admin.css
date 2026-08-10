@@ -714,3 +714,7 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 }
 .clave-pie { font-size: 13.5px; color: var(--ink-3); margin: 14px 0 0; }
 .btn.ok { background: var(--green-soft); color: var(--green-ink); border-color: var(--green); }
+
+/* Lo que contó cada interesado: puede ser un párrafo, así que no estira la
+   tabla a lo ancho ni la deja ilegible. */
+.celda-cuenta { max-width: 380px; white-space: normal; font-size: 14px; }

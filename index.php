@@ -2,6 +2,17 @@
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/helpers.php';
 
+// La sesión se abre acá arriba, antes de imprimir una sola línea de HTML.
+//
+// Es la única forma de que funcione el token del formulario del pop-up. Ese
+// token lo genera csrf_field(), que está al final de la página: para entonces
+// las cabeceras ya salieron y PHP no puede mandar la cookie de sesión. El
+// token quedaba guardado en una sesión que el navegador nunca recibía, y al
+// mandar el formulario el servidor lo rechazaba con "la página estuvo abierta
+// demasiado tiempo". Sin JavaScript no pasaba, porque avisame.php sí abre la
+// sesión antes de imprimir nada.
+iniciar_sesion();
+
 $pageTitle = 'Esquel LAB — Convocatoria 2026 para nuevas experiencias turísticas';
 $pageDescription = 'Programa gratuito. Ocho semanas de acompañamiento técnico para convertir tu oficio, tu campo o tu servicio en una experiencia turística lista para recibir visitantes. Se seleccionan hasta 18 proyectos. Postulaciones hasta el 9 de agosto de 2026.';
 $activeNav = 'home';
@@ -28,13 +39,26 @@ require __DIR__ . '/includes/header.php';
   <div class="container hero-grid">
     <div class="hero-copy">
 <?php /* Estado + nombre del programa: un título que informa no necesita convencer. */ ?>
-      <span class="eyebrow"><span class="dot"></span> Esquel LAB · Primera cohorte 2026</span>
-      <h1><em>Inscripciones abiertas</em> al programa de aceleración turística de Esquel</h1>
-      <p class="hero-lede">
-        Ocho semanas de trabajo con un equipo, en tu campo, tu taller o tu local,
-        sobre lo que hace falta para poder recibir visitantes: el precio, la forma de reservarlo,
-        el material de venta y la ficha con la que las agencias de la ciudad lo ofrecen.
-      </p>
+      <?php if ($abierta): ?>
+        <span class="eyebrow"><span class="dot"></span> Esquel LAB · <?= e(COHORTE_ACTUAL) ?></span>
+        <h1><em>Inscripciones abiertas</em> al programa de aceleración turística de Esquel</h1>
+        <p class="hero-lede">
+          Ocho semanas de trabajo con un equipo, en tu campo, tu taller o tu local,
+          sobre lo que hace falta para poder recibir visitantes: el precio, la forma de reservarlo,
+          el material de venta y la ficha con la que las agencias de la ciudad lo ofrecen.
+        </p>
+      <?php else: ?>
+        <?php /* Con la convocatoria cerrada el título no puede seguir diciendo
+                 "Inscripciones abiertas". Y el que llega tarde no necesita que
+                 le expliquen que llegó tarde: necesita saber que hay una próxima. */ ?>
+        <span class="eyebrow"><span class="dot"></span> Esquel LAB · <?= e(COHORTE_ACTUAL) ?> en marcha</span>
+        <h1>La primera cohorte ya está trabajando. <em>La próxima puede ser la tuya.</em></h1>
+        <p class="hero-lede">
+          Un grupo de emprendedores de Esquel está ocho semanas dándole forma a su experiencia turística:
+          el precio, la forma de reservarla, el material con el que se vende.
+          Cuando abra la segunda convocatoria, queremos que te enteres primero.
+        </p>
+      <?php endif; ?>
 
       <?php /* La fecha de cierre no va acá: ya está en la barra de plazo, justo arriba. */ ?>
       <dl class="hero-datos">
@@ -45,11 +69,19 @@ require __DIR__ . '/includes/header.php';
         <div><dt>Dedicación</dt><dd>12 hs por semana</dd></div>
       </dl>
 
-      <div class="hero-cta">
-        <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
-        <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
-      </div>
-      <p class="hero-note">Podés presentarte sin monotributo ni habilitación.</p>
+      <?php if ($abierta): ?>
+        <div class="hero-cta">
+          <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
+          <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
+        </div>
+        <p class="hero-note">Podés presentarte sin monotributo ni habilitación.</p>
+      <?php else: ?>
+        <div class="hero-cta">
+          <button type="button" class="btn btn-primary btn-lg" data-abrir-avisame="hero">Avisame de la próxima</button>
+          <a href="#para-vos" class="btn btn-secondary btn-lg">Ver si es para mí</a>
+        </div>
+        <p class="hero-note">Sin compromiso: es para que no te enteres tarde otra vez.</p>
+      <?php endif; ?>
     </div>
 
     <div class="hero-media">
@@ -389,6 +421,26 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<?php if (!$abierta): ?>
+<!-- ======================= DÓNDE ESTAMOS (cohortes) ======================= -->
+<?php /*
+  Con la convocatoria cerrada, esta es la sección que reemplaza al "postulate
+  ya". Cuenta en una línea de tiempo que la primera cohorte cerró, está
+  trabajando y va a haber una segunda, con el botón para anotarse en el último
+  hito, que es donde la pregunta "¿y yo?" aparece sola.
+*/ ?>
+<section class="section section-white" id="cohortes">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Dónde estamos</span>
+      <h2>La primera ya arrancó</h2>
+      <p>Esto es lo que está pasando ahora mismo, y lo que viene después.</p>
+    </div>
+    <?php require_once __DIR__ . '/includes/cohortes.php'; echo linea_cohortes(); ?>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- ============================ CIERRE ============================ -->
 <?php /*
   El cierre va en oscuro y con el video de Esquel de fondo. Antes era del
@@ -424,13 +476,14 @@ require __DIR__ . '/includes/header.php';
       <a href="inscribirse.php" class="btn btn-primary btn-lg">Postularme</a>
       <p class="cierre-nota">Podés presentarte sin monotributo ni habilitación.</p>
     <?php else: ?>
-      <span class="eyebrow"><span class="dot"></span> Convocatoria cerrada</span>
-      <h2>La primera cohorte ya cerró</h2>
+      <span class="eyebrow"><span class="dot"></span> <?= e(PROXIMA_COHORTE) ?></span>
+      <h2>Vos podés ser el que sigue</h2>
       <p>
-        Las postulaciones cerraron el <?= e(fecha_larga(FECHA_CIERRE)) ?>. Va a haber más convocatorias:
-        escribinos y te avisamos cuando abra la próxima.
+        Dejanos tus datos y te avisamos apenas abra la próxima convocatoria. Si mientras tanto
+        aparece algo que le sirva a lo tuyo, también te lo contamos.
       </p>
-      <a href="mailto:<?= e(EMAIL_PROGRAMA) ?>" class="btn btn-secondary btn-lg">Escribirnos</a>
+      <button type="button" class="btn btn-primary btn-lg" data-abrir-avisame="cierre">Avisame cuando abra</button>
+      <p class="cierre-nota">Son dos datos y treinta segundos.</p>
     <?php endif; ?>
   </div>
 </section>
@@ -447,6 +500,55 @@ require __DIR__ . '/includes/header.php';
     </p>
     <a href="inscribirse.php" class="btn btn-primary btn-sm">Postularme</a>
     <button type="button" class="sticky-cta-close" id="stickyCtaClose" aria-label="Ocultar esta barra">&times;</button>
+  </div>
+</div>
+<?php endif; ?>
+
+<?php if (!$abierta): ?>
+<?php /*
+  El pop-up. Sale una sola vez y no vuelve: si alguien lo cerró, ya contestó
+  que no. Volver a mostrarlo en cada visita no convence a nadie, molesta.
+
+  Va en el HTML y no lo arma el JavaScript porque los mismos campos tienen que
+  poder enviarse sin JavaScript: el <form> apunta a avisame.php y funciona
+  igual, sólo que recargando la página en vez de quedarse acá.
+*/ ?>
+<div class="modal" id="modalAvisame" hidden>
+  <div class="modal-fondo" data-cerrar-avisame></div>
+  <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="modalAvisameTitulo">
+    <button type="button" class="modal-x" data-cerrar-avisame aria-label="Cerrar">&times;</button>
+
+    <div class="modal-cuerpo" id="modalAvisameCuerpo">
+      <span class="eyebrow"><span class="dot"></span> <?= e(PROXIMA_COHORTE) ?></span>
+      <h2 id="modalAvisameTitulo">La primera camada ya está manos a la obra</h2>
+      <p class="modal-lede">
+        Emprendedores de Esquel y del campo están armando ahora mismo la experiencia que van a
+        vender. <strong>El próximo podés ser vos</strong>: dejanos tus datos y te avisamos cuando
+        abra la segunda convocatoria, o si aparece algo que le sirva a lo tuyo antes.
+      </p>
+
+      <form method="post" action="avisame.php" class="form-avisame" id="formAvisame">
+        <?= csrf_field() ?>
+        <input type="hidden" name="origen" value="popup" id="avisameOrigen">
+        <?= campos_avisame(['nombre' => '', 'email' => '', 'telefono' => '', 'linea' => '', 'instagram' => '', 'cuenta' => ''], [], 'pop') ?>
+        <p class="form-error" id="avisameError" hidden></p>
+        <div class="modal-acciones">
+          <button type="submit" class="btn btn-primary btn-lg">Avisame</button>
+          <button type="button" class="btn btn-secondary" data-cerrar-avisame>Ahora no</button>
+        </div>
+        <p class="modal-fine">Sólo para avisarte de esto. No compartimos tus datos con nadie.</p>
+      </form>
+    </div>
+
+    <?php /* Lo que se ve después de mandar, sin recargar. */ ?>
+    <div class="modal-gracias" id="modalAvisameGracias" hidden>
+      <div class="gracias-tilde" aria-hidden="true">
+        <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27l8 8 15-16"/></svg>
+      </div>
+      <h2>Listo, te anotamos</h2>
+      <p>Cuando abra la próxima cohorte sos de los primeros en enterarte.</p>
+      <button type="button" class="btn btn-secondary" data-cerrar-avisame>Cerrar</button>
+    </div>
   </div>
 </div>
 <?php endif; ?>

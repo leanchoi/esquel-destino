@@ -318,3 +318,86 @@ function error_dni(string $dni): string
     }
     return '';
 }
+
+/**
+ * Los campos de la lista de espera, una sola vez.
+ *
+ * Los mismos campos aparecen en tres lugares: la página avisame.php, el bloque
+ * de la home y el pop-up. Escribirlos tres veces es garantizar que en algún
+ * momento uno pida algo que los otros no, y que la validación del servidor
+ * rechace lo que la pantalla dejó pasar. Se escriben acá y se usan en los tres.
+ *
+ * El prefijo existe porque el pop-up y el bloque de la home conviven en la
+ * misma página: sin él habría dos elementos con el mismo id y el <label> del
+ * segundo enfocaría el campo del primero.
+ *
+ * @param array  $v        valores actuales (para no perderlos si algo falla)
+ * @param array  $errores  clave => mensaje
+ * @param string $prefijo  para que los id no choquen entre instancias
+ */
+function campos_avisame(array $v, array $errores, string $prefijo): string
+{
+    $id = fn(string $c) => $prefijo . '-' . $c;
+    $val = fn(string $c) => e($v[$c] ?? '');
+    $err = fn(string $c) => isset($errores[$c])
+        ? '<p class="err">' . e($errores[$c]) . '</p>'
+        : '';
+
+    $pistas = '';
+    foreach (PISTAS_PROYECTO as $pista) {
+        $pistas .= '<li>' . e($pista) . '</li>';
+    }
+
+    $lineas = '';
+    foreach (PROGRAMAS as $slug => $p) {
+        $marcado = ($v['linea'] ?? '') === $slug ? ' selected' : '';
+        $lineas .= '<option value="' . e($slug) . '"' . $marcado . '>' . e($p['nombre']) . ' — ' . e($p['resumen']) . '</option>';
+    }
+
+    return '
+      <div class="field">
+        <label class="lbl" for="' . $id('nombre') . '">Tu nombre *</label>
+        <input type="text" id="' . $id('nombre') . '" name="nombre" required autocomplete="name" value="' . $val('nombre') . '">
+        ' . $err('nombre') . '
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="lbl" for="' . $id('email') . '">Correo electrónico *</label>
+          <input type="email" id="' . $id('email') . '" name="email" required autocomplete="email"
+                 inputmode="email" spellcheck="false" value="' . $val('email') . '">
+          ' . $err('email') . '
+        </div>
+        <div class="field">
+          <label class="lbl" for="' . $id('telefono') . '">WhatsApp <span class="lbl-opt">opcional</span></label>
+          <input type="tel" id="' . $id('telefono') . '" name="telefono" autocomplete="tel"
+                 inputmode="tel" placeholder="2945 123456" value="' . $val('telefono') . '">
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl" for="' . $id('linea') . '">¿Por dónde va lo tuyo? <span class="lbl-opt">opcional</span></label>
+        <select id="' . $id('linea') . '" name="linea">
+          <option value="">Todavía no sé</option>
+          ' . $lineas . '
+        </select>
+      </div>
+      <div class="field">
+        <label class="lbl" for="' . $id('instagram') . '">Instagram <span class="lbl-opt">opcional</span></label>
+        <div class="campo-arroba">
+          <span aria-hidden="true">@</span>
+          <input type="text" id="' . $id('instagram') . '" name="instagram" autocomplete="off"
+                 spellcheck="false" placeholder="tuproyecto" value="' . $val('instagram') . '">
+        </div>
+        <p class="hint">Si tenés cuenta del proyecto, nos deja ver lo que hacés antes de escribirte.</p>
+      </div>
+      <div class="field">
+        <label class="lbl" for="' . $id('cuenta') . '">Contanos de tu proyecto o de tu idea <span class="lbl-opt">opcional</span></label>
+        <p class="hint">Lo que quieras. Si no sabés por dónde empezar, alguna de estas:</p>
+        <ul class="pistas">' . $pistas . '</ul>
+        <textarea id="' . $id('cuenta') . '" name="cuenta" rows="5"
+                  placeholder="Ej.: tengo una chacra con frutas finas a 4 km del centro. Hacemos dulces caseros y me gustaría que la gente pueda venir a ver la cosecha y llevarse un frasco.">' . $val('cuenta') . '</textarea>
+      </div>
+      <p class="visually-hidden" aria-hidden="true">
+        <label for="' . $id('sitio') . '">No completar</label>
+        <input type="text" id="' . $id('sitio') . '" name="sitio_web" tabindex="-1" autocomplete="off">
+      </p>';
+}

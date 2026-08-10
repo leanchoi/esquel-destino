@@ -130,6 +130,27 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE CASCADE
     );");
 
+    // Quienes dejaron los datos para que les avisemos de la próxima cohorte.
+    //
+    // El correo es único: alguien que deja los datos dos veces —porque no se
+    // acuerda, o porque vuelve a entrar meses después— tiene que quedar una
+    // sola vez en la lista y con lo último que escribió, no duplicado. Cuando
+    // se repite se actualiza la fila y se guarda cuándo fue la última.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS interesados (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        email TEXT NOT NULL,
+        telefono TEXT NOT NULL DEFAULT '',
+        linea TEXT NOT NULL DEFAULT '',
+        instagram TEXT NOT NULL DEFAULT '',
+        cuenta TEXT NOT NULL DEFAULT '',
+        origen TEXT NOT NULL DEFAULT '',
+        veces INTEGER NOT NULL DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );");
+    $pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_interesados_email ON interesados (email);");
+
     // Bitácora de cambios de estado: trazabilidad del proceso de selección.
     $pdo->exec("CREATE TABLE IF NOT EXISTS stage_history (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -205,6 +226,9 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         'applications' => [
             'notes'        => "TEXT",
             'submitted_at' => "DATETIME",
+        ],
+        'interesados' => [
+            'instagram' => "TEXT NOT NULL DEFAULT ''",
         ],
         // Un criterio nuevo en CRITERIOS aparece solo en las bases que ya existen.
         'evaluaciones' => array_fill_keys(array_keys(CRITERIOS), "INTEGER NOT NULL DEFAULT 0") + [

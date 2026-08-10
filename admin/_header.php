@@ -31,6 +31,7 @@ $nav = $nav ?? '';
     <nav class="admin-nav">
       <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>
       <?php if (puede('admin')): ?>
+        <a href="interesados.php" class="<?= $nav === 'interesados' ? 'is-active' : '' ?>">Interesados</a>
         <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>
         <a href="usuarios.php" class="<?= $nav === 'usuarios' ? 'is-active' : '' ?>">Usuarios</a>
       <?php endif; ?>

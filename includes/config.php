@@ -20,6 +20,22 @@ const FECHA_FIN        = '2026-10-02 00:00:00';
 // Cierre duro confirmado: pasado FECHA_CIERRE el formulario se bloquea solo.
 const CIERRE_DURO = true;
 
+// --- La cohorte que viene --------------------------------------------------
+/**
+ * Con la primera cerrada, el sitio deja de pedir postulaciones y pasa a juntar
+ * gente para la próxima. Estas constantes son lo único que hay que tocar
+ * cuando se sepa la fecha.
+ *
+ * PROXIMA_COHORTE_CUANDO es texto libre a propósito: mientras no haya fecha
+ * firme, "Principios de 2027" dice más que un día inventado, y prometer una
+ * fecha que después se corre es peor que no darla.
+ */
+const COHORTE_ACTUAL   = 'Primera cohorte 2026';
+const PROXIMA_COHORTE  = 'Segunda cohorte';
+const PROXIMA_COHORTE_CUANDO = 'Principios de 2027';
+/** Cuando haya fecha, se pone acá y la pantalla la muestra sola. */
+const PROXIMA_COHORTE_FECHA = null;
+
 // --- Quién organiza y quién acompaña --------------------------------------
 /**
  * Cómo se nombra al programa y a quienes lo respaldan.
@@ -240,6 +256,26 @@ const PISTAS_COMENTARIO = [
     'Qué te hace dudar, si algo te hace dudar.',
     'Qué preguntarías en una entrevista.',
     'Con qué otro proyecto de Esquel lo ves conectado.',
+];
+
+// --- Pistas para contar tu proyecto ---------------------------------------
+/**
+ * Disparadores del campo abierto de la lista de espera.
+ *
+ * "Contanos de tu proyecto" delante de un recuadro vacío no lo llena nadie: la
+ * persona no sabe cuánto escribir ni qué es relevante, y en la duda escribe
+ * dos palabras o no escribe nada. Con tres o cuatro preguntas concretas
+ * adelante, la misma persona escribe un párrafo.
+ *
+ * Es opcional a propósito. Pedirlo obligatorio en una lista de espera espanta
+ * a gente que sí queremos tener anotada; lo que se busca es que el que tiene
+ * ganas de contar tenga por dónde empezar.
+ */
+const PISTAS_PROYECTO = [
+    'Qué hacés hoy, o qué te gustaría hacer.',
+    'Dónde pasa: tu casa, un taller, una chacra, un local, el campo.',
+    'Qué podría ver, hacer o probar alguien que te visite.',
+    'Qué te falta para poder recibir visitantes.',
 ];
 
 // --- Estados del CRM ------------------------------------------------------
