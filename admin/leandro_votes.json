@@ -1,0 +1,374 @@
+[
+  {
+    "id": 44,
+    "name": "El secreto del laberinto",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 4,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "El proyecto 'El secreto del laberinto' destaca por su visión a largo plazo y compromiso familiar. A diferencia de las ofertas tradicionales de Esquel, propone un atractivo lúdico-natural innovador. Sin embargo, su consolidación requiere tiempo y recursos significativos. Coincido con las observaciones sobre la necesidad de definir su modelo durante el crecimiento de las plantas. Es vital integrar a este laberinto vegetal en la matriz turística local para enriquecer la economía de los recuerdos, acompañando con asistencia técnica la readecuación del espacio."
+  },
+  {
+    "id": 43,
+    "name": "Esquel 365",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La propuesta tecnológica de 'Esquel 365' es sumamente ambiciosa y busca centralizar la información turística. Aunque innovadora, la viabilidad operativa y política de integrarse directamente con bases estatales genera dudas legítimas. A nivel global, las plataformas digitales deben complementar, no reemplazar, los canales existentes. Concuerdo en que su éxito dependerá de una validación técnica real y de cómo logre traccionar a los prestadores de Esquel para que el destino consolide su huella digital y potencie la economía de los recuerdos."
+  },
+  {
+    "id": 40,
+    "name": "Holidays eqs",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "'Holidays eqs' aporta una visión inclusiva y de aventura en la Reserva Natural Urbana Laguna La Zeta, un espacio clave para el destino. Su enfoque en accesibilidad es un gran diferencial frente a otras iniciativas. No obstante, comparto las inquietudes sobre los permisos ambientales y la inversión necesaria en infraestructura. Para fortalecer el turismo en Esquel, este parque aéreo debe alinearse estrictamente con los planes de manejo de la reserva, consolidándose como un producto que complemente la oferta sin comprometer el entorno natural."
+  },
+  {
+    "id": 39,
+    "name": "SERVILUX",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 1,
+      "rating_impacto": 1,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "Si bien 'SERVILUX' ofrece un servicio técnico valioso para la comunidad de Trevelin y Esquel, su encuadre dentro de la matriz turística es limitado. A nivel global, los servicios de diagnóstico eléctrico son fundamentales para la seguridad de los alojamientos, pero no constituyen una experiencia turística en sí misma. Construyendo sobre las evaluaciones previas, la iniciativa podría redirigirse hacia la certificación de sustentabilidad y eficiencia energética para prestadores locales, aportando así valor indirecto al ecosistema de hospitalidad."
+  },
+  {
+    "id": 38,
+    "name": "LAZETA",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "La creación de una revista digital para la RNU Laguna La Zeta responde a una necesidad clara de comunicación y concientización. Sin embargo, como señalaron otros jueces, su modelo de negocio y sostenibilidad financiera no están definidos, y actúa más como un canal publicitario que como un producto turístico vendible. Para encajar en la economía de los recuerdos de Esquel, el proyecto de la revista debería evolucionar hacia una plataforma interactiva que no solo informe, sino que facilite reservas o interacciones directas con los prestadores del área."
+  },
+  {
+    "id": 37,
+    "name": "RedGionales",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "'RedGionales' presenta una idea tecnológica interesante para visibilizar y comercializar la producción regional a través de dispensers y códigos QR. Aunque fomenta la integración de los productores de Esquel, su aplicabilidad física y logística de reposición representan barreras importantes. Comparto la visión de que, más que un dispenser físico, el valor real radica en consolidar una plataforma de intermediación o take away que fortalezca el encadenamiento productivo local, permitiendo al turista llevarse sabores auténticos y recuerdos tangibles."
+  },
+  {
+    "id": 36,
+    "name": "Aqua ritmos",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "La iniciativa 'Aqua ritmos' introduce una valiosa propuesta de bienestar y recreación para adultos mayores, un segmento clave. El principal desafío, coincidiendo con otras evaluaciones, es la dependencia de infraestructura de terceros (piletas climatizadas). A nivel global, el turismo de bienestar está en auge y Esquel puede aprovecharlo. Para ser viable, el proyecto debe estructurarse mediante acuerdos formales con alojamientos que posean piscina, empaquetando el servicio como un valor agregado que potencie las estadías prolongadas y la estacionalidad."
+  },
+  {
+    "id": 35,
+    "name": "Disfruteando",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 1,
+      "rating_impacto": 2,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 1
+    },
+    "comentario": "'Disfruteando' busca promover la identidad patagónica mediante contenido audiovisual. Aunque la promoción y la fotografía son esenciales para inspirar al viajero, el proyecto se perfila más como una agencia de marketing digital que como una experiencia turística directa. Para aportar a la matriz de Esquel, sería prudente que esta pasión visual se transforme en un servicio de 'foto-turismo' o safaris fotográficos guiados, donde el visitante sea el protagonista de la captura de recuerdos, integrando así una vivencia real y monetizable."
+  },
+  {
+    "id": 34,
+    "name": "Experiencias Empresariales Esquel",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "Este proyecto introduce el turismo corporativo (MICE y bleisure) a Esquel, un nicho poco explotado pero con alto potencial para romper la estacionalidad. Articular el desarrollo empresarial con la inmersión en la naturaleza local es un diferencial atractivo. No obstante, como apuntan otros jueces, depende de su capacidad para validar la demanda B2B y cerrar acuerdos con los prestadores. El éxito de esta propuesta radicará en empaquetar retiros corporativos que ofrezcan desconexión y aprendizaje, posicionando a la región como un destino de liderazgo."
+  },
+  {
+    "id": 32,
+    "name": "Haiku Casa de Té",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 4,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "'Haiku Casa de Té' es una experiencia multisensorial consolidada que fusiona la identidad botánica patagónica con ceremonias de bienestar. Al estar ya operativa, su viabilidad es alta. El desafío, compartido con otros jueces, es transformar su clientela local en flujo turístico. A nivel global, el turismo gastronomico y de pausas reflexivas está creciendo. Esquel LAB puede brindarle el impulso necesario para forjar alianzas con agencias y alojamientos, convirtiendo este espacio en una parada obligatoria dentro del circuito de la economía de los recuerdos."
+  },
+  {
+    "id": 30,
+    "name": "La Reserva",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 1
+    },
+    "comentario": "El proyecto 'La Reserva' plantea una oferta de glamping y bienestar atractiva, pero su emplazamiento en la Reserva Natural Urbana Laguna La Zeta presenta barreras normativas y de impacto ambiental significativas. Concuerdo en que la construcción de domos en un área protegida requiere factibilidad pública y una alta inversión de capital que hoy no está disponible. Para que la idea prospere y aporte a la matriz de Esquel, debería reorientarse hacia campos privados circundantes, garantizando la sustentabilidad ecológica y la viabilidad legal."
+  },
+  {
+    "id": 29,
+    "name": "Dog hiking Patagonia",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La propuesta de 'Dog hiking Patagonia' captura inteligentemente la creciente tendencia del turismo pet-friendly, ofreciendo una alternativa valiosa ante las restricciones del Parque Nacional. Sin embargo, su consolidación comercial requiere resolver la habilitación formal de guiado y seguros específicos para mascotas. Al igual que otros evaluadores, considero que este nicho puede sumar mucho a Esquel, pero su éxito dependerá de profesionalizar los canales de venta y establecer circuitos claros y seguros que promuevan la convivencia responsable en entornos naturales."
+  },
+  {
+    "id": 28,
+    "name": "Esquel SumARTE pass",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "La digitalización y gamificación del consumo turístico que propone 'Esquel SumARTE pass' es interesante para fidelizar al visitante y recolectar datos de gestión. No obstante, al ser una plataforma conceptual, enfrenta el gran reto de la adopción tanto por parte de comercios como de turistas. A diferencia de las experiencias tangibles, su valor depende de la red de alianzas. Coincido en que, para que esta herramienta traccione la economía local, debe pasar rápidamente de la fase de idea a un piloto funcional integrado con los actores clave del destino."
+  },
+  {
+    "id": 27,
+    "name": "Escuela de Senderismo",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La 'Escuela de Senderismo' ofrece una excelente iniciativa pedagógica e inmersiva, promoviendo el turismo de naturaleza en infancias y adolescencias. Aunque actualmente atiende más al público local, tiene el potencial de adaptarse para familias turistas. Como indican los jueces, el desafío es profesionalizar la estrategia comercial, formalizar el transporte y adquirir equipamiento de seguridad propio. Integrar la herboristería y la escalada en un formato de 'campamento de día' para turistas enriquecería enormemente la oferta vivencial de Esquel."
+  },
+  {
+    "id": 26,
+    "name": "Esquel raíces: turismos de sentidos",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 2,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "La propuesta de Claudina destaca por vincular saberes ancestrales de la flora cordillerana con técnicas de bienestar corporal, un nicho con alta tracción turística global que Esquel no explota formalmente. A diferencia de otros proyectos de senderismo convencional, el valor aquí reside en la experiencia holística post-caminata. Coincido con la advertencia de los jueces sobre la necesidad de contar con habilitaciones oficiales como prestadora turística y la manipulación segura de las infusiones nativas. El programa debe orientar el proyecto a estructurar un modelo comercial y alianzas con guías registrados."
+  },
+  {
+    "id": 25,
+    "name": "Los Crovas",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 5,
+      "rating_impacto": 4,
+      "rating_viabilidad": 4,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "'Los Crovas' representa un proyecto de turismo de autor y oficio de altísima calidad. La manufactura artesanal de pipas con maderas nativas aporta una exclusividad internacional inédita para Esquel. Su viabilidad operativa es inmediata al contar con taller propio. Comparto la visión de que el reto radica en adecuar la bioseguridad del espacio para visitas y resolver el marco legal para las degustaciones. Este producto es un claro ejemplo de la economía de los recuerdos, donde el visitante se lleva una pieza identitaria, tangible y de lujo patagónico."
+  },
+  {
+    "id": 24,
+    "name": "Mica Perez Cocinera",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "La pastelería de 'Mica Perez Cocinera' posee una calidad artesanal comprobada y un loable enfoque de impacto social al integrar a mujeres productoras. Si bien los productos regionales suman a la gastronomía local, como experiencia turística directa el proyecto aún es incipiente. Concuerdo en que requiere una fuerte inversión en equipamiento y en la adecuación de un local propio para recibir visitantes. Para insertarse en el circuito de Esquel, podría aliarse con casas de té y prestadores, convirtiéndose en el proveedor estrella de 'meriendas patagónicas'."
+  },
+  {
+    "id": 23,
+    "name": "Pausa de ñire",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "'Pausa de ñire' aborda acertadamente el turismo de bienestar mediante la inmersión contemplativa de los 'baños de bosque'. La utilización del bosque nativo y la capacitación específica del emprendedor son grandes fortalezas. Aunque su ubicación en Trevelin genera debate sobre el alcance jurisdiccional del programa, su valor para la microrregión es innegable. Para despegar, requiere profesionalizar la señalética y la comercialización. Es una propuesta necesaria que invita al turista a desacelerar, enriqueciendo la oferta alternativa de la cordillera chubutense."
+  },
+  {
+    "id": 22,
+    "name": "Yamamori Travel",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 3,
+      "rating_viabilidad": 4,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "El proyecto 'Yamamori Travel' presenta una visión receptiva sumamente especializada, buscando captar al turismo japonés de alta gama. Su diferencial radica en la aplicación del 'omotenashi' y la sensibilidad cultural asiática. Aunque no posee infraestructura propia, su rol como comercializadora e integradora de servicios locales es estratégico para internacionalizar a Esquel. Coincido en que el reto será sostener la operatividad receptiva y formalizar alianzas firmes con prestadores locales que puedan estar a la altura de las exigencias de este nicho internacional."
+  },
+  {
+    "id": 20,
+    "name": "Vultur",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "La propuesta de 'Vultur' se centra en el senderismo interpretativo con un profundo enfoque en la geomorfología y la historia de los pueblos originarios. Si bien este relato es valioso, el proyecto se encuentra en una etapa muy embrionaria y carece de activos críticos como un vehículo propio para la logística. Como han destacado otros jueces, para transformarse en un producto turístico viable y no solo en un servicio esporádico, debe definir circuitos específicos, estructurar su comercialización y forjar alianzas de traslado con agencias receptivas de Esquel."
+  },
+  {
+    "id": 19,
+    "name": "LO DE POROTA...",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 4,
+      "rating_viabilidad": 4,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La propuesta 'LO DE POROTA' fusiona brillantemente la merienda campera con el patrimonio arqueológico e histórico familiar, ofreciendo una experiencia inmersiva única en el casco urbano. Dispone del espacio físico y los recursos materiales, lo que le otorga gran viabilidad. Concuerdo en que el acompañamiento debe centrarse en el encuadre legal de la colección arqueológica, el desarrollo de marca y la comercialización. Es una iniciativa que nutre la economía de los recuerdos, permitiendo al turista conectar emocionalmente con las raíces patagónicas."
+  },
+  {
+    "id": 18,
+    "name": "Centro Integral Ecuestre Lucero",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 4,
+      "rating_viabilidad": 4,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "El 'Centro Integral Ecuestre Lucero' es una iniciativa de excelencia que enriquece el turismo rural y de bienestar. Su oferta interdisciplinaria, que combina actividades ecuestres con equinoterapia y constelaciones, es altamente diferenciadora. Al contar con un predio operativo, su viabilidad es robusta. Comparto la visión de que el siguiente paso es profesionalizar el marketing y crear un punto de venta físico para consolidar la oferta. Esta propuesta es clave para fortalecer la identidad del destino, promoviendo un vínculo transformador con la naturaleza."
+  },
+  {
+    "id": 16,
+    "name": "Esquel a la mesa",
+    "ratings": {
+      "rating_perfil": 2,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 2
+    },
+    "comentario": "'Esquel a la mesa' posee un loable espíritu de anfitrionaje y promueve la gastronomía identitaria. La idea de revalorizar la RNU Laguna La Zeta con un food truck es atractiva, pero se enfrenta a serias restricciones burocráticas y de infraestructura pública (concesiones, electricidad, sanitarios). Como señalaron los evaluadores, la dependencia de espacios municipales regulados compromete su viabilidad a corto plazo. Sería más factible asociar esta oferta culinaria rodante con eventos privados o predios ya habilitados, garantizando un servicio constante y de calidad."
+  },
+  {
+    "id": 15,
+    "name": "EL ARROYO QUE NOS VE CRECER...",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La iniciativa de caminatas históricas por el arroyo y las laderas ofrece un valioso enfoque patrimonial y sociocultural. El respaldo académico del equipo y el conocimiento empírico son indiscutibles. No obstante, comparto las dudas sobre la transición de un 'evento cultural' a un producto turístico comercializable. Para integrarse al mercado, el proyecto necesita definir su identidad visual, establecer precios competitivos y garantizar la seguridad de los recorridos urbanos. Es una propuesta excelente para descentralizar los flujos turísticos dentro de la ciudad de Esquel."
+  },
+  {
+    "id": 13,
+    "name": "TRUE PATAGONIA",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "El paquete inmersivo 'TRUE PATAGONIA' agrupa magistralmente la cultura textil, la alfarería y la vida rural mapuche-tehuelche. Esta propuesta tiene un enorme potencial para desestacionalizar el turismo y ofrecer una vivencia verdaderamente transformadora. Al ser una idea conceptual, su viabilidad depende completamente de la formalización de alianzas con los prestadores locales (alojamientos, artesanos, guías). Coincido en que, de lograr articular esta red de saberes bajo una gestión comercial unificada, se convertirá en un producto estrella para el turismo internacional."
+  },
+  {
+    "id": 12,
+    "name": "FLYPARK",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 5,
+      "rating_impacto": 4,
+      "rating_viabilidad": 4,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "'FLYPARK' es una apuesta estratégica y disruptiva que consolida a Esquel como un destino de montaña urbano todo el año. La pista de dryslope democratiza el acceso a los deportes de nieve y rompe la dependencia climática y concesionaria. El equipo cuenta con la experiencia técnica necesaria y el proyecto está avanzado. Como bien apuntan las evaluaciones, el desafío es asegurar el marco legal del predio a largo plazo y completar la inversión en infraestructura. Es una iniciativa clave para la matriz turística, deportiva y comunitaria de la región."
+  },
+  {
+    "id": 11,
+    "name": "Mis sueños s",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "La propuesta bicéfala de Azucena (recorrido cervecero periférico y necroturismo histórico) tiene un atractivo singular para diversificar la oferta urbana. El cementerio local alberga un rico patrimonio histórico no explotado, similar a tours de gran éxito en capitales globales. Concuerdo con la observación de que debe enfocarse en una sola línea para evitar dispersión, y que el perfil del postulante como guía técnica es una gran base. No obstante, las habilitaciones municipales para visitas nocturnas o solemnes al cementerio representan un cuello de botella regulatorio clave que requiere validación previa."
+  },
+  {
+    "id": 10,
+    "name": "Patagonia Foods & Co",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 2,
+      "rating_impacto": 2,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 4
+    },
+    "comentario": "Javier tiene un emprendimiento gastronómico ya consolidado y un claro deseo de profesionalización, lo que reduce la incertidumbre operativa inicial. No obstante, en la matriz actual de Esquel, la oferta tradicional de comida rápida convencional (hamburguesas y lomitos) compite en un mercado ya saturado y tiene baja atracción turística directa. Coincido plenamente en que la clave de su acompañamiento en el LAB radica en la diferenciación identitaria: debe redefinir su menú integrando sabores cordilleranos y productos típicos de la región para convertirse en una verdadera parada de valor cultural para el visitante."
+  },
+  {
+    "id": 9,
+    "name": "Latidos del Sur- Navegación en espejos de agua",
+    "ratings": {
+      "rating_perfil": 4,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 3,
+      "rating_viabilidad": 2,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La propuesta de navegación a vela de Ángel Fabián es conceptualmente brillante y cubre un vacío absoluto de oferta recreativa lacustre en el Parque Nacional. A diferencia del transporte regular, plantea el paseo contemplativo y didáctico a bordo, integrando productores gastronómicos de Esquel. No obstante, la viabilidad real del proyecto está severamente condicionada a nivel global por la falta de embarcación propia y los complejos permisos regulatorios comerciales de Parques Nacionales y Prefectura Naval. Sería un proyecto tractor extraordinario para el destino si logra capitalizarse e integrarse formalmente."
+  },
+  {
+    "id": 8,
+    "name": "Patagonia Retro",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 3,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La colección de objetos cotidianos de 'Patagonia Retro' tiene el potencial de convertirse en un atractivo cultural nostálgico, ideal para días de clima adverso. Su integración actual con el alojamiento es un buen punto de partida, pero para impactar en el destino debe abrirse al público general. Concuerdo con la necesidad de profesionalizar la museografía, incorporando actividades interactivas (photo opportunities) y definiendo una estrategia de comercialización clara que transforme una pasión privada en un producto turístico rentable y memorable."
+  },
+  {
+    "id": 7,
+    "name": "Sabor Mapuche",
+    "ratings": {
+      "rating_perfil": 3,
+      "rating_diferenciacion": 4,
+      "rating_impacto": 3,
+      "rating_viabilidad": 3,
+      "rating_producto_fisico": 3
+    },
+    "comentario": "La propuesta de 'Sabor Mapuche' es un baluarte del agroturismo y la cultura preexistente, con un inmenso valor identitario para la región. Ofrece una inmersión auténtica a través de la gastronomía y las labores de campo. Sin embargo, concuerdo en que la infraestructura sanitaria debe ser una prioridad de inversión para garantizar la calidad del servicio. Además, es crucial reorientar la comunicación sobre la interacción animal hacia prácticas de bienestar, adaptándose a las exigencias del turista moderno y garantizando una experiencia educativa, respetuosa y culturalmente rica."
+  }
+]
