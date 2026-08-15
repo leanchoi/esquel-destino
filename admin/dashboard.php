@@ -249,41 +249,43 @@ function puntaje_jurado(array $c): string
     </a>
   </div>
 
-  <form method="get" class="filters">
-    <select name="program">
-      <option value="">Todas las líneas</option>
-      <?php foreach (PROGRAMAS as $k => $p): ?>
-        <option value="<?= e($k) ?>" <?= $filtros['program'] === $k ? 'selected' : '' ?>><?= e($p['nombre']) ?></option>
-      <?php endforeach; ?>
-    </select>
-    <select name="stage">
-      <option value="">Todos los estados</option>
-      <?php foreach (ESTADOS as $k => $s): ?>
-        <option value="<?= e($k) ?>" <?= $filtros['stage'] === $k ? 'selected' : '' ?>><?= e($s['label']) ?></option>
-      <?php endforeach; ?>
-    </select>
-    <select name="jurado">
-      <option value="">Todo el jurado</option>
-      <?php
-      // "Con disenso" mide la distancia entre el voto más alto y el más bajo,
-      // así que es información sobre los votos ajenos: va sólo para el admin.
-      // Y si se ofreciera igual, para un evaluador no devolvería nunca nada,
-      // que es la peor forma de esconder algo: parece que el panel falla.
-      $opcionesJurado = [
-        'mio'      => 'Me falta votar',
-        'falta'    => 'Falta algún jurado',
-        'completo' => 'Votó todo el jurado',
-      ];
-      if ($puedeVerVotos) {
-          $opcionesJurado['disenso'] = 'Con disenso';
-      }
-      foreach ($opcionesJurado as $k => $lbl): ?>
-        <option value="<?= e($k) ?>" <?= $filtros['jurado'] === $k ? 'selected' : '' ?>><?= e($lbl) ?></option>
-      <?php endforeach; ?>
-    </select>
-    <input type="search" name="q" value="<?= e($filtros['q']) ?>" placeholder="Buscar proyecto, persona o correo…">
-    <button type="submit" class="btn btn-secondary btn-sm">Filtrar</button>
-    <?php if (array_filter($filtros)): ?><a href="dashboard.php" class="clear">Limpiar</a><?php endif; ?>
+  <div class="filters">
+    <form method="get" style="display:contents;">
+      <select name="program">
+        <option value="">Todas las líneas</option>
+        <?php foreach (PROGRAMAS as $k => $p): ?>
+          <option value="<?= e($k) ?>" <?= $filtros['program'] === $k ? 'selected' : '' ?>><?= e($p['nombre']) ?></option>
+        <?php endforeach; ?>
+      </select>
+      <select name="stage">
+        <option value="">Todos los estados</option>
+        <?php foreach (ESTADOS as $k => $s): ?>
+          <option value="<?= e($k) ?>" <?= $filtros['stage'] === $k ? 'selected' : '' ?>><?= e($s['label']) ?></option>
+        <?php endforeach; ?>
+      </select>
+      <select name="jurado">
+        <option value="">Todo el jurado</option>
+        <?php
+        // "Con disenso" mide la distancia entre el voto más alto y el más bajo,
+        // así que es información sobre los votos ajenos: va sólo para el admin.
+        // Y si se ofreciera igual, para un evaluador no devolvería nunca nada,
+        // que es la peor forma de esconder algo: parece que el panel falla.
+        $opcionesJurado = [
+          'mio'      => 'Me falta votar',
+          'falta'    => 'Falta algún jurado',
+          'completo' => 'Votó todo el jurado',
+        ];
+        if ($puedeVerVotos) {
+            $opcionesJurado['disenso'] = 'Con disenso';
+        }
+        foreach ($opcionesJurado as $k => $lbl): ?>
+          <option value="<?= e($k) ?>" <?= $filtros['jurado'] === $k ? 'selected' : '' ?>><?= e($lbl) ?></option>
+        <?php endforeach; ?>
+      </select>
+      <input type="search" name="q" value="<?= e($filtros['q']) ?>" placeholder="Buscar proyecto, persona o correo…">
+      <button type="submit" class="btn btn-secondary btn-sm">Filtrar</button>
+      <?php if (array_filter($filtros)): ?><a href="dashboard.php" class="clear">Limpiar</a><?php endif; ?>
+    </form>
 
     <span class="grow"></span>
     <div class="view-toggle" role="tablist" aria-label="Cómo ver las postulaciones">
@@ -305,7 +307,7 @@ function puntaje_jurado(array $c): string
         </button>
       </form>
     <?php endif; ?>
-  </form>
+  </div>
 
   <?php if (!$apps): ?>
     <div class="empty-state">No hay postulaciones que coincidan con estos filtros.</div>
