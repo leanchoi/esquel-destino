@@ -314,3 +314,17 @@ function historial_por_jurado(PDO $pdo, int $appId, ?int $userId = null): array
 
     return $porJurado;
 }
+
+/**
+ * Consulta si la votación y evaluaciones están actualmente pausadas por la coordinación.
+ */
+function evaluaciones_pausadas(PDO $pdo): bool
+{
+    try {
+        $stmt = $pdo->prepare("SELECT value FROM settings WHERE key = 'evaluations_paused' LIMIT 1");
+        $stmt->execute();
+        return $stmt->fetchColumn() === '1';
+    } catch (Throwable $e) {
+        return false;
+    }
+}

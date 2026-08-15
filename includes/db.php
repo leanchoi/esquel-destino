@@ -208,6 +208,12 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );");
 
+    // Configuración general del panel y procesos.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS settings (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL
+    );");
+
     // Migraciones de columnas.
     //
     // El CREATE TABLE IF NOT EXISTS de arriba no toca una tabla que ya existe,

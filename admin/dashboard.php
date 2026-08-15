@@ -6,6 +6,20 @@ require_once __DIR__ . '/../includes/jurado.php';
 $u = requiere_login();
 $pdo = db();
 
+// Alternar pausa de evaluaciones (solo administrador)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && puede('admin')) {
+    if (csrf_valido($_POST['csrf_token'] ?? null)) {
+        $accion = $_POST['accion'] ?? '';
+        if ($accion === 'toggle_pause') {
+            $nuevo_estado = ($_POST['estado'] ?? '0') === '1' ? '1' : '0';
+            $stmt = $pdo->prepare("INSERT INTO settings (key, value) VALUES ('evaluations_paused', ?)
+                                    ON CONFLICT(key) DO UPDATE SET value = excluded.value");
+            $stmt->execute([$nuevo_estado]);
+            redirect('dashboard.php');
+        }
+    }
+}
+
 $filtros = [
     'program' => $_GET['program'] ?? '',
     'stage'   => $_GET['stage'] ?? '',
@@ -209,6 +223,16 @@ function puntaje_jurado(array $c): string
 
 <div class="admin-content">
 
+  <?php if (evaluaciones_pausadas($pdo)): ?>
+    <div class="callout" style="margin-bottom: 24px; border-left: 4px solid #d97706; background: #fffbeb; color: #92400e; padding: 14px 18px; border-radius: 6px; font-size: 15px;">
+      <strong>Votación pausada temporalmente.</strong> 
+      <?= puede('admin') 
+        ? 'Las evaluaciones y cambios de votos están suspendidos para los jurados. Podés reanudarlos usando el botón en la barra de filtros.' 
+        : 'La coordinación ha pausado la votación de forma temporal. Podés ver los proyectos y tu historial, pero no es posible emitir nuevos votos ni editar comentarios.' 
+      ?>
+    </div>
+  <?php endif; ?>
+
   <div class="stats">
     <div class="stat"><span class="k">Total</span><span class="v"><?= (int) $tot['total'] ?></span></div>
     <div class="stat acelera"><span class="k">Acelera</span><span class="v"><?= (int) $tot['acelera'] ?></span></div>
@@ -269,8 +293,17 @@ function puntaje_jurado(array $c): string
     </div>
     <?php /* El CSV lleva el voto y el comentario de cada jurado con nombre y
              apellido, y el DNI de cada postulante: es del admin. */ ?>
-    <?php if (puede('admin')): ?>
+    <?php if (puede('admin')): 
+      $pausadas = evaluaciones_pausadas($pdo); ?>
       <a href="api.php?export=csv&amp;<?= e($queryFiltros) ?>" class="btn btn-secondary btn-sm">Descargar CSV</a>
+      <form method="post" style="display:inline; margin-left:8px;">
+        <?= csrf_field() ?>
+        <input type="hidden" name="accion" value="toggle_pause">
+        <input type="hidden" name="estado" value="<?= $pausadas ? '0' : '1' ?>">
+        <button type="submit" class="btn <?= $pausadas ? 'btn-primary' : 'btn-secondary' ?> btn-sm" style="display:inline-flex; align-items:center; gap:4px;">
+          <?= $pausadas ? '🟢 Habilitar Votación' : '⏸️ Pausar Votación' ?>
+        </button>
+      </form>
     <?php endif; ?>
   </form>
 
@@ -448,7 +481,7 @@ function puntaje_jurado(array $c): string
     'pistas'      => PISTAS_COMENTARIO,
     'jurado'      => $jurado,
     'yo'          => ['id' => $miId, 'username' => $u['username'], 'role' => $u['role']],
-    'puedeVotar'  => $soyJuez,
+    'puedeVotar'  => $soyJuez && !evaluaciones_pausadas($pdo),
     'puedeVerVotos' => $puedeVerVotos,
     'puedeEstado' => puede('admin'),
     'puedeBorrar' => puede('admin'),

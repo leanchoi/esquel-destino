@@ -178,6 +178,15 @@ if (in_array($data['accion'] ?? '', ['voto', 'retirar-voto'], true) && !es_jurad
     exit(json_encode(['ok' => false, 'error' => 'Tu rol no emite voto. El jurado son los evaluadores.']));
 }
 
+// Si las evaluaciones están pausadas, nadie (excepto posiblemente en scripts internos)
+// puede modificar votos ni restaurar versiones desde el panel.
+if (in_array($data['accion'] ?? '', ['voto', 'retirar-voto', 'restaurar-version'], true)) {
+    if (evaluaciones_pausadas($pdo)) {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Las evaluaciones están pausadas temporalmente por la coordinación.']));
+    }
+}
+
 $id = (int) ($data['id'] ?? 0);
 if ($id <= 0) {
     http_response_code(400);
