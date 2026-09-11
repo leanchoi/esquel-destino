@@ -209,10 +209,10 @@ function lab_asegurar_datos(PDO $pdo): void
                 1,
                 'mariela',
                 'cesia',
-                "[\"Taller de carpintería y artesanía en maderas nobles de la región.\",\"Mano de obra calificada y diseño de objetos utilitarios y decorativos para turistas.\",\"Disponibilidad de taller propio.\"]",
-                "[\"Tiempos de producción artesanal vs volumen requerido.\",\"Falta de espacio de exhibición propio céntrico.\"]",
-                "[{\"t\":\"Línea Turística\",\"items\":[\"Seleccionar 4 productos estrella de fácil transporte en valija.\",\"Grabado de identidad y sello Esquel.\"]},{\"t\":\"Canales Comerciales\",\"items\":[\"Inserción en tiendas de regionales y hoteles.\",\"Venta por encargo y catálogo digital.\"]}]",
-                "[\"Ficha de costos y precios de los 4 productos.\",\"Convenio de exhibición en al menos 2 comercios.\"]"
+                "[\"Artesano de la madera nacido y criado en Barrio Estación (Esquel, 38 años), con formación técnica formal de 3 años en carpintería de banco y torneado en el Centro de Formación Profesional (CFP) Nº 655 de calle Chacabuco, egresado con honores.\",\"Capacidad técnica y productiva demostrada en torno de madera y banco: confecciona cuencos, mates torneados, platos de asado, fuentes y mobiliario artesanal en maderas nobles (lenga, ciprés, radal). Dispone de taller de armado, torneado y lijado en el patio de su vivienda (calle Brown 1570) y utiliza la maquinaria pesada del Centro de Apoyo a la Producción de Esquel (CAPEC) pagando el canon de uso comunitario ('CAM') para tareas de cepillado y dimensionado grueso.\",\"Estructura familiar y vocación de arraigo: padre de 4 hijos (de 14, 10, 8 años y un lactante de 10 meses), su esposa es docente de nivel inicial y apoya en la gestión comercial. Disponibilidad horaria neta en turnos matutinos (08:30 a 14:30) y fines de semana para recepción turística.\"]",
+                "[\"Cuello de botella en maquinado primario y estacionalidad edilicia: dependencia del taller del CAPEC para escuadrado y cepillado de tablones en bruto; taller hogareño expuesto al invierno cordillerano por falta de cerramiento y aislación térmica adecuada.\",\"Dispersión de catálogo y sub-costeo artesanal: coexistencia de pedidos a medida de carpintería general (muebles, aberturas) con piezas torneadas de souvenirs, sin una matriz que dimensione horas-hombre de torno, desgaste de gubias, lijas y acabados alimentarios no tóxicos (cera de abejas y aceite mineral).\",\"Falta de canales de comercialización fijos y experiencia vivencial inexplorada: inexistencia de puntos de venta en el circuito céntrico o tiendas de montaña, y desaprovechamiento del valor patrimonial del torno en vivo como experiencia turística comunitaria en Barrio Estación.\"]",
+                "[{\"t\":\"Curaduría del Catálogo Turístico B2B (4 Piezas Estrella)\",\"items\":[\"Selección y estandarización de las 4 piezas insignia: Cuenco Mediano Torneado, Mate Rústico con Virola o Base Firme, Plato de Asado Patagónico y Cuchara Rústica con Grabado.\",\"Identidad y autenticidad: marca 'Carpintero Esquel' aplicada a fuego, etiqueta colgante de madera noble con origen regional y acabado no tóxico con aceites naturales.\"]},{\"t\":\"Experiencia 'Taller Abierto en Barrio Estación'\",\"items\":[\"Diseño de la vivencia turística para grupos reducidos (2 a 4 personas): demostración de torneado en vivo, participación en lijado y pulido de su propia pieza, marcado a fuego y mateada campesina tradicional.\",\"Protocolo estricto de bioseguridad: zona segura demarcada a 1,5 metros del torno, uso obligatorio de antiparras y protección auditiva; turista nunca opera herramientas de corte.\"]},{\"t\":\"Estructura de Costos, Canales Comerciales y Mejora de Infraestructura\",\"items\":[\"Planilla paramétrica de costos y fijación de precios mayoristas y minoristas para regionales y hoteles.\",\"Colocación en consignación en al menos 2 comercios céntricos con remito formal a 15 días.\",\"Articulación con Secretaría de Producción / CAPEC (Paula Botto) para formulación de proyecto de financiamiento para cerramiento y aislación del taller.\"]}]",
+                "[\"Ficha técnica y costos estandarizados de las 4 piezas de la Línea Turística Estrella.\",\"Catálogo digital profesional (PDF y ficha técnica de producto) con fotografía 4K de piezas.\",\"Protocolo operativo y de seguridad para la experiencia 'Taller Abierto en Barrio Estación'.\",\"Acuerdo de consignación y colocación de stock inicial en al menos 2 comercios céntricos o regionales de Esquel.\",\"Proyecto técnico-económico de mejora edilicia del taller formulado para presentación ante líneas de crédito productivas.\"]"
             ],
             [
                 'corcho',
@@ -1800,171 +1800,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'carpint-01',
                 'carpint',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
-                'ind',
-                "Taller / Local",
-                '2026-09-11',
+                "Diagnóstico en Taller de Barrio Estación y Relevamiento del Torno",
+                'ter',
+                "Taller Carpintero Esquel (Brown 1570, B° Estación)",
+                '2026-09-17',
                 "10:00",
-                "11:30",
+                "12:30",
                 'programada',
-                "Conocer el espacio real de trabajo de José Maximiliano Manquin. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Carpintero Esquel hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Visitar el taller hogareño de Maxi en calle Brown 1570. Relevar el torno de madera, las gubias, herramientas de lijado, acopio de troncos y tablones nobles (lenga, radal, ciprés). Evaluar el lay-out actual para definir la zona segura para visitantes (a 1,5 m de la bancada del torno).",
+                "[\"¿Cuánto tiempo real te insume tornear un cuenco mediano desde el trozo en bruto hasta el lijado final?\",\"¿Qué trabajos pesados te obligan sí o sí a trasladar madera al CAPEC y cuánto pagás por el canon CAM?\",\"¿Cómo resolvés el frío y la lluvia en el patio durante el invierno para no frenar la producción?\"]",
+                "[\"Relevar medidas y lay-out del taller para delimitar la zona de visita y zona segura del torno.\",\"Identificar las piezas con mayor demanda histórica y mayor margen de ganancia artesanal.\",\"Establecer el cronograma de trabajo conjunto y disponibilidad matutina de Maxi.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar torno de madera, herramientas y stock de maderas nobles en taller\",\"done\":false},{\"id\":2,\"texto\":\"Medir distancias de seguridad y demarcar visualmente la zona de visitantes a 1,5 m\",\"done\":false},{\"id\":3,\"texto\":\"Listar los 4 productos candidatos a conformar la Línea Turística Estrella\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'carpint-02',
                 'carpint',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
+                "Estandarización de las 4 Piezas Estrella y Acabados Alimentarios",
                 'ind',
-                "Turismo",
-                '2026-09-18',
-                "10:00",
-                "11:30",
+                "Taller Carpintero Esquel",
+                '2026-09-24',
+                "10:30",
+                "12:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Seleccionar y cerrar las 4 piezas definitivas de la línea turística (Cuenco Mediano, Mate Torneado con Sello, Plato de Asado y Cuchara Rústica). Estandarizar dimensiones, tiempos de torno, tipo de madera y protocolo de curado alimentario seguro con cera de abejas y aceite mineral.",
+                "[\"¿Qué tratamiento o sellador usás actualmente para que los cuencos y mates no se rajen ni transmitan sabores extraños?\",\"¿Cuál es el costo unitario de lija, sellador y marca a fuego por pieza?\",\"¿Podemos garantizar un stock mínimo de 10 unidades por pieza para abastecer consignaciones iniciales?\"]",
+                "[\"Cerrar la ficha técnica con dimensiones y tolerancias de cada una de las 4 piezas estrella.\",\"Validar la fórmula de curado artesanal inocuo y apto para alimentos calientes y fríos.\",\"Diseñar la etiqueta colgante de madera o papel kraft que certifique autenticidad y origen cordillerano.\"]",
+                "[{\"id\":1,\"texto\":\"Definir medidas exactas de cuenco, mate, plato y cuchara rústica\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar el protocolo de curado inocuo con cera de abejas virgen\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar el boceto de etiqueta colgante con historia de Barrio Estación y cuidados de la madera\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'carpint-03',
                 'carpint',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Costeo Integral, Tiempos de Maquinado y Tarifario Mayorista/Minorista",
                 'ind',
-                "Turismo",
-                '2026-09-22',
-                "11:00",
+                "Oficinas de Turismo / LAB Esquel",
+                '2026-10-01',
+                "10:30",
                 "12:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Construir la planilla de costeo paramétrico de las 4 piezas. Desglosar costo de pie de madera, canon de uso del CAPEC, desgaste de herramientas/lijas, cera, marca a fuego, y cuantificar la mano de obra calificada por hora de torno. Fijar precios sugeridos al público y precio mayorista para comercios (margen del 30-40% para el revendedor).",
+                "[\"¿Cuántas piezas podés producir por semana sin descuidar pedidos de carpintería tradicional?\",\"¿A qué precio vendías antes tus piezas y qué margen real te quedaba tras comprar insumos?\",\"¿Qué porcentaje de comisión o descuento comercial resulta viable ofrecer a regionales y hoteles?\"]",
+                "[\"Parametrizar el costo unitario real de cada pieza en planilla Excel/Drive.\",\"Establecer el precio de venta mayorista y el precio de venta sugerido al público (PVP).\",\"Fijar la política de reposición y plazos de pago para tiendas en consignación.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos unitarios con amortización de herramientas y CAPEC\",\"done\":false},{\"id\":2,\"texto\":\"Emitir la lista de precios oficial mayorista y minorista de la Línea Turística\",\"done\":false},{\"id\":3,\"texto\":\"Redactar modelo de remito y acta de entrega en consignación a 15 días\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'carpint-04',
                 'carpint',
                 4,
-                "Puesta en común Célula undefined",
-                'gru',
-                "Célula undefined (Turismo)",
-                '2026-09-30',
-                "09:30",
-                "12:00",
+                "Guion Vivencial Taller Abierto en Barrio Estación y Protocolo de Seguridad",
+                'ter',
+                "Taller Carpintero Esquel",
+                '2026-10-08',
+                "10:00",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["mariela"]
+                "Estructurar la experiencia vivencial turística para grupos reducidos (2 a 4 personas). Diseñar la secuencia: bienvenida con reseña del oficio y Barrio Estación, demostración de torneado en vivo, participación guiada del turista en lijado de su propia pieza, marcado a fuego y cierre con mateada campesina. Validar el protocolo de seguridad y zona restringida.",
+                "[\"¿Qué sensaciones y anécdotas del oficio de carpintero querés transmitirle al visitante durante la demostración?\",\"¿En qué momento exacto de la pieza participa el turista para que sea una experiencia segura y sin riesgo de corte?\",\"¿Cómo articulamos con tu familia la preparación del mate y las tortas fritas para la bienvenida?\"]",
+                "[\"Redactar el guion vivencial paso a paso de 60 a 75 minutos de duración.\",\"Formalizar el protocolo de bioseguridad y elementos de protección (antiparras obligatorias).\",\"Definir el valor de la entrada o ticket por persona que incluya la pieza personalizada de recuerdo.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar el guion de la experiencia Taller Abierto en Barrio Estación\",\"done\":false},{\"id\":2,\"texto\":\"Comprobar stock de antiparras de seguridad y cartelería de precaución en torno\",\"done\":false},{\"id\":3,\"texto\":\"Simular la secuencia de lijado participativo y marcado a fuego con el equipo técnico\",\"done\":false}]",
+                ["mariela","cesia"]
             ],
             [
                 'carpint-05',
                 'carpint',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Taller / Turismo",
-                '2026-10-6',
+                "Producción Fotográfica 4K, Catálogo Digital y Piezas de Comunicación",
+                'ter',
+                "Taller Carpintero Esquel",
+                '2026-10-15',
                 "10:00",
-                "11:30",
+                "13:00",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
-                ["mariela","cesia"]
+                "Sesión fotográfica y de video profesional 4K en el taller con iluminación natural y encuadres de virutas volando en el torno. Registrar las 4 piezas terminadas y la dinámica vivencial con el artesano. Armar el catálogo digital interactivo para envío a agencias receptivas y hotelería de alta gama.",
+                "[\"¿Qué piezas y maderas tienen mejor veta y presencia visual para el plano detalle de fotografía?\",\"¿Cómo querés presentar tu historia personal en el texto de portada del catálogo digital?\",\"¿Qué canales de contacto directo (WhatsApp comercial, Instagram) vamos a vincular al catálogo?\"]",
+                "[\"Generar un banco de 25 fotografías profesionales en alta resolución y clips cortos de torno en vivo.\",\"Maquetar el catálogo digital PDF de la Línea Turística con ficha técnica de cada madera noble.\",\"Configurar el perfil de Instagram y WhatsApp Business con catálogo integrado de productos.\"]",
+                "[{\"id\":1,\"texto\":\"Realizar sesión fotográfica de piezas individuales y demostración en torno\",\"done\":false},{\"id\":2,\"texto\":\"Seleccionar las 15 mejores imágenes y redactar reseñas de cada producto\",\"done\":false},{\"id\":3,\"texto\":\"Generar el catálogo digital interactivo en formato PDF y enlace web\",\"done\":false}]",
+                ["mariela","cesia","leandro"]
             ],
             [
                 'carpint-06',
                 'carpint',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Articulación CAPEC, Proyecto de Infraestructura y Rueda Comercial B2B",
                 'ind',
-                "Turismo",
-                '2026-10-14',
-                "10:00",
-                "11:30",
+                "CAPEC Esquel / Secretaría de Producción",
+                '2026-10-22',
+                "10:30",
+                "12:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
-                ["mariela","cesia"]
+                "Reunión de trabajo con la coordinación del CAPEC (Paula Botto) y Producción. Presentar la formulación de proyecto para subsidio o microcrédito destinado al cerramiento térmico y techado definitivo del taller. Planificar la ronda de visitas a los primeros comercios céntricos y hoteles boutique para colocación en consignación.",
+                "[\"¿Cuáles son los montos máximos y requisitos de la línea de financiamiento productivo vigente en CAPEC?\",\"¿Qué comercios de regionales y chocolaterías del centro tienen el perfil de cliente adecuado para estas piezas nobles?\",\"¿Qué volumen de stock de piezas estrella tenemos listo para dejar en consignación esta semana?\"]",
+                "[\"Presentar el presupuesto de materiales para el cerramiento del taller ante la Secretaría de Producción.\",\"Visitar 3 comercios regionales de Esquel y presentar catálogo y muestras físicas de producto.\",\"Firmar acuerdos de consignación con remito oficial a 15 días con al menos 2 comercios.\"]",
+                "[{\"id\":1,\"texto\":\"Entregar anteproyecto técnico y presupuesto de cerramiento del taller en CAPEC\",\"done\":false},{\"id\":2,\"texto\":\"Visitar comercios céntricos seleccionados con muestras físicas y catálogo en mano\",\"done\":false},{\"id\":3,\"texto\":\"Dejar stock inicial de 5 cuencos, 5 mates y 5 tablas en al menos 2 comercios adheridos\",\"done\":false}]",
+                ["mariela","cesia","leandro"]
             ],
             [
                 'carpint-07',
                 'carpint',
                 7,
-                "Comunicación digital, contenido y redes",
-                'ind',
-                "Turismo",
-                '2026-10-21',
-                "10:00",
-                "11:30",
+                "Ensayo General de Taller Abierto (Fam Press y Validación en Campo)",
+                'ter',
+                "Taller Carpintero Esquel (Brown 1570)",
+                '2026-10-29',
+                "10:30",
+                "12:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
+                "Simulacro completo de la experiencia vivencial con un grupo de prueba (informantes de la Secretaría de Turismo y guías invitados). Evaluar el manejo de tiempos, la claridad de la demostración en torno, la seguridad del lijado participativo, el impacto del mate con tortas fritas caseras y la venta espontánea de piezas adicionales.",
+                "[\"¿Cómo se sintió Maxi al hablar y explicar frente a personas desconocidas mientras operaba el torno?\",\"¿El espacio de estacionamiento en calle Brown y el acceso peatonal al patio resultaron cómodos para los visitantes?\",\"¿Qué dudas o sugerencias plantearon los participantes durante la mateada final?\"]",
+                "[\"Validar la duración real de la experiencia (meta: 60 minutos cronometrados sin desvíos).\",\"Testear la comprensión de normas de seguridad y la satisfacción del visitante al estampar su pieza a fuego.\",\"Ajustar detalles del guion verbal y del rincón de exhibición de piezas a la venta.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el simulacro de la experiencia vivencial con 4 invitados externos\",\"done\":false},{\"id\":2,\"texto\":\"Recoger encuestas de feedback sobre seguridad, calidez y valor percibido del souvenir\",\"done\":false},{\"id\":3,\"texto\":\"Monitorear ventas de las primeras consignaciones en comercios céntricos y cobrar remitos cumplidos\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'carpint-08',
                 'carpint',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ind',
-                "Taller / Local",
-                '2026-10-28',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["mariela","cesia"]
-            ],
-            [
-                'carpint-09',
-                'carpint',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-3',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["mariela","cesia"]
-            ],
-            [
-                'carpint-10',
-                'carpint',
-                10,
-                "Distinción, resultados y rueda de negocios",
-                'cie',
-                "Acto de cierre",
-                '2026-11-10',
-                "10:00",
+                "Ronda de Negocios Final, Lanzamiento Oficial y Hoja de Ruta Post-LAB",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-05',
+                "09:30",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Participación protagónica en el Encuentro de Cierre y Ronda de Negocios de Esquel LAB. Montaje de mesa de exhibición de torneado y piezas de maderas nobles. Pitch de 3 minutos de Maxi presentando Carpintero Esquel: Artefactos con Alma de Bosque y Taller Abierto en Barrio Estación. Firma de acuerdos comerciales con prestadores turísticos y entrega del plan operativo post-incubación.",
+                "[\"¿Qué balance arrojan las primeras ventas en consignación y qué producto tuvo mayor rotación?\",\"¿Cómo organizará Maxi su calendario semanal entre producción de taller, CAPEC y visitas turísticas agendadas?\",\"¿Qué apoyo adicional requerirá para la ejecución de la obra del taller cuando se apruebe el financiamiento?\"]",
+                "[\"Exhibir la Línea Turística Estrella completa ante operadores turísticos, guías y autoridades municipales.\",\"Consolidar al menos 3 acuerdos de comercialización continua con hoteles y tiendas de diseño local.\",\"Entregar el informe de cierre de asistencia técnica y hoja de ruta productiva para la temporada 2026/2027.\"]",
+                "[{\"id\":1,\"texto\":\"Armar stand con virutas de madera, torno fotográfico y las 4 piezas estrella terminadas\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante el ecosistema turístico y comercial de Esquel\",\"done\":false},{\"id\":3,\"texto\":\"Firmar actas de compromiso comercial y balance de cobro de las primeras ventas\",\"done\":false}]",
+                ["mariela","cesia","leandro"]
             ],
             [
                 'corcho-01',
@@ -3210,7 +3176,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -4388,6 +4354,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rs[0];
             foreach ($asistentes as $consId) {
                 $insAsistSenderos->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Carpintero Esquel si todavía tiene la plantilla genérica inicial
+    $checkCarpint = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'carpint-01'")->fetchColumn();
+    if ($checkCarpint === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkCarpint) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'carpint-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'carpint'");
+
+        $insReuCarpint = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistCarpint = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesCarpint = [
+            [
+                'carpint-01',
+                'carpint',
+                1,
+                "Diagnóstico en Taller de Barrio Estación y Relevamiento del Torno",
+                'ter',
+                "Taller Carpintero Esquel (Brown 1570, B° Estación)",
+                '2026-09-17',
+                "10:00",
+                "12:30",
+                'programada',
+                "Visitar el taller hogareño de Maxi en calle Brown 1570. Relevar el torno de madera, las gubias, herramientas de lijado, acopio de troncos y tablones nobles (lenga, radal, ciprés). Evaluar el lay-out actual para definir la zona segura para visitantes (a 1,5 m de la bancada del torno).",
+                "[\"¿Cuánto tiempo real te insume tornear un cuenco mediano desde el trozo en bruto hasta el lijado final?\",\"¿Qué trabajos pesados te obligan sí o sí a trasladar madera al CAPEC y cuánto pagás por el canon CAM?\",\"¿Cómo resolvés el frío y la lluvia en el patio durante el invierno para no frenar la producción?\"]",
+                "[\"Relevar medidas y lay-out del taller para delimitar la zona de visita y zona segura del torno.\",\"Identificar las piezas con mayor demanda histórica y mayor margen de ganancia artesanal.\",\"Establecer el cronograma de trabajo conjunto y disponibilidad matutina de Maxi.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar torno de madera, herramientas y stock de maderas nobles en taller\",\"done\":false},{\"id\":2,\"texto\":\"Medir distancias de seguridad y demarcar visualmente la zona de visitantes a 1,5 m\",\"done\":false},{\"id\":3,\"texto\":\"Listar los 4 productos candidatos a conformar la Línea Turística Estrella\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'carpint-02',
+                'carpint',
+                2,
+                "Estandarización de las 4 Piezas Estrella y Acabados Alimentarios",
+                'ind',
+                "Taller Carpintero Esquel",
+                '2026-09-24',
+                "10:30",
+                "12:30",
+                'programada',
+                "Seleccionar y cerrar las 4 piezas definitivas de la línea turística (Cuenco Mediano, Mate Torneado con Sello, Plato de Asado y Cuchara Rústica). Estandarizar dimensiones, tiempos de torno, tipo de madera y protocolo de curado alimentario seguro con cera de abejas y aceite mineral.",
+                "[\"¿Qué tratamiento o sellador usás actualmente para que los cuencos y mates no se rajen ni transmitan sabores extraños?\",\"¿Cuál es el costo unitario de lija, sellador y marca a fuego por pieza?\",\"¿Podemos garantizar un stock mínimo de 10 unidades por pieza para abastecer consignaciones iniciales?\"]",
+                "[\"Cerrar la ficha técnica con dimensiones y tolerancias de cada una de las 4 piezas estrella.\",\"Validar la fórmula de curado artesanal inocuo y apto para alimentos calientes y fríos.\",\"Diseñar la etiqueta colgante de madera o papel kraft que certifique autenticidad y origen cordillerano.\"]",
+                "[{\"id\":1,\"texto\":\"Definir medidas exactas de cuenco, mate, plato y cuchara rústica\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar el protocolo de curado inocuo con cera de abejas virgen\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar el boceto de etiqueta colgante con historia de Barrio Estación y cuidados de la madera\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'carpint-03',
+                'carpint',
+                3,
+                "Costeo Integral, Tiempos de Maquinado y Tarifario Mayorista/Minorista",
+                'ind',
+                "Oficinas de Turismo / LAB Esquel",
+                '2026-10-01',
+                "10:30",
+                "12:30",
+                'programada',
+                "Construir la planilla de costeo paramétrico de las 4 piezas. Desglosar costo de pie de madera, canon de uso del CAPEC, desgaste de herramientas/lijas, cera, marca a fuego, y cuantificar la mano de obra calificada por hora de torno. Fijar precios sugeridos al público y precio mayorista para comercios (margen del 30-40% para el revendedor).",
+                "[\"¿Cuántas piezas podés producir por semana sin descuidar pedidos de carpintería tradicional?\",\"¿A qué precio vendías antes tus piezas y qué margen real te quedaba tras comprar insumos?\",\"¿Qué porcentaje de comisión o descuento comercial resulta viable ofrecer a regionales y hoteles?\"]",
+                "[\"Parametrizar el costo unitario real de cada pieza en planilla Excel/Drive.\",\"Establecer el precio de venta mayorista y el precio de venta sugerido al público (PVP).\",\"Fijar la política de reposición y plazos de pago para tiendas en consignación.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos unitarios con amortización de herramientas y CAPEC\",\"done\":false},{\"id\":2,\"texto\":\"Emitir la lista de precios oficial mayorista y minorista de la Línea Turística\",\"done\":false},{\"id\":3,\"texto\":\"Redactar modelo de remito y acta de entrega en consignación a 15 días\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'carpint-04',
+                'carpint',
+                4,
+                "Guion Vivencial Taller Abierto en Barrio Estación y Protocolo de Seguridad",
+                'ter',
+                "Taller Carpintero Esquel",
+                '2026-10-08',
+                "10:00",
+                "12:30",
+                'programada',
+                "Estructurar la experiencia vivencial turística para grupos reducidos (2 a 4 personas). Diseñar la secuencia: bienvenida con reseña del oficio y Barrio Estación, demostración de torneado en vivo, participación guiada del turista en lijado de su propia pieza, marcado a fuego y cierre con mateada campesina. Validar el protocolo de seguridad y zona restringida.",
+                "[\"¿Qué sensaciones y anécdotas del oficio de carpintero querés transmitirle al visitante durante la demostración?\",\"¿En qué momento exacto de la pieza participa el turista para que sea una experiencia segura y sin riesgo de corte?\",\"¿Cómo articulamos con tu familia la preparación del mate y las tortas fritas para la bienvenida?\"]",
+                "[\"Redactar el guion vivencial paso a paso de 60 a 75 minutos de duración.\",\"Formalizar el protocolo de bioseguridad y elementos de protección (antiparras obligatorias).\",\"Definir el valor de la entrada o ticket por persona que incluya la pieza personalizada de recuerdo.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar el guion de la experiencia Taller Abierto en Barrio Estación\",\"done\":false},{\"id\":2,\"texto\":\"Comprobar stock de antiparras de seguridad y cartelería de precaución en torno\",\"done\":false},{\"id\":3,\"texto\":\"Simular la secuencia de lijado participativo y marcado a fuego con el equipo técnico\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'carpint-05',
+                'carpint',
+                5,
+                "Producción Fotográfica 4K, Catálogo Digital y Piezas de Comunicación",
+                'ter',
+                "Taller Carpintero Esquel",
+                '2026-10-15',
+                "10:00",
+                "13:00",
+                'programada',
+                "Sesión fotográfica y de video profesional 4K en el taller con iluminación natural y encuadres de virutas volando en el torno. Registrar las 4 piezas terminadas y la dinámica vivencial con el artesano. Armar el catálogo digital interactivo para envío a agencias receptivas y hotelería de alta gama.",
+                "[\"¿Qué piezas y maderas tienen mejor veta y presencia visual para el plano detalle de fotografía?\",\"¿Cómo querés presentar tu historia personal en el texto de portada del catálogo digital?\",\"¿Qué canales de contacto directo (WhatsApp comercial, Instagram) vamos a vincular al catálogo?\"]",
+                "[\"Generar un banco de 25 fotografías profesionales en alta resolución y clips cortos de torno en vivo.\",\"Maquetar el catálogo digital PDF de la Línea Turística con ficha técnica de cada madera noble.\",\"Configurar el perfil de Instagram y WhatsApp Business con catálogo integrado de productos.\"]",
+                "[{\"id\":1,\"texto\":\"Realizar sesión fotográfica de piezas individuales y demostración en torno\",\"done\":false},{\"id\":2,\"texto\":\"Seleccionar las 15 mejores imágenes y redactar reseñas de cada producto\",\"done\":false},{\"id\":3,\"texto\":\"Generar el catálogo digital interactivo en formato PDF y enlace web\",\"done\":false}]",
+                ["mariela","cesia","leandro"]
+            ],
+            [
+                'carpint-06',
+                'carpint',
+                6,
+                "Articulación CAPEC, Proyecto de Infraestructura y Rueda Comercial B2B",
+                'ind',
+                "CAPEC Esquel / Secretaría de Producción",
+                '2026-10-22',
+                "10:30",
+                "12:30",
+                'programada',
+                "Reunión de trabajo con la coordinación del CAPEC (Paula Botto) y Producción. Presentar la formulación de proyecto para subsidio o microcrédito destinado al cerramiento térmico y techado definitivo del taller. Planificar la ronda de visitas a los primeros comercios céntricos y hoteles boutique para colocación en consignación.",
+                "[\"¿Cuáles son los montos máximos y requisitos de la línea de financiamiento productivo vigente en CAPEC?\",\"¿Qué comercios de regionales y chocolaterías del centro tienen el perfil de cliente adecuado para estas piezas nobles?\",\"¿Qué volumen de stock de piezas estrella tenemos listo para dejar en consignación esta semana?\"]",
+                "[\"Presentar el presupuesto de materiales para el cerramiento del taller ante la Secretaría de Producción.\",\"Visitar 3 comercios regionales de Esquel y presentar catálogo y muestras físicas de producto.\",\"Firmar acuerdos de consignación con remito oficial a 15 días con al menos 2 comercios.\"]",
+                "[{\"id\":1,\"texto\":\"Entregar anteproyecto técnico y presupuesto de cerramiento del taller en CAPEC\",\"done\":false},{\"id\":2,\"texto\":\"Visitar comercios céntricos seleccionados con muestras físicas y catálogo en mano\",\"done\":false},{\"id\":3,\"texto\":\"Dejar stock inicial de 5 cuencos, 5 mates y 5 tablas en al menos 2 comercios adheridos\",\"done\":false}]",
+                ["mariela","cesia","leandro"]
+            ],
+            [
+                'carpint-07',
+                'carpint',
+                7,
+                "Ensayo General de Taller Abierto (Fam Press y Validación en Campo)",
+                'ter',
+                "Taller Carpintero Esquel (Brown 1570)",
+                '2026-10-29',
+                "10:30",
+                "12:30",
+                'programada',
+                "Simulacro completo de la experiencia vivencial con un grupo de prueba (informantes de la Secretaría de Turismo y guías invitados). Evaluar el manejo de tiempos, la claridad de la demostración en torno, la seguridad del lijado participativo, el impacto del mate con tortas fritas caseras y la venta espontánea de piezas adicionales.",
+                "[\"¿Cómo se sintió Maxi al hablar y explicar frente a personas desconocidas mientras operaba el torno?\",\"¿El espacio de estacionamiento en calle Brown y el acceso peatonal al patio resultaron cómodos para los visitantes?\",\"¿Qué dudas o sugerencias plantearon los participantes durante la mateada final?\"]",
+                "[\"Validar la duración real de la experiencia (meta: 60 minutos cronometrados sin desvíos).\",\"Testear la comprensión de normas de seguridad y la satisfacción del visitante al estampar su pieza a fuego.\",\"Ajustar detalles del guion verbal y del rincón de exhibición de piezas a la venta.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el simulacro de la experiencia vivencial con 4 invitados externos\",\"done\":false},{\"id\":2,\"texto\":\"Recoger encuestas de feedback sobre seguridad, calidez y valor percibido del souvenir\",\"done\":false},{\"id\":3,\"texto\":\"Monitorear ventas de las primeras consignaciones en comercios céntricos y cobrar remitos cumplidos\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'carpint-08',
+                'carpint',
+                8,
+                "Ronda de Negocios Final, Lanzamiento Oficial y Hoja de Ruta Post-LAB",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-05',
+                "09:30",
+                "13:00",
+                'programada',
+                "Participación protagónica en el Encuentro de Cierre y Ronda de Negocios de Esquel LAB. Montaje de mesa de exhibición de torneado y piezas de maderas nobles. Pitch de 3 minutos de Maxi presentando Carpintero Esquel: Artefactos con Alma de Bosque y Taller Abierto en Barrio Estación. Firma de acuerdos comerciales con prestadores turísticos y entrega del plan operativo post-incubación.",
+                "[\"¿Qué balance arrojan las primeras ventas en consignación y qué producto tuvo mayor rotación?\",\"¿Cómo organizará Maxi su calendario semanal entre producción de taller, CAPEC y visitas turísticas agendadas?\",\"¿Qué apoyo adicional requerirá para la ejecución de la obra del taller cuando se apruebe el financiamiento?\"]",
+                "[\"Exhibir la Línea Turística Estrella completa ante operadores turísticos, guías y autoridades municipales.\",\"Consolidar al menos 3 acuerdos de comercialización continua con hoteles y tiendas de diseño local.\",\"Entregar el informe de cierre de asistencia técnica y hoja de ruta productiva para la temporada 2026/2027.\"]",
+                "[{\"id\":1,\"texto\":\"Armar stand con virutas de madera, torno fotográfico y las 4 piezas estrella terminadas\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante el ecosistema turístico y comercial de Esquel\",\"done\":false},{\"id\":3,\"texto\":\"Firmar actas de compromiso comercial y balance de cobro de las primeras ventas\",\"done\":false}]",
+                ["mariela","cesia","leandro"]
+            ],
+        ];
+
+        foreach ($reunionesCarpint as $rc) {
+            $asistentes = array_pop($rc);
+            $insReuCarpint->execute($rc);
+            $reuId = $rc[0];
+            foreach ($asistentes as $consId) {
+                $insAsistCarpint->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

@@ -554,33 +554,45 @@
       "sr": "mariela",
       "jr": "cesia",
       "diagnostico": [
-        "Taller de carpintería y artesanía en maderas nobles de la región.",
-        "Mano de obra calificada y diseño de objetos utilitarios y decorativos para turistas.",
-        "Disponibilidad de taller propio."
+        "Artesano de la madera nacido y criado en Barrio Estación (Esquel, 38 años), con formación técnica formal de 3 años en carpintería de banco y torneado en el Centro de Formación Profesional (CFP) Nº 655 de calle Chacabuco, egresado con honores.",
+        "Capacidad técnica y productiva demostrada en torno de madera y banco: confecciona cuencos, mates torneados, platos de asado, fuentes y mobiliario artesanal en maderas nobles (lenga, ciprés, radal). Dispone de taller de armado, torneado y lijado en el patio de su vivienda (calle Brown 1570) y utiliza la maquinaria pesada del Centro de Apoyo a la Producción de Esquel (CAPEC) pagando el canon de uso comunitario ('CAM') para tareas de cepillado y dimensionado grueso.",
+        "Estructura familiar y vocación de arraigo: padre de 4 hijos (de 14, 10, 8 años y un lactante de 10 meses), su esposa es docente de nivel inicial y apoya en la gestión comercial. Disponibilidad horaria neta en turnos matutinos (08:30 a 14:30) y fines de semana para recepción turística."
       ],
       "trabas": [
-        "Tiempos de producción artesanal vs volumen requerido.",
-        "Falta de espacio de exhibición propio céntrico."
+        "Cuello de botella en maquinado primario y estacionalidad edilicia: dependencia del taller del CAPEC para escuadrado y cepillado de tablones en bruto; taller hogareño expuesto al invierno cordillerano por falta de cerramiento y aislación térmica adecuada.",
+        "Dispersión de catálogo y sub-costeo artesanal: coexistencia de pedidos a medida de carpintería general (muebles, aberturas) con piezas torneadas de souvenirs, sin una matriz que dimensione horas-hombre de torno, desgaste de gubias, lijas y acabados alimentarios no tóxicos (cera de abejas y aceite mineral).",
+        "Falta de canales de comercialización fijos y experiencia vivencial inexplorada: inexistencia de puntos de venta en el circuito céntrico o tiendas de montaña, y desaprovechamiento del valor patrimonial del torno en vivo como experiencia turística comunitaria en Barrio Estación."
       ],
       "ejes": [
         {
-          "t": "Línea Turística",
+          "t": "Curaduría del Catálogo Turístico B2B (4 Piezas Estrella)",
           "items": [
-            "Seleccionar 4 productos estrella de fácil transporte en valija.",
-            "Grabado de identidad y sello Esquel."
+            "Selección y estandarización de las 4 piezas insignia: Cuenco Mediano Torneado, Mate Rústico con Virola o Base Firme, Plato de Asado Patagónico y Cuchara Rústica con Grabado.",
+            "Identidad y autenticidad: marca 'Carpintero Esquel' aplicada a fuego, etiqueta colgante de madera noble con origen regional y acabado no tóxico con aceites naturales."
           ]
         },
         {
-          "t": "Canales Comerciales",
+          "t": "Experiencia 'Taller Abierto en Barrio Estación'",
           "items": [
-            "Inserción en tiendas de regionales y hoteles.",
-            "Venta por encargo y catálogo digital."
+            "Diseño de la vivencia turística para grupos reducidos (2 a 4 personas): demostración de torneado en vivo, participación en lijado y pulido de su propia pieza, marcado a fuego y mateada campesina tradicional.",
+            "Protocolo estricto de bioseguridad: zona segura demarcada a 1,5 metros del torno, uso obligatorio de antiparras y protección auditiva; turista nunca opera herramientas de corte."
+          ]
+        },
+        {
+          "t": "Estructura de Costos, Canales Comerciales y Mejora de Infraestructura",
+          "items": [
+            "Planilla paramétrica de costos y fijación de precios mayoristas y minoristas para regionales y hoteles.",
+            "Colocación en consignación en al menos 2 comercios céntricos con remito formal a 15 días.",
+            "Articulación con Secretaría de Producción / CAPEC (Paula Botto) para formulación de proyecto de financiamiento para cerramiento y aislación del taller."
           ]
         }
       ],
       "entregables": [
-        "Ficha de costos y precios de los 4 productos.",
-        "Convenio de exhibición en al menos 2 comercios."
+        "Ficha técnica y costos estandarizados de las 4 piezas de la Línea Turística Estrella.",
+        "Catálogo digital profesional (PDF y ficha técnica de producto) con fotografía 4K de piezas.",
+        "Protocolo operativo y de seguridad para la experiencia 'Taller Abierto en Barrio Estación'.",
+        "Acuerdo de consignación y colocación de stock inicial en al menos 2 comercios céntricos o regionales de Esquel.",
+        "Proyecto técnico-económico de mejora edilicia del taller formulado para presentación ante líneas de crédito productivas."
       ]
     },
     {

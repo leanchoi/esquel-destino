@@ -490,6 +490,56 @@ const exactMeetings = {
       check: ['Presentar informe de balance y métricas del viaje piloto', 'Exponer calendario 2027 en la rueda de negocios', 'Firmar al menos 2 acuerdos comerciales con prestadores locales']
     }
   ],
+  carpint: [
+    { num: 1, f: '2026-09-17', t: 'ter', lugar: 'Taller Carpintero Esquel (Brown 1570, B° Estación)', hora: '10:00 a 12:30', titulo: 'Diagnóstico en Taller de Barrio Estación y Relevamiento del Torno', asistentes: ['mariela', 'cesia'],
+      guia: 'Visitar el taller hogareño de Maxi en calle Brown 1570. Relevar el torno de madera, las gubias, herramientas de lijado, acopio de troncos y tablones nobles (lenga, radal, ciprés). Evaluar el lay-out actual para definir la zona segura para visitantes (a 1,5 m de la bancada del torno).',
+      preguntas: ['¿Cuánto tiempo real te insume tornear un cuenco mediano desde el trozo en bruto hasta el lijado final?', '¿Qué trabajos pesados te obligan sí o sí a trasladar madera al CAPEC y cuánto pagás por el canon CAM?', '¿Cómo resolvés el frío y la lluvia en el patio durante el invierno para no frenar la producción?'],
+      objetivos: ['Relevar medidas y lay-out del taller para delimitar la zona de visita y zona segura del torno.', 'Identificar las piezas con mayor demanda histórica y mayor margen de ganancia artesanal.', 'Establecer el cronograma de trabajo conjunto y disponibilidad matutina de Maxi.'],
+      check: ['Inspeccionar torno de madera, herramientas y stock de maderas nobles en taller', 'Medir distancias de seguridad y demarcar visualmente la zona de visitantes a 1,5 m', 'Listar los 4 productos candidatos a conformar la Línea Turística Estrella']
+    },
+    { num: 2, f: '2026-09-24', t: 'ind', lugar: 'Taller Carpintero Esquel', hora: '10:30 a 12:30', titulo: 'Estandarización de las 4 Piezas Estrella y Acabados Alimentarios', asistentes: ['mariela', 'cesia'],
+      guia: 'Seleccionar y cerrar las 4 piezas definitivas de la línea turística (Cuenco Mediano, Mate Torneado con Sello, Plato de Asado y Cuchara Rústica). Estandarizar dimensiones, tiempos de torno, tipo de madera y protocolo de curado alimentario seguro con cera de abejas y aceite mineral.',
+      preguntas: ['¿Qué tratamiento o sellador usás actualmente para que los cuencos y mates no se rajen ni transmitan sabores extraños?', '¿Cuál es el costo unitario de lija, sellador y marca a fuego por pieza?', '¿Podemos garantizar un stock mínimo de 10 unidades por pieza para abastecer consignaciones iniciales?'],
+      objetivos: ['Cerrar la ficha técnica con dimensiones y tolerancias de cada una de las 4 piezas estrella.', 'Validar la fórmula de curado artesanal inocuo y apto para alimentos calientes y fríos.', 'Diseñar la etiqueta colgante de madera o papel kraft que certifique autenticidad y origen cordillerano.'],
+      check: ['Definir medidas exactas de cuenco, mate, plato y cuchara rústica', 'Aprobar el protocolo de curado inocuo con cera de abejas virgen', 'Diseñar el boceto de etiqueta colgante con historia de Barrio Estación y cuidados de la madera']
+    },
+    { num: 3, f: '2026-10-01', t: 'ind', lugar: 'Oficinas de Turismo / LAB Esquel', hora: '10:30 a 12:30', titulo: 'Costeo Integral, Tiempos de Maquinado y Tarifario Mayorista/Minorista', asistentes: ['mariela', 'cesia'],
+      guia: 'Construir la planilla de costeo paramétrico de las 4 piezas. Desglosar costo de pie de madera, canon de uso del CAPEC, desgaste de herramientas/lijas, cera, marca a fuego, y cuantificar la mano de obra calificada por hora de torno. Fijar precios sugeridos al público y precio mayorista para comercios (margen del 30-40% para el revendedor).',
+      preguntas: ['¿Cuántas piezas podés producir por semana sin descuidar pedidos de carpintería tradicional?', '¿A qué precio vendías antes tus piezas y qué margen real te quedaba tras comprar insumos?', '¿Qué porcentaje de comisión o descuento comercial resulta viable ofrecer a regionales y hoteles?'],
+      objetivos: ['Parametrizar el costo unitario real de cada pieza en planilla Excel/Drive.', 'Establecer el precio de venta mayorista y el precio de venta sugerido al público (PVP).', 'Fijar la política de reposición y plazos de pago para tiendas en consignación.'],
+      check: ['Cargar la planilla de costos unitarios con amortización de herramientas y CAPEC', 'Emitir la lista de precios oficial mayorista y minorista de la Línea Turística', 'Redactar modelo de remito y acta de entrega en consignación a 15 días']
+    },
+    { num: 4, f: '2026-10-08', t: 'ter', lugar: 'Taller Carpintero Esquel', hora: '10:00 a 12:30', titulo: 'Guion Vivencial Taller Abierto en Barrio Estación y Protocolo de Seguridad', asistentes: ['mariela', 'cesia'],
+      guia: 'Estructurar la experiencia vivencial turística para grupos reducidos (2 a 4 personas). Diseñar la secuencia: bienvenida con reseña del oficio y Barrio Estación, demostración de torneado en vivo, participación guiada del turista en lijado de su propia pieza, marcado a fuego y cierre con mateada campesina. Validar el protocolo de seguridad y zona restringida.',
+      preguntas: ['¿Qué sensaciones y anécdotas del oficio de carpintero querés transmitirle al visitante durante la demostración?', '¿En qué momento exacto de la pieza participa el turista para que sea una experiencia segura y sin riesgo de corte?', '¿Cómo articulamos con tu familia la preparación del mate y las tortas fritas para la bienvenida?'],
+      objetivos: ['Redactar el guion vivencial paso a paso de 60 a 75 minutos de duración.', 'Formalizar el protocolo de bioseguridad y elementos de protección (antiparras obligatorias).', 'Definir el valor de la entrada o ticket por persona que incluya la pieza personalizada de recuerdo.'],
+      check: ['Redactar el guion de la experiencia Taller Abierto en Barrio Estación', 'Comprobar stock de antiparras de seguridad y cartelería de precaución en torno', 'Simular la secuencia de lijado participativo y marcado a fuego con el equipo técnico']
+    },
+    { num: 5, f: '2026-10-15', t: 'ter', lugar: 'Taller Carpintero Esquel', hora: '10:00 a 13:00', titulo: 'Producción Fotográfica 4K, Catálogo Digital y Piezas de Comunicación', asistentes: ['mariela', 'cesia', 'leandro'],
+      guia: 'Sesión fotográfica y de video profesional 4K en el taller con iluminación natural y encuadres de virutas volando en el torno. Registrar las 4 piezas terminadas y la dinámica vivencial con el artesano. Armar el catálogo digital interactivo para envío a agencias receptivas y hotelería de alta gama.',
+      preguntas: ['¿Qué piezas y maderas tienen mejor veta y presencia visual para el plano detalle de fotografía?', '¿Cómo querés presentar tu historia personal en el texto de portada del catálogo digital?', '¿Qué canales de contacto directo (WhatsApp comercial, Instagram) vamos a vincular al catálogo?'],
+      objetivos: ['Generar un banco de 25 fotografías profesionales en alta resolución y clips cortos de torno en vivo.', 'Maquetar el catálogo digital PDF de la Línea Turística con ficha técnica de cada madera noble.', 'Configurar el perfil de Instagram y WhatsApp Business con catálogo integrado de productos.'],
+      check: ['Realizar sesión fotográfica de piezas individuales y demostración en torno', 'Seleccionar las 15 mejores imágenes y redactar reseñas de cada producto', 'Generar el catálogo digital interactivo en formato PDF y enlace web']
+    },
+    { num: 6, f: '2026-10-22', t: 'ind', lugar: 'CAPEC Esquel / Secretaría de Producción', hora: '10:30 a 12:30', titulo: 'Articulación CAPEC, Proyecto de Infraestructura y Rueda Comercial B2B', asistentes: ['mariela', 'cesia', 'leandro'],
+      guia: 'Reunión de trabajo con la coordinación del CAPEC (Paula Botto) y Producción. Presentar la formulación de proyecto para subsidio o microcrédito destinado al cerramiento térmico y techado definitivo del taller. Planificar la ronda de visitas a los primeros comercios céntricos y hoteles boutique para colocación en consignación.',
+      preguntas: ['¿Cuáles son los montos máximos y requisitos de la línea de financiamiento productivo vigente en CAPEC?', '¿Qué comercios de regionales y chocolaterías del centro tienen el perfil de cliente adecuado para estas piezas nobles?', '¿Qué volumen de stock de piezas estrella tenemos listo para dejar en consignación esta semana?'],
+      objetivos: ['Presentar el presupuesto de materiales para el cerramiento del taller ante la Secretaría de Producción.', 'Visitar 3 comercios regionales de Esquel y presentar catálogo y muestras físicas de producto.', 'Firmar acuerdos de consignación con remito oficial a 15 días con al menos 2 comercios.'],
+      check: ['Entregar anteproyecto técnico y presupuesto de cerramiento del taller en CAPEC', 'Visitar comercios céntricos seleccionados con muestras físicas y catálogo en mano', 'Dejar stock inicial de 5 cuencos, 5 mates y 5 tablas en al menos 2 comercios adheridos']
+    },
+    { num: 7, f: '2026-10-29', t: 'ter', lugar: 'Taller Carpintero Esquel (Brown 1570)', hora: '10:30 a 12:30', titulo: 'Ensayo General de Taller Abierto (Fam Press y Validación en Campo)', asistentes: ['mariela', 'cesia'],
+      guia: 'Simulacro completo de la experiencia vivencial con un grupo de prueba (informantes de la Secretaría de Turismo y guías invitados). Evaluar el manejo de tiempos, la claridad de la demostración en torno, la seguridad del lijado participativo, el impacto del mate con tortas fritas caseras y la venta espontánea de piezas adicionales.',
+      preguntas: ['¿Cómo se sintió Maxi al hablar y explicar frente a personas desconocidas mientras operaba el torno?', '¿El espacio de estacionamiento en calle Brown y el acceso peatonal al patio resultaron cómodos para los visitantes?', '¿Qué dudas o sugerencias plantearon los participantes durante la mateada final?'],
+      objetivos: ['Validar la duración real de la experiencia (meta: 60 minutos cronometrados sin desvíos).', 'Testear la comprensión de normas de seguridad y la satisfacción del visitante al estampar su pieza a fuego.', 'Ajustar detalles del guion verbal y del rincón de exhibición de piezas a la venta.'],
+      check: ['Ejecutar el simulacro de la experiencia vivencial con 4 invitados externos', 'Recoger encuestas de feedback sobre seguridad, calidez y valor percibido del souvenir', 'Monitorear ventas de las primeras consignaciones en comercios céntricos y cobrar remitos cumplidos']
+    },
+    { num: 8, f: '2026-11-05', t: 'col', lugar: 'Centro Cultural Melipal / Espacio LAB', hora: '09:30 a 13:00', titulo: 'Ronda de Negocios Final, Lanzamiento Oficial y Hoja de Ruta Post-LAB', asistentes: ['mariela', 'cesia', 'leandro'],
+      guia: 'Participación protagónica en el Encuentro de Cierre y Ronda de Negocios de Esquel LAB. Montaje de mesa de exhibición de torneado y piezas de maderas nobles. Pitch de 3 minutos de Maxi presentando Carpintero Esquel: Artefactos con Alma de Bosque y Taller Abierto en Barrio Estación. Firma de acuerdos comerciales con prestadores turísticos y entrega del plan operativo post-incubación.',
+      preguntas: ['¿Qué balance arrojan las primeras ventas en consignación y qué producto tuvo mayor rotación?', '¿Cómo organizará Maxi su calendario semanal entre producción de taller, CAPEC y visitas turísticas agendadas?', '¿Qué apoyo adicional requerirá para la ejecución de la obra del taller cuando se apruebe el financiamiento?'],
+      objetivos: ['Exhibir la Línea Turística Estrella completa ante operadores turísticos, guías y autoridades municipales.', 'Consolidar al menos 3 acuerdos de comercialización continua con hoteles y tiendas de diseño local.', 'Entregar el informe de cierre de asistencia técnica y hoja de ruta productiva para la temporada 2026/2027.'],
+      check: ['Armar stand con virutas de madera, torno fotográfico y las 4 piezas estrella terminadas', 'Exponer el pitch de 3 minutos ante el ecosistema turístico y comercial de Esquel', 'Firmar actas de compromiso comercial y balance de cobro de las primeras ventas']
+    }
+  ],
   senderos: [
     { num: 1, f: '2026-09-18', t: 'ter', lugar: 'Acceso La Cascada / Senda Cámpora', hora: '09:30 a 12:30', titulo: 'Relevamiento en terreno del Sendero La Cascada y punto cero', asistentes: ['adria', 'francisco'],
       guia: 'Caminar el circuito accesible de La Cascada. Identificar especies nativas presentes (llantén, paramela, palo piche, rosa mosqueta), medir tiempos de caminata pausada y seleccionar los 3 puntos de parada interpretativa.',
@@ -838,7 +888,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -1274,6 +1324,68 @@ php += `        ];
             $reuId = $rs[0];
             foreach ($asistentes as $consId) {
                 $insAsistSenderos->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Carpintero Esquel si todavía tiene la plantilla genérica inicial
+    $checkCarpint = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'carpint-01'")->fetchColumn();
+    if ($checkCarpint === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkCarpint) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'carpint-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'carpint'");
+
+        $insReuCarpint = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistCarpint = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesCarpint = [
+`;
+
+const carpintMeetingsList = exactMeetings.carpint;
+for (const m of carpintMeetingsList) {
+  const reuId = `carpint-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['mariela', 'cesia'];
+
+  php += `            [
+                '${reuId}',
+                'carpint',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesCarpint as $rc) {
+            $asistentes = array_pop($rc);
+            $insReuCarpint->execute($rc);
+            $reuId = $rc[0];
+            foreach ($asistentes as $consId) {
+                $insAsistCarpint->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
