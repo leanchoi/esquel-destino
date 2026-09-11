@@ -328,11 +328,11 @@ function lab_asegurar_datos(PDO $pdo): void
                 3.25,
                 4,
                 'mariela',
-                'agustina',
-                "[\"Paquete turístico receptivo boutique que integra naturaleza, gastronomía y patrimonio de la comarca.\",\"Visión profesional del turismo receptivo y altos estándares de calidad.\",\"Capacidad de articulación con prestadores.\"]",
-                "[\"Cierre de acuerdos comerciales con tarifas netas confidenciales.\",\"Canales de distribución emisivos en grandes ciudades.\"]",
-                "[{\"t\":\"Estandarización del Paquete\",\"items\":[\"Itinerario cerrado de 4 días / 3 noches.\",\"Costeo integral con margen de agencia garantizado.\"]},{\"t\":\"Venta B2B\",\"items\":[\"Presentación a agencias emisivas de Buenos Aires y Rosario.\",\"Material promocional de alta calidad visual.\"]}]",
-                "[\"Tarifario B2B confidencial y condiciones de contratación.\",\"Brochure comercial y ficha técnica completa.\"]"
+                'noelia',
+                "[\"Cecilia Fernanda Simonini (radicada en Esquel hace 10 años por elección pura) combina un perfil técnico, artístico y naturalista excepcional: técnica en electrónica, diseñadora gráfica, formación en pastelería, naturalista egresada de Aves Argentinas (trabajo de campo y educación ambiental) y tejedora en telar mapuche, crochet, peine e hilandera en huso tradicional en el Centro Cultural Melipal.\",\"Amplia experiencia en el sector turístico receptivo de Esquel: trayectoria en Las Bayas (hotelería boutique), Frontera Sur (agencia receptiva, rental, esquí y concesiones en Parque Nacional Los Alerces como Cabañas El Chaltén, Camping Lago Verde y Restaurante El Aura), y piezas textiles para Maipú. Reside en el periurbano (detrás de Chacra Los Álamos), en conexión directa con la vida de campo.\",\"Propuesta de valor transformadora y vivencial: 'hacer y experimentar en lugar de solo observar'. Ciclo completo de la lana (oveja, esquila, hilado en huso, recolección botánica de tintes naturales y telar mapuche), alfarería rústica, cosmovisión con nociones de mapuzungun y cocina al rescoldo/horno de barro, complementado con cápsulas de crochet en el paisaje cordillerano.\"]",
+                "[\"Disonancia del nombre provisorio anglosajón ('True Patagonia') frente a una propuesta de raíz ancestral mapuche-tehuelche y criolla profunda, señalada unánimemente por el jurado.\",\"Cuello de botella en la base de alojamiento: pretender concentrar todo en una sola chacra rural con ovejas frena el proyecto por falta de infraestructura hotelera adecuada (calefacción, camas de confort, baños privados) en parajes comarcales.\",\"Sobrecarga operativa al estar sola: necesidad de estructurar el encuadre legal, seguros de turismo activo/asistencia al viajero y comercialización mediante convenios con agencias de viajes receptivas (EVyT) habilitadas.\"]",
+                "[{\"t\":\"Deconstrucción de Marca y Reposicionamiento de Autor\",\"items\":[\"Reemplazo de 'True Patagonia' por una denominación de autor con anclaje comarcal y calidez patagónica.\",\"Construcción de la persona pública de Cecilia como activo irreplicable, anfitriona y puente de confianza con el campo.\"]},{\"t\":\"Modelo 'Punta de Lanza' y Curaduría Emocional\",\"items\":[\"Base de alojamiento en cabañas periurbanas o predios seleccionados (Establecimiento Las Margaritas de Lorena Cogos en Nahuelpan) e incursiones diarias a chacras de Alto Río Percy y parajes.\",\"Diseño del itinerario de 4 días / 3 noches con curva dramática: momentos de calma, silencios, mateadas campesinas y picos de asombro artesanal.\"]},{\"t\":\"Souvenir Físico Conector y Comercialización Receptiva\",\"items\":[\"Diseño y prototipado editorial de la 'Bitácora Textil y Carpeta de Saberes' (fichas botánicas, fórmulas de tinte, glosario mapuzungun y muestras de lana hilada/teñida).\",\"Estructuración de costos B2B/B2C, punto de equilibrio (4 pasajeros), encuadre de turismo activo y convenio marco con agencia receptiva (EVyT) para venta anticipada.\"]}]",
+                "[\"Manual de Marca y Relato de Autor desarticulando el nombre foráneo.\",\"Itinerario Técnico Guionado (4 Días / 3 Noches) y Cápsula Full Day 'Patrones de Montaña & Crochet'.\",\"Prototipo Editorial Impreso de la 'Bitácora Textil y Carpeta de Saberes' con packaging de bienvenida.\",\"Convenio preliminar de uso de espacio con Establecimiento Las Margaritas y predios campesinos de Percy.\",\"Ficha Comercial B2B, matriz de costeo integral con margen de agencia y modelo de seguro de turismo activo.\"]"
             ],
         ];
 
@@ -3126,171 +3126,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'truepat-01',
                 'truepat',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
-                'ter',
-                "Predio / Chacra",
-                '2026-09-13',
+                "Diagnóstico en terreno, deconstrucción de marca y reposicionamiento de autor",
+                'ind',
+                "Oficina Turismo",
+                '2026-09-18',
                 "10:00",
-                "11:30",
+                "12:30",
                 'programada',
-                "Conocer el espacio real de trabajo de Cecilia Fernanda Simonini. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de TRUE PATAGONIA hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
-                ["mariela","agustina"]
+                "Deconstruir el nombre provisorio \"True Patagonia\" y acordar la nueva denominación de autor. Inventariar la red de contactos existente (maestras de telar en Melipal, hilanderas, chacras conocidas en Percy y Nahuelpan). Fijar el perfil de la persona pública de Cecilia.",
+                "[\"¿Por qué el nombre en inglés aleja al público que busca identidad ancestral?\",\"¿Cómo resumimos la historia de Cecilia en 30 segundos de manera magnética?\",\"¿Cuáles son los 3 saberes que sí o sí deben estar en el retiro?\"]",
+                "[\"Completar ficha de relevamiento de contactos de campo.\",\"Proponer 3 opciones de denominación de marca con anclaje patagónico.\",\"Definir público objetivo (mujeres 35-65 años, apasionadas del quehacer textil, turismo regenerativo y cultural).\"]",
+                "[{\"id\":1,\"texto\":\"Mapear artesanas, hilanderas y predios rurales aliados\",\"done\":false},{\"id\":2,\"texto\":\"Definir nueva denominación de marca de autor\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar perfil de la persona pública de Cecilia\",\"done\":false}]",
+                ["mariela","noelia","leandro"]
             ],
             [
                 'truepat-02',
                 'truepat',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
+                "Curaduría del itinerario vivencial y diseño del guion emocional",
                 'ind',
-                "Turismo",
-                '2026-09-20',
-                "10:00",
-                "11:30",
+                "Taller Cecilia (Los Álamos)",
+                '2026-09-22',
+                "14:00",
+                "16:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
-                ["mariela","agustina"]
+                "Diagramar el cronograma paso a paso del retiro de 4 días / 3 noches. Diseñar la curva dramática de la experiencia: alternancia de actividades manuales, tiempos de descanso, comidas tradicionales y momentos de asombro.",
+                "[\"¿Cómo evitamos que la jornada de hilado resulte agotadora para quien nunca agarró un huso?\",\"¿En qué momento del día se produce la revelación del color en la olla de tintes?\",\"¿Qué historia de fogón compartimos a la noche?\"]",
+                "[\"Redactar el guion cronológico del Día 1 al Día 4.\",\"Cronometrar tiempos de taller (máximo 3 horas de trabajo manual por jornada).\",\"Programar la Cápsula Full Day de Crochet y Naturaleza como producto complementario.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar guion paso a paso de las 4 jornadas\",\"done\":false},{\"id\":2,\"texto\":\"Establecer descansos y pausas sensoriales\",\"done\":false},{\"id\":3,\"texto\":\"Definir la cápsula de campo Patrones de Montaña y Crochet\",\"done\":false}]",
+                ["noelia"]
             ],
             [
                 'truepat-03',
                 'truepat',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
-                'ind',
-                "Turismo",
-                '2026-09-24',
-                "11:00",
-                "12:30",
+                "Prospección en territorio y acuerdos con anfitriones rurales",
+                'ter',
+                "Las Margaritas (Nahuelpan) y Percy",
+                '2026-09-28',
+                "09:30",
+                "13:00",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
-                ["mariela","agustina"]
+                "Relevar in situ las instalaciones de Establecimiento Las Margaritas y evaluar la articulación entre emprendimientos de la misma cohorte. Visitar chacras ovinas aliadas para definir el espacio de esquila, demostración y almuerzo criollo.",
+                "[\"¿Las Margaritas cuenta con capacidad para alojar o funciona mejor como locación de talleres y contacto con animales?\",\"¿Qué infraestructura básica de baños y resguardo de viento se requiere en Percy?\"]",
+                "[\"Completar acta de acuerdo preliminar con Las Margaritas.\",\"Evaluar estado de accesos vehiculares para transfers de turistas.\",\"Determinar el canon diario por uso de instalaciones y atención campesina.\"]",
+                "[{\"id\":1,\"texto\":\"Relevar predio Las Margaritas con Lorena Cogos\",\"done\":false},{\"id\":2,\"texto\":\"Inspeccionar chacras ovinas en Alto Río Percy\",\"done\":false},{\"id\":3,\"texto\":\"Fijar canon por uso de predio y atención campesina\",\"done\":false}]",
+                ["mariela","noelia"]
             ],
             [
                 'truepat-04',
                 'truepat',
                 4,
-                "Puesta en común Célula undefined",
+                "Costeo, punto de equilibrio y tarifario (Célula 4)",
                 'gru',
-                "Célula undefined (Turismo)",
+                "Célula 4 (Melipal)",
                 '2026-09-30',
                 "09:30",
-                "12:00",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["mariela"]
+                "Poner en común la estructura de costos de los paquetes receptivos y retiros. Calcular costos fijos y variables (alojamiento, transfers, insumos de telar/tintes, honorarios de artesanas campesinas, coordinación de Cecilia y comisión de agencia).",
+                "[\"¿Cuál es el costo directo por persona y cuánto representa el honorario de facilitación de Cecilia?\",\"¿Qué precio final en dólares y pesos resiste el segmento ABC1 nacional e internacional?\",\"¿A partir de cuántos pasajeros se cubre el punto de equilibrio?\"]",
+                "[\"Planilla de costeo integral terminada.\",\"Fijar punto de equilibrio en 4 pasajeros.\",\"Definir esquema de comisión para agencias de viajes (20% margen receptivo sobre tarifa neta).\"]",
+                "[{\"id\":1,\"texto\":\"Completar matriz de costeo integral\",\"done\":false},{\"id\":2,\"texto\":\"Determinar punto de equilibrio (4 pasajeros)\",\"done\":false},{\"id\":3,\"texto\":\"Fijar tarifario B2C y tarifa neta B2B con 20% margen\",\"done\":false}]",
+                ["mariela","noelia","agustina"]
             ],
             [
                 'truepat-05',
                 'truepat',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
+                "Diseño editorial del souvenir físico y packaging de bienvenida",
                 'ind',
-                "Predio",
-                '2026-10-8',
+                "Oficina Turismo",
+                '2026-10-08',
                 "10:00",
-                "11:30",
+                "12:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
-                ["mariela","agustina"]
+                "Revisar la maqueta editorial de la \"Bitácora Textil y Carpeta de Saberes\" diseñada por Cecilia. Definir proveedores de impresión local en papel reciclado/kraft y armar el packaging de bienvenida (bolsa de lienzo con huso rústico y vellón crudo).",
+                "[\"¿Cómo estructuramos las fichas botánicas para que el visitante pueda anotar sus propias recetas de tinte?\",\"¿Qué piezas componen el kit inicial entregado al llegar a Esquel?\"]",
+                "[\"Prototipo impreso de la Bitácora de Saberes.\",\"Presupuestar impresión de 50 ejemplares con imprentas de Esquel.\",\"Diseñar etiquetas colgantes con QR que derive a la galería digital privada.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar maqueta editorial de la Bitácora de Saberes\",\"done\":false},{\"id\":2,\"texto\":\"Cotizar impresión en papel kraft/reciclado local\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar kit de bienvenida en bolsa de lienzo con huso\",\"done\":false}]",
+                ["noelia"]
             ],
             [
                 'truepat-06',
                 'truepat',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Encuadre regulatorio, seguros y alianzas con agencias receptivas (EVyT)",
                 'ind',
                 "Turismo",
-                '2026-10-16',
-                "10:00",
-                "11:30",
+                '2026-10-14',
+                "11:00",
+                "13:00",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
-                ["mariela","agustina"]
+                "Establecer el encuadre normativo del paquete. Definir la contratación de pólizas de seguro de accidentes personales / turismo activo para los excursionistas. Presentar el producto ante agencias receptivas habilitadas (EVyT) de Esquel para operar bajo su paraguas comercial.",
+                "[\"¿Qué agencia local está dispuesta a firmar un acuerdo de comercialización exclusiva o co-branding?\",\"¿Qué requisitos de habilitación de transporte se exigen para los traslados a Nahuelpan y Percy?\"]",
+                "[\"Modelo de convenio marco con agencia receptiva local.\",\"Cotización de póliza de seguro de turismo alternativo.\",\"Redactar condiciones generales de contratación y políticas de cancelación estricta.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar modelo de convenio marco con agencias EVyT\",\"done\":false},{\"id\":2,\"texto\":\"Cotizar póliza de turismo activo y accidentes personales\",\"done\":false},{\"id\":3,\"texto\":\"Definir políticas de reserva, seña y cancelación\",\"done\":false}]",
+                ["mariela","leandro"]
             ],
             [
                 'truepat-07',
                 'truepat',
                 7,
-                "Comunicación digital, contenido y redes",
-                'ind',
-                "Turismo",
-                '2026-10-23',
-                "10:00",
-                "11:30",
+                "Banco de contenidos visuales de autor y ficha comercial B2B",
+                'ter',
+                "Chacra Rural (Nahuelpan / Percy)",
+                '2026-10-19',
+                "09:00",
+                "13:00",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
-                ["mariela","agustina"]
+                "Producción fotográfica y audiovisual profesional (tomas de detalle en huso, humeado de ollas de tintes con calafate, vellones ovinos, retratos cálidos de Cecilia y anfitrionas campesinas). Redacción final del brochure comercial B2B para comercializadores emisivos de Buenos Aires, Córdoba y Rosario.",
+                "[\"¿Qué tomas transmiten paz, textura y autenticidad sin caer en el cliché folclórico?\",\"¿Qué formato de video vertical funciona mejor para redes de comunidades de tejedoras y clubes de lana?\"]",
+                "[\"Banco de 30 fotografías profesionales de alta calidad.\",\"3 reels cortos narrados por Cecilia explicando la experiencia.\",\"Ficha comercial digital en PDF lista para envío a agencias.\"]",
+                "[{\"id\":1,\"texto\":\"Rodaje fotográfico y clips en chacra rural\",\"done\":false},{\"id\":2,\"texto\":\"Seleccionar y editar 3 reels de autor\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar brochure digital B2B para agencias emisivas\",\"done\":false}]",
+                ["noelia"]
             ],
             [
                 'truepat-08',
                 'truepat',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ter',
-                "Predio",
-                '2026-10-30',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["mariela","agustina"]
-            ],
-            [
-                'truepat-09',
-                'truepat',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-5',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["mariela","agustina"]
-            ],
-            [
-                'truepat-10',
-                'truepat',
-                10,
-                "Distinción, resultados y rueda de negocios",
+                "Validación sensorial piloto, rueda de negocios y cierre de cohorte",
                 'cie',
-                "Acto de cierre",
+                "Melipal",
                 '2026-11-10',
                 "10:00",
-                "13:00",
+                "14:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Validación final de la experiencia mediante un micro-taller demostrativo en vivo (hilado en huso y muestrario de lanas teñidas en el stand). Participación en la ronda de negocios con operadores turísticos y entrega de la distinción oficial del Laboratorio.",
+                "[\"¿Qué agencias de Buenos Aires y de la comarca confirman fechas de preventa para marzo/abril de 2027?\",\"¿Cómo queda enlazado el retiro en la web oficial esquel.site?\"]",
+                "[\"Montaje del stand de experiencia con vellones, husos, ovillos teñidos y bitácoras.\",\"Presentación del pitch de 3 minutos de Cecilia.\",\"Firma de al menos 2 cartas de intención con agencias receptivas.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand vivencial con huso y muestrario de tintes\",\"done\":false},{\"id\":2,\"texto\":\"Presentar pitch de 3 minutos ante prestadores comarcales\",\"done\":false},{\"id\":3,\"texto\":\"Firmar al menos 2 cartas de intención con agencias\",\"done\":false}]",
+                ["leandro","mariela","noelia","adria","francisco","agustina","cesia"]
             ],
         ];
 
@@ -3312,7 +3278,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -3986,6 +3952,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rl[0];
             foreach ($asistentes as $consId) {
                 $insAsistLaberin->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de True Patagonia (Inmersivos Textiles) si todavía tiene la plantilla genérica inicial
+    $checkTruepat = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'truepat-01'")->fetchColumn();
+    if ($checkTruepat === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkTruepat) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'truepat-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'truepat'");
+
+        $insReuTruepat = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistTruepat = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesTruepat = [
+            [
+                'truepat-01',
+                'truepat',
+                1,
+                "Diagnóstico en terreno, deconstrucción de marca y reposicionamiento de autor",
+                'ind',
+                "Oficina Turismo",
+                '2026-09-18',
+                "10:00",
+                "12:30",
+                'programada',
+                "Deconstruir el nombre provisorio \"True Patagonia\" y acordar la nueva denominación de autor. Inventariar la red de contactos existente (maestras de telar en Melipal, hilanderas, chacras conocidas en Percy y Nahuelpan). Fijar el perfil de la persona pública de Cecilia.",
+                "[\"¿Por qué el nombre en inglés aleja al público que busca identidad ancestral?\",\"¿Cómo resumimos la historia de Cecilia en 30 segundos de manera magnética?\",\"¿Cuáles son los 3 saberes que sí o sí deben estar en el retiro?\"]",
+                "[\"Completar ficha de relevamiento de contactos de campo.\",\"Proponer 3 opciones de denominación de marca con anclaje patagónico.\",\"Definir público objetivo (mujeres 35-65 años, apasionadas del quehacer textil, turismo regenerativo y cultural).\"]",
+                "[{\"id\":1,\"texto\":\"Mapear artesanas, hilanderas y predios rurales aliados\",\"done\":false},{\"id\":2,\"texto\":\"Definir nueva denominación de marca de autor\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar perfil de la persona pública de Cecilia\",\"done\":false}]",
+                ["mariela","noelia","leandro"]
+            ],
+            [
+                'truepat-02',
+                'truepat',
+                2,
+                "Curaduría del itinerario vivencial y diseño del guion emocional",
+                'ind',
+                "Taller Cecilia (Los Álamos)",
+                '2026-09-22',
+                "14:00",
+                "16:30",
+                'programada',
+                "Diagramar el cronograma paso a paso del retiro de 4 días / 3 noches. Diseñar la curva dramática de la experiencia: alternancia de actividades manuales, tiempos de descanso, comidas tradicionales y momentos de asombro.",
+                "[\"¿Cómo evitamos que la jornada de hilado resulte agotadora para quien nunca agarró un huso?\",\"¿En qué momento del día se produce la revelación del color en la olla de tintes?\",\"¿Qué historia de fogón compartimos a la noche?\"]",
+                "[\"Redactar el guion cronológico del Día 1 al Día 4.\",\"Cronometrar tiempos de taller (máximo 3 horas de trabajo manual por jornada).\",\"Programar la Cápsula Full Day de Crochet y Naturaleza como producto complementario.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar guion paso a paso de las 4 jornadas\",\"done\":false},{\"id\":2,\"texto\":\"Establecer descansos y pausas sensoriales\",\"done\":false},{\"id\":3,\"texto\":\"Definir la cápsula de campo Patrones de Montaña y Crochet\",\"done\":false}]",
+                ["noelia"]
+            ],
+            [
+                'truepat-03',
+                'truepat',
+                3,
+                "Prospección en territorio y acuerdos con anfitriones rurales",
+                'ter',
+                "Las Margaritas (Nahuelpan) y Percy",
+                '2026-09-28',
+                "09:30",
+                "13:00",
+                'programada',
+                "Relevar in situ las instalaciones de Establecimiento Las Margaritas y evaluar la articulación entre emprendimientos de la misma cohorte. Visitar chacras ovinas aliadas para definir el espacio de esquila, demostración y almuerzo criollo.",
+                "[\"¿Las Margaritas cuenta con capacidad para alojar o funciona mejor como locación de talleres y contacto con animales?\",\"¿Qué infraestructura básica de baños y resguardo de viento se requiere en Percy?\"]",
+                "[\"Completar acta de acuerdo preliminar con Las Margaritas.\",\"Evaluar estado de accesos vehiculares para transfers de turistas.\",\"Determinar el canon diario por uso de instalaciones y atención campesina.\"]",
+                "[{\"id\":1,\"texto\":\"Relevar predio Las Margaritas con Lorena Cogos\",\"done\":false},{\"id\":2,\"texto\":\"Inspeccionar chacras ovinas en Alto Río Percy\",\"done\":false},{\"id\":3,\"texto\":\"Fijar canon por uso de predio y atención campesina\",\"done\":false}]",
+                ["mariela","noelia"]
+            ],
+            [
+                'truepat-04',
+                'truepat',
+                4,
+                "Costeo, punto de equilibrio y tarifario (Célula 4)",
+                'gru',
+                "Célula 4 (Melipal)",
+                '2026-09-30',
+                "09:30",
+                "12:30",
+                'programada',
+                "Poner en común la estructura de costos de los paquetes receptivos y retiros. Calcular costos fijos y variables (alojamiento, transfers, insumos de telar/tintes, honorarios de artesanas campesinas, coordinación de Cecilia y comisión de agencia).",
+                "[\"¿Cuál es el costo directo por persona y cuánto representa el honorario de facilitación de Cecilia?\",\"¿Qué precio final en dólares y pesos resiste el segmento ABC1 nacional e internacional?\",\"¿A partir de cuántos pasajeros se cubre el punto de equilibrio?\"]",
+                "[\"Planilla de costeo integral terminada.\",\"Fijar punto de equilibrio en 4 pasajeros.\",\"Definir esquema de comisión para agencias de viajes (20% margen receptivo sobre tarifa neta).\"]",
+                "[{\"id\":1,\"texto\":\"Completar matriz de costeo integral\",\"done\":false},{\"id\":2,\"texto\":\"Determinar punto de equilibrio (4 pasajeros)\",\"done\":false},{\"id\":3,\"texto\":\"Fijar tarifario B2C y tarifa neta B2B con 20% margen\",\"done\":false}]",
+                ["mariela","noelia","agustina"]
+            ],
+            [
+                'truepat-05',
+                'truepat',
+                5,
+                "Diseño editorial del souvenir físico y packaging de bienvenida",
+                'ind',
+                "Oficina Turismo",
+                '2026-10-08',
+                "10:00",
+                "12:30",
+                'programada',
+                "Revisar la maqueta editorial de la \"Bitácora Textil y Carpeta de Saberes\" diseñada por Cecilia. Definir proveedores de impresión local en papel reciclado/kraft y armar el packaging de bienvenida (bolsa de lienzo con huso rústico y vellón crudo).",
+                "[\"¿Cómo estructuramos las fichas botánicas para que el visitante pueda anotar sus propias recetas de tinte?\",\"¿Qué piezas componen el kit inicial entregado al llegar a Esquel?\"]",
+                "[\"Prototipo impreso de la Bitácora de Saberes.\",\"Presupuestar impresión de 50 ejemplares con imprentas de Esquel.\",\"Diseñar etiquetas colgantes con QR que derive a la galería digital privada.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar maqueta editorial de la Bitácora de Saberes\",\"done\":false},{\"id\":2,\"texto\":\"Cotizar impresión en papel kraft/reciclado local\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar kit de bienvenida en bolsa de lienzo con huso\",\"done\":false}]",
+                ["noelia"]
+            ],
+            [
+                'truepat-06',
+                'truepat',
+                6,
+                "Encuadre regulatorio, seguros y alianzas con agencias receptivas (EVyT)",
+                'ind',
+                "Turismo",
+                '2026-10-14',
+                "11:00",
+                "13:00",
+                'programada',
+                "Establecer el encuadre normativo del paquete. Definir la contratación de pólizas de seguro de accidentes personales / turismo activo para los excursionistas. Presentar el producto ante agencias receptivas habilitadas (EVyT) de Esquel para operar bajo su paraguas comercial.",
+                "[\"¿Qué agencia local está dispuesta a firmar un acuerdo de comercialización exclusiva o co-branding?\",\"¿Qué requisitos de habilitación de transporte se exigen para los traslados a Nahuelpan y Percy?\"]",
+                "[\"Modelo de convenio marco con agencia receptiva local.\",\"Cotización de póliza de seguro de turismo alternativo.\",\"Redactar condiciones generales de contratación y políticas de cancelación estricta.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar modelo de convenio marco con agencias EVyT\",\"done\":false},{\"id\":2,\"texto\":\"Cotizar póliza de turismo activo y accidentes personales\",\"done\":false},{\"id\":3,\"texto\":\"Definir políticas de reserva, seña y cancelación\",\"done\":false}]",
+                ["mariela","leandro"]
+            ],
+            [
+                'truepat-07',
+                'truepat',
+                7,
+                "Banco de contenidos visuales de autor y ficha comercial B2B",
+                'ter',
+                "Chacra Rural (Nahuelpan / Percy)",
+                '2026-10-19',
+                "09:00",
+                "13:00",
+                'programada',
+                "Producción fotográfica y audiovisual profesional (tomas de detalle en huso, humeado de ollas de tintes con calafate, vellones ovinos, retratos cálidos de Cecilia y anfitrionas campesinas). Redacción final del brochure comercial B2B para comercializadores emisivos de Buenos Aires, Córdoba y Rosario.",
+                "[\"¿Qué tomas transmiten paz, textura y autenticidad sin caer en el cliché folclórico?\",\"¿Qué formato de video vertical funciona mejor para redes de comunidades de tejedoras y clubes de lana?\"]",
+                "[\"Banco de 30 fotografías profesionales de alta calidad.\",\"3 reels cortos narrados por Cecilia explicando la experiencia.\",\"Ficha comercial digital en PDF lista para envío a agencias.\"]",
+                "[{\"id\":1,\"texto\":\"Rodaje fotográfico y clips en chacra rural\",\"done\":false},{\"id\":2,\"texto\":\"Seleccionar y editar 3 reels de autor\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar brochure digital B2B para agencias emisivas\",\"done\":false}]",
+                ["noelia"]
+            ],
+            [
+                'truepat-08',
+                'truepat',
+                8,
+                "Validación sensorial piloto, rueda de negocios y cierre de cohorte",
+                'cie',
+                "Melipal",
+                '2026-11-10',
+                "10:00",
+                "14:00",
+                'programada',
+                "Validación final de la experiencia mediante un micro-taller demostrativo en vivo (hilado en huso y muestrario de lanas teñidas en el stand). Participación en la ronda de negocios con operadores turísticos y entrega de la distinción oficial del Laboratorio.",
+                "[\"¿Qué agencias de Buenos Aires y de la comarca confirman fechas de preventa para marzo/abril de 2027?\",\"¿Cómo queda enlazado el retiro en la web oficial esquel.site?\"]",
+                "[\"Montaje del stand de experiencia con vellones, husos, ovillos teñidos y bitácoras.\",\"Presentación del pitch de 3 minutos de Cecilia.\",\"Firma de al menos 2 cartas de intención con agencias receptivas.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand vivencial con huso y muestrario de tintes\",\"done\":false},{\"id\":2,\"texto\":\"Presentar pitch de 3 minutos ante prestadores comarcales\",\"done\":false},{\"id\":3,\"texto\":\"Firmar al menos 2 cartas de intención con agencias\",\"done\":false}]",
+                ["leandro","mariela","noelia","adria","francisco","agustina","cesia"]
+            ],
+        ];
+
+        foreach ($reunionesTruepat as $rt) {
+            $asistentes = array_pop($rt);
+            $insReuTruepat->execute($rt);
+            $reuId = $rt[0];
+            foreach ($asistentes as $consId) {
+                $insAsistTruepat->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

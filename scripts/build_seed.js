@@ -389,6 +389,56 @@ const exactMeetings = {
       objetivos: ['Presentar el Master Plan del laberinto en el stand.', 'Ofrecer degustación de repostería de la futura casa de té.', 'Cerrar al menos una carta de intención con el sector receptivo.'],
       check: ['Montar maqueta/lámina del Master Plan en el stand', 'Llevar plantines de ligustro y muestras de repostería casera', 'Cerrar al menos una alianza comercial en la rueda']
     }
+  ],
+  truepat: [
+    { num: 1, f: '2026-09-18', t: 'ind', lugar: 'Oficina Turismo', hora: '10:00 a 12:30', titulo: 'Diagnóstico en terreno, deconstrucción de marca y reposicionamiento de autor', asistentes: ['mariela', 'noelia', 'leandro'],
+      guia: 'Deconstruir el nombre provisorio "True Patagonia" y acordar la nueva denominación de autor. Inventariar la red de contactos existente (maestras de telar en Melipal, hilanderas, chacras conocidas en Percy y Nahuelpan). Fijar el perfil de la persona pública de Cecilia.',
+      preguntas: ['¿Por qué el nombre en inglés aleja al público que busca identidad ancestral?', '¿Cómo resumimos la historia de Cecilia en 30 segundos de manera magnética?', '¿Cuáles son los 3 saberes que sí o sí deben estar en el retiro?'],
+      objetivos: ['Completar ficha de relevamiento de contactos de campo.', 'Proponer 3 opciones de denominación de marca con anclaje patagónico.', 'Definir público objetivo (mujeres 35-65 años, apasionadas del quehacer textil, turismo regenerativo y cultural).'],
+      check: ['Mapear artesanas, hilanderas y predios rurales aliados', 'Definir nueva denominación de marca de autor', 'Diseñar perfil de la persona pública de Cecilia']
+    },
+    { num: 2, f: '2026-09-22', t: 'ind', lugar: 'Taller Cecilia (Los Álamos)', hora: '14:00 a 16:30', titulo: 'Curaduría del itinerario vivencial y diseño del guion emocional', asistentes: ['noelia'],
+      guia: 'Diagramar el cronograma paso a paso del retiro de 4 días / 3 noches. Diseñar la curva dramática de la experiencia: alternancia de actividades manuales, tiempos de descanso, comidas tradicionales y momentos de asombro.',
+      preguntas: ['¿Cómo evitamos que la jornada de hilado resulte agotadora para quien nunca agarró un huso?', '¿En qué momento del día se produce la revelación del color en la olla de tintes?', '¿Qué historia de fogón compartimos a la noche?'],
+      objetivos: ['Redactar el guion cronológico del Día 1 al Día 4.', 'Cronometrar tiempos de taller (máximo 3 horas de trabajo manual por jornada).', 'Programar la Cápsula Full Day de Crochet y Naturaleza como producto complementario.'],
+      check: ['Redactar guion paso a paso de las 4 jornadas', 'Establecer descansos y pausas sensoriales', 'Definir la cápsula de campo Patrones de Montaña y Crochet']
+    },
+    { num: 3, f: '2026-09-28', t: 'ter', lugar: 'Las Margaritas (Nahuelpan) y Percy', hora: '09:30 a 13:00', titulo: 'Prospección en territorio y acuerdos con anfitriones rurales', asistentes: ['mariela', 'noelia'],
+      guia: 'Relevar in situ las instalaciones de Establecimiento Las Margaritas y evaluar la articulación entre emprendimientos de la misma cohorte. Visitar chacras ovinas aliadas para definir el espacio de esquila, demostración y almuerzo criollo.',
+      preguntas: ['¿Las Margaritas cuenta con capacidad para alojar o funciona mejor como locación de talleres y contacto con animales?', '¿Qué infraestructura básica de baños y resguardo de viento se requiere en Percy?'],
+      objetivos: ['Completar acta de acuerdo preliminar con Las Margaritas.', 'Evaluar estado de accesos vehiculares para transfers de turistas.', 'Determinar el canon diario por uso de instalaciones y atención campesina.'],
+      check: ['Relevar predio Las Margaritas con Lorena Cogos', 'Inspeccionar chacras ovinas en Alto Río Percy', 'Fijar canon por uso de predio y atención campesina']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 4 (Melipal)', hora: '09:30 a 12:30', titulo: 'Costeo, punto de equilibrio y tarifario (Célula 4)', asistentes: ['mariela', 'noelia', 'agustina'],
+      guia: 'Poner en común la estructura de costos de los paquetes receptivos y retiros. Calcular costos fijos y variables (alojamiento, transfers, insumos de telar/tintes, honorarios de artesanas campesinas, coordinación de Cecilia y comisión de agencia).',
+      preguntas: ['¿Cuál es el costo directo por persona y cuánto representa el honorario de facilitación de Cecilia?', '¿Qué precio final en dólares y pesos resiste el segmento ABC1 nacional e internacional?', '¿A partir de cuántos pasajeros se cubre el punto de equilibrio?'],
+      objetivos: ['Planilla de costeo integral terminada.', 'Fijar punto de equilibrio en 4 pasajeros.', 'Definir esquema de comisión para agencias de viajes (20% margen receptivo sobre tarifa neta).'],
+      check: ['Completar matriz de costeo integral', 'Determinar punto de equilibrio (4 pasajeros)', 'Fijar tarifario B2C y tarifa neta B2B con 20% margen']
+    },
+    { num: 5, f: '2026-10-08', t: 'ind', lugar: 'Oficina Turismo', hora: '10:00 a 12:30', titulo: 'Diseño editorial del souvenir físico y packaging de bienvenida', asistentes: ['noelia'],
+      guia: 'Revisar la maqueta editorial de la "Bitácora Textil y Carpeta de Saberes" diseñada por Cecilia. Definir proveedores de impresión local en papel reciclado/kraft y armar el packaging de bienvenida (bolsa de lienzo con huso rústico y vellón crudo).',
+      preguntas: ['¿Cómo estructuramos las fichas botánicas para que el visitante pueda anotar sus propias recetas de tinte?', '¿Qué piezas componen el kit inicial entregado al llegar a Esquel?'],
+      objetivos: ['Prototipo impreso de la Bitácora de Saberes.', 'Presupuestar impresión de 50 ejemplares con imprentas de Esquel.', 'Diseñar etiquetas colgantes con QR que derive a la galería digital privada.'],
+      check: ['Aprobar maqueta editorial de la Bitácora de Saberes', 'Cotizar impresión en papel kraft/reciclado local', 'Diseñar kit de bienvenida en bolsa de lienzo con huso']
+    },
+    { num: 6, f: '2026-10-14', t: 'ind', lugar: 'Turismo', hora: '11:00 a 13:00', titulo: 'Encuadre regulatorio, seguros y alianzas con agencias receptivas (EVyT)', asistentes: ['mariela', 'leandro'],
+      guia: 'Establecer el encuadre normativo del paquete. Definir la contratación de pólizas de seguro de accidentes personales / turismo activo para los excursionistas. Presentar el producto ante agencias receptivas habilitadas (EVyT) de Esquel para operar bajo su paraguas comercial.',
+      preguntas: ['¿Qué agencia local está dispuesta a firmar un acuerdo de comercialización exclusiva o co-branding?', '¿Qué requisitos de habilitación de transporte se exigen para los traslados a Nahuelpan y Percy?'],
+      objetivos: ['Modelo de convenio marco con agencia receptiva local.', 'Cotización de póliza de seguro de turismo alternativo.', 'Redactar condiciones generales de contratación y políticas de cancelación estricta.'],
+      check: ['Redactar modelo de convenio marco con agencias EVyT', 'Cotizar póliza de turismo activo y accidentes personales', 'Definir políticas de reserva, seña y cancelación']
+    },
+    { num: 7, f: '2026-10-19', t: 'ter', lugar: 'Chacra Rural (Nahuelpan / Percy)', hora: '09:00 a 13:00', titulo: 'Banco de contenidos visuales de autor y ficha comercial B2B', asistentes: ['noelia'],
+      guia: 'Producción fotográfica y audiovisual profesional (tomas de detalle en huso, humeado de ollas de tintes con calafate, vellones ovinos, retratos cálidos de Cecilia y anfitrionas campesinas). Redacción final del brochure comercial B2B para comercializadores emisivos de Buenos Aires, Córdoba y Rosario.',
+      preguntas: ['¿Qué tomas transmiten paz, textura y autenticidad sin caer en el cliché folclórico?', '¿Qué formato de video vertical funciona mejor para redes de comunidades de tejedoras y clubes de lana?'],
+      objetivos: ['Banco de 30 fotografías profesionales de alta calidad.', '3 reels cortos narrados por Cecilia explicando la experiencia.', 'Ficha comercial digital en PDF lista para envío a agencias.'],
+      check: ['Rodaje fotográfico y clips en chacra rural', 'Seleccionar y editar 3 reels de autor', 'Diseñar brochure digital B2B para agencias emisivas']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Melipal', hora: '10:00 a 14:00', titulo: 'Validación sensorial piloto, rueda de negocios y cierre de cohorte', asistentes: ['leandro', 'mariela', 'noelia', 'adria', 'francisco', 'agustina', 'cesia'],
+      guia: 'Validación final de la experiencia mediante un micro-taller demostrativo en vivo (hilado en huso y muestrario de lanas teñidas en el stand). Participación en la ronda de negocios con operadores turísticos y entrega de la distinción oficial del Laboratorio.',
+      preguntas: ['¿Qué agencias de Buenos Aires y de la comarca confirman fechas de preventa para marzo/abril de 2027?', '¿Cómo queda enlazado el retiro en la web oficial esquel.site?'],
+      objetivos: ['Montaje del stand de experiencia con vellones, husos, ovillos teñidos y bitácoras.', 'Presentación del pitch de 3 minutos de Cecilia.', 'Firma de al menos 2 cartas de intención con agencias receptivas.'],
+      check: ['Montar stand vivencial con huso y muestrario de tintes', 'Presentar pitch de 3 minutos ante prestadores comarcales', 'Firmar al menos 2 cartas de intención con agencias']
+    }
   ]
 };
 
@@ -688,7 +738,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -938,6 +988,68 @@ php += `        ];
             $reuId = $rl[0];
             foreach ($asistentes as $consId) {
                 $insAsistLaberin->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de True Patagonia (Inmersivos Textiles) si todavía tiene la plantilla genérica inicial
+    $checkTruepat = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'truepat-01'")->fetchColumn();
+    if ($checkTruepat === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkTruepat) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'truepat-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'truepat'");
+
+        $insReuTruepat = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistTruepat = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesTruepat = [
+`;
+
+const truepatMeetingsList = exactMeetings.truepat;
+for (const m of truepatMeetingsList) {
+  const reuId = `truepat-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['mariela', 'noelia'];
+
+  php += `            [
+                '${reuId}',
+                'truepat',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesTruepat as $rt) {
+            $asistentes = array_pop($rt);
+            $insReuTruepat->execute($rt);
+            $reuId = $rt[0];
+            foreach ($asistentes as $consId) {
+                $insAsistTruepat->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

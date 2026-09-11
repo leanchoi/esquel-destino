@@ -905,35 +905,46 @@
       "puntaje": 3.25,
       "celula": 4,
       "sr": "mariela",
-      "jr": "agustina",
+      "jr": "noelia",
       "diagnostico": [
-        "Paquete turístico receptivo boutique que integra naturaleza, gastronomía y patrimonio de la comarca.",
-        "Visión profesional del turismo receptivo y altos estándares de calidad.",
-        "Capacidad de articulación con prestadores."
+        "Cecilia Fernanda Simonini (radicada en Esquel hace 10 años por elección pura) combina un perfil técnico, artístico y naturalista excepcional: técnica en electrónica, diseñadora gráfica, formación en pastelería, naturalista egresada de Aves Argentinas (trabajo de campo y educación ambiental) y tejedora en telar mapuche, crochet, peine e hilandera en huso tradicional en el Centro Cultural Melipal.",
+        "Amplia experiencia en el sector turístico receptivo de Esquel: trayectoria en Las Bayas (hotelería boutique), Frontera Sur (agencia receptiva, rental, esquí y concesiones en Parque Nacional Los Alerces como Cabañas El Chaltén, Camping Lago Verde y Restaurante El Aura), y piezas textiles para Maipú. Reside en el periurbano (detrás de Chacra Los Álamos), en conexión directa con la vida de campo.",
+        "Propuesta de valor transformadora y vivencial: 'hacer y experimentar en lugar de solo observar'. Ciclo completo de la lana (oveja, esquila, hilado en huso, recolección botánica de tintes naturales y telar mapuche), alfarería rústica, cosmovisión con nociones de mapuzungun y cocina al rescoldo/horno de barro, complementado con cápsulas de crochet en el paisaje cordillerano."
       ],
       "trabas": [
-        "Cierre de acuerdos comerciales con tarifas netas confidenciales.",
-        "Canales de distribución emisivos en grandes ciudades."
+        "Disonancia del nombre provisorio anglosajón ('True Patagonia') frente a una propuesta de raíz ancestral mapuche-tehuelche y criolla profunda, señalada unánimemente por el jurado.",
+        "Cuello de botella en la base de alojamiento: pretender concentrar todo en una sola chacra rural con ovejas frena el proyecto por falta de infraestructura hotelera adecuada (calefacción, camas de confort, baños privados) en parajes comarcales.",
+        "Sobrecarga operativa al estar sola: necesidad de estructurar el encuadre legal, seguros de turismo activo/asistencia al viajero y comercialización mediante convenios con agencias de viajes receptivas (EVyT) habilitadas."
       ],
       "ejes": [
         {
-          "t": "Estandarización del Paquete",
+          "t": "Deconstrucción de Marca y Reposicionamiento de Autor",
           "items": [
-            "Itinerario cerrado de 4 días / 3 noches.",
-            "Costeo integral con margen de agencia garantizado."
+            "Reemplazo de 'True Patagonia' por una denominación de autor con anclaje comarcal y calidez patagónica.",
+            "Construcción de la persona pública de Cecilia como activo irreplicable, anfitriona y puente de confianza con el campo."
           ]
         },
         {
-          "t": "Venta B2B",
+          "t": "Modelo 'Punta de Lanza' y Curaduría Emocional",
           "items": [
-            "Presentación a agencias emisivas de Buenos Aires y Rosario.",
-            "Material promocional de alta calidad visual."
+            "Base de alojamiento en cabañas periurbanas o predios seleccionados (Establecimiento Las Margaritas de Lorena Cogos en Nahuelpan) e incursiones diarias a chacras de Alto Río Percy y parajes.",
+            "Diseño del itinerario de 4 días / 3 noches con curva dramática: momentos de calma, silencios, mateadas campesinas y picos de asombro artesanal."
+          ]
+        },
+        {
+          "t": "Souvenir Físico Conector y Comercialización Receptiva",
+          "items": [
+            "Diseño y prototipado editorial de la 'Bitácora Textil y Carpeta de Saberes' (fichas botánicas, fórmulas de tinte, glosario mapuzungun y muestras de lana hilada/teñida).",
+            "Estructuración de costos B2B/B2C, punto de equilibrio (4 pasajeros), encuadre de turismo activo y convenio marco con agencia receptiva (EVyT) para venta anticipada."
           ]
         }
       ],
       "entregables": [
-        "Tarifario B2B confidencial y condiciones de contratación.",
-        "Brochure comercial y ficha técnica completa."
+        "Manual de Marca y Relato de Autor desarticulando el nombre foráneo.",
+        "Itinerario Técnico Guionado (4 Días / 3 Noches) y Cápsula Full Day 'Patrones de Montaña & Crochet'.",
+        "Prototipo Editorial Impreso de la 'Bitácora Textil y Carpeta de Saberes' con packaging de bienvenida.",
+        "Convenio preliminar de uso de espacio con Establecimiento Las Margaritas y predios campesinos de Percy.",
+        "Ficha Comercial B2B, matriz de costeo integral con margen de agencia y modelo de seguro de turismo activo."
       ]
     }
   ]
