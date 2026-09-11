@@ -128,16 +128,16 @@ function lab_asegurar_datos(PDO $pdo): void
                 'porota',
                 19,
                 "LO DE POROTA... \"meriendas de campo y arqueología familiar patagónica\"",
-                "Alda Inés Mateo Garin",
+                "Alda Inés Mateo Garín (\"Pelusa\")",
                 'Acelera',
                 3.85,
                 3,
                 'adria',
                 'francisco',
-                "[\"Meriendas campestres y relato histórico de pioneros en predio rural con encanto.\",\"Fuerte valor patrimonial y arqueología familiar patagónica.\",\"Gran calidez de anfitriona.\"]",
-                "[\"Acondicionamiento de baños y salón de té para invierno/lluvia.\",\"Definición de cupo máximo por turno para preservar la intimidad.\"]",
-                "[{\"t\":\"Guion Interpretativo\",\"items\":[\"Curaduría de objetos familiares y relatos guiados.\",\"Estructura de la merienda en 3 pasos sensoriales.\"]},{\"t\":\"Comercialización\",\"items\":[\"Sistema de reservas previas por WhatsApp.\",\"Alianza con hoteles boutique para derivación.\"]}]",
-                "[\"Guion de la merienda escrito.\",\"Carta de menú patagónico y tarifario por persona.\"]"
+                "[\"Propuesta de turismo cultural, arqueológico y gastronómico de inmenso valor testimonial e identitario, ubicada en Don Bosco 920 (Barrio Don Bosco, Esquel). Rescata el legado centenario de la familia Mateo-Garín (pioneros de Tecka desde 1875 en Estancia La Central).\",\"El corazón del proyecto es la 'Colección Arqueológica Clara Rosa Garín (Porota)', conformada por 7.552 piezas milenarias (puntas de flecha, hachas de piedra, pipas, raspadores, boleadoras y trawiles) recolectadas a caballo durante décadas por Porota Garín. Colección privada legalmente registrada e inventariada técnicamente por los antropólogos Heidi y Leandro.\",\"La experiencia fusiona la memoria viva de la Patagonia con la hospitalidad hogareña de Alda Inés Mateo Garín ('Pelusa', jubilada): merienda casera campera (pan horneado en casa, manteca de campo, mermeladas de frutos del bosque, tortas fritas calientes), recorrido guiado por las vitrinas y mesas vidriadas de la casa, y asesoramiento museológico cercano del Prof. Marcelo Troiano (vecino y co-seleccionado de la cohorte).\"]",
+                "[\"Acondicionamiento museográfico y mobiliario seguro: necesidad de transformar el mobiliario existente (escritorio antiguo, vitrina de pared y mesas de té con tapas de vidrio templado de seguridad) para exhibir las piezas de forma protegida sin permitir la manipulación riesgosa o extravío, además de pintura y puesta a punto de sanitarios domésticos para recepción.\",\"Protocolización bromatológica y comercial de la merienda: transición desde una actividad familiar informal hacia un servicio gastronómico habilitado con cupo máximo estricto (6 a 10 comensales por turno) que preserve la intimidad y la custodia patrimonial.\",\"Creación de identidad de marca, canales digitales y souvenir físico: carencia de logotipo, identidad visual y web de reservas; ausencia de un souvenir tangible (réplicas de puntas de flecha en arcilla/madera o postales ilustradas con la historia de Tecka) para capitalizar la 'economía de los recuerdos'.\"]",
+                "[{\"t\":\"Curaduría Museográfica, Conservación Patrimonial y Guion Emocional\",\"items\":[\"Adaptación del mobiliario de la casa (escritorio histórico con caja vidriada de seguridad, vitrina de pared y mesas de té vidriadas) e iluminación de las piezas arqueológicas.\",\"Redacción del guion interpretativo en 4 momentos: 1) Linaje de los pioneros de Tecka (1875); 2) Exposición de las 7.552 piezas y métodos líticos ancestrales; 3) Taller de mate y torta frita casera en el comedor/jardín; y 4) Relato íntimo de la pieza más preciada de Porota.\",\"Asesoramiento cruzado con Marcelo Troiano y los antropólogos Heidi y Leandro.\"]},{\"t\":\"Identidad de Marca 'Lo de Porota', Plataforma Web y Souvenirs de Autor\",\"items\":[\"Desarrollo de la marca e identidad visual (logo, paleta de colores tierra/piedra, tipografía evocativa y señalética exterior discreta).\",\"Landing page de reservas online en esquel.site con cupos limitados por turno (martes, jueves y sábados de 16:30 a 18:30 hs para no interferir con las mañanas de Newcom de Pelusa).\",\"Desarrollo del souvenir oficial: réplicas artesanales de puntas de proyectil en arcilla/madera con packaging rústico y cuadernillo ilustrado 'Memorias de Porota Garín'.\"]},{\"t\":\"Estructura de Costos, Habilitación Bromatológica y Alianzas B2B\",\"items\":[\"Planilla paramétrica de costos de la merienda de campo y fijación de tarifario dual (general turistas vs residentes) y comisiones del 20-25% para agencias EVyT.\",\"Adecuación a las normativas de bromatología municipal para salones de té y meriendas hogareñas.\",\"Alianzas de derivación con hoteles boutique céntricos y sinergias con otros proyectos de Célula 3 (El Arroyo Que Nos Ve Crecer... y Sabor Mapuche).\"]}]",
+                "[\"Guion interpretativo y protocolo de visita de 'Lo de Porota: meriendas de campo y arqueología familiar', con tiempos, capacidad de carga (máx. 10 personas) y catálogo de piezas destacadas.\",\"Mobiliario museográfico adaptado y seguro en sala principal (escritorio antiguo vidriado, vitrina y mesas temáticas) con fichas técnicas explicativas.\",\"Identidad visual consolidada (logotipo, tipografía, paleta de colores y cartelería de bienvenida) y landing page de reservas online.\",\"Prototipo del souvenir de autor conector (réplicas de puntas de flecha artesanales en cofre rústico y folleto ilustrado con relatos de Tecka).\",\"Planilla paramétrica de costos y tarifario oficial B2C/B2B para comercialización con agencias receptivas y alojamientos.\",\"Manual de manipulación segura y custodia legal de la Colección Arqueológica Clara Rosa Garín avalado ante las áreas de Patrimonio Cultural.\"]"
             ],
             [
                 'senderos',
@@ -1018,171 +1018,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'porota-01',
                 'porota',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
-                'ind',
-                "Taller / Local",
-                '2026-09-12',
-                "10:00",
-                "11:30",
+                "Diagnóstico en Don Bosco 920, relevamiento de las 7.552 piezas y espacio físico",
+                'ter',
+                "Casa de Porota (Don Bosco 920)",
+                '2026-09-17',
+                "16:30",
+                "18:30",
                 'programada',
-                "Conocer el espacio real de trabajo de Alda Inés Mateo Garin. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de LO DE POROTA... \\\"meriendas de campo y arqueología familiar patagónica\\\" hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Visita al domicilio de Pelusa en Don Bosco 920. Inspección ocular de la sala temática de acceso, comedor, cocina, jardín delantero y sanitarios. Relevamiento de las 7.552 piezas de la Colección Arqueológica Clara Rosa Garín ya inventariadas por los antropólogos Heidi y Leandro. Relevamiento del mobiliario existente a adaptar (escritorio antiguo, vitrina de pared y mesas de té).",
+                "[\"¿Qué capacidad máxima de comensales sentados permite el salón y comedor para que la experiencia sea cómoda e íntima?\",\"¿Cómo protegemos las piezas más delicadas (puntas de flecha milimétricas) del contacto directo de los visitantes?\",\"¿Qué disponibilidad de turnos fijamos por la tarde para no interferir con las mañanas de Newcom de Pelusa?\"]",
+                "[\"Mapear el circuito físico de la visita: recepción en jardín, sala arqueológica y salón merendero.\",\"Relevar las medidas del mobiliario para cotizar las tapas de vidrio templado de seguridad.\",\"Definir el cronograma semanal de trabajo conjunto y días fijos de atención: martes, jueves y sábados.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar sala temática, comedor, jardín y sanitarios en Don Bosco 920\",\"done\":false},{\"id\":2,\"texto\":\"Inventariar el mobiliario a intervenir con vidrio templado de seguridad\",\"done\":false},{\"id\":3,\"texto\":\"Establecer los días y horarios fijos semanales para las reuniones de consultoría y visitas\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'porota-02',
                 'porota',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
-                'ind',
-                "Turismo",
-                '2026-09-19',
-                "10:00",
-                "11:30",
+                "Curaduría del guion emocional de Porota, vitrinas y mesas con vidrio de seguridad",
+                'ter',
+                "Don Bosco 920",
+                '2026-09-24',
+                "16:30",
+                "18:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Estructurar el guion narrativo y testimonial de Alda (\"Pelusa\"): la historia de los pioneros de Tecka (1875), la vida en Estancia La Central, las anécdotas de Porota recorriendo el campo a caballo y el rescate de las piezas líticas. Definir con el museólogo y vecino Marcelo Troiano las especificaciones técnicas de las cajas vidriadas y vitrinas para garantizar la conservación patrimonial.",
+                "[\"¿Cuáles son las anécdotas más conmovedoras de Porota a caballo que conectan emocionalmente con el visitante?\",\"¿Qué piezas líticas seleccionamos como muestra estrella para el recorrido de 40 minutos?\",\"¿Cómo organizamos la iluminación puntual y fichas técnicas explicativas en cada mueble?\"]",
+                "[\"Redactar el guion didáctico y emocional paso a paso de la experiencia turística.\",\"Aprobar las especificaciones técnicas de vidrios templados para el escritorio antiguo y mesas.\",\"Elaborar las fichas interpretativas de las 30 piezas arqueológicas más representativas.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el borrador del guion narrativo de Alda para la bienvenida y exposición\",\"done\":false},{\"id\":2,\"texto\":\"Definir el presupuesto de vidrios templados y herrajes para el mobiliario\",\"done\":false},{\"id\":3,\"texto\":\"Validar la selección de piezas con el marco de custodia legal de Patrimonio Cultural\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'porota-03',
                 'porota',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Estructura de costos, menú de la merienda de campo y tarifario dual B2C/B2B",
                 'ind',
-                "Turismo",
-                '2026-09-23',
-                "11:00",
-                "12:30",
+                "Melipal / Espacio LAB",
+                '2026-10-01',
+                "16:30",
+                "18:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Construir la planilla de costeo paramétrico de la merienda casera (harina, manteca de campo, mermeladas regionales, variedades de té en hebras, café y leña/gas). Fijar la tarifa minorista por persona y un esquema dual (turistas vs residentes comarcales). Establecer comisiones del 20-25% para agencias de viajes receptivas y conserjerías de hoteles boutique de Esquel y Trevelin.",
+                "[\"¿Cuál es el costo unitario de elaboración de la merienda y cuál es el punto de equilibrio mínimo por grupo?\",\"¿Qué precio por cubierto resulta competitivo frente a las casas de té tradicionales de la comarca?\",\"¿Qué política de reservas previas (seña del 50%) implementaremos para evitar cancelaciones?\"]",
+                "[\"Parametrizar los costos fijos y variables de la merienda campestre.\",\"Emitir la lista oficial de precios: público general, tarifa social residente y tarifa mayorista B2B.\",\"Diseñar el protocolo de reservas anticipadas y cancelaciones con 24 hs de margen.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir la ficha tarifaria comercial para agencias y hoteles boutique\",\"done\":false},{\"id\":3,\"texto\":\"Establecer el menú fijo estacional de la merienda de campo\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'porota-04',
                 'porota',
                 4,
-                "Puesta en común Célula undefined",
-                'gru',
-                "Célula undefined (Turismo)",
-                '2026-09-30',
-                "09:30",
-                "12:00",
+                "Desarrollo de marca \"Lo de Porota\", souvenirs de autor y encuadre bromatológico",
+                'ind',
+                "Melipal / Espacio LAB",
+                '2026-10-08',
+                "16:30",
+                "18:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["adria"]
+                "Diseñar la identidad visual del emprendimiento: logotipo evocativo de \"Lo de Porota\", paleta cromática de tierra y piedra, tipografía rústica y elegante, y placa discreta para el portón de entrada. Prototipar el souvenir de autor: cofre rústico con 2 réplicas artesanales de puntas de flecha en arcilla/madera y fascículo biográfico \"Memorias de Porota Garín\". Revisión del trámite bromatológico simplificado.",
+                "[\"¿Qué elementos gráficos sintetizan mejor la unión entre la arqueología lítica y el calor de la merienda hogareña?\",\"¿Qué costo de producción tienen los cofres de réplicas para asegurar un margen sustentable?\",\"¿Qué requisitos bromatológicos municipales deben verificarse en la cocina de Don Bosco 920?\"]",
+                "[\"Aprobar la identidad visual y manual básico de marca de \\\"Lo de Porota\\\".\",\"Cotizar y prototipar la primera serie de 50 cofres de souvenirs con artesanos locales.\",\"Formalizar el cumplimiento de normas de manipulación segura de alimentos.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el logotipo oficial, paleta de colores y cartel de bienvenida exterior\",\"done\":false},{\"id\":2,\"texto\":\"Validar el prototipo del cofre con réplicas de puntas de flecha y cuadernillo\",\"done\":false},{\"id\":3,\"texto\":\"Completar el checklist de higiene y bromatología en el salón merendero\",\"done\":false}]",
+                ["adria","francisco"]
             ],
             [
                 'porota-05',
                 'porota',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Taller / Turismo",
-                '2026-10-7',
-                "10:00",
-                "11:30",
+                "Producción audiovisual profesional 4K, tomas del jardín y canal de reservas web",
+                'ter',
+                "Don Bosco 920",
+                '2026-10-15',
+                "16:00",
+                "18:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
-                ["adria","francisco"]
+                "Jornada de producción fotográfica y audiovisual profesional en Don Bosco 920. Registro en video 4K de Alda en la cocina amasando pan, tomas macro de las piezas arqueológicas protegidas bajo vidrio, retratos de Porota y planos del jardín florido. Configuración de la landing page transaccional desarrollada por Leandro Choi en el ecosistema digital de Esquel, con calendario de turnos y WhatsApp Business.",
+                "[\"¿Qué encuadres y secuencias transmiten con mayor fuerza la ternura de Pelusa y el misterio milenario de las piedras?\",\"¿Cómo estructurar la reserva online para que el turista seleccione turnos de 6 a 10 personas sin confusiones?\",\"¿Qué enlace de Mercado Pago / transferencia dejamos asociado a la seña de confirmación?\"]",
+                "[\"Generar un banco de 30 fotografías profesionales de alta calidad y clips para reels.\",\"Publicar la landing page de reservas de \\\"Lo de Porota\\\" con pasarela de pagos.\",\"Capacitar a Pelusa y su familia en la confirmación de turnos por WhatsApp.\"]",
+                "[{\"id\":1,\"texto\":\"Completar la sesión de fotos 4K y registro en video de la anfitriona y la colección\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar la interfaz y textos de la landing page de reservas online\",\"done\":false},{\"id\":3,\"texto\":\"Cargar el catálogo de servicios con precios y horarios en WhatsApp Business\",\"done\":false}]",
+                ["adria","francisco","leandro"]
             ],
             [
                 'porota-06',
                 'porota',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Rueda comercial B2B con agencias receptivas, hoteles boutique y Marcelo Troiano",
                 'ind',
-                "Turismo",
-                '2026-10-15',
-                "10:00",
-                "11:30",
+                "Secretaría de Turismo / Melipal",
+                '2026-10-22',
+                "16:30",
+                "18:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Presentar formalmente la propuesta a las principales agencias de turismo receptivo de Esquel y Trevelin, destacando su exclusividad como experiencia de cupo reducido. Coordinar alianzas con hoteles boutique céntricos para recomendar la merienda a huéspedes que buscan vivencias culturales no masivas. Articular con Marcelo Troiano (El Arroyo Que Nos Ve Crecer...) un circuito combinado de memoria urbana y merienda.",
+                "[\"¿Qué receptividad muestran los hoteles boutique en derivar pasajeros para una merienda privada y cultural?\",\"¿Cómo articulamos con las agencias receptivas la venta anticipada de grupos exclusivos?\",\"¿Qué sinergias de promoción cruzada podemos implementar con los demás proyectos de la cohorte?\"]",
+                "[\"Presentar el catálogo oficial a 3 agencias de viajes receptivas y 3 hoteles boutique de Esquel.\",\"Firmar al menos 2 acuerdos comerciales de derivación turística con comisiones formalizadas.\",\"Diseñar un itinerario conjunto optativo con Marcelo Troiano (visita histórica + merienda).\"]",
+                "[{\"id\":1,\"texto\":\"Reunión comercial con agencias y alojamientos seleccionados con muestras de té y souvenirs\",\"done\":false},{\"id\":2,\"texto\":\"Firmar convenios de derivación turística con tarifario mayorista\",\"done\":false},{\"id\":3,\"texto\":\"Coordinar la primera salida combinada piloto con Marcelo Troiano\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'porota-07',
                 'porota',
                 7,
-                "Comunicación digital, contenido y redes",
-                'ind',
-                "Turismo",
-                '2026-10-22',
-                "10:00",
-                "11:30",
+                "Simulacro vivencial de merienda (Fam Tour con informantes turísticos y guías)",
+                'ter',
+                "Don Bosco 920",
+                '2026-10-29',
+                "16:30",
+                "19:00",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
-                ["adria","francisco"]
+                "Simulacro real en Don Bosco 920 con un grupo de prueba (8 informantes de las Secretarías de Turismo de Esquel y Trevelin, guías del Parque y prestadores de la cohorte). Recorrido completo: bienvenida en el jardín, relato biográfico de Porota, exhibición de piezas en el escritorio vidriado, servicio de merienda casera caliente, entrega de souvenirs y testeo del sistema de reservas.",
+                "[\"¿Cómo evaluaron los participantes la fluidez del guion y la calidez del trato de Alda?\",\"¿La disposición del mobiliario y los vidrios de protección garantizaron la seguridad total de las piezas?\",\"¿Qué sugerencias de mejora gastronómica o de ambientación plantearon los informantes turísticos?\"]",
+                "[\"Validar los tiempos operativos reales de la merienda y exposición (2 horas exactas).\",\"Consolidar la soltura y confianza de Alda frente al público en su propio hogar.\",\"Recoger devoluciones técnicas mediante encuestas para perfeccionar el servicio antes del debut comercial.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 8 participantes del sector turístico comarcal\",\"done\":false},{\"id\":2,\"texto\":\"Completar las encuestas de evaluación sobre hospitalidad, guion y degustación\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales del servicio de mesa y cartelería informativa\",\"done\":false}]",
+                ["adria","francisco","leandro"]
             ],
             [
                 'porota-08',
                 'porota',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ind',
-                "Taller / Local",
-                '2026-10-29',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["adria","francisco"]
-            ],
-            [
-                'porota-09',
-                'porota',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-4',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["adria","francisco"]
-            ],
-            [
-                'porota-10',
-                'porota',
-                10,
-                "Distinción, resultados y rueda de negocios",
-                'cie',
-                "Acto de cierre",
-                '2026-11-10',
-                "10:00",
+                "Ronda de negocios final, pitch institucional y homenaje público al legado de Porota",
+                'col',
+                "Melipal / Espacio LAB",
+                '2026-11-05',
+                "09:30",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB en el Centro Cultural Melipal. Montaje de mesa temática de \"Lo de Porota\" con fotografías históricas de Tecka, piezas representativas en vitrina cerrada, muestras del cofre de souvenirs y degustación de tortas fritas caseras. Pitch institucional de 3 minutos de Alda Inés Mateo Garín. Firma de acuerdos comerciales y entrega del plan operativo post-LAB.",
+                "[\"¿Qué balance arrojan las primeras reservas turísticas ingresadas a través de la web y agencias?\",\"¿Cómo se organizará el calendario operativo de Pelusa para la temporada alta de verano 2026/2027?\",\"¿Qué pasos siguen para la gestión de fondos de mejora edilicia ante Cultura o Municipio?\"]",
+                "[\"Exhibir el producto consolidado ante autoridades municipales, prestadores y medios de comunicación.\",\"Consolidar convenios comerciales firmes con el sector privado para el verano.\",\"Entregar el informe final de consultoría técnica y hoja de ruta post-incubación.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con vitrina de piezas, souvenirs y degustación campesina\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos de Alda ante autoridades y empresarios turísticos\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos comerciales formales y entrega de la hoja de ruta 2026/2027\",\"done\":false}]",
+                ["adria","francisco","leandro"]
             ],
             [
                 'senderos-01',
@@ -3040,7 +3006,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor', 'porota'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -5058,6 +5024,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rs[0];
             foreach ($asistentes as $consId) {
                 $insAsistSabor->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Lo de Porota si todavía tiene la plantilla genérica inicial
+    $checkPorota = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'porota-01'")->fetchColumn();
+    if ($checkPorota === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkPorota) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'porota-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'porota'");
+
+        $insReuPorota = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistPorota = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesPorota = [
+            [
+                'porota-01',
+                'porota',
+                1,
+                "Diagnóstico en Don Bosco 920, relevamiento de las 7.552 piezas y espacio físico",
+                'ter',
+                "Casa de Porota (Don Bosco 920)",
+                '2026-09-17',
+                "16:30",
+                "18:30",
+                'programada',
+                "Visita al domicilio de Pelusa en Don Bosco 920. Inspección ocular de la sala temática de acceso, comedor, cocina, jardín delantero y sanitarios. Relevamiento de las 7.552 piezas de la Colección Arqueológica Clara Rosa Garín ya inventariadas por los antropólogos Heidi y Leandro. Relevamiento del mobiliario existente a adaptar (escritorio antiguo, vitrina de pared y mesas de té).",
+                "[\"¿Qué capacidad máxima de comensales sentados permite el salón y comedor para que la experiencia sea cómoda e íntima?\",\"¿Cómo protegemos las piezas más delicadas (puntas de flecha milimétricas) del contacto directo de los visitantes?\",\"¿Qué disponibilidad de turnos fijamos por la tarde para no interferir con las mañanas de Newcom de Pelusa?\"]",
+                "[\"Mapear el circuito físico de la visita: recepción en jardín, sala arqueológica y salón merendero.\",\"Relevar las medidas del mobiliario para cotizar las tapas de vidrio templado de seguridad.\",\"Definir el cronograma semanal de trabajo conjunto y días fijos de atención: martes, jueves y sábados.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar sala temática, comedor, jardín y sanitarios en Don Bosco 920\",\"done\":false},{\"id\":2,\"texto\":\"Inventariar el mobiliario a intervenir con vidrio templado de seguridad\",\"done\":false},{\"id\":3,\"texto\":\"Establecer los días y horarios fijos semanales para las reuniones de consultoría y visitas\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'porota-02',
+                'porota',
+                2,
+                "Curaduría del guion emocional de Porota, vitrinas y mesas con vidrio de seguridad",
+                'ter',
+                "Don Bosco 920",
+                '2026-09-24',
+                "16:30",
+                "18:30",
+                'programada',
+                "Estructurar el guion narrativo y testimonial de Alda (\"Pelusa\"): la historia de los pioneros de Tecka (1875), la vida en Estancia La Central, las anécdotas de Porota recorriendo el campo a caballo y el rescate de las piezas líticas. Definir con el museólogo y vecino Marcelo Troiano las especificaciones técnicas de las cajas vidriadas y vitrinas para garantizar la conservación patrimonial.",
+                "[\"¿Cuáles son las anécdotas más conmovedoras de Porota a caballo que conectan emocionalmente con el visitante?\",\"¿Qué piezas líticas seleccionamos como muestra estrella para el recorrido de 40 minutos?\",\"¿Cómo organizamos la iluminación puntual y fichas técnicas explicativas en cada mueble?\"]",
+                "[\"Redactar el guion didáctico y emocional paso a paso de la experiencia turística.\",\"Aprobar las especificaciones técnicas de vidrios templados para el escritorio antiguo y mesas.\",\"Elaborar las fichas interpretativas de las 30 piezas arqueológicas más representativas.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el borrador del guion narrativo de Alda para la bienvenida y exposición\",\"done\":false},{\"id\":2,\"texto\":\"Definir el presupuesto de vidrios templados y herrajes para el mobiliario\",\"done\":false},{\"id\":3,\"texto\":\"Validar la selección de piezas con el marco de custodia legal de Patrimonio Cultural\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'porota-03',
+                'porota',
+                3,
+                "Estructura de costos, menú de la merienda de campo y tarifario dual B2C/B2B",
+                'ind',
+                "Melipal / Espacio LAB",
+                '2026-10-01',
+                "16:30",
+                "18:30",
+                'programada',
+                "Construir la planilla de costeo paramétrico de la merienda casera (harina, manteca de campo, mermeladas regionales, variedades de té en hebras, café y leña/gas). Fijar la tarifa minorista por persona y un esquema dual (turistas vs residentes comarcales). Establecer comisiones del 20-25% para agencias de viajes receptivas y conserjerías de hoteles boutique de Esquel y Trevelin.",
+                "[\"¿Cuál es el costo unitario de elaboración de la merienda y cuál es el punto de equilibrio mínimo por grupo?\",\"¿Qué precio por cubierto resulta competitivo frente a las casas de té tradicionales de la comarca?\",\"¿Qué política de reservas previas (seña del 50%) implementaremos para evitar cancelaciones?\"]",
+                "[\"Parametrizar los costos fijos y variables de la merienda campestre.\",\"Emitir la lista oficial de precios: público general, tarifa social residente y tarifa mayorista B2B.\",\"Diseñar el protocolo de reservas anticipadas y cancelaciones con 24 hs de margen.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir la ficha tarifaria comercial para agencias y hoteles boutique\",\"done\":false},{\"id\":3,\"texto\":\"Establecer el menú fijo estacional de la merienda de campo\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'porota-04',
+                'porota',
+                4,
+                "Desarrollo de marca \"Lo de Porota\", souvenirs de autor y encuadre bromatológico",
+                'ind',
+                "Melipal / Espacio LAB",
+                '2026-10-08',
+                "16:30",
+                "18:30",
+                'programada',
+                "Diseñar la identidad visual del emprendimiento: logotipo evocativo de \"Lo de Porota\", paleta cromática de tierra y piedra, tipografía rústica y elegante, y placa discreta para el portón de entrada. Prototipar el souvenir de autor: cofre rústico con 2 réplicas artesanales de puntas de flecha en arcilla/madera y fascículo biográfico \"Memorias de Porota Garín\". Revisión del trámite bromatológico simplificado.",
+                "[\"¿Qué elementos gráficos sintetizan mejor la unión entre la arqueología lítica y el calor de la merienda hogareña?\",\"¿Qué costo de producción tienen los cofres de réplicas para asegurar un margen sustentable?\",\"¿Qué requisitos bromatológicos municipales deben verificarse en la cocina de Don Bosco 920?\"]",
+                "[\"Aprobar la identidad visual y manual básico de marca de \\\"Lo de Porota\\\".\",\"Cotizar y prototipar la primera serie de 50 cofres de souvenirs con artesanos locales.\",\"Formalizar el cumplimiento de normas de manipulación segura de alimentos.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el logotipo oficial, paleta de colores y cartel de bienvenida exterior\",\"done\":false},{\"id\":2,\"texto\":\"Validar el prototipo del cofre con réplicas de puntas de flecha y cuadernillo\",\"done\":false},{\"id\":3,\"texto\":\"Completar el checklist de higiene y bromatología en el salón merendero\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'porota-05',
+                'porota',
+                5,
+                "Producción audiovisual profesional 4K, tomas del jardín y canal de reservas web",
+                'ter',
+                "Don Bosco 920",
+                '2026-10-15',
+                "16:00",
+                "18:30",
+                'programada',
+                "Jornada de producción fotográfica y audiovisual profesional en Don Bosco 920. Registro en video 4K de Alda en la cocina amasando pan, tomas macro de las piezas arqueológicas protegidas bajo vidrio, retratos de Porota y planos del jardín florido. Configuración de la landing page transaccional desarrollada por Leandro Choi en el ecosistema digital de Esquel, con calendario de turnos y WhatsApp Business.",
+                "[\"¿Qué encuadres y secuencias transmiten con mayor fuerza la ternura de Pelusa y el misterio milenario de las piedras?\",\"¿Cómo estructurar la reserva online para que el turista seleccione turnos de 6 a 10 personas sin confusiones?\",\"¿Qué enlace de Mercado Pago / transferencia dejamos asociado a la seña de confirmación?\"]",
+                "[\"Generar un banco de 30 fotografías profesionales de alta calidad y clips para reels.\",\"Publicar la landing page de reservas de \\\"Lo de Porota\\\" con pasarela de pagos.\",\"Capacitar a Pelusa y su familia en la confirmación de turnos por WhatsApp.\"]",
+                "[{\"id\":1,\"texto\":\"Completar la sesión de fotos 4K y registro en video de la anfitriona y la colección\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar la interfaz y textos de la landing page de reservas online\",\"done\":false},{\"id\":3,\"texto\":\"Cargar el catálogo de servicios con precios y horarios en WhatsApp Business\",\"done\":false}]",
+                ["adria","francisco","leandro"]
+            ],
+            [
+                'porota-06',
+                'porota',
+                6,
+                "Rueda comercial B2B con agencias receptivas, hoteles boutique y Marcelo Troiano",
+                'ind',
+                "Secretaría de Turismo / Melipal",
+                '2026-10-22',
+                "16:30",
+                "18:30",
+                'programada',
+                "Presentar formalmente la propuesta a las principales agencias de turismo receptivo de Esquel y Trevelin, destacando su exclusividad como experiencia de cupo reducido. Coordinar alianzas con hoteles boutique céntricos para recomendar la merienda a huéspedes que buscan vivencias culturales no masivas. Articular con Marcelo Troiano (El Arroyo Que Nos Ve Crecer...) un circuito combinado de memoria urbana y merienda.",
+                "[\"¿Qué receptividad muestran los hoteles boutique en derivar pasajeros para una merienda privada y cultural?\",\"¿Cómo articulamos con las agencias receptivas la venta anticipada de grupos exclusivos?\",\"¿Qué sinergias de promoción cruzada podemos implementar con los demás proyectos de la cohorte?\"]",
+                "[\"Presentar el catálogo oficial a 3 agencias de viajes receptivas y 3 hoteles boutique de Esquel.\",\"Firmar al menos 2 acuerdos comerciales de derivación turística con comisiones formalizadas.\",\"Diseñar un itinerario conjunto optativo con Marcelo Troiano (visita histórica + merienda).\"]",
+                "[{\"id\":1,\"texto\":\"Reunión comercial con agencias y alojamientos seleccionados con muestras de té y souvenirs\",\"done\":false},{\"id\":2,\"texto\":\"Firmar convenios de derivación turística con tarifario mayorista\",\"done\":false},{\"id\":3,\"texto\":\"Coordinar la primera salida combinada piloto con Marcelo Troiano\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'porota-07',
+                'porota',
+                7,
+                "Simulacro vivencial de merienda (Fam Tour con informantes turísticos y guías)",
+                'ter',
+                "Don Bosco 920",
+                '2026-10-29',
+                "16:30",
+                "19:00",
+                'programada',
+                "Simulacro real en Don Bosco 920 con un grupo de prueba (8 informantes de las Secretarías de Turismo de Esquel y Trevelin, guías del Parque y prestadores de la cohorte). Recorrido completo: bienvenida en el jardín, relato biográfico de Porota, exhibición de piezas en el escritorio vidriado, servicio de merienda casera caliente, entrega de souvenirs y testeo del sistema de reservas.",
+                "[\"¿Cómo evaluaron los participantes la fluidez del guion y la calidez del trato de Alda?\",\"¿La disposición del mobiliario y los vidrios de protección garantizaron la seguridad total de las piezas?\",\"¿Qué sugerencias de mejora gastronómica o de ambientación plantearon los informantes turísticos?\"]",
+                "[\"Validar los tiempos operativos reales de la merienda y exposición (2 horas exactas).\",\"Consolidar la soltura y confianza de Alda frente al público en su propio hogar.\",\"Recoger devoluciones técnicas mediante encuestas para perfeccionar el servicio antes del debut comercial.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 8 participantes del sector turístico comarcal\",\"done\":false},{\"id\":2,\"texto\":\"Completar las encuestas de evaluación sobre hospitalidad, guion y degustación\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales del servicio de mesa y cartelería informativa\",\"done\":false}]",
+                ["adria","francisco","leandro"]
+            ],
+            [
+                'porota-08',
+                'porota',
+                8,
+                "Ronda de negocios final, pitch institucional y homenaje público al legado de Porota",
+                'col',
+                "Melipal / Espacio LAB",
+                '2026-11-05',
+                "09:30",
+                "13:00",
+                'programada',
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB en el Centro Cultural Melipal. Montaje de mesa temática de \"Lo de Porota\" con fotografías históricas de Tecka, piezas representativas en vitrina cerrada, muestras del cofre de souvenirs y degustación de tortas fritas caseras. Pitch institucional de 3 minutos de Alda Inés Mateo Garín. Firma de acuerdos comerciales y entrega del plan operativo post-LAB.",
+                "[\"¿Qué balance arrojan las primeras reservas turísticas ingresadas a través de la web y agencias?\",\"¿Cómo se organizará el calendario operativo de Pelusa para la temporada alta de verano 2026/2027?\",\"¿Qué pasos siguen para la gestión de fondos de mejora edilicia ante Cultura o Municipio?\"]",
+                "[\"Exhibir el producto consolidado ante autoridades municipales, prestadores y medios de comunicación.\",\"Consolidar convenios comerciales firmes con el sector privado para el verano.\",\"Entregar el informe final de consultoría técnica y hoja de ruta post-incubación.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con vitrina de piezas, souvenirs y degustación campesina\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos de Alda ante autoridades y empresarios turísticos\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos comerciales formales y entrega de la hoja de ruta 2026/2027\",\"done\":false}]",
+                ["adria","francisco","leandro"]
+            ],
+        ];
+
+        foreach ($reunionesPorota as $rp) {
+            $asistentes = array_pop($rp);
+            $insReuPorota->execute($rp);
+            $reuId = $rp[0];
+            foreach ($asistentes as $consId) {
+                $insAsistPorota->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

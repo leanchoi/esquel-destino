@@ -319,40 +319,55 @@
       "id": "porota",
       "app_id": 19,
       "nombre": "LO DE POROTA... \"meriendas de campo y arqueología familiar patagónica\"",
-      "titular": "Alda Inés Mateo Garin",
+      "titular": "Alda Inés Mateo Garín (\"Pelusa\")",
       "linea": "Acelera",
       "puntaje": 3.85,
       "celula": 3,
       "sr": "adria",
       "jr": "francisco",
       "diagnostico": [
-        "Meriendas campestres y relato histórico de pioneros en predio rural con encanto.",
-        "Fuerte valor patrimonial y arqueología familiar patagónica.",
-        "Gran calidez de anfitriona."
+        "Propuesta de turismo cultural, arqueológico y gastronómico de inmenso valor testimonial e identitario, ubicada en Don Bosco 920 (Barrio Don Bosco, Esquel). Rescata el legado centenario de la familia Mateo-Garín (pioneros de Tecka desde 1875 en Estancia La Central).",
+        "El corazón del proyecto es la 'Colección Arqueológica Clara Rosa Garín (Porota)', conformada por 7.552 piezas milenarias (puntas de flecha, hachas de piedra, pipas, raspadores, boleadoras y trawiles) recolectadas a caballo durante décadas por Porota Garín. Colección privada legalmente registrada e inventariada técnicamente por los antropólogos Heidi y Leandro.",
+        "La experiencia fusiona la memoria viva de la Patagonia con la hospitalidad hogareña de Alda Inés Mateo Garín ('Pelusa', jubilada): merienda casera campera (pan horneado en casa, manteca de campo, mermeladas de frutos del bosque, tortas fritas calientes), recorrido guiado por las vitrinas y mesas vidriadas de la casa, y asesoramiento museológico cercano del Prof. Marcelo Troiano (vecino y co-seleccionado de la cohorte)."
       ],
       "trabas": [
-        "Acondicionamiento de baños y salón de té para invierno/lluvia.",
-        "Definición de cupo máximo por turno para preservar la intimidad."
+        "Acondicionamiento museográfico y mobiliario seguro: necesidad de transformar el mobiliario existente (escritorio antiguo, vitrina de pared y mesas de té con tapas de vidrio templado de seguridad) para exhibir las piezas de forma protegida sin permitir la manipulación riesgosa o extravío, además de pintura y puesta a punto de sanitarios domésticos para recepción.",
+        "Protocolización bromatológica y comercial de la merienda: transición desde una actividad familiar informal hacia un servicio gastronómico habilitado con cupo máximo estricto (6 a 10 comensales por turno) que preserve la intimidad y la custodia patrimonial.",
+        "Creación de identidad de marca, canales digitales y souvenir físico: carencia de logotipo, identidad visual y web de reservas; ausencia de un souvenir tangible (réplicas de puntas de flecha en arcilla/madera o postales ilustradas con la historia de Tecka) para capitalizar la 'economía de los recuerdos'."
       ],
       "ejes": [
         {
-          "t": "Guion Interpretativo",
+          "t": "Curaduría Museográfica, Conservación Patrimonial y Guion Emocional",
           "items": [
-            "Curaduría de objetos familiares y relatos guiados.",
-            "Estructura de la merienda en 3 pasos sensoriales."
+            "Adaptación del mobiliario de la casa (escritorio histórico con caja vidriada de seguridad, vitrina de pared y mesas de té vidriadas) e iluminación de las piezas arqueológicas.",
+            "Redacción del guion interpretativo en 4 momentos: 1) Linaje de los pioneros de Tecka (1875); 2) Exposición de las 7.552 piezas y métodos líticos ancestrales; 3) Taller de mate y torta frita casera en el comedor/jardín; y 4) Relato íntimo de la pieza más preciada de Porota.",
+            "Asesoramiento cruzado con Marcelo Troiano y los antropólogos Heidi y Leandro."
           ]
         },
         {
-          "t": "Comercialización",
+          "t": "Identidad de Marca 'Lo de Porota', Plataforma Web y Souvenirs de Autor",
           "items": [
-            "Sistema de reservas previas por WhatsApp.",
-            "Alianza con hoteles boutique para derivación."
+            "Desarrollo de la marca e identidad visual (logo, paleta de colores tierra/piedra, tipografía evocativa y señalética exterior discreta).",
+            "Landing page de reservas online en esquel.site con cupos limitados por turno (martes, jueves y sábados de 16:30 a 18:30 hs para no interferir con las mañanas de Newcom de Pelusa).",
+            "Desarrollo del souvenir oficial: réplicas artesanales de puntas de proyectil en arcilla/madera con packaging rústico y cuadernillo ilustrado 'Memorias de Porota Garín'."
+          ]
+        },
+        {
+          "t": "Estructura de Costos, Habilitación Bromatológica y Alianzas B2B",
+          "items": [
+            "Planilla paramétrica de costos de la merienda de campo y fijación de tarifario dual (general turistas vs residentes) y comisiones del 20-25% para agencias EVyT.",
+            "Adecuación a las normativas de bromatología municipal para salones de té y meriendas hogareñas.",
+            "Alianzas de derivación con hoteles boutique céntricos y sinergias con otros proyectos de Célula 3 (El Arroyo Que Nos Ve Crecer... y Sabor Mapuche)."
           ]
         }
       ],
       "entregables": [
-        "Guion de la merienda escrito.",
-        "Carta de menú patagónico y tarifario por persona."
+        "Guion interpretativo y protocolo de visita de 'Lo de Porota: meriendas de campo y arqueología familiar', con tiempos, capacidad de carga (máx. 10 personas) y catálogo de piezas destacadas.",
+        "Mobiliario museográfico adaptado y seguro en sala principal (escritorio antiguo vidriado, vitrina y mesas temáticas) con fichas técnicas explicativas.",
+        "Identidad visual consolidada (logotipo, tipografía, paleta de colores y cartelería de bienvenida) y landing page de reservas online.",
+        "Prototipo del souvenir de autor conector (réplicas de puntas de flecha artesanales en cofre rústico y folleto ilustrado con relatos de Tecka).",
+        "Planilla paramétrica de costos y tarifario oficial B2C/B2B para comercialización con agencias receptivas y alojamientos.",
+        "Manual de manipulación segura y custodia legal de la Colección Arqueológica Clara Rosa Garín avalado ante las áreas de Patrimonio Cultural."
       ]
     },
     {

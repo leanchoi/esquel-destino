@@ -490,6 +490,56 @@ const exactMeetings = {
       check: ['Presentar informe de balance y métricas del viaje piloto', 'Exponer calendario 2027 en la rueda de negocios', 'Firmar al menos 2 acuerdos comerciales con prestadores locales']
     }
   ],
+  porota: [
+    { num: 1, f: '2026-09-17', t: 'ter', lugar: 'Casa de Porota (Don Bosco 920)', hora: '16:30 a 18:30', titulo: 'Diagnóstico en Don Bosco 920, relevamiento de las 7.552 piezas y espacio físico', asistentes: ['adria', 'francisco'],
+      guia: 'Visita al domicilio de Pelusa en Don Bosco 920. Inspección ocular de la sala temática de acceso, comedor, cocina, jardín delantero y sanitarios. Relevamiento de las 7.552 piezas de la Colección Arqueológica Clara Rosa Garín ya inventariadas por los antropólogos Heidi y Leandro. Relevamiento del mobiliario existente a adaptar (escritorio antiguo, vitrina de pared y mesas de té).',
+      preguntas: ['¿Qué capacidad máxima de comensales sentados permite el salón y comedor para que la experiencia sea cómoda e íntima?', '¿Cómo protegemos las piezas más delicadas (puntas de flecha milimétricas) del contacto directo de los visitantes?', '¿Qué disponibilidad de turnos fijamos por la tarde para no interferir con las mañanas de Newcom de Pelusa?'],
+      objetivos: ['Mapear el circuito físico de la visita: recepción en jardín, sala arqueológica y salón merendero.', 'Relevar las medidas del mobiliario para cotizar las tapas de vidrio templado de seguridad.', 'Definir el cronograma semanal de trabajo conjunto y días fijos de atención: martes, jueves y sábados.'],
+      check: ['Inspeccionar sala temática, comedor, jardín y sanitarios en Don Bosco 920', 'Inventariar el mobiliario a intervenir con vidrio templado de seguridad', 'Establecer los días y horarios fijos semanales para las reuniones de consultoría y visitas']
+    },
+    { num: 2, f: '2026-09-24', t: 'ter', lugar: 'Don Bosco 920', hora: '16:30 a 18:30', titulo: 'Curaduría del guion emocional de Porota, vitrinas y mesas con vidrio de seguridad', asistentes: ['adria', 'francisco'],
+      guia: 'Estructurar el guion narrativo y testimonial de Alda ("Pelusa"): la historia de los pioneros de Tecka (1875), la vida en Estancia La Central, las anécdotas de Porota recorriendo el campo a caballo y el rescate de las piezas líticas. Definir con el museólogo y vecino Marcelo Troiano las especificaciones técnicas de las cajas vidriadas y vitrinas para garantizar la conservación patrimonial.',
+      preguntas: ['¿Cuáles son las anécdotas más conmovedoras de Porota a caballo que conectan emocionalmente con el visitante?', '¿Qué piezas líticas seleccionamos como muestra estrella para el recorrido de 40 minutos?', '¿Cómo organizamos la iluminación puntual y fichas técnicas explicativas en cada mueble?'],
+      objetivos: ['Redactar el guion didáctico y emocional paso a paso de la experiencia turística.', 'Aprobar las especificaciones técnicas de vidrios templados para el escritorio antiguo y mesas.', 'Elaborar las fichas interpretativas de las 30 piezas arqueológicas más representativas.'],
+      check: ['Aprobar el borrador del guion narrativo de Alda para la bienvenida y exposición', 'Definir el presupuesto de vidrios templados y herrajes para el mobiliario', 'Validar la selección de piezas con el marco de custodia legal de Patrimonio Cultural']
+    },
+    { num: 3, f: '2026-10-01', t: 'ind', lugar: 'Melipal / Espacio LAB', hora: '16:30 a 18:30', titulo: 'Estructura de costos, menú de la merienda de campo y tarifario dual B2C/B2B', asistentes: ['adria', 'francisco'],
+      guia: 'Construir la planilla de costeo paramétrico de la merienda casera (harina, manteca de campo, mermeladas regionales, variedades de té en hebras, café y leña/gas). Fijar la tarifa minorista por persona y un esquema dual (turistas vs residentes comarcales). Establecer comisiones del 20-25% para agencias de viajes receptivas y conserjerías de hoteles boutique de Esquel y Trevelin.',
+      preguntas: ['¿Cuál es el costo unitario de elaboración de la merienda y cuál es el punto de equilibrio mínimo por grupo?', '¿Qué precio por cubierto resulta competitivo frente a las casas de té tradicionales de la comarca?', '¿Qué política de reservas previas (seña del 50%) implementaremos para evitar cancelaciones?'],
+      objetivos: ['Parametrizar los costos fijos y variables de la merienda campestre.', 'Emitir la lista oficial de precios: público general, tarifa social residente y tarifa mayorista B2B.', 'Diseñar el protocolo de reservas anticipadas y cancelaciones con 24 hs de margen.'],
+      check: ['Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel', 'Emitir la ficha tarifaria comercial para agencias y hoteles boutique', 'Establecer el menú fijo estacional de la merienda de campo']
+    },
+    { num: 4, f: '2026-10-08', t: 'ind', lugar: 'Melipal / Espacio LAB', hora: '16:30 a 18:30', titulo: 'Desarrollo de marca "Lo de Porota", souvenirs de autor y encuadre bromatológico', asistentes: ['adria', 'francisco'],
+      guia: 'Diseñar la identidad visual del emprendimiento: logotipo evocativo de "Lo de Porota", paleta cromática de tierra y piedra, tipografía rústica y elegante, y placa discreta para el portón de entrada. Prototipar el souvenir de autor: cofre rústico con 2 réplicas artesanales de puntas de flecha en arcilla/madera y fascículo biográfico "Memorias de Porota Garín". Revisión del trámite bromatológico simplificado.',
+      preguntas: ['¿Qué elementos gráficos sintetizan mejor la unión entre la arqueología lítica y el calor de la merienda hogareña?', '¿Qué costo de producción tienen los cofres de réplicas para asegurar un margen sustentable?', '¿Qué requisitos bromatológicos municipales deben verificarse en la cocina de Don Bosco 920?'],
+      objetivos: ['Aprobar la identidad visual y manual básico de marca de "Lo de Porota".', 'Cotizar y prototipar la primera serie de 50 cofres de souvenirs con artesanos locales.', 'Formalizar el cumplimiento de normas de manipulación segura de alimentos.'],
+      check: ['Aprobar el logotipo oficial, paleta de colores y cartel de bienvenida exterior', 'Validar el prototipo del cofre con réplicas de puntas de flecha y cuadernillo', 'Completar el checklist de higiene y bromatología en el salón merendero']
+    },
+    { num: 5, f: '2026-10-15', t: 'ter', lugar: 'Don Bosco 920', hora: '16:00 a 18:30', titulo: 'Producción audiovisual profesional 4K, tomas del jardín y canal de reservas web', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Jornada de producción fotográfica y audiovisual profesional en Don Bosco 920. Registro en video 4K de Alda en la cocina amasando pan, tomas macro de las piezas arqueológicas protegidas bajo vidrio, retratos de Porota y planos del jardín florido. Configuración de la landing page transaccional desarrollada por Leandro Choi en el ecosistema digital de Esquel, con calendario de turnos y WhatsApp Business.',
+      preguntas: ['¿Qué encuadres y secuencias transmiten con mayor fuerza la ternura de Pelusa y el misterio milenario de las piedras?', '¿Cómo estructurar la reserva online para que el turista seleccione turnos de 6 a 10 personas sin confusiones?', '¿Qué enlace de Mercado Pago / transferencia dejamos asociado a la seña de confirmación?'],
+      objetivos: ['Generar un banco de 30 fotografías profesionales de alta calidad y clips para reels.', 'Publicar la landing page de reservas de "Lo de Porota" con pasarela de pagos.', 'Capacitar a Pelusa y su familia en la confirmación de turnos por WhatsApp.'],
+      check: ['Completar la sesión de fotos 4K y registro en video de la anfitriona y la colección', 'Aprobar la interfaz y textos de la landing page de reservas online', 'Cargar el catálogo de servicios con precios y horarios en WhatsApp Business']
+    },
+    { num: 6, f: '2026-10-22', t: 'ind', lugar: 'Secretaría de Turismo / Melipal', hora: '16:30 a 18:30', titulo: 'Rueda comercial B2B con agencias receptivas, hoteles boutique y Marcelo Troiano', asistentes: ['adria', 'francisco'],
+      guia: 'Presentar formalmente la propuesta a las principales agencias de turismo receptivo de Esquel y Trevelin, destacando su exclusividad como experiencia de cupo reducido. Coordinar alianzas con hoteles boutique céntricos para recomendar la merienda a huéspedes que buscan vivencias culturales no masivas. Articular con Marcelo Troiano (El Arroyo Que Nos Ve Crecer...) un circuito combinado de memoria urbana y merienda.',
+      preguntas: ['¿Qué receptividad muestran los hoteles boutique en derivar pasajeros para una merienda privada y cultural?', '¿Cómo articulamos con las agencias receptivas la venta anticipada de grupos exclusivos?', '¿Qué sinergias de promoción cruzada podemos implementar con los demás proyectos de la cohorte?'],
+      objetivos: ['Presentar el catálogo oficial a 3 agencias de viajes receptivas y 3 hoteles boutique de Esquel.', 'Firmar al menos 2 acuerdos comerciales de derivación turística con comisiones formalizadas.', 'Diseñar un itinerario conjunto optativo con Marcelo Troiano (visita histórica + merienda).'],
+      check: ['Reunión comercial con agencias y alojamientos seleccionados con muestras de té y souvenirs', 'Firmar convenios de derivación turística con tarifario mayorista', 'Coordinar la primera salida combinada piloto con Marcelo Troiano']
+    },
+    { num: 7, f: '2026-10-29', t: 'ter', lugar: 'Don Bosco 920', hora: '16:30 a 19:00', titulo: 'Simulacro vivencial de merienda (Fam Tour con informantes turísticos y guías)', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Simulacro real en Don Bosco 920 con un grupo de prueba (8 informantes de las Secretarías de Turismo de Esquel y Trevelin, guías del Parque y prestadores de la cohorte). Recorrido completo: bienvenida en el jardín, relato biográfico de Porota, exhibición de piezas en el escritorio vidriado, servicio de merienda casera caliente, entrega de souvenirs y testeo del sistema de reservas.',
+      preguntas: ['¿Cómo evaluaron los participantes la fluidez del guion y la calidez del trato de Alda?', '¿La disposición del mobiliario y los vidrios de protección garantizaron la seguridad total de las piezas?', '¿Qué sugerencias de mejora gastronómica o de ambientación plantearon los informantes turísticos?'],
+      objetivos: ['Validar los tiempos operativos reales de la merienda y exposición (2 horas exactas).', 'Consolidar la soltura y confianza de Alda frente al público en su propio hogar.', 'Recoger devoluciones técnicas mediante encuestas para perfeccionar el servicio antes del debut comercial.'],
+      check: ['Ejecutar el Fam Tour con 8 participantes del sector turístico comarcal', 'Completar las encuestas de evaluación sobre hospitalidad, guion y degustación', 'Ajustar detalles finales del servicio de mesa y cartelería informativa']
+    },
+    { num: 8, f: '2026-11-05', t: 'col', lugar: 'Melipal / Espacio LAB', hora: '09:30 a 13:00', titulo: 'Ronda de negocios final, pitch institucional y homenaje público al legado de Porota', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Participación protagónica en el Encuentro de Cierre de Esquel LAB en el Centro Cultural Melipal. Montaje de mesa temática de "Lo de Porota" con fotografías históricas de Tecka, piezas representativas en vitrina cerrada, muestras del cofre de souvenirs y degustación de tortas fritas caseras. Pitch institucional de 3 minutos de Alda Inés Mateo Garín. Firma de acuerdos comerciales y entrega del plan operativo post-LAB.',
+      preguntas: ['¿Qué balance arrojan las primeras reservas turísticas ingresadas a través de la web y agencias?', '¿Cómo se organizará el calendario operativo de Pelusa para la temporada alta de verano 2026/2027?', '¿Qué pasos siguen para la gestión de fondos de mejora edilicia ante Cultura o Municipio?'],
+      objetivos: ['Exhibir el producto consolidado ante autoridades municipales, prestadores y medios de comunicación.', 'Consolidar convenios comerciales firmes con el sector privado para el verano.', 'Entregar el informe final de consultoría técnica y hoja de ruta post-incubación.'],
+      check: ['Montar stand interactivo con vitrina de piezas, souvenirs y degustación campesina', 'Exponer el pitch de 3 minutos de Alda ante autoridades y empresarios turísticos', 'Firmar acuerdos comerciales formales y entrega de la hoja de ruta 2026/2027']
+    }
+  ],
   sabor: [
     { num: 1, f: '2026-09-18', t: 'ter', lugar: 'Casa de Piedra (Comunidad Nahuelpan)', hora: '10:00 a 12:30', titulo: 'Diagnóstico integral en Casa de Piedra, sendero Huella del Cóndor y sanitarios', asistentes: ['adria', 'francisco'],
       guia: 'Visita a la Comunidad Nahuelpan. Inspección ocular de Casa de Piedra (antigua escuela comunitaria recuperada), sector de cocina, corrales de gallinas y sendero La Huella del Cóndor. Relevamiento técnico del estado de los baños: verificación de la cámara séptica y pozo ciego ya ejecutados, y detalle de los materiales faltantes (cerámicos, artefactos, grifería y pintura) para su terminación.',
@@ -1088,7 +1138,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor', 'porota'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -1834,6 +1884,68 @@ php += `        ];
             $reuId = $rs[0];
             foreach ($asistentes as $consId) {
                 $insAsistSabor->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Lo de Porota si todavía tiene la plantilla genérica inicial
+    $checkPorota = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'porota-01'")->fetchColumn();
+    if ($checkPorota === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkPorota) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'porota-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'porota'");
+
+        $insReuPorota = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistPorota = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesPorota = [
+`;
+
+const porotaMeetingsList = exactMeetings.porota;
+for (const m of porotaMeetingsList) {
+  const reuId = `porota-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'francisco'];
+
+  php += `            [
+                '${reuId}',
+                'porota',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesPorota as $rp) {
+            $asistentes = array_pop($rp);
+            $insReuPorota->execute($rp);
+            $reuId = $rp[0];
+            foreach ($asistentes as $consId) {
+                $insAsistPorota->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
