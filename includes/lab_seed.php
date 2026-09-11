@@ -248,16 +248,16 @@ function lab_asegurar_datos(PDO $pdo): void
                 'margher',
                 3,
                 "Establecimiento Margherita",
-                "Dante Oliva",
+                "Dante José Oliva y compañera",
                 'Raíz',
                 4.42,
                 2,
                 'adria',
                 'noelia',
-                "[\"Chacra productiva y agroturismo de primer nivel.\",\"Puntaje más alto de la línea Raíz (4.42).\",\"Producción de alimentos de calidad y experiencia vivencial del campo cordillerano.\"]",
-                "[\"Logística de traslados y camino rural en días de lluvia.\",\"Calendarización de visitas regulares sin entorpecer la producción.\"]",
-                "[{\"t\":\"Recorrido Agroturístico\",\"items\":[\"Guion de visita a las parcelas productivas.\",\"Degustación de productos de chacra al cierre.\"]},{\"t\":\"Comercialización Directa\",\"items\":[\"Paseo con compra en origen.\",\"Venta corporativa e institucional.\"]}]",
-                "[\"Dossier de la visita agroturística empaquetada.\",\"Tarifario para agencias y particulares.\"]"
+                "[\"Iniciativa de excelencia y máxima puntuación de la línea Esquel Raíz (Puesto #1 · 4.42/5.00 con calificación perfecta 5.00 de la Dirección). Establecimiento agropecuario de 500 hectáreas sobre la ladera sur del Cerro Nahuelpan, a 18 km de Esquel y en el límite con Trevelin, en un entorno de imponente belleza cordillerana.\",\"Solvencia productiva y patrimonio arquitectónico: cabaña de ovinos (mejora genética de carneros), cría y reproducción de asnos mansos de interacción, y apicultura profesional con la marca 'Oro de Esquel' (elaborada en la sala habilitada de CAPEC con tránsito federal). Cuenta con una casita centenaria de más de 100 años de adobe y tejuelas de alerce restaurada.\",\"Definición estratégica del modelo: priorización del Agroturismo de Día de Campo, talleres vivenciales y eventos de calendario cerrado (Fiesta de la Esquila en coincidencia con Tulipanes en octubre, y jornadas nocturnas de Astroturismo con pizzas a la parrilla), preservando la casita histórica como refugio boutique estacional para no sobrecargar las tareas rurales de los titulares.\"]",
+                "[\"Sobrecarga operativa y riesgo de dispersión: necesidad de acotar la oferta al agroturismo diurno programado con reserva previa y cupos estrictos (8 a 15 personas), evitando la demanda de limpieza y lavandería continua que exigiría un hospedaje masivo.\",\"Soberanía comercial frente a intermediarios: evitar esquemas abusivos donde agencias externas revenden el acceso cobrando el doble y relegando al productor a un simple alquiler de predio; fijación de un precio único oficial y comisiones formalizadas del 20% para agencias EVyT y recepcionistas de hotel.\",\"Comercialización digital y atención de consultas: ausencia de plataforma web y pérdida de energía en mensajes manuales de WhatsApp sin cobro automatizado de señas; necesidad de producción audiovisual profesional con dron y cámaras 4K financiada por el LAB.\"]",
+                "[{\"t\":\"Curaduría de Experiencias y Estandarización de Calidad Turística\",\"items\":[\"Diseño del guion interpretativo del 'Día de Campo Margherita' (apicultura con trajes y ahumador, interacción con asnos mansos y amasado participativo de tortas fritas en la galería).\",\"Estandarización de los eventos estrella: la 'Fiesta de la Esquila & Asado de Cordero Patagónico' (octubre) y las veladas de 'Astroturismo & Cielos del Nahuelpan' con pizzas a la parrilla y telescopio.\"]},{\"t\":\"Plataforma Web Transaccional y Producción Audiovisual 4K con Dron\",\"items\":[\"Desarrollo ad-honorem a cargo de Leandro Choi de la plataforma web transaccional con pasarela de pagos integrada, reserva de turnos online y catálogo de productos de la granja.\",\"Jornada de filmación y fotografía profesional con cámaras 4K y dron en la ladera sur del Nahuelpan para banco de contenidos y cápsulas de apicultura, ovinos y casita de adobe.\"]},{\"t\":\"Costeo Paramétrico, Tarifario Unificado B2C/B2B y Fam Tour\",\"items\":[\"Planilla paramétrica de costos y fijación de tarifas con margen del 20% de comisión formal para agencias receptivas y recepcionistas de hoteles boutique de Esquel y Trevelin.\",\"Realización de un Fam Tour exclusivo para fidelizar a los operadores locales y normalización de la etiqueta de miel 'Oro de Esquel' con la estética de la tranquera histórica.\"]}]",
+                "[\"Manual operativo y guiones interpretativos estandarizados de las 3 experiencias (Día de Campo, Fiesta de la Esquila y Noche de Astroturismo).\",\"Plataforma web transaccional institucional desarrollada por Leandro Choi con motor de reservas y cobro de señas automatizado.\",\"Banco de contenidos audiovisuales profesionales: 30 fotografías 4K en alta resolución y cápsulas institucionales con tomas aéreas de dron.\",\"Planilla paramétrica de costos y tarifario oficial unificado minorista/mayorista (B2C y B2B) con comisiones del 20%.\",\"Etiqueta rediseñada de la miel 'Oro de Esquel' vinculada a la identidad visual de la tranquera y la casita de adobe.\",\"Convenios comerciales de derivación turística firmados con al menos 2 agencias receptivas habilitadas y 2 hoteles boutique de la Comarca.\"]"
             ],
             [
                 'lucero',
@@ -2140,171 +2140,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'margher-01',
                 'margher',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
+                "Diagnóstico integral en territorio: casita centenaria, colmenares y corrales",
                 'ter',
-                "Predio / Chacra",
-                '2026-09-11',
+                "Establecimiento Margherita (Ladera Sur del Nahuelpan)",
+                '2026-09-19',
                 "10:00",
-                "11:30",
+                "13:00",
                 'programada',
-                "Conocer el espacio real de trabajo de Dante Oliva. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Establecimiento Margherita hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Visita a las 500 ha en la ladera sur del Cerro Nahuelpan (a 18 km de Esquel, límite con Trevelin). Inspección ocular de la casita centenaria de adobe y tejuelas de alerce, galería cubierta, sector de apiarios y potreros de asnos y ovinos de cabaña. Mapeo de senderos pedestres internos y evaluación del estado de accesos viales.",
+                "[\"¿Qué capacidad máxima de carga simultánea toleran las instalaciones para mantener la intimidad campestre?\",\"¿Cómo organizamos el calendario para no entorpecer los ciclos reproductivos ovinos y de cosecha apícola?\",\"¿Qué mejoras menores de cartelería rústica y delimitación de senderos se requieren en el predio?\"]",
+                "[\"Mapear el circuito físico: recepción en galería, senderos hacia apiarios, potreros de asnos y miradores.\",\"Definir el modelo de negocio: agroturismo de día y eventos especiales, preservando la casita como refugio estacional.\",\"Acordar el cronograma semanal de consultoría y roles operativos de Dante y su compañera.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar casita de adobe, galería, apiario y corrales en la ladera sur\",\"done\":false},{\"id\":2,\"texto\":\"Relevar el estado de accesos viales y conectividad para los visitantes\",\"done\":false},{\"id\":3,\"texto\":\"Fijar el cronograma de 8 encuentros de consultoría técnica\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'margher-02',
                 'margher',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
-                'ind',
-                "Turismo",
-                '2026-09-18',
-                "10:00",
-                "11:30",
+                "Estandarización del Día de Campo, guion de apicultura y protocolo con asnos",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-09-26',
+                "10:30",
+                "13:00",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Cerrar la estructura pedagógica y el guion narrativo de la experiencia \"Día de Campo Margherita\" (3h 30min). Redactar las pautas de seguridad e higiene para la demostración apícola (uso de ahumador, trajes y cata de mieles), la interacción con los burritos mansos y el taller de amasado de tortas fritas en la galería. Fijación de cupos máximos (10 personas por turno).",
+                "[\"¿Cuáles son los pasos clave del guion para que Dante transmita su pasión apícola de forma didáctica y segura?\",\"¿Cómo articulamos el amasado participativo con la anfitriona mientras se preparan las brasas en la parrilla?\",\"¿Qué elementos de protección y bioseguridad se dispondrán para los visitantes en el colmenar?\"]",
+                "[\"Redactar la ficha técnica y guion interpretativo paso a paso del Día de Campo.\",\"Formalizar el protocolo de seguridad apícola y deslinde de responsabilidad civil en turismo rural.\",\"Ensayar la dinámica de recepción con mate y tortas fritas calientes en la galería.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el guion didáctico del Día de Campo y la demostración apícola\",\"done\":false},{\"id\":2,\"texto\":\"Verificar stock y condiciones de trajes apícolas y caretas para visitantes\",\"done\":false},{\"id\":3,\"texto\":\"Fijar la capacidad de carga (máx. 10 personas) y política de reservas previas de 24 hs\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'margher-03',
                 'margher',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Estructura de costos paramétricos, punto de equilibrio y tarifario dual B2C/B2B",
                 'ind',
-                "Turismo",
-                '2026-09-22',
-                "11:00",
+                "Melipal / Espacio LAB",
+                '2026-10-03',
+                "10:30",
                 "12:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Construir la planilla paramétrica de costos de las experiencias (ingredientes gastronómicos, leña de monte, mantenimiento, seguros de turismo rural y honorarios). Establecer el \"Precio Único Oficial\" del establecimiento y estructurar el margen del 20% de comisión para agencias receptivas y conserjerías de hoteles de Esquel y Trevelin.",
+                "[\"¿Cuál es el costo unitario por visitante y cuál es el punto de equilibrio mínimo para abrir la tranquera?\",\"¿Cómo aseguramos que las agencias vendan al mismo precio oficial sin recargos abusivos?\",\"¿Qué porcentaje de seña anticipada (50%) exigirá la plataforma web para congelar la reserva?\"]",
+                "[\"Parametrizar los costos fijos y variables de la media jornada y jornada entera.\",\"Emitir la lista oficial de precios: público general, tarifa social residente y tarifa mayorista B2B.\",\"Diseñar la política de reservas, cancelaciones y reprogramaciones climáticas.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir el tarifario oficial unificado para agencias y hoteles boutique\",\"done\":false},{\"id\":3,\"texto\":\"Definir el protocolo de contingencia climática en caso de lluvias intensas\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'margher-04',
                 'margher',
                 4,
-                "Puesta en común Célula undefined",
-                'gru',
-                "Célula undefined (Turismo)",
-                '2026-09-30',
-                "09:30",
-                "12:00",
+                "Preparación operativa de la Fiesta de la Esquila y logística gastronómica",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-10-10',
+                "10:00",
+                "13:00",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["adria"]
+                "Planificar minuciosamente la realización del hito anual \"Fiesta de la Esquila & Asado de Cordero Patagónico\" en coincidencia con la temporada alta de Tulipanes en Trevelin. Coordinar la demostración en vivo de comparsa de esquila, clasificación de vellones, preparación del cordero al asador a la leña y venta de frascos de miel \"Oro de Esquel\" con packaging rústico.",
+                "[\"¿Qué logística de compra y ovinos seleccionados se dispondrán para la jornada de esquila?\",\"¿Cómo se ambientará la galería y el patio para recibir cómodamente a los 15 comensales?\",\"¿Qué stock de frascos de miel fraccionada en CAPEC se destinará para venta en origen?\"]",
+                "[\"Cerrar el cronograma minuto a minuto de la jornada de esquila y banquete.\",\"Verificar la logística del fuego, asadores, vajilla campesina y puestos de sombra.\",\"Diseñar la presentación rústica de los frascos de miel como souvenir conector.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el programa operativo de la Fiesta de la Esquila\",\"done\":false},{\"id\":2,\"texto\":\"Coordinar con la comparsa de esquila y el asador el horario de demostración\",\"done\":false},{\"id\":3,\"texto\":\"Disponer el stock de miel Oro de Esquel con la nueva etiqueta institucional\",\"done\":false}]",
+                ["adria","noelia"]
             ],
             [
                 'margher-05',
                 'margher',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Predio",
-                '2026-10-6',
+                "Producción audiovisual 4K con dron y arquitectura de la web transaccional",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-10-17',
                 "10:00",
-                "11:30",
+                "13:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
-                ["adria","noelia"]
+                "Jornada de producción fotográfica y audiovisual profesional financiada por el LAB (cámaras 4K y dron en la ladera sur del Nahuelpan). Registro aéreo de las 500 ha, tomas de Dante en el apiario con traje y ahumador con las cumbres de fondo, casita de adobe y tejuelas, burritos mansos y cocina al fuego. En paralelo, revisión técnica con Leandro Choi de la web transaccional y pasarela de reservas.",
+                "[\"¿Cuáles son los ángulos aéreos más espectaculares de la ladera sur y la casita centenaria?\",\"¿Cómo estructurar la carga de datos del visitante en la web para automatizar la confirmación de turnos?\",\"¿Qué pasarela de pagos (Mercado Pago / transferencia) dejamos integrada para cobrar las señas?\"]",
+                "[\"Completar el plan de rodaje con cámaras 4K y tomas de dron para cápsulas institucionales.\",\"Validar la interfaz y textos de la plataforma web desarrollada ad-honorem por Leandro.\",\"Capacitar a Dante y su compañera en la administración sencilla del panel de reservas.\"]",
+                "[{\"id\":1,\"texto\":\"Rodar el material audiovisual 4K y banco de 30 fotografías profesionales\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar el diseño y catálogo de la plataforma web transaccional\",\"done\":false},{\"id\":3,\"texto\":\"Configurar el canal de WhatsApp Business con respuestas rápidas y catálogo\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'margher-06',
                 'margher',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Rueda comercial con agencias receptivas, hoteleros y sinergias de cohorte",
                 'ind',
-                "Turismo",
-                '2026-10-14',
-                "10:00",
-                "11:30",
+                "Secretaría de Turismo / Melipal",
+                '2026-10-24',
+                "10:30",
+                "12:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Presentar formalmente la propuesta a las 4 agencias de turismo receptivo habilitadas de Esquel y Trevelin y conserjerías de hoteles boutique. Articular sinergias ecosistémicas: provisión de miel para el productor de hidromiel de la comarca, circuitos de cicloturismo de estancia con Corcho Bikes y meriendas cruzadas con Haiku Casa de Té.",
+                "[\"¿Qué interés manifiestan las agencias en comercializar el Día de Campo y la Fiesta de la Esquila con comisión del 20%?\",\"¿Cómo articulamos la logística de traslados en combis o 4x4 para turistas sin movilidad propia?\",\"¿Qué acuerdos de provisión de miel y cera pura establecemos con emprendimientos de la cohorte?\"]",
+                "[\"Reunirse con 3 agencias de viaje receptivas y 3 hoteles boutique de Esquel y Trevelin.\",\"Firmar al menos 2 convenios comerciales de derivación turística con comisiones formalizadas.\",\"Acordar una alianza de provisión de miel con el elaborador comarcal de hidromiel.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar el catálogo oficial a agencias receptivas y prestadores hoteleros\",\"done\":false},{\"id\":2,\"texto\":\"Firmar acuerdos de comercialización turística con tarifario mayorista unificado\",\"done\":false},{\"id\":3,\"texto\":\"Concretar la alianza estratégica de miel para hidromiel y cicloturismo\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'margher-07',
                 'margher',
                 7,
-                "Comunicación digital, contenido y redes",
-                'ind',
-                "Turismo",
-                '2026-10-21',
-                "10:00",
-                "11:30",
+                "Fam Tour vivencial con agencias receptivas, hoteleros y test de reservas web",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-10-31',
+                "11:00",
+                "14:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
-                ["adria","noelia"]
+                "Simulacro vivencial real en el campo con 10 invitados estratégicos (titulares de agencias receptivas, recepcionistas de hoteles boutique y prensa turística). Prueba en vivo de la experiencia: recepción con mate y tortas fritas, visita al apiario y potrero de asnos, pizzas a la parrilla en la galería, degustación de miel y testeo del circuito de reservas web.",
+                "[\"¿Cómo evaluaron los operadores turísticos el dinamismo del guion y la calidez del anfitrión?\",\"¿La duración de 3 horas y media resultó equilibrada y atractiva para la venta en mostrador?\",\"¿Qué sugerencias técnicas plantearon los recepcionistas de hotel para recomendar el lugar?\"]",
+                "[\"Validar los tiempos operativos reales de la experiencia completa en condiciones simuladas.\",\"Fidelizar a los recepcionistas y agentes de viaje como promotores directos del establecimiento.\",\"Recoger encuestas de satisfacción para pulir detalles del servicio antes de la apertura estival.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 10 participantes del sector turístico comarcal\",\"done\":false},{\"id\":2,\"texto\":\"Completar encuestas de evaluación sobre hospitalidad, guion y gastronomía\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales del servicio de mesa y cartelería informativa interna\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'margher-08',
                 'margher',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ter',
-                "Predio",
-                '2026-10-28',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'margher-09',
-                'margher',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-3',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'margher-10',
-                'margher',
-                10,
-                "Distinción, resultados y rueda de negocios",
-                'cie',
-                "Acto de cierre",
-                '2026-11-10',
-                "10:00",
+                "Ronda de negocios final, lanzamiento de la web y hoja de ruta post-LAB",
+                'col',
+                "Melipal / Espacio LAB",
+                '2026-11-07',
+                "09:30",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB en el Centro Cultural Melipal. Montaje de mesa temática con frascos de miel Oro de Esquel, velas de cera, vellones de lana y fotos 4K del Nahuelpan. Presentación pública de la plataforma web transaccional. Pitch de 3 minutos de Dante Oliva y compañera ante autoridades y empresarios turísticos. Entrega del informe final de consultoría técnica.",
+                "[\"¿Cuáles son las reservas confirmadas en la plataforma web para la temporada de verano?\",\"¿Cómo se organizará el calendario de Dante entre la zafra apícola y los días de campo turísticos?\",\"¿Qué pasos inmediatos se proyectan para el desarrollo del SUM rústico modular a futuro?\"]",
+                "[\"Presentar públicamente la oferta consolidada de Agroturismo de Establecimiento Margherita.\",\"Consolidar acuerdos comerciales firmes con el sector receptivo comarcal para el verano.\",\"Entregar el informe final de consultoría técnica y cronograma de temporada alta 2026/2027.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con degustación de miel, fotos 4K y terminal web\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante autoridades municipales, prestadores y medios\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos comerciales formales y entrega de la hoja de ruta post-incubación\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'lucero-01',
@@ -3006,7 +2972,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor', 'porota'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor', 'porota', 'margher'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -5192,6 +5158,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rp[0];
             foreach ($asistentes as $consId) {
                 $insAsistPorota->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Establecimiento Margherita si todavía tiene la plantilla genérica inicial
+    $checkMargher = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'margher-01'")->fetchColumn();
+    if ($checkMargher === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkMargher) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'margher-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'margher'");
+
+        $insReuMargher = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistMargher = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesMargher = [
+            [
+                'margher-01',
+                'margher',
+                1,
+                "Diagnóstico integral en territorio: casita centenaria, colmenares y corrales",
+                'ter',
+                "Establecimiento Margherita (Ladera Sur del Nahuelpan)",
+                '2026-09-19',
+                "10:00",
+                "13:00",
+                'programada',
+                "Visita a las 500 ha en la ladera sur del Cerro Nahuelpan (a 18 km de Esquel, límite con Trevelin). Inspección ocular de la casita centenaria de adobe y tejuelas de alerce, galería cubierta, sector de apiarios y potreros de asnos y ovinos de cabaña. Mapeo de senderos pedestres internos y evaluación del estado de accesos viales.",
+                "[\"¿Qué capacidad máxima de carga simultánea toleran las instalaciones para mantener la intimidad campestre?\",\"¿Cómo organizamos el calendario para no entorpecer los ciclos reproductivos ovinos y de cosecha apícola?\",\"¿Qué mejoras menores de cartelería rústica y delimitación de senderos se requieren en el predio?\"]",
+                "[\"Mapear el circuito físico: recepción en galería, senderos hacia apiarios, potreros de asnos y miradores.\",\"Definir el modelo de negocio: agroturismo de día y eventos especiales, preservando la casita como refugio estacional.\",\"Acordar el cronograma semanal de consultoría y roles operativos de Dante y su compañera.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar casita de adobe, galería, apiario y corrales en la ladera sur\",\"done\":false},{\"id\":2,\"texto\":\"Relevar el estado de accesos viales y conectividad para los visitantes\",\"done\":false},{\"id\":3,\"texto\":\"Fijar el cronograma de 8 encuentros de consultoría técnica\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'margher-02',
+                'margher',
+                2,
+                "Estandarización del Día de Campo, guion de apicultura y protocolo con asnos",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-09-26',
+                "10:30",
+                "13:00",
+                'programada',
+                "Cerrar la estructura pedagógica y el guion narrativo de la experiencia \"Día de Campo Margherita\" (3h 30min). Redactar las pautas de seguridad e higiene para la demostración apícola (uso de ahumador, trajes y cata de mieles), la interacción con los burritos mansos y el taller de amasado de tortas fritas en la galería. Fijación de cupos máximos (10 personas por turno).",
+                "[\"¿Cuáles son los pasos clave del guion para que Dante transmita su pasión apícola de forma didáctica y segura?\",\"¿Cómo articulamos el amasado participativo con la anfitriona mientras se preparan las brasas en la parrilla?\",\"¿Qué elementos de protección y bioseguridad se dispondrán para los visitantes en el colmenar?\"]",
+                "[\"Redactar la ficha técnica y guion interpretativo paso a paso del Día de Campo.\",\"Formalizar el protocolo de seguridad apícola y deslinde de responsabilidad civil en turismo rural.\",\"Ensayar la dinámica de recepción con mate y tortas fritas calientes en la galería.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el guion didáctico del Día de Campo y la demostración apícola\",\"done\":false},{\"id\":2,\"texto\":\"Verificar stock y condiciones de trajes apícolas y caretas para visitantes\",\"done\":false},{\"id\":3,\"texto\":\"Fijar la capacidad de carga (máx. 10 personas) y política de reservas previas de 24 hs\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'margher-03',
+                'margher',
+                3,
+                "Estructura de costos paramétricos, punto de equilibrio y tarifario dual B2C/B2B",
+                'ind',
+                "Melipal / Espacio LAB",
+                '2026-10-03',
+                "10:30",
+                "12:30",
+                'programada',
+                "Construir la planilla paramétrica de costos de las experiencias (ingredientes gastronómicos, leña de monte, mantenimiento, seguros de turismo rural y honorarios). Establecer el \"Precio Único Oficial\" del establecimiento y estructurar el margen del 20% de comisión para agencias receptivas y conserjerías de hoteles de Esquel y Trevelin.",
+                "[\"¿Cuál es el costo unitario por visitante y cuál es el punto de equilibrio mínimo para abrir la tranquera?\",\"¿Cómo aseguramos que las agencias vendan al mismo precio oficial sin recargos abusivos?\",\"¿Qué porcentaje de seña anticipada (50%) exigirá la plataforma web para congelar la reserva?\"]",
+                "[\"Parametrizar los costos fijos y variables de la media jornada y jornada entera.\",\"Emitir la lista oficial de precios: público general, tarifa social residente y tarifa mayorista B2B.\",\"Diseñar la política de reservas, cancelaciones y reprogramaciones climáticas.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir el tarifario oficial unificado para agencias y hoteles boutique\",\"done\":false},{\"id\":3,\"texto\":\"Definir el protocolo de contingencia climática en caso de lluvias intensas\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'margher-04',
+                'margher',
+                4,
+                "Preparación operativa de la Fiesta de la Esquila y logística gastronómica",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-10-10',
+                "10:00",
+                "13:00",
+                'programada',
+                "Planificar minuciosamente la realización del hito anual \"Fiesta de la Esquila & Asado de Cordero Patagónico\" en coincidencia con la temporada alta de Tulipanes en Trevelin. Coordinar la demostración en vivo de comparsa de esquila, clasificación de vellones, preparación del cordero al asador a la leña y venta de frascos de miel \"Oro de Esquel\" con packaging rústico.",
+                "[\"¿Qué logística de compra y ovinos seleccionados se dispondrán para la jornada de esquila?\",\"¿Cómo se ambientará la galería y el patio para recibir cómodamente a los 15 comensales?\",\"¿Qué stock de frascos de miel fraccionada en CAPEC se destinará para venta en origen?\"]",
+                "[\"Cerrar el cronograma minuto a minuto de la jornada de esquila y banquete.\",\"Verificar la logística del fuego, asadores, vajilla campesina y puestos de sombra.\",\"Diseñar la presentación rústica de los frascos de miel como souvenir conector.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el programa operativo de la Fiesta de la Esquila\",\"done\":false},{\"id\":2,\"texto\":\"Coordinar con la comparsa de esquila y el asador el horario de demostración\",\"done\":false},{\"id\":3,\"texto\":\"Disponer el stock de miel Oro de Esquel con la nueva etiqueta institucional\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'margher-05',
+                'margher',
+                5,
+                "Producción audiovisual 4K con dron y arquitectura de la web transaccional",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-10-17',
+                "10:00",
+                "13:30",
+                'programada',
+                "Jornada de producción fotográfica y audiovisual profesional financiada por el LAB (cámaras 4K y dron en la ladera sur del Nahuelpan). Registro aéreo de las 500 ha, tomas de Dante en el apiario con traje y ahumador con las cumbres de fondo, casita de adobe y tejuelas, burritos mansos y cocina al fuego. En paralelo, revisión técnica con Leandro Choi de la web transaccional y pasarela de reservas.",
+                "[\"¿Cuáles son los ángulos aéreos más espectaculares de la ladera sur y la casita centenaria?\",\"¿Cómo estructurar la carga de datos del visitante en la web para automatizar la confirmación de turnos?\",\"¿Qué pasarela de pagos (Mercado Pago / transferencia) dejamos integrada para cobrar las señas?\"]",
+                "[\"Completar el plan de rodaje con cámaras 4K y tomas de dron para cápsulas institucionales.\",\"Validar la interfaz y textos de la plataforma web desarrollada ad-honorem por Leandro.\",\"Capacitar a Dante y su compañera en la administración sencilla del panel de reservas.\"]",
+                "[{\"id\":1,\"texto\":\"Rodar el material audiovisual 4K y banco de 30 fotografías profesionales\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar el diseño y catálogo de la plataforma web transaccional\",\"done\":false},{\"id\":3,\"texto\":\"Configurar el canal de WhatsApp Business con respuestas rápidas y catálogo\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+            [
+                'margher-06',
+                'margher',
+                6,
+                "Rueda comercial con agencias receptivas, hoteleros y sinergias de cohorte",
+                'ind',
+                "Secretaría de Turismo / Melipal",
+                '2026-10-24',
+                "10:30",
+                "12:30",
+                'programada',
+                "Presentar formalmente la propuesta a las 4 agencias de turismo receptivo habilitadas de Esquel y Trevelin y conserjerías de hoteles boutique. Articular sinergias ecosistémicas: provisión de miel para el productor de hidromiel de la comarca, circuitos de cicloturismo de estancia con Corcho Bikes y meriendas cruzadas con Haiku Casa de Té.",
+                "[\"¿Qué interés manifiestan las agencias en comercializar el Día de Campo y la Fiesta de la Esquila con comisión del 20%?\",\"¿Cómo articulamos la logística de traslados en combis o 4x4 para turistas sin movilidad propia?\",\"¿Qué acuerdos de provisión de miel y cera pura establecemos con emprendimientos de la cohorte?\"]",
+                "[\"Reunirse con 3 agencias de viaje receptivas y 3 hoteles boutique de Esquel y Trevelin.\",\"Firmar al menos 2 convenios comerciales de derivación turística con comisiones formalizadas.\",\"Acordar una alianza de provisión de miel con el elaborador comarcal de hidromiel.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar el catálogo oficial a agencias receptivas y prestadores hoteleros\",\"done\":false},{\"id\":2,\"texto\":\"Firmar acuerdos de comercialización turística con tarifario mayorista unificado\",\"done\":false},{\"id\":3,\"texto\":\"Concretar la alianza estratégica de miel para hidromiel y cicloturismo\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'margher-07',
+                'margher',
+                7,
+                "Fam Tour vivencial con agencias receptivas, hoteleros y test de reservas web",
+                'ter',
+                "Establecimiento Margherita",
+                '2026-10-31',
+                "11:00",
+                "14:30",
+                'programada',
+                "Simulacro vivencial real en el campo con 10 invitados estratégicos (titulares de agencias receptivas, recepcionistas de hoteles boutique y prensa turística). Prueba en vivo de la experiencia: recepción con mate y tortas fritas, visita al apiario y potrero de asnos, pizzas a la parrilla en la galería, degustación de miel y testeo del circuito de reservas web.",
+                "[\"¿Cómo evaluaron los operadores turísticos el dinamismo del guion y la calidez del anfitrión?\",\"¿La duración de 3 horas y media resultó equilibrada y atractiva para la venta en mostrador?\",\"¿Qué sugerencias técnicas plantearon los recepcionistas de hotel para recomendar el lugar?\"]",
+                "[\"Validar los tiempos operativos reales de la experiencia completa en condiciones simuladas.\",\"Fidelizar a los recepcionistas y agentes de viaje como promotores directos del establecimiento.\",\"Recoger encuestas de satisfacción para pulir detalles del servicio antes de la apertura estival.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 10 participantes del sector turístico comarcal\",\"done\":false},{\"id\":2,\"texto\":\"Completar encuestas de evaluación sobre hospitalidad, guion y gastronomía\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales del servicio de mesa y cartelería informativa interna\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+            [
+                'margher-08',
+                'margher',
+                8,
+                "Ronda de negocios final, lanzamiento de la web y hoja de ruta post-LAB",
+                'col',
+                "Melipal / Espacio LAB",
+                '2026-11-07',
+                "09:30",
+                "13:00",
+                'programada',
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB en el Centro Cultural Melipal. Montaje de mesa temática con frascos de miel Oro de Esquel, velas de cera, vellones de lana y fotos 4K del Nahuelpan. Presentación pública de la plataforma web transaccional. Pitch de 3 minutos de Dante Oliva y compañera ante autoridades y empresarios turísticos. Entrega del informe final de consultoría técnica.",
+                "[\"¿Cuáles son las reservas confirmadas en la plataforma web para la temporada de verano?\",\"¿Cómo se organizará el calendario de Dante entre la zafra apícola y los días de campo turísticos?\",\"¿Qué pasos inmediatos se proyectan para el desarrollo del SUM rústico modular a futuro?\"]",
+                "[\"Presentar públicamente la oferta consolidada de Agroturismo de Establecimiento Margherita.\",\"Consolidar acuerdos comerciales firmes con el sector receptivo comarcal para el verano.\",\"Entregar el informe final de consultoría técnica y cronograma de temporada alta 2026/2027.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con degustación de miel, fotos 4K y terminal web\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante autoridades municipales, prestadores y medios\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos comerciales formales y entrega de la hoja de ruta post-incubación\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+        ];
+
+        foreach ($reunionesMargher as $rm) {
+            $asistentes = array_pop($rm);
+            $insReuMargher->execute($rm);
+            $reuId = $rm[0];
+            foreach ($asistentes as $consId) {
+                $insAsistMargher->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

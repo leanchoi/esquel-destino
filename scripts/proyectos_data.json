@@ -739,40 +739,52 @@
       "id": "margher",
       "app_id": 3,
       "nombre": "Establecimiento Margherita",
-      "titular": "Dante Oliva",
+      "titular": "Dante José Oliva y compañera",
       "linea": "Raíz",
       "puntaje": 4.42,
       "celula": 2,
       "sr": "adria",
       "jr": "noelia",
       "diagnostico": [
-        "Chacra productiva y agroturismo de primer nivel.",
-        "Puntaje más alto de la línea Raíz (4.42).",
-        "Producción de alimentos de calidad y experiencia vivencial del campo cordillerano."
+        "Iniciativa de excelencia y máxima puntuación de la línea Esquel Raíz (Puesto #1 · 4.42/5.00 con calificación perfecta 5.00 de la Dirección). Establecimiento agropecuario de 500 hectáreas sobre la ladera sur del Cerro Nahuelpan, a 18 km de Esquel y en el límite con Trevelin, en un entorno de imponente belleza cordillerana.",
+        "Solvencia productiva y patrimonio arquitectónico: cabaña de ovinos (mejora genética de carneros), cría y reproducción de asnos mansos de interacción, y apicultura profesional con la marca 'Oro de Esquel' (elaborada en la sala habilitada de CAPEC con tránsito federal). Cuenta con una casita centenaria de más de 100 años de adobe y tejuelas de alerce restaurada.",
+        "Definición estratégica del modelo: priorización del Agroturismo de Día de Campo, talleres vivenciales y eventos de calendario cerrado (Fiesta de la Esquila en coincidencia con Tulipanes en octubre, y jornadas nocturnas de Astroturismo con pizzas a la parrilla), preservando la casita histórica como refugio boutique estacional para no sobrecargar las tareas rurales de los titulares."
       ],
       "trabas": [
-        "Logística de traslados y camino rural en días de lluvia.",
-        "Calendarización de visitas regulares sin entorpecer la producción."
+        "Sobrecarga operativa y riesgo de dispersión: necesidad de acotar la oferta al agroturismo diurno programado con reserva previa y cupos estrictos (8 a 15 personas), evitando la demanda de limpieza y lavandería continua que exigiría un hospedaje masivo.",
+        "Soberanía comercial frente a intermediarios: evitar esquemas abusivos donde agencias externas revenden el acceso cobrando el doble y relegando al productor a un simple alquiler de predio; fijación de un precio único oficial y comisiones formalizadas del 20% para agencias EVyT y recepcionistas de hotel.",
+        "Comercialización digital y atención de consultas: ausencia de plataforma web y pérdida de energía en mensajes manuales de WhatsApp sin cobro automatizado de señas; necesidad de producción audiovisual profesional con dron y cámaras 4K financiada por el LAB."
       ],
       "ejes": [
         {
-          "t": "Recorrido Agroturístico",
+          "t": "Curaduría de Experiencias y Estandarización de Calidad Turística",
           "items": [
-            "Guion de visita a las parcelas productivas.",
-            "Degustación de productos de chacra al cierre."
+            "Diseño del guion interpretativo del 'Día de Campo Margherita' (apicultura con trajes y ahumador, interacción con asnos mansos y amasado participativo de tortas fritas en la galería).",
+            "Estandarización de los eventos estrella: la 'Fiesta de la Esquila & Asado de Cordero Patagónico' (octubre) y las veladas de 'Astroturismo & Cielos del Nahuelpan' con pizzas a la parrilla y telescopio."
           ]
         },
         {
-          "t": "Comercialización Directa",
+          "t": "Plataforma Web Transaccional y Producción Audiovisual 4K con Dron",
           "items": [
-            "Paseo con compra en origen.",
-            "Venta corporativa e institucional."
+            "Desarrollo ad-honorem a cargo de Leandro Choi de la plataforma web transaccional con pasarela de pagos integrada, reserva de turnos online y catálogo de productos de la granja.",
+            "Jornada de filmación y fotografía profesional con cámaras 4K y dron en la ladera sur del Nahuelpan para banco de contenidos y cápsulas de apicultura, ovinos y casita de adobe."
+          ]
+        },
+        {
+          "t": "Costeo Paramétrico, Tarifario Unificado B2C/B2B y Fam Tour",
+          "items": [
+            "Planilla paramétrica de costos y fijación de tarifas con margen del 20% de comisión formal para agencias receptivas y recepcionistas de hoteles boutique de Esquel y Trevelin.",
+            "Realización de un Fam Tour exclusivo para fidelizar a los operadores locales y normalización de la etiqueta de miel 'Oro de Esquel' con la estética de la tranquera histórica."
           ]
         }
       ],
       "entregables": [
-        "Dossier de la visita agroturística empaquetada.",
-        "Tarifario para agencias y particulares."
+        "Manual operativo y guiones interpretativos estandarizados de las 3 experiencias (Día de Campo, Fiesta de la Esquila y Noche de Astroturismo).",
+        "Plataforma web transaccional institucional desarrollada por Leandro Choi con motor de reservas y cobro de señas automatizado.",
+        "Banco de contenidos audiovisuales profesionales: 30 fotografías 4K en alta resolución y cápsulas institucionales con tomas aéreas de dron.",
+        "Planilla paramétrica de costos y tarifario oficial unificado minorista/mayorista (B2C y B2B) con comisiones del 20%.",
+        "Etiqueta rediseñada de la miel 'Oro de Esquel' vinculada a la identidad visual de la tranquera y la casita de adobe.",
+        "Convenios comerciales de derivación turística firmados con al menos 2 agencias receptivas habilitadas y 2 hoteles boutique de la Comarca."
       ]
     },
     {

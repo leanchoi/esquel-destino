@@ -540,6 +540,56 @@ const exactMeetings = {
       check: ['Montar stand interactivo con vitrina de piezas, souvenirs y degustación campesina', 'Exponer el pitch de 3 minutos de Alda ante autoridades y empresarios turísticos', 'Firmar acuerdos comerciales formales y entrega de la hoja de ruta 2026/2027']
     }
   ],
+  margher: [
+    { num: 1, f: '2026-09-19', t: 'ter', lugar: 'Establecimiento Margherita (Ladera Sur del Nahuelpan)', hora: '10:00 a 13:00', titulo: 'Diagnóstico integral en territorio: casita centenaria, colmenares y corrales', asistentes: ['adria', 'noelia'],
+      guia: 'Visita a las 500 ha en la ladera sur del Cerro Nahuelpan (a 18 km de Esquel, límite con Trevelin). Inspección ocular de la casita centenaria de adobe y tejuelas de alerce, galería cubierta, sector de apiarios y potreros de asnos y ovinos de cabaña. Mapeo de senderos pedestres internos y evaluación del estado de accesos viales.',
+      preguntas: ['¿Qué capacidad máxima de carga simultánea toleran las instalaciones para mantener la intimidad campestre?', '¿Cómo organizamos el calendario para no entorpecer los ciclos reproductivos ovinos y de cosecha apícola?', '¿Qué mejoras menores de cartelería rústica y delimitación de senderos se requieren en el predio?'],
+      objetivos: ['Mapear el circuito físico: recepción en galería, senderos hacia apiarios, potreros de asnos y miradores.', 'Definir el modelo de negocio: agroturismo de día y eventos especiales, preservando la casita como refugio estacional.', 'Acordar el cronograma semanal de consultoría y roles operativos de Dante y su compañera.'],
+      check: ['Inspeccionar casita de adobe, galería, apiario y corrales en la ladera sur', 'Relevar el estado de accesos viales y conectividad para los visitantes', 'Fijar el cronograma de 8 encuentros de consultoría técnica']
+    },
+    { num: 2, f: '2026-09-26', t: 'ter', lugar: 'Establecimiento Margherita', hora: '10:30 a 13:00', titulo: 'Estandarización del Día de Campo, guion de apicultura y protocolo con asnos', asistentes: ['adria', 'noelia'],
+      guia: 'Cerrar la estructura pedagógica y el guion narrativo de la experiencia "Día de Campo Margherita" (3h 30min). Redactar las pautas de seguridad e higiene para la demostración apícola (uso de ahumador, trajes y cata de mieles), la interacción con los burritos mansos y el taller de amasado de tortas fritas en la galería. Fijación de cupos máximos (10 personas por turno).',
+      preguntas: ['¿Cuáles son los pasos clave del guion para que Dante transmita su pasión apícola de forma didáctica y segura?', '¿Cómo articulamos el amasado participativo con la anfitriona mientras se preparan las brasas en la parrilla?', '¿Qué elementos de protección y bioseguridad se dispondrán para los visitantes en el colmenar?'],
+      objetivos: ['Redactar la ficha técnica y guion interpretativo paso a paso del Día de Campo.', 'Formalizar el protocolo de seguridad apícola y deslinde de responsabilidad civil en turismo rural.', 'Ensayar la dinámica de recepción con mate y tortas fritas calientes en la galería.'],
+      check: ['Aprobar el guion didáctico del Día de Campo y la demostración apícola', 'Verificar stock y condiciones de trajes apícolas y caretas para visitantes', 'Fijar la capacidad de carga (máx. 10 personas) y política de reservas previas de 24 hs']
+    },
+    { num: 3, f: '2026-10-03', t: 'ind', lugar: 'Melipal / Espacio LAB', hora: '10:30 a 12:30', titulo: 'Estructura de costos paramétricos, punto de equilibrio y tarifario dual B2C/B2B', asistentes: ['adria', 'noelia'],
+      guia: 'Construir la planilla paramétrica de costos de las experiencias (ingredientes gastronómicos, leña de monte, mantenimiento, seguros de turismo rural y honorarios). Establecer el "Precio Único Oficial" del establecimiento y estructurar el margen del 20% de comisión para agencias receptivas y conserjerías de hoteles de Esquel y Trevelin.',
+      preguntas: ['¿Cuál es el costo unitario por visitante y cuál es el punto de equilibrio mínimo para abrir la tranquera?', '¿Cómo aseguramos que las agencias vendan al mismo precio oficial sin recargos abusivos?', '¿Qué porcentaje de seña anticipada (50%) exigirá la plataforma web para congelar la reserva?'],
+      objetivos: ['Parametrizar los costos fijos y variables de la media jornada y jornada entera.', 'Emitir la lista oficial de precios: público general, tarifa social residente y tarifa mayorista B2B.', 'Diseñar la política de reservas, cancelaciones y reprogramaciones climáticas.'],
+      check: ['Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel', 'Emitir el tarifario oficial unificado para agencias y hoteles boutique', 'Definir el protocolo de contingencia climática en caso de lluvias intensas']
+    },
+    { num: 4, f: '2026-10-10', t: 'ter', lugar: 'Establecimiento Margherita', hora: '10:00 a 13:00', titulo: 'Preparación operativa de la Fiesta de la Esquila y logística gastronómica', asistentes: ['adria', 'noelia'],
+      guia: 'Planificar minuciosamente la realización del hito anual "Fiesta de la Esquila & Asado de Cordero Patagónico" en coincidencia con la temporada alta de Tulipanes en Trevelin. Coordinar la demostración en vivo de comparsa de esquila, clasificación de vellones, preparación del cordero al asador a la leña y venta de frascos de miel "Oro de Esquel" con packaging rústico.',
+      preguntas: ['¿Qué logística de compra y ovinos seleccionados se dispondrán para la jornada de esquila?', '¿Cómo se ambientará la galería y el patio para recibir cómodamente a los 15 comensales?', '¿Qué stock de frascos de miel fraccionada en CAPEC se destinará para venta en origen?'],
+      objetivos: ['Cerrar el cronograma minuto a minuto de la jornada de esquila y banquete.', 'Verificar la logística del fuego, asadores, vajilla campesina y puestos de sombra.', 'Diseñar la presentación rústica de los frascos de miel como souvenir conector.'],
+      check: ['Aprobar el programa operativo de la Fiesta de la Esquila', 'Coordinar con la comparsa de esquila y el asador el horario de demostración', 'Disponer el stock de miel Oro de Esquel con la nueva etiqueta institucional']
+    },
+    { num: 5, f: '2026-10-17', t: 'ter', lugar: 'Establecimiento Margherita', hora: '10:00 a 13:30', titulo: 'Producción audiovisual 4K con dron y arquitectura de la web transaccional', asistentes: ['adria', 'noelia', 'leandro'],
+      guia: 'Jornada de producción fotográfica y audiovisual profesional financiada por el LAB (cámaras 4K y dron en la ladera sur del Nahuelpan). Registro aéreo de las 500 ha, tomas de Dante en el apiario con traje y ahumador con las cumbres de fondo, casita de adobe y tejuelas, burritos mansos y cocina al fuego. En paralelo, revisión técnica con Leandro Choi de la web transaccional y pasarela de reservas.',
+      preguntas: ['¿Cuáles son los ángulos aéreos más espectaculares de la ladera sur y la casita centenaria?', '¿Cómo estructurar la carga de datos del visitante en la web para automatizar la confirmación de turnos?', '¿Qué pasarela de pagos (Mercado Pago / transferencia) dejamos integrada para cobrar las señas?'],
+      objetivos: ['Completar el plan de rodaje con cámaras 4K y tomas de dron para cápsulas institucionales.', 'Validar la interfaz y textos de la plataforma web desarrollada ad-honorem por Leandro.', 'Capacitar a Dante y su compañera en la administración sencilla del panel de reservas.'],
+      check: ['Rodar el material audiovisual 4K y banco de 30 fotografías profesionales', 'Aprobar el diseño y catálogo de la plataforma web transaccional', 'Configurar el canal de WhatsApp Business con respuestas rápidas y catálogo']
+    },
+    { num: 6, f: '2026-10-24', t: 'ind', lugar: 'Secretaría de Turismo / Melipal', hora: '10:30 a 12:30', titulo: 'Rueda comercial con agencias receptivas, hoteleros y sinergias de cohorte', asistentes: ['adria', 'noelia'],
+      guia: 'Presentar formalmente la propuesta a las 4 agencias de turismo receptivo habilitadas de Esquel y Trevelin y conserjerías de hoteles boutique. Articular sinergias ecosistémicas: provisión de miel para el productor de hidromiel de la comarca, circuitos de cicloturismo de estancia con Corcho Bikes y meriendas cruzadas con Haiku Casa de Té.',
+      preguntas: ['¿Qué interés manifiestan las agencias en comercializar el Día de Campo y la Fiesta de la Esquila con comisión del 20%?', '¿Cómo articulamos la logística de traslados en combis o 4x4 para turistas sin movilidad propia?', '¿Qué acuerdos de provisión de miel y cera pura establecemos con emprendimientos de la cohorte?'],
+      objetivos: ['Reunirse con 3 agencias de viaje receptivas y 3 hoteles boutique de Esquel y Trevelin.', 'Firmar al menos 2 convenios comerciales de derivación turística con comisiones formalizadas.', 'Acordar una alianza de provisión de miel con el elaborador comarcal de hidromiel.'],
+      check: ['Presentar el catálogo oficial a agencias receptivas y prestadores hoteleros', 'Firmar acuerdos de comercialización turística con tarifario mayorista unificado', 'Concretar la alianza estratégica de miel para hidromiel y cicloturismo']
+    },
+    { num: 7, f: '2026-10-31', t: 'ter', lugar: 'Establecimiento Margherita', hora: '11:00 a 14:30', titulo: 'Fam Tour vivencial con agencias receptivas, hoteleros y test de reservas web', asistentes: ['adria', 'noelia', 'leandro'],
+      guia: 'Simulacro vivencial real en el campo con 10 invitados estratégicos (titulares de agencias receptivas, recepcionistas de hoteles boutique y prensa turística). Prueba en vivo de la experiencia: recepción con mate y tortas fritas, visita al apiario y potrero de asnos, pizzas a la parrilla en la galería, degustación de miel y testeo del circuito de reservas web.',
+      preguntas: ['¿Cómo evaluaron los operadores turísticos el dinamismo del guion y la calidez del anfitrión?', '¿La duración de 3 horas y media resultó equilibrada y atractiva para la venta en mostrador?', '¿Qué sugerencias técnicas plantearon los recepcionistas de hotel para recomendar el lugar?'],
+      objetivos: ['Validar los tiempos operativos reales de la experiencia completa en condiciones simuladas.', 'Fidelizar a los recepcionistas y agentes de viaje como promotores directos del establecimiento.', 'Recoger encuestas de satisfacción para pulir detalles del servicio antes de la apertura estival.'],
+      check: ['Ejecutar el Fam Tour con 10 participantes del sector turístico comarcal', 'Completar encuestas de evaluación sobre hospitalidad, guion y gastronomía', 'Ajustar detalles finales del servicio de mesa y cartelería informativa interna']
+    },
+    { num: 8, f: '2026-11-07', t: 'col', lugar: 'Melipal / Espacio LAB', hora: '09:30 a 13:00', titulo: 'Ronda de negocios final, lanzamiento de la web y hoja de ruta post-LAB', asistentes: ['adria', 'noelia', 'leandro'],
+      guia: 'Participación protagónica en el Encuentro de Cierre de Esquel LAB en el Centro Cultural Melipal. Montaje de mesa temática con frascos de miel Oro de Esquel, velas de cera, vellones de lana y fotos 4K del Nahuelpan. Presentación pública de la plataforma web transaccional. Pitch de 3 minutos de Dante Oliva y compañera ante autoridades y empresarios turísticos. Entrega del informe final de consultoría técnica.',
+      preguntas: ['¿Cuáles son las reservas confirmadas en la plataforma web para la temporada de verano?', '¿Cómo se organizará el calendario de Dante entre la zafra apícola y los días de campo turísticos?', '¿Qué pasos inmediatos se proyectan para el desarrollo del SUM rústico modular a futuro?'],
+      objetivos: ['Presentar públicamente la oferta consolidada de Agroturismo de Establecimiento Margherita.', 'Consolidar acuerdos comerciales firmes con el sector receptivo comarcal para el verano.', 'Entregar el informe final de consultoría técnica y cronograma de temporada alta 2026/2027.'],
+      check: ['Montar stand interactivo con degustación de miel, fotos 4K y terminal web', 'Exponer el pitch de 3 minutos ante autoridades municipales, prestadores y medios', 'Firmar acuerdos comerciales formales y entrega de la hoja de ruta post-incubación']
+    }
+  ],
   sabor: [
     { num: 1, f: '2026-09-18', t: 'ter', lugar: 'Casa de Piedra (Comunidad Nahuelpan)', hora: '10:00 a 12:30', titulo: 'Diagnóstico integral en Casa de Piedra, sendero Huella del Cóndor y sanitarios', asistentes: ['adria', 'francisco'],
       guia: 'Visita a la Comunidad Nahuelpan. Inspección ocular de Casa de Piedra (antigua escuela comunitaria recuperada), sector de cocina, corrales de gallinas y sendero La Huella del Cóndor. Relevamiento técnico del estado de los baños: verificación de la cámara séptica y pozo ciego ya ejecutados, y detalle de los materiales faltantes (cerámicos, artefactos, grifería y pintura) para su terminación.',
@@ -1138,7 +1188,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor', 'porota'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor', 'porota', 'margher'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -1946,6 +1996,68 @@ php += `        ];
             $reuId = $rp[0];
             foreach ($asistentes as $consId) {
                 $insAsistPorota->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Establecimiento Margherita si todavía tiene la plantilla genérica inicial
+    $checkMargher = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'margher-01'")->fetchColumn();
+    if ($checkMargher === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkMargher) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'margher-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'margher'");
+
+        $insReuMargher = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistMargher = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesMargher = [
+`;
+
+const margherMeetingsList = exactMeetings.margher;
+for (const m of margherMeetingsList) {
+  const reuId = `margher-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'noelia'];
+
+  php += `            [
+                '${reuId}',
+                'margher',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesMargher as $rm) {
+            $asistentes = array_pop($rm);
+            $insReuMargher->execute($rm);
+            $reuId = $rm[0];
+            foreach ($asistentes as $consId) {
+                $insAsistMargher->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
