@@ -88,11 +88,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdo->prepare('DELETE FROM users WHERE id = ?')->execute([$id]);
                 $msg = ['tipo' => 'ok', 'texto' => 'Usuario eliminado.'];
             }
+        } elseif ($accion === 'lab_acceso') {
+            $id = (int) ($_POST['id'] ?? 0);
+            $habilitar = !empty($_POST['habilitar']) ? 1 : 0;
+            if ($habilitar) {
+                $pdo->prepare('INSERT OR IGNORE INTO lab_user_access (user_id, granted_by) VALUES (?, ?)')
+                    ->execute([$id, (int) $u['id']]);
+                $msg = ['tipo' => 'ok', 'texto' => 'Acceso a Gestión LAB habilitado.'];
+            } else {
+                $pdo->prepare('DELETE FROM lab_user_access WHERE user_id = ?')->execute([$id]);
+                $msg = ['tipo' => 'ok', 'texto' => 'Acceso a Gestión LAB revocado.'];
+            }
         }
     }
 }
 
 $usuarios = $pdo->query('SELECT id, username, role, must_change_password, created_at FROM users ORDER BY created_at ASC')->fetchAll();
+$accesoLab = array_column($pdo->query('SELECT user_id FROM lab_user_access')->fetchAll(), 'user_id', 'user_id');
+
 
 // ------------------------------------------------------------------ actividad
 //
@@ -260,7 +273,7 @@ require __DIR__ . '/_header.php';
     <div class="panel" style="padding:0;overflow:hidden">
       <div class="table-scroll">
         <table class="crm-table tabla-usuarios">
-          <thead><tr><th>Usuario</th><th>Rol</th><th>Vota</th><th>Estado</th><th></th></tr></thead>
+          <thead><tr><th>Usuario</th><th>Rol</th><th>Vota</th><th>Gestión LAB</th><th>Estado</th><th></th></tr></thead>
           <tbody>
             <?php foreach ($usuarios as $usr): ?>
               <tr>
@@ -284,6 +297,22 @@ require __DIR__ . '/_header.php';
                 <td data-col="Vota"><?= !empty(ROLES_INFO[$usr['role']]['vota'])
                       ? '<span class="jurado-sello is-completo"><span class="js-n">sí</span></span>'
                       : '<span class="sub">no</span>' ?></td>
+                <td data-col="Gestión LAB">
+                  <?php if ($usr['role'] === 'admin'): ?>
+                    <span class="sub" title="Los administradores tienen acceso irrestricto">Acceso total</span>
+                  <?php else: ?>
+                    <?php $tieneLab = isset($accesoLab[$usr['id']]); ?>
+                    <form method="post" class="inline">
+                      <?= csrf_field() ?>
+                      <input type="hidden" name="accion" value="lab_acceso">
+                      <input type="hidden" name="id" value="<?= (int) $usr['id'] ?>">
+                      <input type="hidden" name="habilitar" value="<?= $tieneLab ? '0' : '1' ?>">
+                      <button type="submit" class="btn btn-sm <?= $tieneLab ? 'btn-primary' : 'btn-secondary' ?>" style="font-size:11px;padding:3px 8px">
+                        <?= $tieneLab ? '✓ Habilitado' : '+ Habilitar' ?>
+                      </button>
+                    </form>
+                  <?php endif; ?>
+                </td>
                 <td class="sub" data-col="Estado"><?= $usr['must_change_password'] ? 'Contraseña provisoria' : 'Activo' ?></td>
                 <td class="right nowrap">
                   <form method="post" class="inline" onsubmit="return confirm('Se le pone una contraseña nueva a <?= e($usr['username']) ?> y la vas a ver una sola vez, en pantalla, para pasársela. La que tenía deja de funcionar. ¿Vamos?')">

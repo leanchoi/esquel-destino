@@ -214,6 +214,103 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         value TEXT NOT NULL
     );");
 
+    // --- Módulo de Gestión y Aceleración de Proyectos (Esquel LAB) ---
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_user_access (
+        user_id INTEGER PRIMARY KEY,
+        granted_by INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    );");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_consultores (
+        id TEXT PRIMARY KEY,
+        user_id INTEGER NULL,
+        nombre TEXT NOT NULL,
+        rol TEXT NOT NULL,
+        disponibilidad TEXT NOT NULL DEFAULT '[]',
+        restricciones TEXT NOT NULL DEFAULT '',
+        activo INTEGER NOT NULL DEFAULT 1,
+        color TEXT NOT NULL DEFAULT '#4A7FA8',
+        email TEXT NOT NULL DEFAULT '',
+        telefono TEXT NOT NULL DEFAULT '',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_proyectos (
+        id TEXT PRIMARY KEY,
+        application_id INTEGER NULL,
+        nombre TEXT NOT NULL,
+        titular TEXT NOT NULL,
+        linea TEXT NOT NULL,
+        puntaje REAL NOT NULL DEFAULT 0.0,
+        celula INTEGER NOT NULL DEFAULT 1,
+        consultor_sr_id TEXT NOT NULL,
+        consultor_jr_id TEXT NOT NULL,
+        estado_acompanamiento TEXT NOT NULL DEFAULT 'En curso',
+        diagnostico TEXT NOT NULL DEFAULT '[]',
+        trabas TEXT NOT NULL DEFAULT '[]',
+        ejes TEXT NOT NULL DEFAULT '[]',
+        entregables TEXT NOT NULL DEFAULT '[]',
+        notas_generales TEXT NOT NULL DEFAULT '',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE SET NULL
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_proy_app ON lab_proyectos (application_id);");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_reuniones (
+        id TEXT PRIMARY KEY,
+        proyecto_id TEXT NOT NULL,
+        numero_reunion INTEGER NOT NULL DEFAULT 1,
+        titulo TEXT NOT NULL,
+        tipo TEXT NOT NULL DEFAULT 'ind',
+        lugar TEXT NOT NULL DEFAULT 'A confirmar',
+        fecha TEXT NOT NULL,
+        hora_inicio TEXT NOT NULL DEFAULT '',
+        hora_fin TEXT NOT NULL DEFAULT '',
+        estado TEXT NOT NULL DEFAULT 'programada',
+        asistencia_estado INTEGER NOT NULL DEFAULT 0,
+        hora_real_inicio TEXT NOT NULL DEFAULT '',
+        hora_real_fin TEXT NOT NULL DEFAULT '',
+        guia_consultor TEXT NOT NULL DEFAULT '',
+        preguntas_clave TEXT NOT NULL DEFAULT '[]',
+        objetivos TEXT NOT NULL DEFAULT '[]',
+        checklist TEXT NOT NULL DEFAULT '[]',
+        minuta_notas TEXT NOT NULL DEFAULT '',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (proyecto_id) REFERENCES lab_proyectos (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_reuniones_proy ON lab_reuniones (proyecto_id);");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_reuniones_fecha ON lab_reuniones (fecha);");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_reunion_asistentes (
+        reunion_id TEXT NOT NULL,
+        consultor_id TEXT NOT NULL,
+        rol TEXT NOT NULL DEFAULT 'asistente',
+        asistio INTEGER NOT NULL DEFAULT 1,
+        PRIMARY KEY (reunion_id, consultor_id),
+        FOREIGN KEY (reunion_id) REFERENCES lab_reuniones (id) ON DELETE CASCADE,
+        FOREIGN KEY (consultor_id) REFERENCES lab_consultores (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_asist_reunion ON lab_reunion_asistentes (reunion_id);");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_asist_cons ON lab_reunion_asistentes (consultor_id);");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_compromisos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        proyecto_id TEXT NOT NULL,
+        reunion_id TEXT NULL,
+        descripcion TEXT NOT NULL,
+        responsable TEXT NOT NULL DEFAULT 'Emprendedor',
+        fecha_limite TEXT NOT NULL DEFAULT '',
+        estado TEXT NOT NULL DEFAULT 'pendiente',
+        completado_at DATETIME NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (proyecto_id) REFERENCES lab_proyectos (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_comp_proy ON lab_compromisos (proyecto_id);");
+
+
     // Migraciones de columnas.
     //
     // El CREATE TABLE IF NOT EXISTS de arriba no toca una tabla que ya existe,
@@ -270,7 +367,14 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         $stmt = $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES (?, ?, 'admin', 1, datetime('now'))");
         $stmt->execute(['admin', password_hash('admin123', PASSWORD_DEFAULT)]);
     }
+
+    // Carga inicial y persistencia del Módulo de Gestión LAB
+    if (file_exists(__DIR__ . '/lab_seed.php')) {
+        require_once __DIR__ . '/lab_seed.php';
+        lab_asegurar_datos($pdo);
+    }
 }
+
 
 /** id reservado para la evaluación que existía antes de que hubiera votos por jurado. */
 const EVALUADOR_HEREDADO = -1;

@@ -30,6 +30,9 @@ $nav = $nav ?? '';
     </a>
     <nav class="admin-nav">
       <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>
+      <?php if (puede_gestionar_lab($u)): ?>
+        <a href="gestion.php" class="<?= $nav === 'gestion' ? 'is-active' : '' ?>">Gestión LAB</a>
+      <?php endif; ?>
       <?php if (puede('admin')): ?>
         <a href="interesados.php" class="<?= $nav === 'interesados' ? 'is-active' : '' ?>">Interesados</a>
         <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>

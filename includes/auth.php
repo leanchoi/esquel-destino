@@ -86,6 +86,37 @@ function puede(string $minimo): bool
 }
 
 /**
+ * ¿Tiene este usuario acceso al módulo de Gestión y Aceleración de Proyectos?
+ * El admin siempre puede. Los demás roles solo si el admin les otorgó acceso explícito.
+ */
+function puede_gestionar_lab(?array $u = null): bool
+{
+    $u = $u ?? usuario_actual();
+    if (!$u) {
+        return false;
+    }
+    if (($u['role'] ?? '') === 'admin') {
+        return true;
+    }
+    $pdo = db();
+    $stmt = $pdo->prepare('SELECT 1 FROM lab_user_access WHERE user_id = ? LIMIT 1');
+    $stmt->execute([(int) $u['id']]);
+    return (bool) $stmt->fetchColumn();
+}
+
+/**
+ * Exige permiso de acceso a Gestión LAB.
+ */
+function requiere_gestion_lab(): array
+{
+    $u = requiere_login();
+    if (!puede_gestionar_lab($u)) {
+        pagina_sin_permiso($u, 'Acceso a Gestión LAB');
+    }
+    return $u;
+}
+
+/**
  * ¿Este usuario emite voto?
  *
  * Se pregunta por rol exacto y no con puede(), que compara jerarquías. El
