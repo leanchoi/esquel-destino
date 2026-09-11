@@ -490,6 +490,56 @@ const exactMeetings = {
       check: ['Presentar informe de balance y métricas del viaje piloto', 'Exponer calendario 2027 en la rueda de negocios', 'Firmar al menos 2 acuerdos comerciales con prestadores locales']
     }
   ],
+  arroyo: [
+    { num: 1, f: '2026-09-18', t: 'ter', lugar: 'Márgenes del Arroyo Esquel (Punto cero: Av. Fontana y Arroyo)', hora: '15:00 a 17:30', titulo: 'Relevamiento en terreno del arroyo y delimitación de paradas sociohistóricas', asistentes: ['adria', 'francisco'],
+      guia: 'Caminar las riberas del arroyo Esquel junto a Marcelo desde Av. Fontana hasta el Puente de Molinari. Identificar hitos de arqueología urbana (el Molino Weber, la vieja Planta de Gas, la fractura del terraplén ferroviario) y relevar accesibilidad de veredas, cruces peatonales y estado ambiental de las márgenes.',
+      preguntas: ['¿Qué historias orales y personajes cotidianos podemos rescatar en cada uno de estos 5 puntos para que el visitante se sienta inmerso en la vida real de Esquel?', '¿Qué riesgos de transitabilidad o cruce identificamos para grupos de adultos mayores o familias con niños?', '¿Cómo abordamos didácticamente el contraste ambiental entre la limpieza de los años 90 y los desafíos actuales del cauce?'],
+      objetivos: ['Mapear con GPS el trazado físico preliminar del Circuito 1 (El Origen entre el Arroyo y las Vías).', 'Definir las primeras 5 estaciones interpretativas y sus conceptos históricos vertebrales.', 'Establecer los criterios de seguridad peatonal y tiempos de permanencia en cada parada.'],
+      check: ['Caminar el tramo Fontana-Molinari y registrar coordenadas de 5 estaciones clave', 'Documentar el estado de veredas, pasarelas y accesos a las márgenes del arroyo', 'Fijar la duración máxima de la caminata peatonal en 90 minutos netos']
+    },
+    { num: 2, f: '2026-09-25', t: 'ter', lugar: 'Barrio Ceferino / Gruta del Padre Parolini', hora: '15:00 a 17:30', titulo: 'Prospección en laderas, mirador de La Gruta y articulación vecinal', asistentes: ['adria', 'francisco'],
+      guia: 'Recorrer el ascenso peatonal hacia La Gruta del Ceferino por la escalinata barrial. Evaluar el mirador panorámico como estación de interpretación urbana (donde se observa el crecimiento de la ciudad). Contactar a vecinas del barrio (Doña Pepa / elaboradoras de tortas fritas) para evaluar la factibilidad de una parada de mate y sabor campesino.',
+      preguntas: ['¿Cómo reciben los vecinos del barrio la idea de que un grupo reducido de turistas suba a la gruta y comparta una merienda tradicional?', '¿Qué relatos del Padre Parolini y de los primeros pobladores de las laderas le dan mística al mirador?', '¿Cuál es el esfuerzo físico real que demanda subir la escalinata y cómo lo adaptamos para distintos públicos?'],
+      objetivos: ['Definir la viabilidad del Circuito 2 (Laderas, Gruta y Memoria Viva).', 'Acordar con una vecina o comercio barrial la provisión de tortas fritas caseras y servicio de mate.', 'Diseñar la parada en La Gruta como punto cúspide de la experiencia inmersiva.'],
+      check: ['Cronometrar los tiempos de ascenso y descenso por la escalinata del Ceferino', 'Entrevistar a vecinas del sector para consensuar la dinámica de bienvenida comunitaria', 'Asegurar condiciones de higiene y calidez para la merienda popular en el mirador']
+    },
+    { num: 3, f: '2026-10-02', t: 'ind', lugar: 'LAB Esquel / Secretaría de Turismo', hora: '10:30 a 12:30', titulo: 'Estructuración del guion interpretativo y diseño del libro-souvenir', asistentes: ['adria', 'francisco'],
+      guia: 'Trabajar en gabinete la dramaturgia del guiado: transformar la erudición histórica en un relato empático y emocionante de 90 a 120 minutos. Seleccionar las anécdotas, fotografías de época y documentos que componen el libro-souvenir Postales históricas de Esquel, definiendo su formato de entrega y packaging artesanal.',
+      preguntas: ['¿Cómo dosificamos la información para que el visitante no se sienta abrumado por fechas, sino conmovido por la vivencia humana?', '¿Qué formato físico de folleto de bolsillo o postal coleccionable acompaña al libro para entregar durante la caminata?', '¿Cómo articulamos la figura de Marcelo como anfitrión inspirador con futuros guías jóvenes o estudiantes de turismo co-anfitriones?'],
+      objetivos: ['Cerrar el guion narrativo modular de los dos circuitos (estaciones, relatos, remates y preguntas reflexivas).', 'Prototipar la presentación editorial del libro Postales históricas de Esquel como souvenir de alto valor.', 'Elaborar el decálogo de buenas prácticas de turismo comunitario y respeto vecinal.'],
+      check: ['Aprobar el guion literario y técnico de las 5 estaciones del Circuito 1', 'Definir el costo de imprenta y precio del libro-souvenir de autor', 'Diseñar el tríptico de mano con el mapa de la cuenca y puntos de memoria']
+    },
+    { num: 4, f: '2026-10-09', t: 'ind', lugar: 'LAB Esquel', hora: '10:30 a 12:30', titulo: 'Estructura de costos, tarifario y alianzas con comercios del arroyo', asistentes: ['adria', 'francisco'],
+      guia: 'Definir el modelo económico de la experiencia. Desglosar costos: honorarios del historiador/guía, compra de tortas fritas/refrigerio a vecinas, costo de impresión de postales/souvenirs y margen de comercialización. Fijar precio por persona (B2C), tarifa diferenciada para residentes y comisión del 20-25% para agencias receptivas y hoteles.',
+      preguntas: ['¿Cuál es el tamaño óptimo de grupo (mínimo 4, máximo 12 personas) para no perder la intimidad del relato?', '¿Qué acuerdo comercial establecemos con Panadería Genes o el Molino para paradas de café y descanso?', '¿Qué días y horarios fijos semanales se ofrecerá la salida regular para facilitar la venta en agencias?'],
+      objetivos: ['Construir la planilla paramétrica de costos y punto de equilibrio por salida.', 'Fijar el tarifario comercial oficial B2C y B2B para la temporada primavera/verano 2026.', 'Establecer el calendario de salidas regulares (ej. viernes y sábados por la tarde).'],
+      check: ['Calcular costo por pasajero y punto de equilibrio financiero (4 pasajeros)', 'Emitir la ficha tarifaria formal para agencias receptivas de Esquel', 'Formalizar el acuerdo de consumo y parada técnica con Panadería Genes / comercio local']
+    },
+    { num: 5, f: '2026-10-16', t: 'ind', lugar: 'LAB Esquel / Espacio Digital', hora: '10:00 a 12:30', titulo: 'Plataforma digital, autoguiado interactivo y pasarela de cobro', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Diseñar la landing page oficial de El Arroyo que nos ve crecer.... Cargar el mapa geolocalizado en la web de turismo de Esquel con el circuito autoguiado (audioguías breves y fotos históricas de los años 30-50). Configurar el canal de reservas por WhatsApp Business y la pasarela de pagos con Mercado Pago para cobro online de las caminatas guiadas.',
+      preguntas: ['¿Qué locuciones breves (1 minuto por estación) puede grabar Marcelo para el audioguía digital?', '¿Cómo facilitamos que un vecino o turista escanee el código QR en la vía pública sin necesidad de app pesada?', '¿Qué datos de contacto y comprobantes de reserva automatizamos para el turista?'],
+      objetivos: ['Maquetar la landing page con la identidad visual del proyecto y mapa interactivo.', 'Grabar 5 micro-audios testimoniales de Marcelo para el sistema autoguiado.', 'Configurar la cuenta de cobro digital Mercado Pago vinculada al sistema de reservas.'],
+      check: ['Publicar la landing page informativa y el mapa interactivo del recorrido', 'Subir los 5 archivos de audio interpretativo al servidor de Esquel Destino', 'Validar el link de pago y el formulario de reserva online']
+    },
+    { num: 6, f: '2026-10-23', t: 'ind', lugar: 'Oficinas de Turismo / Centro Cultural Melipal', hora: '10:30 a 12:30', titulo: 'Sinergias de cohorte (Corcho Bikes, La Trochita) y rueda con agencias', asistentes: ['adria', 'francisco'],
+      guia: 'Articulación intersectorial: reunirse con Néstor Colinecul (Corcho Bikes) para diseñar la variante Cicloturismo Histórico del Arroyo (alquiler de bicis + guiado). Presentar la caminata a agencias receptivas locales (EVyT) y prestadores hoteleros como complemento ideal para días sin excursiones largas o tardes libres de La Trochita.',
+      preguntas: ['¿Cómo sincronizamos el horario de llegada del tren de La Trochita con el inicio de la caminata en Av. Fontana?', '¿Qué tarifa combinada bici-tour podemos estructurar junto a Corcho Bikes?', '¿Qué material gráfico impreso dejamos en los mostradores de información turística y recepciones de hoteles?'],
+      objetivos: ['Definir el paquete combinado de cicloturismo histórico junto a Corcho Bikes.', 'Firmar al menos 2 acuerdos de comercialización y derivación con agencias receptivas habilitadas.', 'Distribuir el folleto promocional en los centros de informes turísticos municipales.'],
+      check: ['Redactar la ficha de producto combinado bici-tour con Corcho Bikes', 'Reunirse con 3 agencias de turismo receptivo de Esquel', 'Dejar material promocional impreso en la Secretaría de Turismo y Melipal']
+    },
+    { num: 7, f: '2026-10-30', t: 'ter', lugar: 'Márgenes del Arroyo Esquel y Mirador del Ceferino', hora: '15:30 a 18:00', titulo: 'Caminata de validación en campo (Fam Tour con informantes y guías)', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Salida piloto en terreno con un grupo de prueba de 8 personas (informantes turísticos municipales, guías de turismo matriculados y vecinos invitados). Ejecución completa del guiado, paradas interpretativas, merienda de tortas fritas con doña Pepa y entrega simbólica del libro-souvenir. Medición de tiempos, retroalimentación y ajuste de dinámicas grupales.',
+      preguntas: ['¿Cómo funcionó el ritmo de marcha y la acústica urbana del relato en cada parada?', '¿Qué emociones y aprendizajes destacaron los participantes en la encuesta de satisfacción?', '¿Qué ajustes finales requiere el trato con los vecinos y la logística de la merienda?'],
+      objetivos: ['Validar la experiencia integral en condiciones reales de operación turística.', 'Recopilar encuestas de calidad, testimonios y sugerencias de mejora del sector profesional.', 'Generar registro fotográfico y en video de la caminata para promoción en redes y medios.'],
+      check: ['Realizar el Fam Tour completo con 8 participantes invitados', 'Completar planilla de evaluación de tiempos, narrativa y paradas gastronómicas', 'Obtener banco de fotos y clips audiovisuales de la experiencia en campo']
+    },
+    { num: 8, f: '2026-11-06', t: 'col', lugar: 'Centro Cultural Melipal / Espacio LAB', hora: '09:30 a 13:00', titulo: 'Ronda de negocios final, lanzamiento oficial y hoja de ruta post-LAB', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Participación protagónica en el Encuentro de Cierre de Esquel LAB. Montaje del espacio de El Arroyo que nos ve crecer... con exhibición del libro Postales históricas de Esquel, mapas de cuenca y fotografías antiguas. Pitch de 3 minutos de Marcelo Troiano presentando el producto ante operadores turísticos, prensa y autoridades. Entrega del plan de continuidad comercial y sustentabilidad comunitaria.',
+      preguntas: ['¿Qué balance arroja el proceso de aceleración y cómo se siente Marcelo en su nuevo rol de anfitrión turístico?', '¿Cómo se proyecta la incorporación de jóvenes guías del CFP Nº 655 para la temporada alta de verano?', '¿Qué articulación se mantendrá con la Secretaría de Turismo para eventos culturales y fechas históricas?'],
+      objetivos: ['Presentar oficialmente el producto turístico ante el ecosistema turístico y los medios de prensa.', 'Consolidar compromisos comerciales firmes de comercialización para el verano 2026/2027.', 'Entregar el informe de cierre de asistencia técnica y manual operativo del recorrido.'],
+      check: ['Montar mesa expositora con libros, fotos patrimoniales y postales históricas', 'Exponer el pitch de 3 minutos ante prestadores y autoridades municipales', 'Firmar cartas de compromiso comercial con agencias y hoteles de Esquel']
+    }
+  ],
   carpint: [
     { num: 1, f: '2026-09-17', t: 'ter', lugar: 'Taller Carpintero Esquel (Brown 1570, B° Estación)', hora: '10:00 a 12:30', titulo: 'Diagnóstico en Taller de Barrio Estación y Relevamiento del Torno', asistentes: ['mariela', 'cesia'],
       guia: 'Visitar el taller hogareño de Maxi en calle Brown 1570. Relevar el torno de madera, las gubias, herramientas de lijado, acopio de troncos y tablones nobles (lenga, radal, ciprés). Evaluar el lay-out actual para definir la zona segura para visitantes (a 1,5 m de la bancada del torno).',
@@ -888,7 +938,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -1386,6 +1436,68 @@ php += `        ];
             $reuId = $rc[0];
             foreach ($asistentes as $consId) {
                 $insAsistCarpint->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de El Arroyo Que Nos Ve Crecer si todavía tiene la plantilla genérica inicial
+    $checkArroyo = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'arroyo-01'")->fetchColumn();
+    if ($checkArroyo === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkArroyo) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'arroyo-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'arroyo'");
+
+        $insReuArroyo = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistArroyo = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesArroyo = [
+`;
+
+const arroyoMeetingsList = exactMeetings.arroyo;
+for (const m of arroyoMeetingsList) {
+  const reuId = `arroyo-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'francisco'];
+
+  php += `            [
+                '${reuId}',
+                'arroyo',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesArroyo as $ra) {
+            $asistentes = array_pop($ra);
+            $insReuArroyo->execute($ra);
+            $reuId = $ra[0];
+            foreach ($asistentes as $consId) {
+                $insAsistArroyo->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

@@ -449,40 +449,52 @@
       "id": "arroyo",
       "app_id": 15,
       "nombre": "EL ARROYO QUE NOS VE CRECER...",
-      "titular": "MARCELO TROIANO",
+      "titular": "Prof. Marcelo Troiano",
       "linea": "Acelera",
       "puntaje": 3.32,
       "celula": 3,
       "sr": "adria",
       "jr": "francisco",
       "diagnostico": [
-        "Experiencia interpretativa en torno a la cuenca hídrica y bosque nativo.",
-        "Foco en educación ambiental, turismo regenerativo y avistaje.",
-        "Emprendedor con gran conocimiento local."
+        "Profesor de historia y museólogo con orientación en museología social comunitaria, residente en Esquel desde hace 40 años (1986). Posee amplia trayectoria docente y sólida solvencia investigativa sobre los barrios de las laderas y la evolución sociohistórica urbana de la ciudad.",
+        "Propuesta de valor disruptiva de turismo cultural y regenerativo: rescate de la memoria viva a la vera del arroyo Esquel y las vías de La Trochita. Supera la mirada tradicional del paisaje para convertir a la ciudad y a sus vecinos en protagonistas del relato histórico, integrando arqueología urbana (Molino Weber, Planta de Gas, pasarelas históricas) con las laderas populares (Barrio Ceferino, La Gruta del Padre Parolini).",
+        "Activo tangible diferenciador: autor del libro-souvenir publicado 'Postales históricas de Esquel', que funciona como soporte de conocimiento de alta gama para el turista, complementado con material fotográfico de época y relatos orales de vecinos emblemáticos."
       ],
       "trabas": [
-        "Señalética interpretativa en el sendero.",
-        "Armado de paquete comercializable para visitantes generales."
+        "Transición de evento cultural o charla académica a producto turístico comercializable: necesidad de estandarizar 2 circuitos cerrados con tiempos, mapas GPS y paradas definidas, superando la dispersión de contenidos.",
+        "Fijación de precios y estructura de costos: falta de una matriz paramétrica que determine tarifas de salidas regulares, comisiones de agencias receptivas y acuerdos económicos de refrigerio con vecinos del barrio (tortas fritas caseras y mate).",
+        "Brecha digital y canal de reservas: ausencia de canales digitales de difusión, venta online (Mercado Pago) y folletería de bolsillo para agencias y hoteles."
       ],
       "ejes": [
         {
-          "t": "Puesta en Valor del Sendero",
+          "t": "Estandarización de 2 Circuitos de Arqueología Urbana",
           "items": [
-            "Infografía de paradas clave y especies nativas.",
-            "Adecuación de huella y descansos."
+            "Circuito 1: 'El Origen entre el Arroyo y las Vías' (Baja dificultad, 90 min, plano y accesible: Av. Fontana, Molino Weber, Planta de Gas, terraplén y descanso en Panadería Genes).",
+            "Circuito 2: 'Laderas, Gruta y Memoria Viva' (Dificultad media, 135 min: ascenso por escalinata barrial a La Gruta del Ceferino, mirador panorámico de la cuenca, relatos del Padre Parolini y parada comunitaria de tortas fritas con Doña Pepa)."
           ]
         },
         {
-          "t": "Comercialización",
+          "t": "Guion Interpretativo, Experiencia Inmersiva y Libro-Souvenir",
           "items": [
-            "Salidas combinadas con degustación local.",
-            "Convenios con escuelas y contingentes."
+            "Dramaturgia de las paradas: relato empático y emocionante de 5 actos que combina rigor histórico con vivencias cotidianas y memoria barrial.",
+            "Puesta en valor del libro 'Postales históricas de Esquel' con packaging de autor y edición del tríptico cartográfico de bolsillo de la cuenca histórica."
+          ]
+        },
+        {
+          "t": "Modelo Económico, Ecosistema Digital y Rueda Comercial B2B",
+          "items": [
+            "Planilla paramétrica de costos (punto de equilibrio en 4 personas), tarifario B2C/B2B y comisiones para agencias receptivas y hoteles.",
+            "Landing page en esquel.site con mapa interactivo geolocalizado, 5 micro-audioguías y botón de cobro online Mercado Pago.",
+            "Alianzas de cohorte: paquete combinado de cicloturismo patrimonial junto a Corcho Bikes y articulación horaria con La Trochita."
           ]
         }
       ],
       "entregables": [
-        "Guion interpretativo de las estaciones del sendero.",
-        "Folletería digital y tarifario por visitante."
+        "Guion interpretativo formal y fichas técnicas con track georreferenciado de los 2 Circuitos ('El Origen' y 'Laderas y Gruta').",
+        "Tríptico cartográfico de bolsillo de la cuenca histórica y packaging de autor para el libro 'Postales históricas de Esquel'.",
+        "Planilla paramétrica de costos unitarios, punto de equilibrio y tarifario comercial minorista y mayorista (B2B/B2C).",
+        "Landing page oficial con mapa interactivo, 5 micro-audioguías y pasarela de cobro digital (Mercado Pago / WhatsApp Business).",
+        "Convenio de articulación con al menos 1 prestador barrial de hospitalidad (Doña Pepa / tortas fritas) y acuerdo de derivación con agencias receptivas de Esquel."
       ]
     },
     {
