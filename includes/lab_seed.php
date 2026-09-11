@@ -32,14 +32,8 @@ function lab_asegurar_datos(PDO $pdo): void
         }
     }
 
-    // 2. Proyectos
-    $countProy = (int) $pdo->query("SELECT COUNT(*) FROM lab_proyectos")->fetchColumn();
-    if ($countProy === 0) {
-        $insProy = $pdo->prepare("
-            INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $proyectos = [
+    // Definición de proyectos de la cohorte
+    $proyectos = [
             [
                 'crova',
                 25,
@@ -284,16 +278,16 @@ function lab_asegurar_datos(PDO $pdo): void
                 'nire',
                 23,
                 "Pausa de ñire",
-                "WALTER CERDÁ",
+                "Walter Cerdá",
                 'Raíz',
                 3.32,
                 2,
                 'adria',
                 'noelia',
-                "[\"Complejo de cabañas inmerso en bosque nativo de ñires con senderos de contemplación y astroturismo.\",\"Propuesta de desconexión y silencio en contacto con la montaña.\",\"Emprendedor comprometido.\"]",
-                "[\"Integrar actividades diurnas para el huésped que busca experiencias guiadas.\",\"Promoción digital enfocada en público corporativo y parejas.\"]",
-                "[{\"t\":\"Cápsulas de Naturaleza\",\"items\":[\"Sendero interpretativo del bosque nativo.\",\"Noches de fogón y observación de estrellas.\"]},{\"t\":\"Comercialización\",\"items\":[\"Paquetes de fin de semana temáticos.\",\"Convenios con guías de aventura locales.\"]}]",
-                "[\"Guion de la experiencia de astroturismo y bosque.\",\"Tarifario de experiencias opcionales para huéspedes.\"]"
+                "[\"Walter adquirió una fracción de 2 hectáreas de bosque de ñire hace 12 años tras desvincularse de un empleo formal de dos décadas. Construyó un cerco perimetral, abrió un camino de circunvalación interno y edificó una casita/salón cerrada con baño interno (biodigestor), estufa a leña, electricidad y agua.\",\"La propuesta no es trekking atlético ni aventura ni yoga. Se basa en el shinrin-yoku (técnica japonesa de inmersión en la naturaleza y conexión sensorial), enfocada en grupos reducidos (4 a 8 personas) que caminan despacio, se detienen, contemplan, escuchan y respiran el bosque cordillerano.\",\"Su esposa y colegas del CONICET identificaron una sorprendente variedad de microflora: líquenes raros en raíces y cortezas (con morfología de cornetitas o trúfulas), hongos patagónicos y flores nativas. Un recorrido de apenas 50 metros puede extenderse dos horas reloj con alto valor interpretativo y de macrofotografía.\",\"Walter cuenta con carnet profesional habilitante para transporte de personas, movilidad propia (camioneta apta para caminos de tierra) y experiencia como chofer trasladando visitantes a La Zeta. Además, dispone de 100% de dedicación horaria para el proyecto.\",\"Su hijo Imanol (13 años, con síndrome de Down) creció en el predio y desarrolló allí una notable independencia y seguridad. Esta vivencia real abre un diferencial conmovedor y escaso en la comarca: diseñar una experiencia de naturaleza y descanso accesible y sin miedos para familias con niños o personas con discapacidad.\"]",
+                "[\"El predio está emplazado en Altos de Nant y Fall (jurisdicción de Trevelin). Si bien el programa adopta una visión comarcal de macrodestino, se hace imprescindible fijar una 'pata en Esquel' mediante experiencias en Laguna La Zeta para blindar el respaldo institucional ante sensibilidades políticas entre comunas.\",\"Desde la Ruta 17 hasta la tranquera del predio hay 1.500 metros de huella de campo que en invierno y deshielo se vuelve intransitable para autos convencionales sin tracción alta.\",\"El curso de guía con Forest Therapy Hub quedó demorado por cuestiones climáticas. Debe completarse la certificación vía remota mientras se avanza operativamente con lo que ya está en marcha, sin paralizar el negocio.\",\"Para el turista promedio, pagar por 'caminar entre los árboles' puede parecer poco tangible. La propuesta debe justificar su valor a través de un guion estructurado, dinámicas guiadas de silencio, ejercicios sensoriales y un cierre gastronómico/ceremonial con infusión nativa.\"]",
+                "[{\"t\":\"Guion Sensorial y Turismo Inclusivo\",\"items\":[\"Estructurar un recorrido de 2 horas con momentos pautados: apertura y respiración, caminata en silencio ultra-lenta, observación de líquenes y microflora (lupa/macrofotografía), contemplación y cierre con infusión caliente de hojas de ñire.\",\"Formatear una cápsula para familias con integrantes con discapacidad, con actividades sencillas de conexión con el entorno, tiempos flexibles, apoyo a los padres y pautas de seguridad agreste.\",\"Creación de bolsitas de infusión de hojas de ñire con recolección sustentable, etiqueta artesanal con relato del árbol nativo y ficha de preparación para obsequiar o comercializar como recuerdo vivo.\"]},{\"t\":\"Estrategia de Macrodestino y Doble Nodo (La Zeta & Nant y Fall)\",\"items\":[\"Diseñar una variante periurbana en la Reserva Natural Urbana Laguna La Zeta (1h30m) para operar como opción de tarde inmediata en Esquel (días sin esquí o descanso entre excursiones largas).\",\"Operar la chacra como experiencia de medio día (3h a 4h) con traslado propio en camioneta desde el centro de Esquel o punto de encuentro sobre Ruta 17.\",\"Establecer un punto seguro de estacionamiento en la entrada del callejón para transbordar a los visitantes en la camioneta de Walter los días de lluvia o barro.\"]},{\"t\":\"Comercialización, Costeo y Alianzas\",\"items\":[\"Estructurar costos de combustible, seguro de accidentes personales, infusiones y honorarios del guía. Fijar tarifa individual y paquete cerrado para familias.\",\"Armado de la ficha técnica comercial en una carilla para recepcionistas de hoteles boutique de Esquel y agencias de turismo receptivo.\",\"Conexión con los prestadores de la Ruta 259 (Viñas de Nant y Fall, Chacra de Azafrán, Casas de Té) para recomendarse mutuamente en recorridos combinados de día completo.\"]}]",
+                "[\"Guion técnico de la experiencia 'Pausa de Ñire' (Versión Chacra Nant y Fall y Versión periurbana Laguna La Zeta).\",\"Ficha comercial y tarifario cerrado para agencias y hoteles boutique.\",\"Prototipo de souvenir botánico empaquetado (bolsita de hojas de ñire con etiqueta y relato).\",\"Propuesta y protocolo de Turismo Accesible Familiar.\",\"Articulación comercial iniciada con al menos 2 alojamientos de Esquel o prestadores de la Ruta 259.\"]"
             ],
             [
                 'truepat',
@@ -312,6 +306,13 @@ function lab_asegurar_datos(PDO $pdo): void
             ],
         ];
 
+    // 2. Proyectos
+    $countProy = (int) $pdo->query("SELECT COUNT(*) FROM lab_proyectos")->fetchColumn();
+    if ($countProy === 0) {
+        $insProy = $pdo->prepare("
+            INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
         $checkApp = $pdo->prepare("SELECT 1 FROM applications WHERE id = ?");
         foreach ($proyectos as $p) {
             $checkApp->execute([(int)$p[1]]);
@@ -3061,159 +3062,125 @@ function lab_asegurar_datos(PDO $pdo): void
                 'nire-01',
                 'nire',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
+                "Relevamiento en terreno y diagnóstico de predio",
                 'ter',
-                "Predio / Chacra",
-                '2026-09-12',
-                "10:00",
-                "11:30",
+                "Predio Altos de Nant y Fall",
+                '2026-09-15',
+                "09:30",
+                "12:30",
                 'programada',
-                "Conocer el espacio real de trabajo de WALTER CERDÁ. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Pausa de ñire hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Relevar in situ las 2 hectáreas, el sendero de circunvalación, la casita de descanso y el estado del camino de ripio de 1.500 m. Evaluar áreas de microflora y puntos de mayor silencio.",
+                "[\"¿Dónde se siente el mayor silencio dentro del bosque?\",\"¿Cómo reacciona el suelo del callejón con lluvia?\",\"¿Qué microflora observamos en el sendero corto?\"]",
+                "[\"Relevar medidas y recorrido del sendero.\",\"Evaluar puntos críticos del callejón de acceso.\",\"Validar disponibilidad de la casita y servicios.\"]",
+                "[{\"id\":1,\"texto\":\"Fotografiar puntos críticos del acceso\",\"done\":false},{\"id\":2,\"texto\":\"Medir los tramos del sendero interno\",\"done\":false},{\"id\":3,\"texto\":\"Probar conectividad y equipamiento de la casita\",\"done\":false},{\"id\":4,\"texto\":\"Tomar muestras de líquenes y hojas de ñire\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'nire-02',
                 'nire',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
+                "Estrategia de macrodestino y nodo Laguna La Zeta",
                 'ind',
                 "Turismo",
-                '2026-09-19',
-                "10:00",
-                "11:30",
+                '2026-09-18',
+                "11:00",
+                "12:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
-                ["adria","noelia"]
+                "Definir el circuito periurbano en Laguna La Zeta para tener presencia activa y legitimada dentro del ejido municipal de Esquel, capturando turistas de tarde.",
+                "[\"¿Qué rincón de La Zeta ofrece la menor contaminación sonora y mejor resguardo de viento?\",\"¿Cómo adaptamos los tiempos para turistas en tránsito en Esquel?\"]",
+                "[\"Trazar el mapa del circuito La Zeta (máximo 1,5 km).\",\"Redactar la fundamentación de macrodestino para autoridades.\",\"Definir frecuencia de salidas semanales.\"]",
+                "[{\"id\":1,\"texto\":\"Trazar el recorrido de La Zeta\",\"done\":false},{\"id\":2,\"texto\":\"Redactar la fundamentación institucional del doble nodo\",\"done\":false},{\"id\":3,\"texto\":\"Definir días y horarios de salidas en Esquel\",\"done\":false}]",
+                ["leandro","adria","noelia"]
             ],
             [
                 'nire-03',
                 'nire',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Estructuración del guion sensorial e inmersión",
                 'ind',
                 "Turismo",
                 '2026-09-23',
-                "11:00",
-                "12:30",
+                "10:00",
+                "12:00",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Redactar el guion de la experiencia con las consignas sensoriales, ejercicios de respiración, micro-observación y tiempos de pausa.",
+                "[\"¿Cómo rompemos el ritmo acelerado del turista en los primeros 10 minutos?\",\"¿Qué metáforas usamos para explicar los líquenes y el ñirantal?\"]",
+                "[\"Escribir el guion de 5 estaciones.\",\"Estandarizar la bienvenida y cierre ceremonial.\",\"Incorporar el protocolo de recolección de infusión.\"]",
+                "[{\"id\":1,\"texto\":\"Escribir las 5 estaciones del recorrido\",\"done\":false},{\"id\":2,\"texto\":\"Pautar los momentos de silencio absoluto\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar la ceremonia de cierre con infusión caliente\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'nire-04',
                 'nire',
                 4,
-                "Puesta en común Célula undefined",
+                "Gestión de predios rurales y costeo (Célula 2)",
                 'gru',
-                "Célula undefined (Turismo)",
+                "Célula 2 (Turismo)",
                 '2026-09-30',
                 "09:30",
-                "12:00",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["adria"]
+                "Encuentro grupal de la Célula 2 (Campo y gran superficie). Poner en común costos de mantenimiento rural, traslados, seguros de excursionistas y alianzas cruzadas en el corredor.",
+                "[\"¿Cómo nos complementamos en el circuito de Nant y Fall y la Ruta 259?\",\"¿Podemos compartir transportes o derivar visitantes entre chacras?\"]",
+                "[\"Completar matriz de costos fijos y variables.\",\"Identificar cruces con Viñas del Nant y Fall y Cascada.\",\"Validar seguro colectivo de turismo activo.\"]",
+                "[{\"id\":1,\"texto\":\"Llevar la matriz de costos completa\",\"done\":false},{\"id\":2,\"texto\":\"Identificar al menos 2 cruces de derivación con la célula\",\"done\":false},{\"id\":3,\"texto\":\"Revisar pólizas de seguro de turismo activo\",\"done\":false}]",
+                ["adria","noelia"]
             ],
             [
                 'nire-05',
                 'nire',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Predio",
-                '2026-10-7',
+                "Salida piloto y prueba de campo en La Zeta",
+                'ter',
+                "Laguna La Zeta",
+                '2026-10-06',
                 "10:00",
-                "11:30",
+                "12:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
+                "Ejecutar el guion sensorial completo con público testigo para medir tiempos reales, silencios y recepción emocional.",
+                "[\"¿Los participantes lograron desconectarse del celular?\",\"¿Qué estación resultó más emotiva?\",\"¿Cómo funcionó la infusión servida al final?\"]",
+                "[\"Validar tiempos reales del guion.\",\"Recoger devoluciones sinceras de los participantes.\",\"Tomar fotografías de calidad para el banco de imágenes.\"]",
+                "[{\"id\":1,\"texto\":\"Cronometrar cada parada del sendero\",\"done\":false},{\"id\":2,\"texto\":\"Registrar planilla de feedback de los asistentes\",\"done\":false},{\"id\":3,\"texto\":\"Probar logística de calentamiento de agua para infusión al aire libre\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'nire-06',
                 'nire',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Turismo accesible familiar y souvenir botánico",
                 'ind',
                 "Turismo",
-                '2026-10-15',
+                '2026-10-14',
                 "10:00",
-                "11:30",
+                "12:00",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Formalizar la cápsula para familias con personas con discapacidad y terminar el prototipo del packaging de la infusión de hojas de ñire.",
+                "[\"¿Qué adaptaciones requiere el sendero para paso asistido o personas con movilidad reducida?\",\"¿Cómo comunicamos la propuesta accesible con calidez y sin estigmatizar?\"]",
+                "[\"Redactar la ficha de Turismo Accesible Familiar.\",\"Diseñar la etiqueta de la bolsita de té de ñire.\",\"Articular con la Dirección de Discapacidad / Inclusión.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar el protocolo para familias con miembros con discapacidad\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar la etiqueta del souvenir botánico\",\"done\":false},{\"id\":3,\"texto\":\"Definir el método de secado y conservación de las hojas\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'nire-07',
                 'nire',
                 7,
-                "Comunicación digital, contenido y redes",
+                "Ficha comercial y venta a receptivos y hoteles",
                 'ind',
                 "Turismo",
-                '2026-10-22',
+                '2026-10-21',
                 "10:00",
-                "11:30",
+                "12:00",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
+                "Cerrar tarifas, comisiones para agencias (15-20%) y armar el material gráfico/digital para recepciones de hoteles boutique de Esquel.",
+                "[\"¿Cuánto le dejamos al recepcionista o agencia por derivación confirmada?\",\"¿Cuál es el canal y mensaje de reserva inmediata?\"]",
+                "[\"Cerrar tarifario definitivo y comisiones.\",\"Imprimir fichas comerciales en alta calidad.\",\"Configurar WhatsApp Business con catálogo.\"]",
+                "[{\"id\":1,\"texto\":\"Cerrar el tarifario final con comisiones\",\"done\":false},{\"id\":2,\"texto\":\"Redactar la ficha de una carilla para agencias\",\"done\":false},{\"id\":3,\"texto\":\"Listar los 5 hoteles boutique donde presentar la propuesta\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'nire-08',
                 'nire',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ter',
-                "Predio",
-                '2026-10-29',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'nire-09',
-                'nire',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-4',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'nire-10',
-                'nire',
-                10,
                 "Distinción, resultados y rueda de negocios",
                 'cie',
                 "Acto de cierre",
@@ -3221,10 +3188,10 @@ function lab_asegurar_datos(PDO $pdo): void
                 "10:00",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
+                "Acto plenario y cierre del programa con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.",
+                "[\"¿Qué convenios comerciales quedan cerrados para el verano 2027?\"]",
+                "[\"Cerrar al menos dos convenios de derivación con agencias u hoteles.\",\"Presentar el souvenir botánico en el stand.\"]",
+                "[{\"id\":1,\"texto\":\"Confirmar asistencia al plenario\",\"done\":false},{\"id\":2,\"texto\":\"Llevar muestras de la infusión de ñire para degustación\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos una alianza comercial en la rueda\",\"done\":false}]",
                 ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
             ],
             [
@@ -3406,6 +3373,187 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $r[0];
             foreach ($asistentes as $consId) {
                 $insAsist->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // 4. Sincronización continua de proyectos y encuentros con planes curados
+    $updProy = $pdo->prepare("
+        UPDATE lab_proyectos 
+        SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
+        WHERE id = ?
+    ");
+    $curados = ['crova', 'haiku', 'tambo', 'nire'];
+    foreach ($proyectos as $p) {
+        if (in_array($p[0], $curados, true)) {
+            $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
+        }
+    }
+
+    // Sincronizar reuniones de Pausa de Ñire si todavía tiene la plantilla genérica inicial
+    $checkNire = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'nire-01'")->fetchColumn();
+    if ($checkNire === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkNire) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'nire-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'nire'");
+
+        $insReuNire = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistNire = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesNire = [
+            [
+                'nire-01',
+                'nire',
+                1,
+                "Relevamiento en terreno y diagnóstico de predio",
+                'ter',
+                "Predio Altos de Nant y Fall",
+                '2026-09-15',
+                "09:30",
+                "12:30",
+                'programada',
+                "Relevar in situ las 2 hectáreas, el sendero de circunvalación, la casita de descanso y el estado del camino de ripio de 1.500 m. Evaluar áreas de microflora y puntos de mayor silencio.",
+                "[\"¿Dónde se siente el mayor silencio dentro del bosque?\",\"¿Cómo reacciona el suelo del callejón con lluvia?\",\"¿Qué microflora observamos en el sendero corto?\"]",
+                "[\"Relevar medidas y recorrido del sendero.\",\"Evaluar puntos críticos del callejón de acceso.\",\"Validar disponibilidad de la casita y servicios.\"]",
+                "[{\"id\":1,\"texto\":\"Fotografiar puntos críticos del acceso\",\"done\":false},{\"id\":2,\"texto\":\"Medir los tramos del sendero interno\",\"done\":false},{\"id\":3,\"texto\":\"Probar conectividad y equipamiento de la casita\",\"done\":false},{\"id\":4,\"texto\":\"Tomar muestras de líquenes y hojas de ñire\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'nire-02',
+                'nire',
+                2,
+                "Estrategia de macrodestino y nodo Laguna La Zeta",
+                'ind',
+                "Turismo",
+                '2026-09-18',
+                "11:00",
+                "12:30",
+                'programada',
+                "Definir el circuito periurbano en Laguna La Zeta para tener presencia activa y legitimada dentro del ejido municipal de Esquel, capturando turistas de tarde.",
+                "[\"¿Qué rincón de La Zeta ofrece la menor contaminación sonora y mejor resguardo de viento?\",\"¿Cómo adaptamos los tiempos para turistas en tránsito en Esquel?\"]",
+                "[\"Trazar el mapa del circuito La Zeta (máximo 1,5 km).\",\"Redactar la fundamentación de macrodestino para autoridades.\",\"Definir frecuencia de salidas semanales.\"]",
+                "[{\"id\":1,\"texto\":\"Trazar el recorrido de La Zeta\",\"done\":false},{\"id\":2,\"texto\":\"Redactar la fundamentación institucional del doble nodo\",\"done\":false},{\"id\":3,\"texto\":\"Definir días y horarios de salidas en Esquel\",\"done\":false}]",
+                ["leandro","adria","noelia"]
+            ],
+            [
+                'nire-03',
+                'nire',
+                3,
+                "Estructuración del guion sensorial e inmersión",
+                'ind',
+                "Turismo",
+                '2026-09-23',
+                "10:00",
+                "12:00",
+                'programada',
+                "Redactar el guion de la experiencia con las consignas sensoriales, ejercicios de respiración, micro-observación y tiempos de pausa.",
+                "[\"¿Cómo rompemos el ritmo acelerado del turista en los primeros 10 minutos?\",\"¿Qué metáforas usamos para explicar los líquenes y el ñirantal?\"]",
+                "[\"Escribir el guion de 5 estaciones.\",\"Estandarizar la bienvenida y cierre ceremonial.\",\"Incorporar el protocolo de recolección de infusión.\"]",
+                "[{\"id\":1,\"texto\":\"Escribir las 5 estaciones del recorrido\",\"done\":false},{\"id\":2,\"texto\":\"Pautar los momentos de silencio absoluto\",\"done\":false},{\"id\":3,\"texto\":\"Diseñar la ceremonia de cierre con infusión caliente\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'nire-04',
+                'nire',
+                4,
+                "Gestión de predios rurales y costeo (Célula 2)",
+                'gru',
+                "Célula 2 (Turismo)",
+                '2026-09-30',
+                "09:30",
+                "12:30",
+                'programada',
+                "Encuentro grupal de la Célula 2 (Campo y gran superficie). Poner en común costos de mantenimiento rural, traslados, seguros de excursionistas y alianzas cruzadas en el corredor.",
+                "[\"¿Cómo nos complementamos en el circuito de Nant y Fall y la Ruta 259?\",\"¿Podemos compartir transportes o derivar visitantes entre chacras?\"]",
+                "[\"Completar matriz de costos fijos y variables.\",\"Identificar cruces con Viñas del Nant y Fall y Cascada.\",\"Validar seguro colectivo de turismo activo.\"]",
+                "[{\"id\":1,\"texto\":\"Llevar la matriz de costos completa\",\"done\":false},{\"id\":2,\"texto\":\"Identificar al menos 2 cruces de derivación con la célula\",\"done\":false},{\"id\":3,\"texto\":\"Revisar pólizas de seguro de turismo activo\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'nire-05',
+                'nire',
+                5,
+                "Salida piloto y prueba de campo en La Zeta",
+                'ter',
+                "Laguna La Zeta",
+                '2026-10-06',
+                "10:00",
+                "12:30",
+                'programada',
+                "Ejecutar el guion sensorial completo con público testigo para medir tiempos reales, silencios y recepción emocional.",
+                "[\"¿Los participantes lograron desconectarse del celular?\",\"¿Qué estación resultó más emotiva?\",\"¿Cómo funcionó la infusión servida al final?\"]",
+                "[\"Validar tiempos reales del guion.\",\"Recoger devoluciones sinceras de los participantes.\",\"Tomar fotografías de calidad para el banco de imágenes.\"]",
+                "[{\"id\":1,\"texto\":\"Cronometrar cada parada del sendero\",\"done\":false},{\"id\":2,\"texto\":\"Registrar planilla de feedback de los asistentes\",\"done\":false},{\"id\":3,\"texto\":\"Probar logística de calentamiento de agua para infusión al aire libre\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'nire-06',
+                'nire',
+                6,
+                "Turismo accesible familiar y souvenir botánico",
+                'ind',
+                "Turismo",
+                '2026-10-14',
+                "10:00",
+                "12:00",
+                'programada',
+                "Formalizar la cápsula para familias con personas con discapacidad y terminar el prototipo del packaging de la infusión de hojas de ñire.",
+                "[\"¿Qué adaptaciones requiere el sendero para paso asistido o personas con movilidad reducida?\",\"¿Cómo comunicamos la propuesta accesible con calidez y sin estigmatizar?\"]",
+                "[\"Redactar la ficha de Turismo Accesible Familiar.\",\"Diseñar la etiqueta de la bolsita de té de ñire.\",\"Articular con la Dirección de Discapacidad / Inclusión.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar el protocolo para familias con miembros con discapacidad\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar la etiqueta del souvenir botánico\",\"done\":false},{\"id\":3,\"texto\":\"Definir el método de secado y conservación de las hojas\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'nire-07',
+                'nire',
+                7,
+                "Ficha comercial y venta a receptivos y hoteles",
+                'ind',
+                "Turismo",
+                '2026-10-21',
+                "10:00",
+                "12:00",
+                'programada',
+                "Cerrar tarifas, comisiones para agencias (15-20%) y armar el material gráfico/digital para recepciones de hoteles boutique de Esquel.",
+                "[\"¿Cuánto le dejamos al recepcionista o agencia por derivación confirmada?\",\"¿Cuál es el canal y mensaje de reserva inmediata?\"]",
+                "[\"Cerrar tarifario definitivo y comisiones.\",\"Imprimir fichas comerciales en alta calidad.\",\"Configurar WhatsApp Business con catálogo.\"]",
+                "[{\"id\":1,\"texto\":\"Cerrar el tarifario final con comisiones\",\"done\":false},{\"id\":2,\"texto\":\"Redactar la ficha de una carilla para agencias\",\"done\":false},{\"id\":3,\"texto\":\"Listar los 5 hoteles boutique donde presentar la propuesta\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'nire-08',
+                'nire',
+                8,
+                "Distinción, resultados y rueda de negocios",
+                'cie',
+                "Acto de cierre",
+                '2026-11-10',
+                "10:00",
+                "13:00",
+                'programada',
+                "Acto plenario y cierre del programa con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.",
+                "[\"¿Qué convenios comerciales quedan cerrados para el verano 2027?\"]",
+                "[\"Cerrar al menos dos convenios de derivación con agencias u hoteles.\",\"Presentar el souvenir botánico en el stand.\"]",
+                "[{\"id\":1,\"texto\":\"Confirmar asistencia al plenario\",\"done\":false},{\"id\":2,\"texto\":\"Llevar muestras de la infusión de ñire para degustación\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos una alianza comercial en la rueda\",\"done\":false}]",
+                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+            ],
+        ];
+
+        foreach ($reunionesNire as $rn) {
+            $asistentes = array_pop($rn);
+            $insReuNire->execute($rn);
+            $reuId = $rn[0];
+            foreach ($asistentes as $consId) {
+                $insAsistNire->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

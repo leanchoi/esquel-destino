@@ -189,6 +189,56 @@ const exactMeetings = {
       objetivos: ['Cerrar acuerdos con agencias y hoteles.'],
       check: ['Confirmar asistencia', 'Llevar fotos del predio', 'Cerrar al menos una reunión con un receptivo']
     }
+  ],
+  nire: [
+    { num: 1, f: '2026-09-15', t: 'ter', lugar: 'Predio Altos de Nant y Fall', hora: '09:30 a 12:30', titulo: 'Relevamiento en terreno y diagnóstico de predio', asistentes: ['adria', 'noelia'],
+      guia: 'Relevar in situ las 2 hectáreas, el sendero de circunvalación, la casita de descanso y el estado del camino de ripio de 1.500 m. Evaluar áreas de microflora y puntos de mayor silencio.',
+      preguntas: ['¿Dónde se siente el mayor silencio dentro del bosque?', '¿Cómo reacciona el suelo del callejón con lluvia?', '¿Qué microflora observamos en el sendero corto?'],
+      objetivos: ['Relevar medidas y recorrido del sendero.', 'Evaluar puntos críticos del callejón de acceso.', 'Validar disponibilidad de la casita y servicios.'],
+      check: ['Fotografiar puntos críticos del acceso', 'Medir los tramos del sendero interno', 'Probar conectividad y equipamiento de la casita', 'Tomar muestras de líquenes y hojas de ñire']
+    },
+    { num: 2, f: '2026-09-18', t: 'ind', lugar: 'Turismo', hora: '11:00 a 12:30', titulo: 'Estrategia de macrodestino y nodo Laguna La Zeta', asistentes: ['leandro', 'adria', 'noelia'],
+      guia: 'Definir el circuito periurbano en Laguna La Zeta para tener presencia activa y legitimada dentro del ejido municipal de Esquel, capturando turistas de tarde.',
+      preguntas: ['¿Qué rincón de La Zeta ofrece la menor contaminación sonora y mejor resguardo de viento?', '¿Cómo adaptamos los tiempos para turistas en tránsito en Esquel?'],
+      objetivos: ['Trazar el mapa del circuito La Zeta (máximo 1,5 km).', 'Redactar la fundamentación de macrodestino para autoridades.', 'Definir frecuencia de salidas semanales.'],
+      check: ['Trazar el recorrido de La Zeta', 'Redactar la fundamentación institucional del doble nodo', 'Definir días y horarios de salidas en Esquel']
+    },
+    { num: 3, f: '2026-09-23', t: 'ind', lugar: 'Turismo', hora: '10:00 a 12:00', titulo: 'Estructuración del guion sensorial e inmersión', asistentes: ['adria', 'noelia'],
+      guia: 'Redactar el guion de la experiencia con las consignas sensoriales, ejercicios de respiración, micro-observación y tiempos de pausa.',
+      preguntas: ['¿Cómo rompemos el ritmo acelerado del turista en los primeros 10 minutos?', '¿Qué metáforas usamos para explicar los líquenes y el ñirantal?'],
+      objetivos: ['Escribir el guion de 5 estaciones.', 'Estandarizar la bienvenida y cierre ceremonial.', 'Incorporar el protocolo de recolección de infusión.'],
+      check: ['Escribir las 5 estaciones del recorrido', 'Pautar los momentos de silencio absoluto', 'Diseñar la ceremonia de cierre con infusión caliente']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 2 (Turismo)', hora: '09:30 a 12:30', titulo: 'Gestión de predios rurales y costeo (Célula 2)', asistentes: ['adria', 'noelia'],
+      guia: 'Encuentro grupal de la Célula 2 (Campo y gran superficie). Poner en común costos de mantenimiento rural, traslados, seguros de excursionistas y alianzas cruzadas en el corredor.',
+      preguntas: ['¿Cómo nos complementamos en el circuito de Nant y Fall y la Ruta 259?', '¿Podemos compartir transportes o derivar visitantes entre chacras?'],
+      objetivos: ['Completar matriz de costos fijos y variables.', 'Identificar cruces con Viñas del Nant y Fall y Cascada.', 'Validar seguro colectivo de turismo activo.'],
+      check: ['Llevar la matriz de costos completa', 'Identificar al menos 2 cruces de derivación con la célula', 'Revisar pólizas de seguro de turismo activo']
+    },
+    { num: 5, f: '2026-10-06', t: 'ter', lugar: 'Laguna La Zeta', hora: '10:00 a 12:30', titulo: 'Salida piloto y prueba de campo en La Zeta', asistentes: ['adria', 'noelia'],
+      guia: 'Ejecutar el guion sensorial completo con público testigo para medir tiempos reales, silencios y recepción emocional.',
+      preguntas: ['¿Los participantes lograron desconectarse del celular?', '¿Qué estación resultó más emotiva?', '¿Cómo funcionó la infusión servida al final?'],
+      objetivos: ['Validar tiempos reales del guion.', 'Recoger devoluciones sinceras de los participantes.', 'Tomar fotografías de calidad para el banco de imágenes.'],
+      check: ['Cronometrar cada parada del sendero', 'Registrar planilla de feedback de los asistentes', 'Probar logística de calentamiento de agua para infusión al aire libre']
+    },
+    { num: 6, f: '2026-10-14', t: 'ind', lugar: 'Turismo', hora: '10:00 a 12:00', titulo: 'Turismo accesible familiar y souvenir botánico', asistentes: ['adria', 'noelia'],
+      guia: 'Formalizar la cápsula para familias con personas con discapacidad y terminar el prototipo del packaging de la infusión de hojas de ñire.',
+      preguntas: ['¿Qué adaptaciones requiere el sendero para paso asistido o personas con movilidad reducida?', '¿Cómo comunicamos la propuesta accesible con calidez y sin estigmatizar?'],
+      objetivos: ['Redactar la ficha de Turismo Accesible Familiar.', 'Diseñar la etiqueta de la bolsita de té de ñire.', 'Articular con la Dirección de Discapacidad / Inclusión.'],
+      check: ['Redactar el protocolo para familias con miembros con discapacidad', 'Diseñar la etiqueta del souvenir botánico', 'Definir el método de secado y conservación de las hojas']
+    },
+    { num: 7, f: '2026-10-21', t: 'ind', lugar: 'Turismo', hora: '10:00 a 12:00', titulo: 'Ficha comercial y venta a receptivos y hoteles', asistentes: ['adria', 'noelia'],
+      guia: 'Cerrar tarifas, comisiones para agencias (15-20%) y armar el material gráfico/digital para recepciones de hoteles boutique de Esquel.',
+      preguntas: ['¿Cuánto le dejamos al recepcionista o agencia por derivación confirmada?', '¿Cuál es el canal y mensaje de reserva inmediata?'],
+      objetivos: ['Cerrar tarifario definitivo y comisiones.', 'Imprimir fichas comerciales en alta calidad.', 'Configurar WhatsApp Business con catálogo.'],
+      check: ['Cerrar el tarifario final con comisiones', 'Redactar la ficha de una carilla para agencias', 'Listar los 5 hoteles boutique donde presentar la propuesta']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Acto de cierre', hora: '10:00 a 13:00', titulo: 'Distinción, resultados y rueda de negocios', asistentes: ['leandro', 'adria', 'mariela', 'francisco', 'agustina', 'cesia', 'noelia'],
+      guia: 'Acto plenario y cierre del programa con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.',
+      preguntas: ['¿Qué convenios comerciales quedan cerrados para el verano 2027?'],
+      objetivos: ['Cerrar al menos dos convenios de derivación con agencias u hoteles.', 'Presentar el souvenir botánico en el stand.'],
+      check: ['Confirmar asistencia al plenario', 'Llevar muestras de la infusión de ñire para degustación', 'Cerrar al menos una alianza comercial en la rueda']
+    }
   ]
 };
 
@@ -325,6 +375,9 @@ require_once __DIR__ . '/db.php';
 
 function lab_asegurar_datos(PDO $pdo): void
 {
+    // Asegurar acceso para el usuario de Leandro
+    $pdo->exec("INSERT OR IGNORE INTO lab_user_access (user_id, granted_by) SELECT id, 1 FROM users WHERE LOWER(username) = 'leandro'");
+
     // 1. Consultores
     $countCons = (int) $pdo->query("SELECT COUNT(*) FROM lab_consultores")->fetchColumn();
     if ($countCons === 0) {
@@ -345,14 +398,8 @@ php += `        ];
         }
     }
 
-    // 2. Proyectos
-    $countProy = (int) $pdo->query("SELECT COUNT(*) FROM lab_proyectos")->fetchColumn();
-    if ($countProy === 0) {
-        $insProy = $pdo->prepare("
-            INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $proyectos = [
+    // Definición de proyectos de la cohorte
+    $proyectos = [
 `;
 
 for (const p of proyectos) {
@@ -373,9 +420,15 @@ for (const p of proyectos) {
             ],\n`;
 }
 
-
 php += `        ];
 
+    // 2. Proyectos
+    $countProy = (int) $pdo->query("SELECT COUNT(*) FROM lab_proyectos")->fetchColumn();
+    if ($countProy === 0) {
+        $insProy = $pdo->prepare("
+            INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
         $checkApp = $pdo->prepare("SELECT 1 FROM applications WHERE id = ?");
         foreach ($proyectos as $p) {
             $checkApp->execute([(int)$p[1]]);
@@ -444,6 +497,81 @@ php += `        ];
             $reuId = $r[0];
             foreach ($asistentes as $consId) {
                 $insAsist->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // 4. Sincronización continua de proyectos y encuentros con planes curados
+    $updProy = $pdo->prepare("
+        UPDATE lab_proyectos 
+        SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
+        WHERE id = ?
+    ");
+    $curados = ['crova', 'haiku', 'tambo', 'nire'];
+    foreach ($proyectos as $p) {
+        if (in_array($p[0], $curados, true)) {
+            $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
+        }
+    }
+
+    // Sincronizar reuniones de Pausa de Ñire si todavía tiene la plantilla genérica inicial
+    $checkNire = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'nire-01'")->fetchColumn();
+    if ($checkNire === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkNire) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'nire-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'nire'");
+
+        $insReuNire = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistNire = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesNire = [
+`;
+
+const nireMeetingsList = exactMeetings.nire;
+for (const m of nireMeetingsList) {
+  const reuId = `nire-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'noelia'];
+
+  php += `            [
+                '${reuId}',
+                'nire',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesNire as $rn) {
+            $asistentes = array_pop($rn);
+            $insReuNire->execute($rn);
+            $reuId = $rn[0];
+            foreach ($asistentes as $consId) {
+                $insAsistNire->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

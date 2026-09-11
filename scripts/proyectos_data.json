@@ -786,40 +786,57 @@
       "id": "nire",
       "app_id": 23,
       "nombre": "Pausa de ñire",
-      "titular": "WALTER CERDÁ",
+      "titular": "Walter Cerdá",
       "linea": "Raíz",
       "puntaje": 3.32,
       "celula": 2,
       "sr": "adria",
       "jr": "noelia",
       "diagnostico": [
-        "Complejo de cabañas inmerso en bosque nativo de ñires con senderos de contemplación y astroturismo.",
-        "Propuesta de desconexión y silencio en contacto con la montaña.",
-        "Emprendedor comprometido."
+        "Walter adquirió una fracción de 2 hectáreas de bosque de ñire hace 12 años tras desvincularse de un empleo formal de dos décadas. Construyó un cerco perimetral, abrió un camino de circunvalación interno y edificó una casita/salón cerrada con baño interno (biodigestor), estufa a leña, electricidad y agua.",
+        "La propuesta no es trekking atlético ni aventura ni yoga. Se basa en el shinrin-yoku (técnica japonesa de inmersión en la naturaleza y conexión sensorial), enfocada en grupos reducidos (4 a 8 personas) que caminan despacio, se detienen, contemplan, escuchan y respiran el bosque cordillerano.",
+        "Su esposa y colegas del CONICET identificaron una sorprendente variedad de microflora: líquenes raros en raíces y cortezas (con morfología de cornetitas o trúfulas), hongos patagónicos y flores nativas. Un recorrido de apenas 50 metros puede extenderse dos horas reloj con alto valor interpretativo y de macrofotografía.",
+        "Walter cuenta con carnet profesional habilitante para transporte de personas, movilidad propia (camioneta apta para caminos de tierra) y experiencia como chofer trasladando visitantes a La Zeta. Además, dispone de 100% de dedicación horaria para el proyecto.",
+        "Su hijo Imanol (13 años, con síndrome de Down) creció en el predio y desarrolló allí una notable independencia y seguridad. Esta vivencia real abre un diferencial conmovedor y escaso en la comarca: diseñar una experiencia de naturaleza y descanso accesible y sin miedos para familias con niños o personas con discapacidad."
       ],
       "trabas": [
-        "Integrar actividades diurnas para el huésped que busca experiencias guiadas.",
-        "Promoción digital enfocada en público corporativo y parejas."
+        "El predio está emplazado en Altos de Nant y Fall (jurisdicción de Trevelin). Si bien el programa adopta una visión comarcal de macrodestino, se hace imprescindible fijar una 'pata en Esquel' mediante experiencias en Laguna La Zeta para blindar el respaldo institucional ante sensibilidades políticas entre comunas.",
+        "Desde la Ruta 17 hasta la tranquera del predio hay 1.500 metros de huella de campo que en invierno y deshielo se vuelve intransitable para autos convencionales sin tracción alta.",
+        "El curso de guía con Forest Therapy Hub quedó demorado por cuestiones climáticas. Debe completarse la certificación vía remota mientras se avanza operativamente con lo que ya está en marcha, sin paralizar el negocio.",
+        "Para el turista promedio, pagar por 'caminar entre los árboles' puede parecer poco tangible. La propuesta debe justificar su valor a través de un guion estructurado, dinámicas guiadas de silencio, ejercicios sensoriales y un cierre gastronómico/ceremonial con infusión nativa."
       ],
       "ejes": [
         {
-          "t": "Cápsulas de Naturaleza",
+          "t": "Guion Sensorial y Turismo Inclusivo",
           "items": [
-            "Sendero interpretativo del bosque nativo.",
-            "Noches de fogón y observación de estrellas."
+            "Estructurar un recorrido de 2 horas con momentos pautados: apertura y respiración, caminata en silencio ultra-lenta, observación de líquenes y microflora (lupa/macrofotografía), contemplación y cierre con infusión caliente de hojas de ñire.",
+            "Formatear una cápsula para familias con integrantes con discapacidad, con actividades sencillas de conexión con el entorno, tiempos flexibles, apoyo a los padres y pautas de seguridad agreste.",
+            "Creación de bolsitas de infusión de hojas de ñire con recolección sustentable, etiqueta artesanal con relato del árbol nativo y ficha de preparación para obsequiar o comercializar como recuerdo vivo."
           ]
         },
         {
-          "t": "Comercialización",
+          "t": "Estrategia de Macrodestino y Doble Nodo (La Zeta & Nant y Fall)",
           "items": [
-            "Paquetes de fin de semana temáticos.",
-            "Convenios con guías de aventura locales."
+            "Diseñar una variante periurbana en la Reserva Natural Urbana Laguna La Zeta (1h30m) para operar como opción de tarde inmediata en Esquel (días sin esquí o descanso entre excursiones largas).",
+            "Operar la chacra como experiencia de medio día (3h a 4h) con traslado propio en camioneta desde el centro de Esquel o punto de encuentro sobre Ruta 17.",
+            "Establecer un punto seguro de estacionamiento en la entrada del callejón para transbordar a los visitantes en la camioneta de Walter los días de lluvia o barro."
+          ]
+        },
+        {
+          "t": "Comercialización, Costeo y Alianzas",
+          "items": [
+            "Estructurar costos de combustible, seguro de accidentes personales, infusiones y honorarios del guía. Fijar tarifa individual y paquete cerrado para familias.",
+            "Armado de la ficha técnica comercial en una carilla para recepcionistas de hoteles boutique de Esquel y agencias de turismo receptivo.",
+            "Conexión con los prestadores de la Ruta 259 (Viñas de Nant y Fall, Chacra de Azafrán, Casas de Té) para recomendarse mutuamente en recorridos combinados de día completo."
           ]
         }
       ],
       "entregables": [
-        "Guion de la experiencia de astroturismo y bosque.",
-        "Tarifario de experiencias opcionales para huéspedes."
+        "Guion técnico de la experiencia 'Pausa de Ñire' (Versión Chacra Nant y Fall y Versión periurbana Laguna La Zeta).",
+        "Ficha comercial y tarifario cerrado para agencias y hoteles boutique.",
+        "Prototipo de souvenir botánico empaquetado (bolsita de hojas de ñire con etiqueta y relato).",
+        "Propuesta y protocolo de Turismo Accesible Familiar.",
+        "Articulación comercial iniciada con al menos 2 alojamientos de Esquel o prestadores de la Ruta 259."
       ]
     },
     {
