@@ -289,6 +289,56 @@ const exactMeetings = {
       objetivos: ['Cerrar al menos dos convenios de derivación con agencias u hoteles.', 'Presentar el sitio web y el video de dron en pantalla gigante.'],
       check: ['Confirmar asistencia al plenario con la familia', 'Montar stand con bici histórica, piezas recicladas y dulces', 'Cerrar al menos un convenio formal en la rueda de negocios']
     }
+  ],
+  vicotita: [
+    { num: 1, f: '2026-09-16', t: 'ter', lugar: 'Taller Chanico Navarro (Pintor Antúnez 968)', hora: '10:00 a 12:00', titulo: 'Relevamiento en terreno: taller, procesos y muestras históricas', asistentes: ['mariela', 'cesia'],
+      guia: 'Relevar las maquinarias de serigrafía, shablonadora, stock de telas impermeables, herramientas de encuadernación y muestras de productos históricos.',
+      preguntas: ['¿Cuáles son los productos con menor tiempo de confección y mejor margen?', '¿Qué capacidad de almacenamiento y aprovisionamiento de telas tienen hoy?'],
+      objetivos: ['Inventariar maquinaria y herramientas de taller.', 'Fotografiar muestras de encuadernación y marroquinería.', 'Analizar compras de insumos por volumen.'],
+      check: ['Relevar máquinas de coser, shablones y mesas de corte', 'Inventariar telas impermeables y tipos de papel', 'Fotografiar muestras históricas y piezas de Puro Diseño', 'Definir el flujo de trabajo entre ambos domicilios']
+    },
+    { num: 2, f: '2026-09-23', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Storytelling de marca, marbete narrativo y código QR', asistentes: ['leandro', 'mariela', 'cesia'],
+      guia: 'Traducir la profundidad del relato mapuche contemporáneo en un texto breve para marbetes y tarjetas de autenticidad que acompañen cada pieza.',
+      preguntas: ['¿Cómo explicamos el símbolo del Quñegüe o el punto nimín en 3 oraciones sencillas?', '¿Qué llamado a la acción incluimos en el código QR?'],
+      objetivos: ['Redactar el texto del marbete de autor.', 'Diseñar el boceto de la tarjeta con código QR.', 'Cotizar impresión con imprentas locales.'],
+      check: ['Redactar el texto del marbete en español y mapuzugun', 'Diseñar el mockup de tarjeta de autenticidad con QR', 'Configurar landing/enlace con galería del proceso artesanal', 'Seleccionar imprenta local para tirada de prueba']
+    },
+    { num: 3, f: '2026-09-25', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Prototipado de la Bitácora de Campo y Registro de Montaña', asistentes: ['mariela', 'cesia'],
+      guia: 'Definir el formato físico, encuadernación y contenido interior de la libreta de registro de senderos y montaña para prestadores.',
+      preguntas: ['¿Qué tamaño es el más práctico para llevar en la mochila de trekking (A5 o A6)?', '¿Qué secciones de coordenadas y apuntes incluimos en las hojas?'],
+      objetivos: ['Definir gramaje de hojas y tipo de encuadernación (cosida o brocheada).', 'Redactar el contenido de las páginas interiores.', 'Armar el primer boceto físico.'],
+      check: ['Definir medidas estándar de corte A5/A6', 'Diagramar la grilla de coordenadas y mapa de senderos', 'Seleccionar micro-poesías de autores patagónicos', 'Confeccionar el primer ejemplar de prueba']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 1 (Melipal)', hora: '09:30 a 12:00', titulo: 'Costeo, volumen y consignación (Célula 1)', asistentes: ['mariela', 'cesia'],
+      guia: 'Encuentro grupal de la Célula 1 (Oficio y pieza). Poner en común matrices de costeo, valor de hora de taller, esquemas de comisiones para revendedores y acuerdos de no canibalización.',
+      preguntas: ['¿Qué porcentaje es justo dejarle a una recepción de hotel o tienda regional?', '¿Conviene vender en firme con descuento o en consignación?'],
+      objetivos: ['Comparar costos fijos y variables con otros artesanos.', 'Validar escala de descuentos mayoristas.', 'Evaluar alianzas de empaque conjunto.'],
+      check: ['Llevar la planilla de costeo por producto terminada', 'Comparar márgenes con Los Crovas, Carpintero y Patagonia Retro', 'Fijar tope de comisión para terceros (20% a 25%)']
+    },
+    { num: 5, f: '2026-10-07', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Diseño y estructura del catálogo B2B para prestadores', asistentes: ['mariela', 'cesia'],
+      guia: 'Estructurar el catálogo comercial digital para presentar a hoteles, agencias y corporativos con mockups de personalización y co-branding.',
+      preguntas: ['¿Qué 6 productos insignia colocamos en el catálogo?', '¿Cómo explicamos los tiempos de producción (7 a 15 días) para evitar reclamos?'],
+      objetivos: ['Seleccionar fotos de alta calidad de los productos.', 'Redactar las fichas técnicas y condiciones comerciales.', 'Montar el PDF interactivo.'],
+      check: ['Seleccionar las fotos definitivas de la línea de temporada', 'Redactar escalas de precios para 20, 50 y 100 unidades', 'Armar el PDF interactivo listo para enviar por WhatsApp y mail', 'Definir cláusula de seña del 50% y plazos de entrega']
+    },
+    { num: 6, f: '2026-10-15', t: 'ter', lugar: 'Taller de Encuadernación (Majo)', hora: '15:00 a 17:00', titulo: 'Validación de prototipos y proto-armado de taller abierto', asistentes: ['mariela', 'cesia'],
+      guia: 'Reunión conjunta con ambas hermanas para revisar los prototipos de la Bitácora de Campo terminados y evaluar la viabilidad de la experiencia inmersiva de taller.',
+      preguntas: ['¿Cómo responde el diseño gráfico interior de la libreta?', '¿Es viable abrir el taller para 4 o 6 personas en temporadas especiales?'],
+      objetivos: ['Evaluar físicamente la bitácora terminada.', 'Validar el circuito de serigrafía y estampado en vivo.', 'Definir pautas del taller abierto de temporada.'],
+      check: ['Revisar 3 bitácoras terminadas con encuadernación artesanal', 'Probar la experiencia de estampado en vivo con matriz doble', 'Redactar el guion de 1h30m para grupos reducidos', 'Establecer cupos máximos de 6 personas para octubre']
+    },
+    { num: 7, f: '2026-10-28', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Rueda de contactos comerciales y colocación en hoteles', asistentes: ['mariela', 'cesia'],
+      guia: 'Presentar el catálogo B2B a 5 establecimientos turísticos seleccionados de Esquel para concertar pedidos mayoristas de merchandising de autor.',
+      preguntas: ['¿Qué hoteles boutique y lodges de pesca muestran interés en co-brandear bitácoras o estuches?', '¿Qué pedidos de muestra se entregan?'],
+      objetivos: ['Enviar catálogo personalizado a los 5 establecimientos objetivo.', 'Entregar muestras físicas con marbete narrativo.', 'Realizar seguimiento de pedidos.'],
+      check: ['Mapear 5 establecimientos objetivo de Esquel', 'Enviar el catálogo comercial con nota formal de presentación', 'Dejar muestras físicas con marbete en 2 hoteles boutique', 'Registrar devoluciones y solicitudes de cotización']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Acto de cierre', hora: '10:00 a 13:00', titulo: 'Distinción, resultados y rueda de negocios', asistentes: ['leandro', 'adria', 'mariela', 'francisco', 'agustina', 'cesia', 'noelia'],
+      guia: 'Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.',
+      preguntas: ['¿Cuántos convenios comerciales de provisión formal se firman en la rueda de negocios?'],
+      objetivos: ['Cerrar al menos dos convenios de provisión con alojamientos o agencias.', 'Exhibir la colección completa en el stand oficial.'],
+      check: ['Confirmar asistencia de ambas socias al plenario', 'Montar stand de exhibición con marbetes y packaging terminado', 'Cerrar al menos un acuerdo comercial formal en la rueda']
+    }
   ]
 };
 
@@ -588,7 +638,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -714,6 +764,68 @@ php += `        ];
             $reuId = $rc[0];
             foreach ($asistentes as $consId) {
                 $insAsistCorcho->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Vico + Tita si todavía tiene la plantilla genérica inicial
+    $checkVicotita = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'vicotita-01'")->fetchColumn();
+    if ($checkVicotita === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkVicotita) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'vicotita-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'vicotita'");
+
+        $insReuVicotita = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistVicotita = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesVicotita = [
+`;
+
+const vicotitaMeetingsList = exactMeetings.vicotita;
+for (const m of vicotitaMeetingsList) {
+  const reuId = `vicotita-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['mariela', 'cesia'];
+
+  php += `            [
+                '${reuId}',
+                'vicotita',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesVicotita as $rv) {
+            $asistentes = array_pop($rv);
+            $insReuVicotita->execute($rv);
+            $reuId = $rv[0];
+            foreach ($asistentes as $consId) {
+                $insAsistVicotita->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

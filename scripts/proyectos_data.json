@@ -465,41 +465,59 @@
     {
       "id": "vicotita",
       "app_id": 45,
-      "nombre": "Merchandising turístico Vico+Tita",
-      "titular": "María Eugenia Gutiérrez",
+      "nombre": "Vico + Tita · Diseño Mapuche Contemporáneo",
+      "titular": "María Eugenia y María José Gutiérrez",
       "linea": "Acelera",
       "puntaje": 3.27,
       "celula": 1,
       "sr": "mariela",
       "jr": "cesia",
       "diagnostico": [
-        "Diseño y confección de recuerdos turísticos de alta calidad estética con identidad patagónica.",
-        "Capacidad de producción y taller propio.",
-        "Excelente alternativa al souvenir tradicional genérico."
+        "Emprendimiento con más de 11 años de trayectoria ininterrumpida (desde 2013/2014) liderado por las hermanas María Eugenia y María José Gutiérrez, docentes de formación (Eugenia en nivel superior y Majo en artes visuales y preservación de patrimonio bibliográfico). Participaron oficialmente en dos ediciones de Puro Diseño en Buenos Aires.",
+        "Propuesta identitaria de 'Diseño Mapuche Contemporáneo'. Como mujeres mapuche que participan activamente de la vida comunitaria y ceremonial (Camarruco), reinterpretan la memoria oral ancestral, la simbología cuatripartita (Choique), los puntos de telar (nimín) y leyendas de flora/fauna (Quñegüe) en piezas utilitarias modernas.",
+        "Complementariedad técnica de excelencia: Majo domina ilustración manual/digital y encuadernación artística (costura en cuero/tela, mosaico en relieve, gofrado, hot stamping dorado/plateado y restauración). Euge domina marroquinería y serigrafía artesanal textil con matrices dobles sobre telas impermeables y repelentes al agua.",
+        "Clientes corporativos y turísticos fieles de larga data: confeccionan desde hace 9 años las bitácoras de viaje y senderismo para una empresa de trekking en Tierra del Fuego; producen líneas para el Campo de Tulipanes y Casa Shagüe/Yagüe; libros de registro para Viñas de Nant y Fall y encuadernaciones para Cultura de Provincia.",
+        "Canales actuales y dependencia de ferias: Históricamente comercializan en la feria artesanal municipal y por pedidos directos. Requieren formalizar un catálogo comercial B2B para que hoteles boutique, lodges de pesca y agencias de viaje incorporen su merchandising de manera recurrente."
       ],
       "trabas": [
-        "Distribución y puntos de venta fijos en la ciudad.",
-        "Financiamiento para compra de materia prima por mayor."
+        "Dificultad para condensar el relato sin desvirtuar su valor: La cosmovisión mapuche y memoria oral de las piezas es profunda, pero en mostrador o feria el visitante muchas veces no dispone de tiempo para escucharla. Requieren un sistema de etiquetado de autor y marbetes con código QR que comuniquen el valor de la pieza en 30 segundos.",
+        "Dispersión de talleres y asimetría de horarios docentes: Euge tiene disponibilidad por las mañanas y Majo por las tardes con horarios escolares rotativos. Cada una produce en su propio taller domiciliario (Barrio Chanico Navarro), lo que condiciona la producción en serie o la apertura permanente de taller al público.",
+        "Inexistencia de catálogo comercial B2B para prestadores: Los prestadores turísticos (hoteles boutique, cabañas, agencias) no pueden visualizar cómo adaptar un estuche o bitácora a su establecimiento sin un muestrario claro de co-branding, escalas de precios por volumen y plazos de entrega.",
+        "Dispersión de costos y necesidad de productos estandarizados de entrada: Piezas complejas de marroquinería ($40.000) o encuadernación pesada tienen rotación lenta. Se requiere consolidar una pirámide de productos con opciones de entrada ágiles (libretas de campo y bitácoras de viaje entre $8.000 y $15.000)."
       ],
       "ejes": [
         {
-          "t": "Puntos de Venta",
+          "t": "Storytelling de Marca, Etiquetado y Colección 'Estampa Esquel'",
           "items": [
-            "Convenios de exhibidores en hoteles y chocolaterías.",
-            "Condiciones de venta firme y consignación."
+            "Sistema de marbetes colgantes y tarjetas de autenticidad de autor, con micro-relato identitario (nimín, Quñegüe, Choique) y código QR ampliado con fotos del proceso de serigrafía y encuadernación.",
+            "Consolidación de la paleta cromática de temporada (colores tierra y verano patagónico) para la colección 'Estampa Esquel: Naturaleza Ancestral' en marroquinería y papelería.",
+            "Estructuración de una pirámide de precios de 3 niveles: Acceso (libretas de mano y señaladores), Medio (bitácoras cosidas, cartucheras, tote bags impermeables) y Colección (cuadernos de cuero con grabado, mochilas de autor)."
           ]
         },
         {
-          "t": "Línea Exclusiva Esquel LAB",
+          "t": "Catálogo Comercial para Prestadores y Convenios de Canal",
           "items": [
-            "Colección temática de souvenirs identitarios.",
-            "Packaging ecológico con relato del destino."
+            "Diseño de catálogo comercial digital interactivo (PDF interactivo y presentación web) orientado específicamente a hoteles boutique, agencias receptivas y organizadores de eventos.",
+            "Muestrario de co-branding y personalización: mockups visuales de libretas y estuches que integran la estampa de autor con logotipos de establecimientos turísticos de Esquel.",
+            "Fijación de lista de precios mayorista por escalas de volumen (pedidos de 20, 50 y 100 unidades) con plazos de entrega estandarizados (7 a 15 días) y facturación con monotributo."
+          ]
+        },
+        {
+          "t": "Prototipado de la Bitácora de Campo y Experiencia Piloto de Taller",
+          "items": [
+            "Desarrollo y testeo de la 'Bitácora de Campo y Registro de Montaña': libreta rústica de tapa blanda con cuadrícula de coordenadas (latitud/longitud), mapas de senderos, flora nativa y micro-poesías patagónicas.",
+            "Prueba de campo de la bitácora con prestadores y guías de senderismo de la Célula 1 (Oficio) y Célula 4 (Canal).",
+            "Proto-armado de un formato de 'Taller Abierto / Clínica de Estampado' para fechas especiales (temporada de tulipanes en octubre o verano) en grupos reducidos de 4 a 6 personas."
           ]
         }
       ],
       "entregables": [
-        "Catálogo de productos y lista de precios mayorista.",
-        "Al menos 3 puntos de venta cerrados en Esquel."
+        "Sistema de etiquetado narrativo y marbete con código QR listo para imprenta.",
+        "Catálogo comercial B2B para hoteles, agencias y eventos turísticos con opciones de co-branding.",
+        "Prototipo final de la 'Bitácora de Campo y Montaña' para senderismo y excursionismo.",
+        "Matriz de costeo por volumen y capacidad de producción estandarizada para pedidos mayoristas.",
+        "Muestrario de la Colección 'Estampa Esquel: Naturaleza Ancestral' en marroquinería y encuadernación.",
+        "Al menos 3 convenios comerciales o acuerdos de provisión cerrados con alojamientos o receptivos."
       ]
     },
     {

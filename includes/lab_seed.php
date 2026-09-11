@@ -187,17 +187,17 @@ function lab_asegurar_datos(PDO $pdo): void
             [
                 'vicotita',
                 45,
-                "Merchandising turístico Vico+Tita",
-                "María Eugenia Gutiérrez",
+                "Vico + Tita · Diseño Mapuche Contemporáneo",
+                "María Eugenia y María José Gutiérrez",
                 'Acelera',
                 3.27,
                 1,
                 'mariela',
                 'cesia',
-                "[\"Diseño y confección de recuerdos turísticos de alta calidad estética con identidad patagónica.\",\"Capacidad de producción y taller propio.\",\"Excelente alternativa al souvenir tradicional genérico.\"]",
-                "[\"Distribución y puntos de venta fijos en la ciudad.\",\"Financiamiento para compra de materia prima por mayor.\"]",
-                "[{\"t\":\"Puntos de Venta\",\"items\":[\"Convenios de exhibidores en hoteles y chocolaterías.\",\"Condiciones de venta firme y consignación.\"]},{\"t\":\"Línea Exclusiva Esquel LAB\",\"items\":[\"Colección temática de souvenirs identitarios.\",\"Packaging ecológico con relato del destino.\"]}]",
-                "[\"Catálogo de productos y lista de precios mayorista.\",\"Al menos 3 puntos de venta cerrados en Esquel.\"]"
+                "[\"Emprendimiento con más de 11 años de trayectoria ininterrumpida (desde 2013/2014) liderado por las hermanas María Eugenia y María José Gutiérrez, docentes de formación (Eugenia en nivel superior y Majo en artes visuales y preservación de patrimonio bibliográfico). Participaron oficialmente en dos ediciones de Puro Diseño en Buenos Aires.\",\"Propuesta identitaria de 'Diseño Mapuche Contemporáneo'. Como mujeres mapuche que participan activamente de la vida comunitaria y ceremonial (Camarruco), reinterpretan la memoria oral ancestral, la simbología cuatripartita (Choique), los puntos de telar (nimín) y leyendas de flora/fauna (Quñegüe) en piezas utilitarias modernas.\",\"Complementariedad técnica de excelencia: Majo domina ilustración manual/digital y encuadernación artística (costura en cuero/tela, mosaico en relieve, gofrado, hot stamping dorado/plateado y restauración). Euge domina marroquinería y serigrafía artesanal textil con matrices dobles sobre telas impermeables y repelentes al agua.\",\"Clientes corporativos y turísticos fieles de larga data: confeccionan desde hace 9 años las bitácoras de viaje y senderismo para una empresa de trekking en Tierra del Fuego; producen líneas para el Campo de Tulipanes y Casa Shagüe/Yagüe; libros de registro para Viñas de Nant y Fall y encuadernaciones para Cultura de Provincia.\",\"Canales actuales y dependencia de ferias: Históricamente comercializan en la feria artesanal municipal y por pedidos directos. Requieren formalizar un catálogo comercial B2B para que hoteles boutique, lodges de pesca y agencias de viaje incorporen su merchandising de manera recurrente.\"]",
+                "[\"Dificultad para condensar el relato sin desvirtuar su valor: La cosmovisión mapuche y memoria oral de las piezas es profunda, pero en mostrador o feria el visitante muchas veces no dispone de tiempo para escucharla. Requieren un sistema de etiquetado de autor y marbetes con código QR que comuniquen el valor de la pieza en 30 segundos.\",\"Dispersión de talleres y asimetría de horarios docentes: Euge tiene disponibilidad por las mañanas y Majo por las tardes con horarios escolares rotativos. Cada una produce en su propio taller domiciliario (Barrio Chanico Navarro), lo que condiciona la producción en serie o la apertura permanente de taller al público.\",\"Inexistencia de catálogo comercial B2B para prestadores: Los prestadores turísticos (hoteles boutique, cabañas, agencias) no pueden visualizar cómo adaptar un estuche o bitácora a su establecimiento sin un muestrario claro de co-branding, escalas de precios por volumen y plazos de entrega.\",\"Dispersión de costos y necesidad de productos estandarizados de entrada: Piezas complejas de marroquinería ($40.000) o encuadernación pesada tienen rotación lenta. Se requiere consolidar una pirámide de productos con opciones de entrada ágiles (libretas de campo y bitácoras de viaje entre $8.000 y $15.000).\"]",
+                "[{\"t\":\"Storytelling de Marca, Etiquetado y Colección 'Estampa Esquel'\",\"items\":[\"Sistema de marbetes colgantes y tarjetas de autenticidad de autor, con micro-relato identitario (nimín, Quñegüe, Choique) y código QR ampliado con fotos del proceso de serigrafía y encuadernación.\",\"Consolidación de la paleta cromática de temporada (colores tierra y verano patagónico) para la colección 'Estampa Esquel: Naturaleza Ancestral' en marroquinería y papelería.\",\"Estructuración de una pirámide de precios de 3 niveles: Acceso (libretas de mano y señaladores), Medio (bitácoras cosidas, cartucheras, tote bags impermeables) y Colección (cuadernos de cuero con grabado, mochilas de autor).\"]},{\"t\":\"Catálogo Comercial para Prestadores y Convenios de Canal\",\"items\":[\"Diseño de catálogo comercial digital interactivo (PDF interactivo y presentación web) orientado específicamente a hoteles boutique, agencias receptivas y organizadores de eventos.\",\"Muestrario de co-branding y personalización: mockups visuales de libretas y estuches que integran la estampa de autor con logotipos de establecimientos turísticos de Esquel.\",\"Fijación de lista de precios mayorista por escalas de volumen (pedidos de 20, 50 y 100 unidades) con plazos de entrega estandarizados (7 a 15 días) y facturación con monotributo.\"]},{\"t\":\"Prototipado de la Bitácora de Campo y Experiencia Piloto de Taller\",\"items\":[\"Desarrollo y testeo de la 'Bitácora de Campo y Registro de Montaña': libreta rústica de tapa blanda con cuadrícula de coordenadas (latitud/longitud), mapas de senderos, flora nativa y micro-poesías patagónicas.\",\"Prueba de campo de la bitácora con prestadores y guías de senderismo de la Célula 1 (Oficio) y Célula 4 (Canal).\",\"Proto-armado de un formato de 'Taller Abierto / Clínica de Estampado' para fechas especiales (temporada de tulipanes en octubre o verano) en grupos reducidos de 4 a 6 personas.\"]}]",
+                "[\"Sistema de etiquetado narrativo y marbete con código QR listo para imprenta.\",\"Catálogo comercial B2B para hoteles, agencias y eventos turísticos con opciones de co-branding.\",\"Prototipo final de la 'Bitácora de Campo y Montaña' para senderismo y excursionismo.\",\"Matriz de costeo por volumen y capacidad de producción estandarizada para pedidos mayoristas.\",\"Muestrario de la Colección 'Estampa Esquel: Naturaleza Ancestral' en marroquinería y encuadernación.\",\"Al menos 3 convenios comerciales o acuerdos de provisión cerrados con alojamientos o receptivos.\"]"
             ],
             [
                 'carpint',
@@ -1732,159 +1732,125 @@ function lab_asegurar_datos(PDO $pdo): void
                 'vicotita-01',
                 'vicotita',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
-                'ind',
-                "Taller / Local",
-                '2026-09-13',
+                "Relevamiento en terreno: taller, procesos y muestras históricas",
+                'ter',
+                "Taller Chanico Navarro (Pintor Antúnez 968)",
+                '2026-09-16',
                 "10:00",
-                "11:30",
+                "12:00",
                 'programada',
-                "Conocer el espacio real de trabajo de María Eugenia Gutiérrez. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Merchandising turístico Vico+Tita hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Relevar las maquinarias de serigrafía, shablonadora, stock de telas impermeables, herramientas de encuadernación y muestras de productos históricos.",
+                "[\"¿Cuáles son los productos con menor tiempo de confección y mejor margen?\",\"¿Qué capacidad de almacenamiento y aprovisionamiento de telas tienen hoy?\"]",
+                "[\"Inventariar maquinaria y herramientas de taller.\",\"Fotografiar muestras de encuadernación y marroquinería.\",\"Analizar compras de insumos por volumen.\"]",
+                "[{\"id\":1,\"texto\":\"Relevar máquinas de coser, shablones y mesas de corte\",\"done\":false},{\"id\":2,\"texto\":\"Inventariar telas impermeables y tipos de papel\",\"done\":false},{\"id\":3,\"texto\":\"Fotografiar muestras históricas y piezas de Puro Diseño\",\"done\":false},{\"id\":4,\"texto\":\"Definir el flujo de trabajo entre ambos domicilios\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'vicotita-02',
                 'vicotita',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
+                "Storytelling de marca, marbete narrativo y código QR",
                 'ind',
                 "Turismo",
-                '2026-09-20',
+                '2026-09-23',
                 "10:00",
                 "11:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
-                ["mariela","cesia"]
+                "Traducir la profundidad del relato mapuche contemporáneo en un texto breve para marbetes y tarjetas de autenticidad que acompañen cada pieza.",
+                "[\"¿Cómo explicamos el símbolo del Quñegüe o el punto nimín en 3 oraciones sencillas?\",\"¿Qué llamado a la acción incluimos en el código QR?\"]",
+                "[\"Redactar el texto del marbete de autor.\",\"Diseñar el boceto de la tarjeta con código QR.\",\"Cotizar impresión con imprentas locales.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar el texto del marbete en español y mapuzugun\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar el mockup de tarjeta de autenticidad con QR\",\"done\":false},{\"id\":3,\"texto\":\"Configurar landing/enlace con galería del proceso artesanal\",\"done\":false},{\"id\":4,\"texto\":\"Seleccionar imprenta local para tirada de prueba\",\"done\":false}]",
+                ["leandro","mariela","cesia"]
             ],
             [
                 'vicotita-03',
                 'vicotita',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Prototipado de la Bitácora de Campo y Registro de Montaña",
                 'ind',
                 "Turismo",
-                '2026-09-24',
-                "11:00",
-                "12:30",
+                '2026-09-25',
+                "10:00",
+                "11:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Definir el formato físico, encuadernación y contenido interior de la libreta de registro de senderos y montaña para prestadores.",
+                "[\"¿Qué tamaño es el más práctico para llevar en la mochila de trekking (A5 o A6)?\",\"¿Qué secciones de coordenadas y apuntes incluimos en las hojas?\"]",
+                "[\"Definir gramaje de hojas y tipo de encuadernación (cosida o brocheada).\",\"Redactar el contenido de las páginas interiores.\",\"Armar el primer boceto físico.\"]",
+                "[{\"id\":1,\"texto\":\"Definir medidas estándar de corte A5/A6\",\"done\":false},{\"id\":2,\"texto\":\"Diagramar la grilla de coordenadas y mapa de senderos\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar micro-poesías de autores patagónicos\",\"done\":false},{\"id\":4,\"texto\":\"Confeccionar el primer ejemplar de prueba\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'vicotita-04',
                 'vicotita',
                 4,
-                "Puesta en común Célula undefined",
+                "Costeo, volumen y consignación (Célula 1)",
                 'gru',
-                "Célula undefined (Turismo)",
+                "Célula 1 (Melipal)",
                 '2026-09-30',
                 "09:30",
                 "12:00",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["mariela"]
+                "Encuentro grupal de la Célula 1 (Oficio y pieza). Poner en común matrices de costeo, valor de hora de taller, esquemas de comisiones para revendedores y acuerdos de no canibalización.",
+                "[\"¿Qué porcentaje es justo dejarle a una recepción de hotel o tienda regional?\",\"¿Conviene vender en firme con descuento o en consignación?\"]",
+                "[\"Comparar costos fijos y variables con otros artesanos.\",\"Validar escala de descuentos mayoristas.\",\"Evaluar alianzas de empaque conjunto.\"]",
+                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo por producto terminada\",\"done\":false},{\"id\":2,\"texto\":\"Comparar márgenes con Los Crovas, Carpintero y Patagonia Retro\",\"done\":false},{\"id\":3,\"texto\":\"Fijar tope de comisión para terceros (20% a 25%)\",\"done\":false}]",
+                ["mariela","cesia"]
             ],
             [
                 'vicotita-05',
                 'vicotita',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
+                "Diseño y estructura del catálogo B2B para prestadores",
                 'ind',
-                "Taller / Turismo",
-                '2026-10-8',
+                "Turismo",
+                '2026-10-07',
                 "10:00",
                 "11:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
+                "Estructurar el catálogo comercial digital para presentar a hoteles, agencias y corporativos con mockups de personalización y co-branding.",
+                "[\"¿Qué 6 productos insignia colocamos en el catálogo?\",\"¿Cómo explicamos los tiempos de producción (7 a 15 días) para evitar reclamos?\"]",
+                "[\"Seleccionar fotos de alta calidad de los productos.\",\"Redactar las fichas técnicas y condiciones comerciales.\",\"Montar el PDF interactivo.\"]",
+                "[{\"id\":1,\"texto\":\"Seleccionar las fotos definitivas de la línea de temporada\",\"done\":false},{\"id\":2,\"texto\":\"Redactar escalas de precios para 20, 50 y 100 unidades\",\"done\":false},{\"id\":3,\"texto\":\"Armar el PDF interactivo listo para enviar por WhatsApp y mail\",\"done\":false},{\"id\":4,\"texto\":\"Definir cláusula de seña del 50% y plazos de entrega\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'vicotita-06',
                 'vicotita',
                 6,
-                "Canales de comercialización y alianzas locales",
-                'ind',
-                "Turismo",
-                '2026-10-16',
-                "10:00",
-                "11:30",
+                "Validación de prototipos y proto-armado de taller abierto",
+                'ter',
+                "Taller de Encuadernación (Majo)",
+                '2026-10-15',
+                "15:00",
+                "17:00",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Reunión conjunta con ambas hermanas para revisar los prototipos de la Bitácora de Campo terminados y evaluar la viabilidad de la experiencia inmersiva de taller.",
+                "[\"¿Cómo responde el diseño gráfico interior de la libreta?\",\"¿Es viable abrir el taller para 4 o 6 personas en temporadas especiales?\"]",
+                "[\"Evaluar físicamente la bitácora terminada.\",\"Validar el circuito de serigrafía y estampado en vivo.\",\"Definir pautas del taller abierto de temporada.\"]",
+                "[{\"id\":1,\"texto\":\"Revisar 3 bitácoras terminadas con encuadernación artesanal\",\"done\":false},{\"id\":2,\"texto\":\"Probar la experiencia de estampado en vivo con matriz doble\",\"done\":false},{\"id\":3,\"texto\":\"Redactar el guion de 1h30m para grupos reducidos\",\"done\":false},{\"id\":4,\"texto\":\"Establecer cupos máximos de 6 personas para octubre\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'vicotita-07',
                 'vicotita',
                 7,
-                "Comunicación digital, contenido y redes",
+                "Rueda de contactos comerciales y colocación en hoteles",
                 'ind',
                 "Turismo",
-                '2026-10-23',
+                '2026-10-28',
                 "10:00",
                 "11:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
+                "Presentar el catálogo B2B a 5 establecimientos turísticos seleccionados de Esquel para concertar pedidos mayoristas de merchandising de autor.",
+                "[\"¿Qué hoteles boutique y lodges de pesca muestran interés en co-brandear bitácoras o estuches?\",\"¿Qué pedidos de muestra se entregan?\"]",
+                "[\"Enviar catálogo personalizado a los 5 establecimientos objetivo.\",\"Entregar muestras físicas con marbete narrativo.\",\"Realizar seguimiento de pedidos.\"]",
+                "[{\"id\":1,\"texto\":\"Mapear 5 establecimientos objetivo de Esquel\",\"done\":false},{\"id\":2,\"texto\":\"Enviar el catálogo comercial con nota formal de presentación\",\"done\":false},{\"id\":3,\"texto\":\"Dejar muestras físicas con marbete en 2 hoteles boutique\",\"done\":false},{\"id\":4,\"texto\":\"Registrar devoluciones y solicitudes de cotización\",\"done\":false}]",
                 ["mariela","cesia"]
             ],
             [
                 'vicotita-08',
                 'vicotita',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ind',
-                "Taller / Local",
-                '2026-10-30',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["mariela","cesia"]
-            ],
-            [
-                'vicotita-09',
-                'vicotita',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-5',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["mariela","cesia"]
-            ],
-            [
-                'vicotita-10',
-                'vicotita',
-                10,
                 "Distinción, resultados y rueda de negocios",
                 'cie',
                 "Acto de cierre",
@@ -1892,10 +1858,10 @@ function lab_asegurar_datos(PDO $pdo): void
                 "10:00",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
+                "Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.",
+                "[\"¿Cuántos convenios comerciales de provisión formal se firman en la rueda de negocios?\"]",
+                "[\"Cerrar al menos dos convenios de provisión con alojamientos o agencias.\",\"Exhibir la colección completa en el stand oficial.\"]",
+                "[{\"id\":1,\"texto\":\"Confirmar asistencia de ambas socias al plenario\",\"done\":false},{\"id\":2,\"texto\":\"Montar stand de exhibición con marbetes y packaging terminado\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un acuerdo comercial formal en la rueda\",\"done\":false}]",
                 ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
             ],
             [
@@ -3380,7 +3346,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -3718,6 +3684,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rc[0];
             foreach ($asistentes as $consId) {
                 $insAsistCorcho->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Vico + Tita si todavía tiene la plantilla genérica inicial
+    $checkVicotita = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'vicotita-01'")->fetchColumn();
+    if ($checkVicotita === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkVicotita) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'vicotita-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'vicotita'");
+
+        $insReuVicotita = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistVicotita = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesVicotita = [
+            [
+                'vicotita-01',
+                'vicotita',
+                1,
+                "Relevamiento en terreno: taller, procesos y muestras históricas",
+                'ter',
+                "Taller Chanico Navarro (Pintor Antúnez 968)",
+                '2026-09-16',
+                "10:00",
+                "12:00",
+                'programada',
+                "Relevar las maquinarias de serigrafía, shablonadora, stock de telas impermeables, herramientas de encuadernación y muestras de productos históricos.",
+                "[\"¿Cuáles son los productos con menor tiempo de confección y mejor margen?\",\"¿Qué capacidad de almacenamiento y aprovisionamiento de telas tienen hoy?\"]",
+                "[\"Inventariar maquinaria y herramientas de taller.\",\"Fotografiar muestras de encuadernación y marroquinería.\",\"Analizar compras de insumos por volumen.\"]",
+                "[{\"id\":1,\"texto\":\"Relevar máquinas de coser, shablones y mesas de corte\",\"done\":false},{\"id\":2,\"texto\":\"Inventariar telas impermeables y tipos de papel\",\"done\":false},{\"id\":3,\"texto\":\"Fotografiar muestras históricas y piezas de Puro Diseño\",\"done\":false},{\"id\":4,\"texto\":\"Definir el flujo de trabajo entre ambos domicilios\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'vicotita-02',
+                'vicotita',
+                2,
+                "Storytelling de marca, marbete narrativo y código QR",
+                'ind',
+                "Turismo",
+                '2026-09-23',
+                "10:00",
+                "11:30",
+                'programada',
+                "Traducir la profundidad del relato mapuche contemporáneo en un texto breve para marbetes y tarjetas de autenticidad que acompañen cada pieza.",
+                "[\"¿Cómo explicamos el símbolo del Quñegüe o el punto nimín en 3 oraciones sencillas?\",\"¿Qué llamado a la acción incluimos en el código QR?\"]",
+                "[\"Redactar el texto del marbete de autor.\",\"Diseñar el boceto de la tarjeta con código QR.\",\"Cotizar impresión con imprentas locales.\"]",
+                "[{\"id\":1,\"texto\":\"Redactar el texto del marbete en español y mapuzugun\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar el mockup de tarjeta de autenticidad con QR\",\"done\":false},{\"id\":3,\"texto\":\"Configurar landing/enlace con galería del proceso artesanal\",\"done\":false},{\"id\":4,\"texto\":\"Seleccionar imprenta local para tirada de prueba\",\"done\":false}]",
+                ["leandro","mariela","cesia"]
+            ],
+            [
+                'vicotita-03',
+                'vicotita',
+                3,
+                "Prototipado de la Bitácora de Campo y Registro de Montaña",
+                'ind',
+                "Turismo",
+                '2026-09-25',
+                "10:00",
+                "11:30",
+                'programada',
+                "Definir el formato físico, encuadernación y contenido interior de la libreta de registro de senderos y montaña para prestadores.",
+                "[\"¿Qué tamaño es el más práctico para llevar en la mochila de trekking (A5 o A6)?\",\"¿Qué secciones de coordenadas y apuntes incluimos en las hojas?\"]",
+                "[\"Definir gramaje de hojas y tipo de encuadernación (cosida o brocheada).\",\"Redactar el contenido de las páginas interiores.\",\"Armar el primer boceto físico.\"]",
+                "[{\"id\":1,\"texto\":\"Definir medidas estándar de corte A5/A6\",\"done\":false},{\"id\":2,\"texto\":\"Diagramar la grilla de coordenadas y mapa de senderos\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar micro-poesías de autores patagónicos\",\"done\":false},{\"id\":4,\"texto\":\"Confeccionar el primer ejemplar de prueba\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'vicotita-04',
+                'vicotita',
+                4,
+                "Costeo, volumen y consignación (Célula 1)",
+                'gru',
+                "Célula 1 (Melipal)",
+                '2026-09-30',
+                "09:30",
+                "12:00",
+                'programada',
+                "Encuentro grupal de la Célula 1 (Oficio y pieza). Poner en común matrices de costeo, valor de hora de taller, esquemas de comisiones para revendedores y acuerdos de no canibalización.",
+                "[\"¿Qué porcentaje es justo dejarle a una recepción de hotel o tienda regional?\",\"¿Conviene vender en firme con descuento o en consignación?\"]",
+                "[\"Comparar costos fijos y variables con otros artesanos.\",\"Validar escala de descuentos mayoristas.\",\"Evaluar alianzas de empaque conjunto.\"]",
+                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo por producto terminada\",\"done\":false},{\"id\":2,\"texto\":\"Comparar márgenes con Los Crovas, Carpintero y Patagonia Retro\",\"done\":false},{\"id\":3,\"texto\":\"Fijar tope de comisión para terceros (20% a 25%)\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'vicotita-05',
+                'vicotita',
+                5,
+                "Diseño y estructura del catálogo B2B para prestadores",
+                'ind',
+                "Turismo",
+                '2026-10-07',
+                "10:00",
+                "11:30",
+                'programada',
+                "Estructurar el catálogo comercial digital para presentar a hoteles, agencias y corporativos con mockups de personalización y co-branding.",
+                "[\"¿Qué 6 productos insignia colocamos en el catálogo?\",\"¿Cómo explicamos los tiempos de producción (7 a 15 días) para evitar reclamos?\"]",
+                "[\"Seleccionar fotos de alta calidad de los productos.\",\"Redactar las fichas técnicas y condiciones comerciales.\",\"Montar el PDF interactivo.\"]",
+                "[{\"id\":1,\"texto\":\"Seleccionar las fotos definitivas de la línea de temporada\",\"done\":false},{\"id\":2,\"texto\":\"Redactar escalas de precios para 20, 50 y 100 unidades\",\"done\":false},{\"id\":3,\"texto\":\"Armar el PDF interactivo listo para enviar por WhatsApp y mail\",\"done\":false},{\"id\":4,\"texto\":\"Definir cláusula de seña del 50% y plazos de entrega\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'vicotita-06',
+                'vicotita',
+                6,
+                "Validación de prototipos y proto-armado de taller abierto",
+                'ter',
+                "Taller de Encuadernación (Majo)",
+                '2026-10-15',
+                "15:00",
+                "17:00",
+                'programada',
+                "Reunión conjunta con ambas hermanas para revisar los prototipos de la Bitácora de Campo terminados y evaluar la viabilidad de la experiencia inmersiva de taller.",
+                "[\"¿Cómo responde el diseño gráfico interior de la libreta?\",\"¿Es viable abrir el taller para 4 o 6 personas en temporadas especiales?\"]",
+                "[\"Evaluar físicamente la bitácora terminada.\",\"Validar el circuito de serigrafía y estampado en vivo.\",\"Definir pautas del taller abierto de temporada.\"]",
+                "[{\"id\":1,\"texto\":\"Revisar 3 bitácoras terminadas con encuadernación artesanal\",\"done\":false},{\"id\":2,\"texto\":\"Probar la experiencia de estampado en vivo con matriz doble\",\"done\":false},{\"id\":3,\"texto\":\"Redactar el guion de 1h30m para grupos reducidos\",\"done\":false},{\"id\":4,\"texto\":\"Establecer cupos máximos de 6 personas para octubre\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'vicotita-07',
+                'vicotita',
+                7,
+                "Rueda de contactos comerciales y colocación en hoteles",
+                'ind',
+                "Turismo",
+                '2026-10-28',
+                "10:00",
+                "11:30",
+                'programada',
+                "Presentar el catálogo B2B a 5 establecimientos turísticos seleccionados de Esquel para concertar pedidos mayoristas de merchandising de autor.",
+                "[\"¿Qué hoteles boutique y lodges de pesca muestran interés en co-brandear bitácoras o estuches?\",\"¿Qué pedidos de muestra se entregan?\"]",
+                "[\"Enviar catálogo personalizado a los 5 establecimientos objetivo.\",\"Entregar muestras físicas con marbete narrativo.\",\"Realizar seguimiento de pedidos.\"]",
+                "[{\"id\":1,\"texto\":\"Mapear 5 establecimientos objetivo de Esquel\",\"done\":false},{\"id\":2,\"texto\":\"Enviar el catálogo comercial con nota formal de presentación\",\"done\":false},{\"id\":3,\"texto\":\"Dejar muestras físicas con marbete en 2 hoteles boutique\",\"done\":false},{\"id\":4,\"texto\":\"Registrar devoluciones y solicitudes de cotización\",\"done\":false}]",
+                ["mariela","cesia"]
+            ],
+            [
+                'vicotita-08',
+                'vicotita',
+                8,
+                "Distinción, resultados y rueda de negocios",
+                'cie',
+                "Acto de cierre",
+                '2026-11-10',
+                "10:00",
+                "13:00",
+                'programada',
+                "Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.",
+                "[\"¿Cuántos convenios comerciales de provisión formal se firman en la rueda de negocios?\"]",
+                "[\"Cerrar al menos dos convenios de provisión con alojamientos o agencias.\",\"Exhibir la colección completa en el stand oficial.\"]",
+                "[{\"id\":1,\"texto\":\"Confirmar asistencia de ambas socias al plenario\",\"done\":false},{\"id\":2,\"texto\":\"Montar stand de exhibición con marbetes y packaging terminado\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un acuerdo comercial formal en la rueda\",\"done\":false}]",
+                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+            ],
+        ];
+
+        foreach ($reunionesVicotita as $rv) {
+            $asistentes = array_pop($rv);
+            $insReuVicotita->execute($rv);
+            $reuId = $rv[0];
+            foreach ($asistentes as $consId) {
+                $insAsistVicotita->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
