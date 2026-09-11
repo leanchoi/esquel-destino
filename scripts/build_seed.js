@@ -439,6 +439,106 @@ const exactMeetings = {
       objetivos: ['Montaje del stand de experiencia con vellones, husos, ovillos teñidos y bitácoras.', 'Presentación del pitch de 3 minutos de Cecilia.', 'Firma de al menos 2 cartas de intención con agencias receptivas.'],
       check: ['Montar stand vivencial con huso y muestrario de tintes', 'Presentar pitch de 3 minutos ante prestadores comarcales', 'Firmar al menos 2 cartas de intención con agencias']
     }
+  ],
+  yamamori: [
+    { num: 1, f: '2026-09-17', t: 'ind', lugar: 'Virtual / Esquel LAB', hora: '15:00 a 17:00', titulo: 'Diagnóstico operativo, análisis del piloto de octubre y devolución técnica', asistentes: ['mariela', 'agustina', 'leandro'],
+      guia: 'Revisar la grilla operativa del viaje piloto del 30 de octubre. Validar el estado de reservas de combi, hotelería (Sur Sur y Trevelin), La Trochita y el Museo Histórico con Carla. Establecer el protocolo de contingencias.',
+      preguntas: ['¿Qué aspecto del itinerario de octubre genera mayor incertidumbre logística?', '¿Cómo coordinamos los traslados del aeropuerto con la combi contratada?', '¿Qué seguro de viaje cubre a los 10 pasajeros?'],
+      objetivos: ['Planilla de reservas y vouchers del viaje de octubre completada.', 'Cronograma minuto a minuto de las 4 jornadas.', 'Confirmación de póliza de asistencia médica y seguro de accidentes.'],
+      check: ['Revisar planilla de reservas y vouchers de octubre', 'Validar cronograma minuto a minuto con transportista', 'Confirmar póliza de seguro de viaje para los 10 pasajeros']
+    },
+    { num: 2, f: '2026-09-23', t: 'ind', lugar: 'Virtual / Gabinete Técnico', hora: '14:00 a 16:30', titulo: 'Curaduría de itinerarios desestacionalizados (Otoño de Lenga, Invierno & Sakura)', asistentes: ['mariela', 'agustina'],
+      guia: 'Estructurar las fichas técnicas de los dos paquetes desestacionalizados para 2027: 1) "Colores del Otoño & Bosques de Lenga" (marzo/abril); 2) "Ciruelos en Flor & El Sakura Patagónico" (septiembre/octubre). Fijar duraciones de 4 días / 3 noches y cupos cerrados de 8 a 10 pasajeros.',
+      preguntas: ['¿Cómo destacamos el florecimiento de ciruelos en la avenida Ameghino como atractivo cultural?', '¿Qué estancias rurales garantizan calidez y gastronomía típica en otoño?'],
+      objetivos: ['Redactar ficha descriptiva del paquete Otoño de Lenga.', 'Redactar ficha del paquete Sakura de Esquel.', 'Definir fechas tentativas del calendario 2027.'],
+      check: ['Redactar ficha técnica del paquete Otoño de Lenga', 'Redactar ficha del paquete Sakura Patagónico en Ameghino', 'Definir calendario de 4 salidas para 2027']
+    },
+    { num: 3, f: '2026-09-28', t: 'ind', lugar: 'Turismo / Virtual', hora: '15:00 a 17:30', titulo: 'Articulación territorial y cruces con emprendimientos de la cohorte', asistentes: ['mariela', 'noelia'],
+      guia: 'Conectar formalmente a Yamamori con prestadores de la cohorte: provisión de té verde de autor con Sandra Roberts (Haiku), visita a talleres de tornería de madera con Andrés Crova en Alto Río Percy, y coordinación de obsequios artesanales de bienvenida.',
+      preguntas: ['¿Qué formato de cata o servicio de té puede ofrecer Haiku a los grupos de Julia?', '¿Cómo organizamos una parada de 45 minutos en el taller de tornería sin entorpecer la producción?'],
+      objetivos: ['Acuerdo preliminar de provisión de té con Haiku.', 'Inclusión de la parada en Percy en el dossier comercial.', 'Definición del souvenir de madera de lenga o té patagónico.'],
+      check: ['Pautar provisión de té verde con Haiku', 'Programar parada de visita con Los Crovas en Percy', 'Definir recuerdo artesanal de lenga para los grupos']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 4 (Melipal)', hora: '09:30 a 12:30', titulo: 'Costeo B2B, tarifarios netos y márgenes (Célula 4)', asistentes: ['mariela', 'agustina', 'noelia'],
+      guia: 'Construir la matriz de costeo integral de los paquetes de autor. Separar costos fijos (transporte privado, coordinación, guías de sitio) y variables (hotelería, comidas, ingresos, seguros), estableciendo la tarifa neta confidencial y el margen de intermediación comercial.',
+      preguntas: ['¿Cuál es el costo unitario por pasajero en base doble para grupos de 8 personas?', '¿Qué honorario de coordinación neta percibe Julia?', '¿Qué comisión del 15% al 20% se asigna al canal minorista?'],
+      objetivos: ['Planilla Excel de costeo integral parametrizada.', 'Punto de equilibrio fijado en 6 pasajeros.', 'Tarifario cerrado en pesos y en dólares para receptivo internacional.'],
+      check: ['Completar planilla de costeo integral parametrizada', 'Fijar punto de equilibrio en 6 pasajeros', 'Definir tarifario neto confidencial y PVP']
+    },
+    { num: 5, f: '2026-10-07', t: 'ind', lugar: 'Virtual / Gabinete', hora: '14:30 a 16:30', titulo: 'Protocolo de hospitalidad "Omotenashi Patagónico" y kit de bienvenida', asistentes: ['agustina'],
+      guia: 'Diseñar el manual de procedimientos de hospitalidad omotenashi adaptado a la Patagonia: recepción en aeropuerto, kit de bienvenida en la habitación (pantuflas artesanales, termo con té verde de Haiku), toallas tibias en excursiones y encuesta de satisfacción sensorial.',
+      preguntas: ['¿Qué elementos tangibles componen el kit de bienvenida?', '¿Cómo capacitamos al transportista y al personal del hotel para que respeten las pautas de cortesía japonesa?'],
+      objetivos: ['Documento del protocolo Omotenashi redactado.', 'Presupuesto del kit de bienvenida por pasajero.', 'Modelo de encuesta de satisfacción post-viaje en español e inglés/japonés.'],
+      check: ['Redactar manual de protocolo Omotenashi', 'Presupuestar kit de bienvenida por pasajero', 'Diseñar encuesta de satisfacción sensorial post-viaje']
+    },
+    { num: 6, f: '2026-10-15', t: 'ind', lugar: 'Turismo', hora: '11:00 a 13:00', titulo: 'Encuadre legal, seguros y convenio marco con agencia receptiva (EVyT)', asistentes: ['mariela', 'leandro'],
+      guia: 'Redactar y suscribir el modelo de convenio marco de cooperación comercial entre Yamamori Travel y una Agencia de Viajes Receptiva (EVyT) habilitada de Esquel. Delimitar responsabilidades legales, cobertura de seguros, facturación y cobro de señas.',
+      preguntas: ['¿Qué agencia local asume la responsabilidad técnica y emisión de vouchers?', '¿Cómo se gestionan las pólizas de seguro de turismo alternativo y accidentes personales?'],
+      objetivos: ['Borrador del convenio marco con agencia EVyT local.', 'Protocolo de contratación de pólizas de asistencia médica.', 'Políticas de reserva, pago anticipado y cancelación estricta.'],
+      check: ['Redactar modelo de convenio marco con agencia EVyT', 'Establecer protocolo de seguros y asistencia al viajero', 'Definir políticas de cobro, señas y cancelación']
+    },
+    { num: 7, f: '2026-10-26', t: 'ind', lugar: 'Virtual / Gabinete', hora: '15:00 a 17:00', titulo: 'Estrategia de comunicación bilingüe, Instagram de autor y difusión', asistentes: ['agustina'],
+      guia: 'Optimizar el perfil de Instagram @yamamoritravel con narrativa bilingüe (español/japonés). Diseñar el brochure digital comercial en PDF con estética minimalista japonesa, destacando las bondades de Esquel como destino seguro, puro y exclusivo.',
+      preguntas: ['¿Cómo explicamos el concepto de Yamamori y Omotenashi en las redes sin perder cercanía con el público argentino?', '¿Qué material de registro se tomará durante el viaje piloto de octubre?'],
+      objetivos: ['Bio de Instagram optimizada con enlace directo a WhatsApp y brochure.', 'Ficha técnica comercial digital en PDF lista para agencias.', 'Pauta de registro fotográfico y video durante el viaje del 30/10.'],
+      check: ['Optimizar biografía y feed bilingüe en Instagram', 'Maquetar brochure digital comercial en PDF', 'Definir pauta de cobertura fotográfica para el viaje del 30/10']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Melipal', hora: '10:00 a 14:00', titulo: 'Balance del viaje piloto, ronda de negocios y cierre de cohorte', asistentes: ['leandro', 'mariela', 'agustina', 'noelia', 'adria', 'francisco', 'cesia'],
+      guia: 'Presentar las conclusiones y métricas reales del viaje piloto ejecutado del 30 de octubre al 2 de noviembre. Participar en la rueda de negocios con el sector hotelero y agencias receptivas de Esquel, presentando el calendario oficial de salidas 2027.',
+      preguntas: ['¿Qué devoluciones dieron los 10 pasajeros del viaje de octubre?', '¿Qué ajustes operativos requiere el paquete para la temporada 2027?', '¿Qué alianzas comerciales quedan selladas?'],
+      objetivos: ['Informe de balance y evaluación de satisfacción del viaje piloto.', 'Presentación del calendario de 4 salidas para 2027.', 'Firma de convenios comerciales con prestadores locales.'],
+      check: ['Presentar informe de balance y métricas del viaje piloto', 'Exponer calendario 2027 en la rueda de negocios', 'Firmar al menos 2 acuerdos comerciales con prestadores locales']
+    }
+  ],
+  senderos: [
+    { num: 1, f: '2026-09-18', t: 'ter', lugar: 'Acceso La Cascada / Senda Cámpora', hora: '09:30 a 12:30', titulo: 'Relevamiento en terreno del Sendero La Cascada y punto cero', asistentes: ['adria', 'francisco'],
+      guia: 'Caminar el circuito accesible de La Cascada. Identificar especies nativas presentes (llantén, paramela, palo piche, rosa mosqueta), medir tiempos de caminata pausada y seleccionar los 3 puntos de parada interpretativa.',
+      preguntas: ['¿Cuánto tiempo real demanda recorrer el sendero parando a observar 5 plantas?', '¿Qué puntos ofrecen sombra y bancos para la merienda final?'],
+      objetivos: ['Mapear las 5 paradas botánicas del sendero La Cascada.', 'Cronometrar la duración total (máximo 1h 45m).', 'Fotografiar las plantas nativas para el tríptico.'],
+      check: ['Mapear las 5 paradas botánicas en La Cascada', 'Cronometrar duración de caminata pausada', 'Fotografiar especies nativas para el tríptico']
+    },
+    { num: 2, f: '2026-09-22', t: 'ter', lugar: 'Cañadón de Bórquez a La Zeta', hora: '15:30 a 18:30', titulo: 'Traqueo del Cañadón de Bórquez a La Zeta y diseño del tríptico', asistentes: ['francisco'],
+      guia: 'Realizar el traqueo GPS del sendero del Cañadón de Bórquez hasta Laguna La Zeta. Revisar el borrador del tríptico de bolsillo y definir el contenido botánico y didáctico.',
+      preguntas: ['¿Cómo resolvemos los tramos con pendiente para personas no habituadas a la montaña?', '¿Qué información técnica debe incluir el folleto sin saturar al turista?'],
+      objetivos: ['Track GPS exportado en formato GPX/KML.', 'Textos y fichas botánicas del tríptico corregidos.', 'Selección de especies para el desafío fotográfico.'],
+      check: ['Traquear recorrido con GPS hasta La Zeta', 'Revisar textos botánicos del tríptico de bolsillo', 'Definir dinámica de desafío fotográfico']
+    },
+    { num: 3, f: '2026-09-25', t: 'ind', lugar: 'Protección Civil Municipal', hora: '09:30 a 12:00', titulo: 'Protocolo de seguridad, evacuación y taller de comunicaciones VHF', asistentes: ['adria'],
+      guia: 'Diseñar el Plan de Contingencias y Evacuación de los 3 senderos. Establecer frecuencias de radio VHF/UHF, pautas de aviso a Defensa Civil y repaso de botiquín WFR.',
+      preguntas: ['¿Qué protocolo seguimos si un turista sufre un esguince en el Cañadón de las Palomas?', '¿Cuáles son los puntos de extracción vehicular más cercanos?'],
+      objetivos: ['Ficha de Gestión del Riesgo y Plan de Evacuación firmada.', 'Pauta de frecuencias de radio municipal asignada.', 'Protocolo de aptitud física previa para excursionistas.'],
+      check: ['Diseñar plan de evacuación para los 3 senderos', 'Fijar frecuencias VHF con Protección Civil', 'Verificar botiquín agreste WFR/RCP']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 3 (Melipal)', hora: '09:30 a 12:30', titulo: 'Costeo de salidas y matriz de precios (Célula 3)', asistentes: ['adria', 'francisco'],
+      guia: 'Calcular la estructura de costos de cada salida: honorarios de las guías, seguro de accidentes personales, impresión de trípticos, insumos del souvenir cosmético, merienda campestre y comisión para agencias (20%).',
+      preguntas: ['¿Cuánto vale el servicio guiado de 2 horas con souvenir incluido?', '¿Cuál es el cupo mínimo para no salir a pérdida?'],
+      objetivos: ['Planilla de costos fijos y variables completada.', 'Punto de equilibrio fijado en 4 pasajeros.', 'Tarifario para venta directa y tarifa neta para agencias hoteleras.'],
+      check: ['Completar matriz de costeo por salida', 'Fijar punto de equilibrio en 4 pasajeros', 'Establecer tarifario B2C y tarifa neta B2B']
+    },
+    { num: 5, f: '2026-10-06', t: 'ter', lugar: 'Mirador La Zeta', hora: '15:30 a 18:00', titulo: 'Ensayo del guion sensorial y dinámica de "bajada a tierra"', asistentes: ['francisco'],
+      guia: 'Probar en terreno la dinámica de meditación, descalzado y respiración consciente en el mirador. Ajustar la transición hacia la mateada campesina y la cata de aromas.',
+      preguntas: ['¿Cómo rompemos la timidez del turista urbano para que se anime a sacarse las zapatillas?', '¿Qué tono de voz y silencios acompañan mejor la experiencia?'],
+      objetivos: ['Guion de facilitación sensorial cronometrado (15 minutos de meditación).', 'Logística de termo, mates individuales y hierbas probada en mochila.', 'Protocolo de higiene para degustación.'],
+      check: ['Cronometrar pausa de respiración y descalzado', 'Probar cebado de mates con paramela y llantén', 'Estandarizar guion narrativo de cierre']
+    },
+    { num: 6, f: '2026-10-19', t: 'ind', lugar: 'CAPEC / Producción', hora: '10:00 a 12:30', titulo: 'Vinculación institucional con CAPEC y registro de prestadores', asistentes: ['adria'],
+      guia: 'Evaluar el marco normativo para la elaboración de cosmética natural en salas comunitarias bajo estándares ANMAT/provinciales. Iniciar trámite en el Registro de Turismo Alternativo de la Subsecretaría de Turismo.',
+      preguntas: ['¿Qué requisitos de rotulado y loteado exige la comercialización turística de cosméticos?', '¿Cómo formalizamos el alta en turismo alternativo municipal?'],
+      objetivos: ['Diagnóstico de adecuación de envases y etiquetas con CAPEC.', 'Formulario de inscripción en Turismo Alternativo completado.', 'Asesoramiento contable para monotributo.'],
+      check: ['Reunión técnica en CAPEC con Paula Botto', 'Completar solicitud de Turismo Alternativo', 'Definir encuadre de facturación y monotributo']
+    },
+    { num: 7, f: '2026-10-23', t: 'ter', lugar: 'Circuito Cañadón de Bórquez', hora: '09:30 a 13:00', titulo: 'Salida piloto con público testigo y producción de contenidos', asistentes: ['adria', 'francisco'],
+      guia: 'Ejecutar la experiencia completa con un grupo testigo real (invitados de taekwondo y equipo municipal). Registrar fotografías profesionales y clips de video para redes sociales y folletería digital.',
+      preguntas: ['¿Cómo reaccionan los participantes ante el desafío del tríptico y el momento de descalzarse?', '¿Qué ajustes de ritmo se requieren?'],
+      objetivos: ['Salida piloto completada con 10 personas.', 'Encuestas de satisfacción recogidas.', 'Banco de 25 fotos profesionales y 3 reels en alta definición.'],
+      check: ['Guiar salida piloto con 10 asistentes', 'Levantar encuestas de satisfacción', 'Obtener banco de imágenes y clips de video']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Melipal', hora: '10:00 a 14:00', titulo: 'Rueda de negocios en Melipal y lanzamiento de salidas', asistentes: ['leandro', 'adria', 'francisco', 'mariela', 'agustina', 'cesia', 'noelia'],
+      guia: 'Presentar el producto terminado ante agencias receptivas, hoteles y comercios comarcales en la rueda de negocios. Exhibir el stand interactivo con ramas secas, muestras de ungüentos y trípticos.',
+      preguntas: ['¿Qué agencias de Esquel incorporan las salidas regulares a su tarifario de verano?', '¿Cómo queda enlazado el botón de reserva en la web oficial?'],
+      objetivos: ['Stand montado con experiencia de aromas y cosmética.', 'Pitch de 3 minutos de Gabriela y Florencia.', 'Firma de cartas de intención con al menos 2 agencias receptivas locales.'],
+      check: ['Montar stand interactivo con cosmética y flora seca', 'Exponer pitch de 3 minutos ante prestadores', 'Firmar al menos 2 cartas de intención con agencias']
+    }
   ]
 };
 
@@ -738,7 +838,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -1050,6 +1150,130 @@ php += `        ];
             $reuId = $rt[0];
             foreach ($asistentes as $consId) {
                 $insAsistTruepat->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Yamamori Travel si todavía tiene la plantilla genérica inicial
+    $checkYamamori = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'yamamori-01'")->fetchColumn();
+    if ($checkYamamori === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkYamamori) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'yamamori-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'yamamori'");
+
+        $insReuYamamori = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistYamamori = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesYamamori = [
+`;
+
+const yamamoriMeetingsList = exactMeetings.yamamori;
+for (const m of yamamoriMeetingsList) {
+  const reuId = `yamamori-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['mariela', 'agustina'];
+
+  php += `            [
+                '${reuId}',
+                'yamamori',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesYamamori as $ry) {
+            $asistentes = array_pop($ry);
+            $insReuYamamori->execute($ry);
+            $reuId = $ry[0];
+            foreach ($asistentes as $consId) {
+                $insAsistYamamori->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Senderos con Identidad si todavía tiene la plantilla genérica inicial
+    $checkSenderos = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'senderos-01'")->fetchColumn();
+    if ($checkSenderos === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkSenderos) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'senderos-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'senderos'");
+
+        $insReuSenderos = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistSenderos = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesSenderos = [
+`;
+
+const senderosMeetingsList = exactMeetings.senderos;
+for (const m of senderosMeetingsList) {
+  const reuId = `senderos-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'francisco'];
+
+  php += `            [
+                '${reuId}',
+                'senderos',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesSenderos as $rs) {
+            $asistentes = array_pop($rs);
+            $insReuSenderos->execute($rs);
+            $reuId = $rs[0];
+            foreach ($asistentes as $consId) {
+                $insAsistSenderos->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

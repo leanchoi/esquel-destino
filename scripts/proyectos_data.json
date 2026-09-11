@@ -353,33 +353,45 @@
       "sr": "adria",
       "jr": "francisco",
       "diagnostico": [
-        "Salidas guiadas de senderismo con reconocimiento de flora, fauna nativa y patrimonio.",
-        "Equipo con formación técnica y habilitación de guías de montaña.",
-        "Propuesta alineada al turismo de bajo impacto ambiental."
+        "Equipo interdisciplinario idóneo y complementario radicado en Barrio Badén: Florencia Micaela Couget es Guía de Senderismo Habilitada (Matrícula N° 26312), socorrista en zonas agrestes (WFR/RCP) y especialista en herbolaria (Alquimiandina); Gabriela Verónica Farias posee Diplomatura Técnico-Profesional en Cosmética Natural (UTN La Plata), trayectoria de 4 años en elaboración (Auténtica Cosmética Natural) y cursa la tecnicatura de guía en el CFP N° 655.",
+        "Propuesta de valor transformadora: senderismo botánico interpretativo y bienestar que supera el 'caminar por caminar'. El sendero funciona como un aula viva a cielo abierto donde el visitante aprende a reconocer plantas nativas (palo piche, paramela, llantén, caléndula, ñire), experimenta sus principios activos in situ, vive un ritual de 'bajada a tierra' (mindfulness, respiración consciente y descalzado en mirador) y comparte mateada campesina con pan casero.",
+        "Articulación activa con el ecosistema de Esquel: vecindad con La Cruz y Cañadón de Bórquez, vinculación con INTA, CIEFAP (hongos silvestres) y sinergias con prestadores de la cohorte (Las Margaritas en Nahuelpan, Haiku té verde, El Mugre en La Zeta)."
       ],
       "trabas": [
-        "Falta de salidas regulares con días fijos asegurados.",
-        "Dependencia de demanda espontánea."
+        "Inseguridad inicial sobre requerir un laboratorio o aula física para dictar talleres (resuelto en el diagnóstico: el taller es el propio sendero a cielo abierto, sin costos de alquiler).",
+        "Equipamiento de seguridad y comunicación: necesidad de radios VHF/UHF para zonas sin señal, plan de contingencias y evacuación visado por Protección Civil y bastones de trekking para excursionistas.",
+        "Falta de estructura de costos y tarifario para salidas regulares: dependencia de la demanda espontánea, necesidad de fijar días fijos y formalizar la comercialización mediante el Registro de Turismo Alternativo y agencias receptivas (EVyT)."
       ],
       "ejes": [
         {
-          "t": "Calendario Regular",
+          "t": "Estandarización y Traqueo de 3 Circuitos",
           "items": [
-            "Fijar 3 salidas semanales garantizadas.",
-            "Definir punto de encuentro céntrico accesible."
+            "Circuito 1: 'Paseo del Arroyo & La Cascada' (accesible / familiar / adultos mayores con canteros de nativas).",
+            "Circuito 2: 'Cañadón de Bórquez a La Zeta' (paisajístico / botánico intermedio con arroyo y miradores).",
+            "Circuito 3: 'Cañadón de las Palomas & El Palomar' (panorámico y geológico con regreso por La Palestra)."
           ]
         },
         {
-          "t": "Canal Hotelero",
+          "t": "Dinámica Sensorial, Souvenir y Guion de Autor",
           "items": [
-            "Folleto en recepciones con código QR directo.",
-            "Comisión clara para recepcionistas."
+            "Estructuración de la pausa de 'bajada a tierra' (respiración consciente, descalzado en la tierra y cata de mate campesino con hierbas recolectadas).",
+            "Tríptico botánico de bolsillo de autor y entrega de muestra de cosmética natural (ungüento de paramela o bálsamo de caléndula) como souvenir tangible."
+          ]
+        },
+        {
+          "t": "Seguridad Agreste, Costeo y Comercialización",
+          "items": [
+            "Plan de emergencias y frecuencias de radio coordinadas con Protección Civil Municipal (Sergio Caneo).",
+            "Matriz de costeo por salida (punto de equilibrio en 4 personas), tarifario B2C/B2B y convenio con agencias receptivas de Esquel."
           ]
         }
       ],
       "entregables": [
-        "Calendario de salidas semanales confirmado.",
-        "Ficha técnica para agencias y hoteles de Esquel."
+        "Fichas técnicas y mapas con tracks GPS de los 3 circuitos estandarizados.",
+        "Plan de Contingencias y Evacuación visado por Protección Civil con frecuencias VHF.",
+        "Tríptico Botánico de Bolsillo impreso y validado en campo.",
+        "Planilla de costeo integral parametrizada y tarifario para agencias y hoteles.",
+        "Convenio marco de comercialización con al menos 1 agencia receptiva habilitada y ficha de inscripción en Turismo Alternativo."
       ]
     },
     {
@@ -393,33 +405,44 @@
       "sr": "mariela",
       "jr": "agustina",
       "diagnostico": [
-        "Agencia de viajes de nicho orientada a turismo consciente, baños de bosque y bienestar emocional.",
-        "Contactos comerciales y mercado emisivo en Buenos Aires y Córdoba.",
-        "Propuesta para grupos reducidos y viajeros de alto valor."
+        "María Julia Montero aporta un perfil profesional de excelencia: Técnica Superior en Hotelería (CESyT), estudios de Licenciatura en Administración Hotelera y Gastronómica (UNSAM), 16 años como Tripulante de Cabina de Pasajeros (Emirates Airlines y Aerolíneas Argentinas) y más de 7 años de estudio del idioma y cultura japonesa (inmersión en Sapporo, enero 2026).",
+        "Apasionada embajadora de Esquel: monitorea a diario los medios locales y promueve el destino proactivamente. Organizó a pulmón su primer viaje piloto grupal (10 pasajeros, 4D/3N) del 30 de octubre al 2 de noviembre de 2026, con 9 plazas confirmadas, combi, hoteles (Sur Sur y Trevelin), La Trochita y guiada en Museo Histórico con Carla.",
+        "Propuesta de valor diferencial: curaduría de viajes de autor en grupos reducidos (8 a 10 personas), introduciendo la filosofía de hospitalidad japonesa 'Omotenashi' (cuidado en el detalle, pantuflas en habitación, termo con té verde al regresar del frío, atención pausada y respetuosa) para captar al turismo receptivo japonés/asiático de alto poder adquisitivo y al segmento emisivo nacional de alta gama."
       ],
       "trabas": [
-        "Encuadre legal (legajo EVyT propio o alianza con receptivo habilitado).",
-        "Tarifarios netos con prestadores de la comarca."
+        "Falta de encuadre normativo propio para comercialización turística: al desempeñarse formalmente como tripulante de cabina, requiere operar bajo convenio marco con una Agencia de Viajes Receptiva (EVyT) habilitada en Esquel.",
+        "Sobrecostos y saturación en temporada alta (vivió la 'trampa de tulipanes' con tarifas duplicadas y plazas colapsadas), lo que exige enfocar la comercialización en productos desestacionalizados.",
+        "Necesidad de estructurar acuerdos de tarifas netas B2B confidenciales con prestadores comarcales (hotelería, transporte, gastronomía y estancias) y coordinar su disponibilidad horaria como TCP."
       ],
       "ejes": [
         {
-          "t": "Alianzas Receptivas",
+          "t": "Desestacionalización y Productos de Autor",
           "items": [
-            "Acuerdo con agencia receptiva local para emisión y seguros.",
-            "Contratos con prestadores locales."
+            "Diseño de dos itinerarios de alta gama para 2027: 'Otoño de Lenga & Fotografía' (marzo/abril) y 'Ciruelos en Flor & El Sakura Patagónico' (septiembre/octubre en Av. Ameghino).",
+            "Monitoreo técnico y capitalización de aprendizajes del viaje piloto del 30 de octubre al 2 de noviembre."
           ]
         },
         {
-          "t": "Paquetes Estrella",
+          "t": "Hospitalidad Omotenashi y Sinergia con la Cohorte",
           "items": [
-            "Estandarizar 2 salidas fijas para la temporada.",
-            "Venta previa a comunidades de bienestar."
+            "Protocolo de atención omotenashi y kit de bienvenida con insumos locales (té verde de Haiku, pantuflas de lana y recuerdos de artesanos de la cohorte).",
+            "Integración de visitas exclusivas a talleres y predios de compañeros de incubación (Crova tornería de madera, Haiku casa de té, estancias ovinas)."
+          ]
+        },
+        {
+          "t": "Encuadre Legal Receptivo y Alianza EVyT",
+          "items": [
+            "Convenio marco comercial con agencia receptiva habilitada (EVyT) de Esquel para respaldo legal, emisión y seguros de turismo activo.",
+            "Matriz de costeo B2B con margen del 15% al 20%, tarifario confidencial y brochure digital bilingüe (español/japonés)."
           ]
         }
       ],
       "entregables": [
-        "Convenio comercial con agencia receptiva.",
-        "Dossier comercial de los 2 paquetes cerrados."
+        "Informe de balance y métricas de satisfacción del viaje piloto de octubre.",
+        "Fichas técnicas y comerciales de los 2 paquetes desestacionalizados 2027 ('Otoño de Lenga' y 'Sakura de Esquel').",
+        "Manual del Protocolo de Hospitalidad 'Omotenashi Patagónico' y ficha del Kit de Bienvenida.",
+        "Convenio marco de cooperación comercial con Agencia Receptiva EVyT de Esquel.",
+        "Tarifario B2B confidencial, matriz de costeo integral y brochure digital bilingüe para comercialización."
       ]
     },
     {
