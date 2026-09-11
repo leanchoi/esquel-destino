@@ -119,10 +119,10 @@ function lab_asegurar_datos(PDO $pdo): void
                 4,
                 'leandro',
                 'agustina',
-                "[\"Parque aéreo y aventura en árboles con tirolesas. Pionero en La Hoya en 2006; ahora relanzamiento en predio accesible.\",\"Excelente perfil de emprendedor y experiencia técnica en seguridad y montaña.\",\"Alta demanda de turismo familiar y activo.\"]",
-                "[\"Permisos y habilitaciones de seguridad de altura.\",\"Inversión en cableado, arneses y plataformas.\",\"Convenio de cesión o alquiler del predio.\"]",
-                "[{\"t\":\"Habilitaciones y Seguridad\",\"items\":[\"Protocolo de seguridad bajo normas IRAM.\",\"Trámite municipal y seguro de responsabilidad civil.\"]},{\"t\":\"Modelo Comercial\",\"items\":[\"Tarifario por circuito y pases familiares.\",\"Convenios con escuelas y agencias receptivas.\"]}]",
-                "[\"Circuito y plano técnico aprobado.\",\"Tarifario comercial cerrado y ficha para agencias.\"]"
+                "[\"Puesto #1 de Esquel Acelera (Puntaje récord 4.22 / 5.00). Proyecto pionero de estación urbana y modular de dryslope (esquí y snowboard sobre alfombra plástica sintética Powplast) que rompe la estacionalidad invernal y desvincula la práctica deportiva de las concesiones de montaña.\",\"Equipo con trayectoria y solvencia técnica comprobada: creadores y operadores del Snowpark original en La Hoya (2006), respaldados por la Asociación Civil de Deportes de Acción Patagonia Freeride (personería jurídica vigente). Disponen de 100 m² de alfombra modular (30 m² propios + 70 m² financiados por el Plan Galina de Chubut Deportes).\",\"Doble impacto socio-turístico: plataforma de freestyle y entrenamiento continuo de pretemporada para clubes andinos locales, combinada con escuela de iniciación al esquí para turistas todo el año y esquí social subsidiado para escuelas públicas de la ciudad.\"]",
+                "[\"Urgencia fatal del Plan Galina (Chubut Deportes): plazo perentorio previo al 7 de octubre de 2026 para montar la pista, operarla y certificar fotográficamente la inversión con cartelería oficial provincial para el cierre del expediente de financiamiento.\",\"Impasse del predio definitivo de 1 hectárea: dilatación en el comodato/alquiler del terreno permanente en Darwin y Humpreys y falta de servicios básicos en el corto plazo; resuelto estratégicamente mediante el préstamo temporal de 3 semanas del predio de la Sociedad Rural de Esquel.\",\"Vacío normativo municipal y estructura jurídica mixta: ausencia de una ordenanza marco para dryslope urbano y necesidad de formalizar un Convenio de Comodato transparente entre la Asociación Civil Patagonia Freeride (titular de la pista) y la firma privada FLYPARK.\"]",
+                "[{\"t\":\"Montaje en Sociedad Rural y Certificación del Plan Galina\",\"items\":[\"Acuerdo de uso temporal del predio de la Sociedad Rural articulado junto a la Secretaría de Producción (Paula Botto).\",\"Ensamble modular de 100 m² de alfombra Powplast, rampa, cajón de salto y tubos de PVC sobre el césped sin impacto ambiental.\",\"Evento Demo Oficial con autoridades (Intendente, Deportes, Turismo), prensa y clubes antes del 7 de octubre para rendir ante Chubut Deportes.\"]},{\"t\":\"Blindaje Político, Ordenanza Marco y Convenio Asociativo\",\"items\":[\"Anteproyecto de ordenanza municipal para parques urbanos de dryslope, con seguros de turismo activo y manual de bioseguridad.\",\"Convenio Marco de Comodato y Articulación entre Asociación Civil Patagonia Freeride y FLYPARK comercial, fijando cupos para escuelas públicas.\",\"Mesa de negociación para la radicación permanente del predio de 1 hectárea.\"]},{\"t\":\"Modelo de Negocio, Tarifario B2B y Merchandising Oficial\",\"items\":[\"Planilla paramétrica de costos y punto de equilibrio por turno de deslizamiento e iniciación.\",\"Tarifario comercial B2C/B2B para agencias receptivas de Esquel y abonos de pretemporada para clubes andinos.\",\"Lanzamiento y monetización de la línea textil de autor de la marca FLYPARK (remeras, buzos, gorritos, buffs).\"]}]",
+                "[\"Montaje de pista modular de 100 m² en Sociedad Rural, Evento Demo Oficial y carpeta de rendición aprobada ante Chubut Deportes (Plan Galina).\",\"Anteproyecto de ordenanza marco para habilitación municipal de dryslope urbano y manual de bioseguridad deportiva.\",\"Convenio Marco de Articulación y Comodato firmado entre la Asociación Civil Patagonia Freeride y FLYPARK comercial.\",\"Planilla paramétrica de costos operativos, amortización de alfombra y tarifario comercial B2C y B2B (agencias y clubes).\",\"Landing page oficial interactiva con motor de reservas y catálogo digital de servicios y merchandising de la marca FLYPARK.\"]"
             ],
             [
                 'porota',
@@ -882,171 +882,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'flypark-01',
                 'flypark',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
-                'ind',
-                "Taller / Local",
-                '2026-09-11',
-                "10:00",
-                "11:30",
+                "Relevamiento de terreno en Sociedad Rural y planificación de montaje",
+                'ter',
+                "Predio de la Sociedad Rural de Esquel",
+                '2026-09-17',
+                "14:00",
+                "16:30",
                 'programada',
-                "Conocer el espacio real de trabajo de FABRICIO GUGLIELMETTI. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de FLYPARK hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Visitar el predio de la Sociedad Rural junto a Fabricio y Paula Botto. Inspeccionar el declive natural del terreno con pasto, evaluar las dimensiones para el trazado de la pista modular de 100 m² (1 tira continua con desnivel) y verificar acometida eléctrica, baños y seguridad perimetral. Coordinar la solicitud formal de préstamo temporal por 3 semanas.",
+                "[\"¿Qué dimensiones exactas y pendiente requiere la bajada para asegurar un deslizamiento fluido sin riesgo de frenado brusco?\",\"¿Cuándo arriba el flete desde Buenos Aires con los 70 m² de alfombra Powplast adquiridos con el Plan Galina?\",\"¿Qué personal y herramientas necesitamos para montar la pista en una sola jornada sin impactar el suelo?\"]",
+                "[\"Delimitar la traza exacta de la pista de dryslope en el desnivel del predio rural.\",\"Definir el cronograma de armado y recepción de materiales del Plan Galina.\",\"Gestionar la nota formal de autorización de uso temporal ante la Comisión Directiva de la Rural.\"]",
+                "[{\"id\":1,\"texto\":\"Medir la pendiente y distancia útil en el césped de la Sociedad Rural\",\"done\":false},{\"id\":2,\"texto\":\"Confirmar la llegada del cargamento de 70 m² de alfombra Powplast\",\"done\":false},{\"id\":3,\"texto\":\"Presentar nota oficial firmada por la Secretaría de Producción y el LAB\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'flypark-02',
                 'flypark',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
-                'ind',
-                "Turismo",
-                '2026-09-18',
+                "Montaje de pista modular de dryslope, cajones y medidas de seguridad",
+                'ter',
+                "Predio de la Sociedad Rural de Esquel",
+                '2026-09-24',
                 "10:00",
-                "11:30",
+                "14:00",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Jornada de ensamblado de los 100 m² de alfombra sintética Powplast entre el equipo de Flypark y colaboradores. Instalación modular por encastre tipo ladrillo sobre el pasto, fijación de anclajes no invasivos, colocación de rampita de inicio, cajón de deslizamiento y tubos de PVC para freestyle. Demarcación de la zona de frenado y colchón de seguridad.",
+                "[\"¿Cómo responde el encastre de las placas plásticas a las ondulaciones del terreno?\",\"¿Qué lubricación superficial con agua o silicona neutra requiere la alfombra para optimizar el deslizamiento?\",\"¿Qué delimitación visual con banderines y redes de contención colocamos en los laterales?\"]",
+                "[\"Dejar la pista de 100 m² completamente armada y operativa en el predio rural.\",\"Testear el deslizamiento con tablas y esquís por parte de riders experimentados.\",\"Verificar que la estructura no altere ni dañe el césped natural.\"]",
+                "[{\"id\":1,\"texto\":\"Ensamblar la totalidad de las placas Powplast (100 m² cubiertos)\",\"done\":false},{\"id\":2,\"texto\":\"Montar 1 cajón y 1 riel de PVC para maniobras de freestyle\",\"done\":false},{\"id\":3,\"texto\":\"Realizar pruebas de deslizamiento y calibrar la zona de detención final\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'flypark-03',
                 'flypark',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
-                'ind',
-                "Turismo",
-                '2026-09-22',
+                "Evento Demo Oficial, registro para Chubut Deportes y respaldo político",
+                'ter',
+                "Sociedad Rural de Esquel",
+                '2026-10-01',
                 "11:00",
-                "12:30",
+                "14:00",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Presentación oficial y Demo de Flypark en La Rural antes del deadline del Plan Galina (7 de octubre). Convocatoria de autoridades provinciales y municipales (Intendente Taccetta, Chubut Deportes, Producción, Turismo), prensa comarcal, Club Andino y jóvenes riders. Demostración en vivo de freestyle e iniciación, fotografía y video oficial con la cartelería del Plan Galina para la rendición definitiva.",
+                "[\"¿Cómo comunicamos el logro histórico de tener esquí urbano todo el año en Esquel ante los medios?\",\"¿Qué tomas y comprobantes exige el formulario de rendición del Plan Galina para cerrar el expediente?\",\"¿Qué devoluciones y compromisos expresaron las autoridades presentes para la radicación definitiva?\"]",
+                "[\"Cerrar la rendición física y audiovisual del Plan Galina ante Chubut Deportes.\",\"Generar un alto impacto mediático y comunitario positivo que blinde el proyecto ante trabas burocráticas.\",\"Demostrar la factibilidad técnica y el atractivo del dryslope urbano en Esquel.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar la exhibición en vivo con riders y autoridades presentes\",\"done\":false},{\"id\":2,\"texto\":\"Registrar el set fotográfico con la cartelería oficial del Plan Galina\",\"done\":false},{\"id\":3,\"texto\":\"Presentar la carpeta de rendición completa ante Chubut Deportes\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'flypark-04',
                 'flypark',
                 4,
-                "Puesta en común Célula undefined",
-                'gru',
-                "Célula undefined (Turismo)",
-                '2026-09-30',
-                "09:30",
-                "12:00",
+                "Estructura legal mixta: Convenio Asociación Civil - Flypark y radicación",
+                'ind',
+                "LAB Esquel / Secretaría de Turismo",
+                '2026-10-08',
+                "10:30",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["leandro"]
+                "Abordar la arquitectura legal del proyecto. Redactar el Convenio Marco de Articulación y Comodato entre la Asociación Civil Patagonia Freeride (titular de la pista financiada) y la firma comercial FLYPARK (operadora privada). Establecer con claridad la contraprestación social (cupos gratuitos para escuelas públicas y entrenamientos de clubes) y avanzar en las negociaciones del terreno definitivo de 1 hectárea.",
+                "[\"¿Cómo garantizamos la transparencia jurídica entre la asociación sin fines de lucro y la empresa comercial?\",\"¿Qué avances hubo con el propietario del terreno de Darwin y Humpreys para el comodato con opción a alquiler?\",\"¿Qué opciones de predios municipales o comodatos alternativos existen si se traba el terreno privado?\"]",
+                "[\"Redactar el borrador del convenio Asociación Civil - Flypark visado legalmente.\",\"Definir el esquema de becas e iniciación escolar comunitaria (esquí social).\",\"Elaborar la estrategia de negociación para el predio definitivo permanente.\"]",
+                "[{\"id\":1,\"texto\":\"Borrador del convenio de comodato y articulación institucional cerrado\",\"done\":false},{\"id\":2,\"texto\":\"Fijar la cuota de horas semanales reservadas para clubes y escuelas públicas\",\"done\":false},{\"id\":3,\"texto\":\"Matriz comparativa de opciones de radicación territorial definitiva\",\"done\":false}]",
+                ["leandro","agustina"]
             ],
             [
                 'flypark-05',
                 'flypark',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
+                "Marco normativo municipal y protocolo de habilitación de dryslope",
                 'ind',
-                "Taller / Turismo",
-                '2026-10-6',
-                "10:00",
-                "11:30",
+                "LAB Esquel",
+                '2026-10-15',
+                "10:30",
+                "12:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
+                "Trabajar junto al equipo técnico del municipio en la formulación del anteproyecto de ordenanza marco para Parques y Pistas Urbanas de Deportes de Nieve Sintética (Dryslope). Redactar el protocolo operativo de bioseguridad: uso obligatorio de casco, protecciones corporales, seguro de accidentes personales / turismo activo y deslinde de responsabilidad.",
+                "[\"¿Bajo qué rubro municipal se encuadra hoy una actividad deportiva inédita en Chubut?\",\"¿Qué exigencias de salida de emergencia, matafuegos y botiquín de primeros auxilios se deben prever? \",\"¿Qué aseguradoras operan pólizas de responsabilidad civil para deportes de acción en seco?\"]",
+                "[\"Redactar el anteproyecto de ordenanza municipal para elevar al Concejo Deliberante.\",\"Consensuar los requisitos técnicos con el área de Habilitaciones Comerciales e Inspecciones.\",\"Cotizar y seleccionar la póliza de seguro de turismo activo para usuarios.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar anteproyecto de ordenanza de dryslope en el Concejo Deliberante\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el manual operativo de seguridad y deslinde de responsabilidad civil\",\"done\":false},{\"id\":3,\"texto\":\"Obtener cotizaciones de póliza de seguro de cobertura deportiva integral\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'flypark-06',
                 'flypark',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Planilla paramétrica de costos, tarifario B2C/B2B y merchandising",
                 'ind',
-                "Turismo",
-                '2026-10-14',
-                "10:00",
-                "11:30",
+                "LAB Esquel",
+                '2026-10-22',
+                "10:30",
+                "12:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Estructurar la economía del emprendimiento. Definir costos fijos y variables (amortización de alfombra, alquiler, instructores, seguro, mantenimiento). Fijar el tarifario: pases por turno (45 y 90 min), abonos mensuales para residentes, pases familiares y tarifas para agencias de viajes (EVyT) y hoteles. Integrar la línea de indumentaria oficial de la marca FLYPARK (remeras, buzos, gorritos, buffs).",
+                "[\"¿Cuál es el precio de mercado de un pase de iniciación al esquí frente al costo de subir a La Hoya?\",\"¿Qué margen de comisión del 20-25% se ofrecerá a las agencias receptivas locales?\",\"¿Cuál es el margen y stock inicial de la línea de merchandising de autor FLYPARK?\"]",
+                "[\"Construir la planilla paramétrica de costos y punto de equilibrio operativo.\",\"Emitir la lista de precios oficial para residentes, turistas y agencias receptivas.\",\"Diseñar el packaging y fijar precios para la línea textil de FLYPARK.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos unitarios y punto de equilibrio financiero\",\"done\":false},{\"id\":2,\"texto\":\"Emitir el tarifario comercial B2C y B2B para la temporada 2026/2027\",\"done\":false},{\"id\":3,\"texto\":\"Catálogo de precios de indumentaria propia (remeras, buzos, gorras y buffs)\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'flypark-07',
                 'flypark',
                 7,
-                "Comunicación digital, contenido y redes",
+                "Plataforma digital, canal de reservas y alianzas con agencias y clubes",
                 'ind',
-                "Turismo",
-                '2026-10-21',
-                "10:00",
-                "11:30",
+                "LAB Esquel / Espacio Digital",
+                '2026-10-29',
+                "10:30",
+                "12:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
+                "Diseño y lanzamiento de la landing page de FLYPARK en esquel.site con sistema de reservas por turnos y cobro anticipado por Mercado Pago. Firma de convenios marco de colaboración con clubes locales (Club Andino Esquel, Slalom Club, Esquel Ski Club) para pretemporada y entrenamientos continuos. Articulación de paquetes turísticos con agencias receptivas de Esquel.",
+                "[\"¿Qué horarios se reservan para entrenamientos federados y cuáles para turistas y principiantes?\",\"¿Cómo se gestiona el sistema de alquiler (rental) de tablas y botas en el predio?\",\"¿Qué convenios de co-branding podemos acordar con marcas de outdoor y sponsors?\"]",
+                "[\"Publicar la landing page oficial con video institucional y motor de reservas.\",\"Firmar cartas de intención con al menos 2 clubes de montaña de Esquel.\",\"Cerrar convenios de distribución comercial con al menos 2 agencias receptivas.\"]",
+                "[{\"id\":1,\"texto\":\"Landing page operativa con botón de reserva y pasarela digital\",\"done\":false},{\"id\":2,\"texto\":\"Firmar actas de acuerdo con clubes deportivos locales\",\"done\":false},{\"id\":3,\"texto\":\"Distribuir material promocional en alojamientos y centros de información\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'flypark-08',
                 'flypark',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ind',
-                "Taller / Local",
-                '2026-10-28',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["leandro","agustina"]
-            ],
-            [
-                'flypark-09',
-                'flypark',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-3',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["leandro","agustina"]
-            ],
-            [
-                'flypark-10',
-                'flypark',
-                10,
-                "Distinción, resultados y rueda de negocios",
-                'cie',
-                "Acto de cierre",
-                '2026-11-10',
-                "10:00",
+                "Ronda de Negocios Final, Lanzamiento Oficial y Hoja de Ruta Post-LAB",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-05',
+                "09:30",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Participación protagónica de FLYPARK en el Encuentro de Cierre de Esquel LAB como proyecto #1 de Acelera. Montaje de stand temático con placas de alfombra Powplast, esquís de freestyle, indumentaria oficial y proyección audiovisual de la demo en La Rural. Pitch de 3 minutos de Fabricio Guglielmetti. Anuncio de la radicación definitiva y entrega del plan operativo post-incubación.",
+                "[\"¿Qué balance arroja el proceso tras haber superado la urgencia del Plan Galina?\",\"¿Cuál es el cronograma de radicación definitiva para la temporada de verano 2026/2027?\",\"¿Qué articulación se proyecta con el Ministerio de Turismo y Deportes provincial?\"]",
+                "[\"Presentar oficialmente a FLYPARK como el primer parque urbano de esquí y snowboard de la provincia.\",\"Consolidar compromisos comerciales con operadores turísticos y sponsors privados.\",\"Entregar el informe de cierre de asistencia técnica y plan de expansión a 3 años.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo de freestyle con equipamiento e indumentaria\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante autoridades, prensa y sector privado\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos comerciales y presentar la hoja de ruta definitiva\",\"done\":false}]",
+                ["leandro","agustina"]
             ],
             [
                 'porota-01',
@@ -3108,7 +3074,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -4790,6 +4756,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rl[0];
             foreach ($asistentes as $consId) {
                 $insAsistLucero->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de FLYPARK si todavía tiene la plantilla genérica inicial
+    $checkFlypark = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'flypark-01'")->fetchColumn();
+    if ($checkFlypark === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkFlypark) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'flypark-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'flypark'");
+
+        $insReuFlypark = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistFlypark = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesFlypark = [
+            [
+                'flypark-01',
+                'flypark',
+                1,
+                "Relevamiento de terreno en Sociedad Rural y planificación de montaje",
+                'ter',
+                "Predio de la Sociedad Rural de Esquel",
+                '2026-09-17',
+                "14:00",
+                "16:30",
+                'programada',
+                "Visitar el predio de la Sociedad Rural junto a Fabricio y Paula Botto. Inspeccionar el declive natural del terreno con pasto, evaluar las dimensiones para el trazado de la pista modular de 100 m² (1 tira continua con desnivel) y verificar acometida eléctrica, baños y seguridad perimetral. Coordinar la solicitud formal de préstamo temporal por 3 semanas.",
+                "[\"¿Qué dimensiones exactas y pendiente requiere la bajada para asegurar un deslizamiento fluido sin riesgo de frenado brusco?\",\"¿Cuándo arriba el flete desde Buenos Aires con los 70 m² de alfombra Powplast adquiridos con el Plan Galina?\",\"¿Qué personal y herramientas necesitamos para montar la pista en una sola jornada sin impactar el suelo?\"]",
+                "[\"Delimitar la traza exacta de la pista de dryslope en el desnivel del predio rural.\",\"Definir el cronograma de armado y recepción de materiales del Plan Galina.\",\"Gestionar la nota formal de autorización de uso temporal ante la Comisión Directiva de la Rural.\"]",
+                "[{\"id\":1,\"texto\":\"Medir la pendiente y distancia útil en el césped de la Sociedad Rural\",\"done\":false},{\"id\":2,\"texto\":\"Confirmar la llegada del cargamento de 70 m² de alfombra Powplast\",\"done\":false},{\"id\":3,\"texto\":\"Presentar nota oficial firmada por la Secretaría de Producción y el LAB\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-02',
+                'flypark',
+                2,
+                "Montaje de pista modular de dryslope, cajones y medidas de seguridad",
+                'ter',
+                "Predio de la Sociedad Rural de Esquel",
+                '2026-09-24',
+                "10:00",
+                "14:00",
+                'programada',
+                "Jornada de ensamblado de los 100 m² de alfombra sintética Powplast entre el equipo de Flypark y colaboradores. Instalación modular por encastre tipo ladrillo sobre el pasto, fijación de anclajes no invasivos, colocación de rampita de inicio, cajón de deslizamiento y tubos de PVC para freestyle. Demarcación de la zona de frenado y colchón de seguridad.",
+                "[\"¿Cómo responde el encastre de las placas plásticas a las ondulaciones del terreno?\",\"¿Qué lubricación superficial con agua o silicona neutra requiere la alfombra para optimizar el deslizamiento?\",\"¿Qué delimitación visual con banderines y redes de contención colocamos en los laterales?\"]",
+                "[\"Dejar la pista de 100 m² completamente armada y operativa en el predio rural.\",\"Testear el deslizamiento con tablas y esquís por parte de riders experimentados.\",\"Verificar que la estructura no altere ni dañe el césped natural.\"]",
+                "[{\"id\":1,\"texto\":\"Ensamblar la totalidad de las placas Powplast (100 m² cubiertos)\",\"done\":false},{\"id\":2,\"texto\":\"Montar 1 cajón y 1 riel de PVC para maniobras de freestyle\",\"done\":false},{\"id\":3,\"texto\":\"Realizar pruebas de deslizamiento y calibrar la zona de detención final\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-03',
+                'flypark',
+                3,
+                "Evento Demo Oficial, registro para Chubut Deportes y respaldo político",
+                'ter',
+                "Sociedad Rural de Esquel",
+                '2026-10-01',
+                "11:00",
+                "14:00",
+                'programada',
+                "Presentación oficial y Demo de Flypark en La Rural antes del deadline del Plan Galina (7 de octubre). Convocatoria de autoridades provinciales y municipales (Intendente Taccetta, Chubut Deportes, Producción, Turismo), prensa comarcal, Club Andino y jóvenes riders. Demostración en vivo de freestyle e iniciación, fotografía y video oficial con la cartelería del Plan Galina para la rendición definitiva.",
+                "[\"¿Cómo comunicamos el logro histórico de tener esquí urbano todo el año en Esquel ante los medios?\",\"¿Qué tomas y comprobantes exige el formulario de rendición del Plan Galina para cerrar el expediente?\",\"¿Qué devoluciones y compromisos expresaron las autoridades presentes para la radicación definitiva?\"]",
+                "[\"Cerrar la rendición física y audiovisual del Plan Galina ante Chubut Deportes.\",\"Generar un alto impacto mediático y comunitario positivo que blinde el proyecto ante trabas burocráticas.\",\"Demostrar la factibilidad técnica y el atractivo del dryslope urbano en Esquel.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar la exhibición en vivo con riders y autoridades presentes\",\"done\":false},{\"id\":2,\"texto\":\"Registrar el set fotográfico con la cartelería oficial del Plan Galina\",\"done\":false},{\"id\":3,\"texto\":\"Presentar la carpeta de rendición completa ante Chubut Deportes\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-04',
+                'flypark',
+                4,
+                "Estructura legal mixta: Convenio Asociación Civil - Flypark y radicación",
+                'ind',
+                "LAB Esquel / Secretaría de Turismo",
+                '2026-10-08',
+                "10:30",
+                "12:30",
+                'programada',
+                "Abordar la arquitectura legal del proyecto. Redactar el Convenio Marco de Articulación y Comodato entre la Asociación Civil Patagonia Freeride (titular de la pista financiada) y la firma comercial FLYPARK (operadora privada). Establecer con claridad la contraprestación social (cupos gratuitos para escuelas públicas y entrenamientos de clubes) y avanzar en las negociaciones del terreno definitivo de 1 hectárea.",
+                "[\"¿Cómo garantizamos la transparencia jurídica entre la asociación sin fines de lucro y la empresa comercial?\",\"¿Qué avances hubo con el propietario del terreno de Darwin y Humpreys para el comodato con opción a alquiler?\",\"¿Qué opciones de predios municipales o comodatos alternativos existen si se traba el terreno privado?\"]",
+                "[\"Redactar el borrador del convenio Asociación Civil - Flypark visado legalmente.\",\"Definir el esquema de becas e iniciación escolar comunitaria (esquí social).\",\"Elaborar la estrategia de negociación para el predio definitivo permanente.\"]",
+                "[{\"id\":1,\"texto\":\"Borrador del convenio de comodato y articulación institucional cerrado\",\"done\":false},{\"id\":2,\"texto\":\"Fijar la cuota de horas semanales reservadas para clubes y escuelas públicas\",\"done\":false},{\"id\":3,\"texto\":\"Matriz comparativa de opciones de radicación territorial definitiva\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-05',
+                'flypark',
+                5,
+                "Marco normativo municipal y protocolo de habilitación de dryslope",
+                'ind',
+                "LAB Esquel",
+                '2026-10-15',
+                "10:30",
+                "12:30",
+                'programada',
+                "Trabajar junto al equipo técnico del municipio en la formulación del anteproyecto de ordenanza marco para Parques y Pistas Urbanas de Deportes de Nieve Sintética (Dryslope). Redactar el protocolo operativo de bioseguridad: uso obligatorio de casco, protecciones corporales, seguro de accidentes personales / turismo activo y deslinde de responsabilidad.",
+                "[\"¿Bajo qué rubro municipal se encuadra hoy una actividad deportiva inédita en Chubut?\",\"¿Qué exigencias de salida de emergencia, matafuegos y botiquín de primeros auxilios se deben prever? \",\"¿Qué aseguradoras operan pólizas de responsabilidad civil para deportes de acción en seco?\"]",
+                "[\"Redactar el anteproyecto de ordenanza municipal para elevar al Concejo Deliberante.\",\"Consensuar los requisitos técnicos con el área de Habilitaciones Comerciales e Inspecciones.\",\"Cotizar y seleccionar la póliza de seguro de turismo activo para usuarios.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar anteproyecto de ordenanza de dryslope en el Concejo Deliberante\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el manual operativo de seguridad y deslinde de responsabilidad civil\",\"done\":false},{\"id\":3,\"texto\":\"Obtener cotizaciones de póliza de seguro de cobertura deportiva integral\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-06',
+                'flypark',
+                6,
+                "Planilla paramétrica de costos, tarifario B2C/B2B y merchandising",
+                'ind',
+                "LAB Esquel",
+                '2026-10-22',
+                "10:30",
+                "12:30",
+                'programada',
+                "Estructurar la economía del emprendimiento. Definir costos fijos y variables (amortización de alfombra, alquiler, instructores, seguro, mantenimiento). Fijar el tarifario: pases por turno (45 y 90 min), abonos mensuales para residentes, pases familiares y tarifas para agencias de viajes (EVyT) y hoteles. Integrar la línea de indumentaria oficial de la marca FLYPARK (remeras, buzos, gorritos, buffs).",
+                "[\"¿Cuál es el precio de mercado de un pase de iniciación al esquí frente al costo de subir a La Hoya?\",\"¿Qué margen de comisión del 20-25% se ofrecerá a las agencias receptivas locales?\",\"¿Cuál es el margen y stock inicial de la línea de merchandising de autor FLYPARK?\"]",
+                "[\"Construir la planilla paramétrica de costos y punto de equilibrio operativo.\",\"Emitir la lista de precios oficial para residentes, turistas y agencias receptivas.\",\"Diseñar el packaging y fijar precios para la línea textil de FLYPARK.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos unitarios y punto de equilibrio financiero\",\"done\":false},{\"id\":2,\"texto\":\"Emitir el tarifario comercial B2C y B2B para la temporada 2026/2027\",\"done\":false},{\"id\":3,\"texto\":\"Catálogo de precios de indumentaria propia (remeras, buzos, gorras y buffs)\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-07',
+                'flypark',
+                7,
+                "Plataforma digital, canal de reservas y alianzas con agencias y clubes",
+                'ind',
+                "LAB Esquel / Espacio Digital",
+                '2026-10-29',
+                "10:30",
+                "12:30",
+                'programada',
+                "Diseño y lanzamiento de la landing page de FLYPARK en esquel.site con sistema de reservas por turnos y cobro anticipado por Mercado Pago. Firma de convenios marco de colaboración con clubes locales (Club Andino Esquel, Slalom Club, Esquel Ski Club) para pretemporada y entrenamientos continuos. Articulación de paquetes turísticos con agencias receptivas de Esquel.",
+                "[\"¿Qué horarios se reservan para entrenamientos federados y cuáles para turistas y principiantes?\",\"¿Cómo se gestiona el sistema de alquiler (rental) de tablas y botas en el predio?\",\"¿Qué convenios de co-branding podemos acordar con marcas de outdoor y sponsors?\"]",
+                "[\"Publicar la landing page oficial con video institucional y motor de reservas.\",\"Firmar cartas de intención con al menos 2 clubes de montaña de Esquel.\",\"Cerrar convenios de distribución comercial con al menos 2 agencias receptivas.\"]",
+                "[{\"id\":1,\"texto\":\"Landing page operativa con botón de reserva y pasarela digital\",\"done\":false},{\"id\":2,\"texto\":\"Firmar actas de acuerdo con clubes deportivos locales\",\"done\":false},{\"id\":3,\"texto\":\"Distribuir material promocional en alojamientos y centros de información\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'flypark-08',
+                'flypark',
+                8,
+                "Ronda de Negocios Final, Lanzamiento Oficial y Hoja de Ruta Post-LAB",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-05',
+                "09:30",
+                "13:00",
+                'programada',
+                "Participación protagónica de FLYPARK en el Encuentro de Cierre de Esquel LAB como proyecto #1 de Acelera. Montaje de stand temático con placas de alfombra Powplast, esquís de freestyle, indumentaria oficial y proyección audiovisual de la demo en La Rural. Pitch de 3 minutos de Fabricio Guglielmetti. Anuncio de la radicación definitiva y entrega del plan operativo post-incubación.",
+                "[\"¿Qué balance arroja el proceso tras haber superado la urgencia del Plan Galina?\",\"¿Cuál es el cronograma de radicación definitiva para la temporada de verano 2026/2027?\",\"¿Qué articulación se proyecta con el Ministerio de Turismo y Deportes provincial?\"]",
+                "[\"Presentar oficialmente a FLYPARK como el primer parque urbano de esquí y snowboard de la provincia.\",\"Consolidar compromisos comerciales con operadores turísticos y sponsors privados.\",\"Entregar el informe de cierre de asistencia técnica y plan de expansión a 3 años.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo de freestyle con equipamiento e indumentaria\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante autoridades, prensa y sector privado\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos comerciales y presentar la hoja de ruta definitiva\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+        ];
+
+        foreach ($reunionesFlypark as $rf) {
+            $asistentes = array_pop($rf);
+            $insReuFlypark->execute($rf);
+            $reuId = $rf[0];
+            foreach ($asistentes as $consId) {
+                $insAsistFlypark->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

@@ -272,34 +272,47 @@
       "sr": "leandro",
       "jr": "agustina",
       "diagnostico": [
-        "Parque aéreo y aventura en árboles con tirolesas. Pionero en La Hoya en 2006; ahora relanzamiento en predio accesible.",
-        "Excelente perfil de emprendedor y experiencia técnica en seguridad y montaña.",
-        "Alta demanda de turismo familiar y activo."
+        "Puesto #1 de Esquel Acelera (Puntaje récord 4.22 / 5.00). Proyecto pionero de estación urbana y modular de dryslope (esquí y snowboard sobre alfombra plástica sintética Powplast) que rompe la estacionalidad invernal y desvincula la práctica deportiva de las concesiones de montaña.",
+        "Equipo con trayectoria y solvencia técnica comprobada: creadores y operadores del Snowpark original en La Hoya (2006), respaldados por la Asociación Civil de Deportes de Acción Patagonia Freeride (personería jurídica vigente). Disponen de 100 m² de alfombra modular (30 m² propios + 70 m² financiados por el Plan Galina de Chubut Deportes).",
+        "Doble impacto socio-turístico: plataforma de freestyle y entrenamiento continuo de pretemporada para clubes andinos locales, combinada con escuela de iniciación al esquí para turistas todo el año y esquí social subsidiado para escuelas públicas de la ciudad."
       ],
       "trabas": [
-        "Permisos y habilitaciones de seguridad de altura.",
-        "Inversión en cableado, arneses y plataformas.",
-        "Convenio de cesión o alquiler del predio."
+        "Urgencia fatal del Plan Galina (Chubut Deportes): plazo perentorio previo al 7 de octubre de 2026 para montar la pista, operarla y certificar fotográficamente la inversión con cartelería oficial provincial para el cierre del expediente de financiamiento.",
+        "Impasse del predio definitivo de 1 hectárea: dilatación en el comodato/alquiler del terreno permanente en Darwin y Humpreys y falta de servicios básicos en el corto plazo; resuelto estratégicamente mediante el préstamo temporal de 3 semanas del predio de la Sociedad Rural de Esquel.",
+        "Vacío normativo municipal y estructura jurídica mixta: ausencia de una ordenanza marco para dryslope urbano y necesidad de formalizar un Convenio de Comodato transparente entre la Asociación Civil Patagonia Freeride (titular de la pista) y la firma privada FLYPARK."
       ],
       "ejes": [
         {
-          "t": "Habilitaciones y Seguridad",
+          "t": "Montaje en Sociedad Rural y Certificación del Plan Galina",
           "items": [
-            "Protocolo de seguridad bajo normas IRAM.",
-            "Trámite municipal y seguro de responsabilidad civil."
+            "Acuerdo de uso temporal del predio de la Sociedad Rural articulado junto a la Secretaría de Producción (Paula Botto).",
+            "Ensamble modular de 100 m² de alfombra Powplast, rampa, cajón de salto y tubos de PVC sobre el césped sin impacto ambiental.",
+            "Evento Demo Oficial con autoridades (Intendente, Deportes, Turismo), prensa y clubes antes del 7 de octubre para rendir ante Chubut Deportes."
           ]
         },
         {
-          "t": "Modelo Comercial",
+          "t": "Blindaje Político, Ordenanza Marco y Convenio Asociativo",
           "items": [
-            "Tarifario por circuito y pases familiares.",
-            "Convenios con escuelas y agencias receptivas."
+            "Anteproyecto de ordenanza municipal para parques urbanos de dryslope, con seguros de turismo activo y manual de bioseguridad.",
+            "Convenio Marco de Comodato y Articulación entre Asociación Civil Patagonia Freeride y FLYPARK comercial, fijando cupos para escuelas públicas.",
+            "Mesa de negociación para la radicación permanente del predio de 1 hectárea."
+          ]
+        },
+        {
+          "t": "Modelo de Negocio, Tarifario B2B y Merchandising Oficial",
+          "items": [
+            "Planilla paramétrica de costos y punto de equilibrio por turno de deslizamiento e iniciación.",
+            "Tarifario comercial B2C/B2B para agencias receptivas de Esquel y abonos de pretemporada para clubes andinos.",
+            "Lanzamiento y monetización de la línea textil de autor de la marca FLYPARK (remeras, buzos, gorritos, buffs)."
           ]
         }
       ],
       "entregables": [
-        "Circuito y plano técnico aprobado.",
-        "Tarifario comercial cerrado y ficha para agencias."
+        "Montaje de pista modular de 100 m² en Sociedad Rural, Evento Demo Oficial y carpeta de rendición aprobada ante Chubut Deportes (Plan Galina).",
+        "Anteproyecto de ordenanza marco para habilitación municipal de dryslope urbano y manual de bioseguridad deportiva.",
+        "Convenio Marco de Articulación y Comodato firmado entre la Asociación Civil Patagonia Freeride y FLYPARK comercial.",
+        "Planilla paramétrica de costos operativos, amortización de alfombra y tarifario comercial B2C y B2B (agencias y clubes).",
+        "Landing page oficial interactiva con motor de reservas y catálogo digital de servicios y merchandising de la marca FLYPARK."
       ]
     },
     {
