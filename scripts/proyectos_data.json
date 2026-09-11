@@ -758,33 +758,45 @@
       "sr": "adria",
       "jr": "noelia",
       "diagnostico": [
-        "Cabalgatas terapéuticas, equinoterapia y turismo ecuestre familiar en entorno rural cuidado.",
-        "Puntaje destacado (4.02) con respaldo unánime del jurado.",
-        "Infraestructura ecuestre y caballos mansos."
+        "Iniciativa de excelencia en turismo rural, de naturaleza y bienestar en predio cordillerano sobre Ruta 259 (km 25 / Barrio Los Cóndores), a mitad de camino entre Esquel y Trevelin. Cuenta con bosque centenario de pinos ('El Pinar'), matera histórica alemana, pista de monta y corrales en comodato con Carlos Baroli.",
+        "Trayectoria consolidada y solvencia interdisciplinaria: titular bióloga y docente de biología (Colegio Salesiano y ex Escuela Experimental), cofundadora de la Fundación Patagónica de Equinoterapia (2011). Integra un equipo de salud (psicomotricista, kinesiólogo, psicóloga, docentes especiales y ecuestres) junto al programa comunitario 'Guardianes de Lucero'.",
+        "Propuesta integral cuádruple: 1) Granja Educativa de Rescate (chinchillas, ratas de laboratorio, cerdita minipig Rita Uva, Pamperito de 35 años); 2) Escuela de Monta Consciente y Respetuosa (sin someter al caballo, pie a tierra y rienda suave); 3) Equinoterapia Interdisciplinaria con alta demanda sostenida; y 4) Terapias de Bienestar (yoga, meditación y constelaciones con caballos, coaching y feria El Paseo del Pinar)."
       ],
       "trabas": [
-        "Seguro de actividad ecuestre turística y deslindes de responsabilidad.",
-        "Armado de paquetes para no iniciados."
+        "Dispersión de servicios y falta de paquetes turísticos estandarizados: necesidad de acotar la oferta para el visitante espontáneo a 2 experiencias claras con días y horarios fijos ('Granja Educativa' y 'Bautismo Ecuestre').",
+        "Estacionalidad forrajera invernal: alto costo de alimentación de caballos (fardos de alfalfa y avena) en invierno por falta de pastura en el pinar, requiriendo un flujo turístico comercial que subsidie la sustentabilidad animal.",
+        "Comercialización informal y falta de punto de venta: dependencia de consultas por redes sociales sin acuerdos con agencias receptivas de Esquel/Trevelin, y necesidad de un espacio rústico de venta física para el Kit infantil 'Pequeño Cuidador' y productos de granja en la matera histórica."
       ],
       "ejes": [
         {
-          "t": "Experiencias Ecuestres",
+          "t": "Curaduría de 2 Experiencias Turísticas Estrella y Bioseguridad",
           "items": [
-            "Paseo suave de contacto y cepillado para niños.",
-            "Cabalgata al atardecer con merienda de campo."
+            "Experiencia 1: 'Granja Educativa & Saberes Vivos' (75 min, familiar y niños, historias de rescate, interacción guiada y merienda en la matera).",
+            "Experiencia 2: 'Bautismo Ecuestre & Encuentro con el Caballo' (90 min, jóvenes y adultos, vínculo pie a tierra, monta consciente y paseo en El Pinar).",
+            "Protocolo formal de bioseguridad ecuestre, deslindes de responsabilidad y seguros de turismo activo."
           ]
         },
         {
-          "t": "Canal de Comercialización",
+          "t": "Desarrollo del Kit 'Pequeño Cuidador' y Productos de Granja",
           "items": [
-            "Alianzas con centros de salud y alojamientos.",
-            "Venta por turnos programados."
+            "Lanzamiento del Kit 'Pequeño Cuidador / Guardián de Lucero' (libreta de campo ilustrada, lápiz ecológico, pin metálico de guardián y actividades).",
+            "Línea de la granja: sobres de compost, semillas nativas y cuaderno editorial 'Historias de Lucero'. Acondicionamiento del puesto en la matera histórica."
+          ]
+        },
+        {
+          "t": "Estructura de Costos, Alianzas B2B y Ecosistema de Cohorte",
+          "items": [
+            "Planilla paramétrica de costos que amortice el forraje invernal y tarifario comercial B2C/B2B para agencias receptivas de Esquel y Trevelin.",
+            "Catálogo digital interactivo, reservas por WhatsApp Business y sinergias con Haiku Casa de Té (retiros en El Pinar) y feria El Paseo del Pinar."
           ]
         }
       ],
       "entregables": [
-        "Guion y protocolo de seguridad de cabalgata.",
-        "Ficha comercial con precios y duración."
+        "Guion interpretativo y fichas técnicas estandarizadas de las 2 Experiencias Turísticas ('Granja Educativa' y 'Bautismo Ecuestre').",
+        "Protocolo de bioseguridad ecuestre, formulario de deslinde de responsabilidad y manual de bienestar animal.",
+        "Prototipo impreso del Kit 'Pequeño Cuidador de Animales / Guardián de Lucero' (libreta, pin y empaque).",
+        "Planilla paramétrica de costos con amortización de forraje invernal y tarifario comercial minorista/mayorista (B2C/B2B).",
+        "Convenio de comercialización turística con al menos 2 agencias receptivas habilitadas de Esquel/Trevelin y catálogo digital publicado."
       ]
     },
     {

@@ -269,10 +269,10 @@ function lab_asegurar_datos(PDO $pdo): void
                 2,
                 'adria',
                 'noelia',
-                "[\"Cabalgatas terapéuticas, equinoterapia y turismo ecuestre familiar en entorno rural cuidado.\",\"Puntaje destacado (4.02) con respaldo unánime del jurado.\",\"Infraestructura ecuestre y caballos mansos.\"]",
-                "[\"Seguro de actividad ecuestre turística y deslindes de responsabilidad.\",\"Armado de paquetes para no iniciados.\"]",
-                "[{\"t\":\"Experiencias Ecuestres\",\"items\":[\"Paseo suave de contacto y cepillado para niños.\",\"Cabalgata al atardecer con merienda de campo.\"]},{\"t\":\"Canal de Comercialización\",\"items\":[\"Alianzas con centros de salud y alojamientos.\",\"Venta por turnos programados.\"]}]",
-                "[\"Guion y protocolo de seguridad de cabalgata.\",\"Ficha comercial con precios y duración.\"]"
+                "[\"Iniciativa de excelencia en turismo rural, de naturaleza y bienestar en predio cordillerano sobre Ruta 259 (km 25 / Barrio Los Cóndores), a mitad de camino entre Esquel y Trevelin. Cuenta con bosque centenario de pinos ('El Pinar'), matera histórica alemana, pista de monta y corrales en comodato con Carlos Baroli.\",\"Trayectoria consolidada y solvencia interdisciplinaria: titular bióloga y docente de biología (Colegio Salesiano y ex Escuela Experimental), cofundadora de la Fundación Patagónica de Equinoterapia (2011). Integra un equipo de salud (psicomotricista, kinesiólogo, psicóloga, docentes especiales y ecuestres) junto al programa comunitario 'Guardianes de Lucero'.\",\"Propuesta integral cuádruple: 1) Granja Educativa de Rescate (chinchillas, ratas de laboratorio, cerdita minipig Rita Uva, Pamperito de 35 años); 2) Escuela de Monta Consciente y Respetuosa (sin someter al caballo, pie a tierra y rienda suave); 3) Equinoterapia Interdisciplinaria con alta demanda sostenida; y 4) Terapias de Bienestar (yoga, meditación y constelaciones con caballos, coaching y feria El Paseo del Pinar).\"]",
+                "[\"Dispersión de servicios y falta de paquetes turísticos estandarizados: necesidad de acotar la oferta para el visitante espontáneo a 2 experiencias claras con días y horarios fijos ('Granja Educativa' y 'Bautismo Ecuestre').\",\"Estacionalidad forrajera invernal: alto costo de alimentación de caballos (fardos de alfalfa y avena) en invierno por falta de pastura en el pinar, requiriendo un flujo turístico comercial que subsidie la sustentabilidad animal.\",\"Comercialización informal y falta de punto de venta: dependencia de consultas por redes sociales sin acuerdos con agencias receptivas de Esquel/Trevelin, y necesidad de un espacio rústico de venta física para el Kit infantil 'Pequeño Cuidador' y productos de granja en la matera histórica.\"]",
+                "[{\"t\":\"Curaduría de 2 Experiencias Turísticas Estrella y Bioseguridad\",\"items\":[\"Experiencia 1: 'Granja Educativa & Saberes Vivos' (75 min, familiar y niños, historias de rescate, interacción guiada y merienda en la matera).\",\"Experiencia 2: 'Bautismo Ecuestre & Encuentro con el Caballo' (90 min, jóvenes y adultos, vínculo pie a tierra, monta consciente y paseo en El Pinar).\",\"Protocolo formal de bioseguridad ecuestre, deslindes de responsabilidad y seguros de turismo activo.\"]},{\"t\":\"Desarrollo del Kit 'Pequeño Cuidador' y Productos de Granja\",\"items\":[\"Lanzamiento del Kit 'Pequeño Cuidador / Guardián de Lucero' (libreta de campo ilustrada, lápiz ecológico, pin metálico de guardián y actividades).\",\"Línea de la granja: sobres de compost, semillas nativas y cuaderno editorial 'Historias de Lucero'. Acondicionamiento del puesto en la matera histórica.\"]},{\"t\":\"Estructura de Costos, Alianzas B2B y Ecosistema de Cohorte\",\"items\":[\"Planilla paramétrica de costos que amortice el forraje invernal y tarifario comercial B2C/B2B para agencias receptivas de Esquel y Trevelin.\",\"Catálogo digital interactivo, reservas por WhatsApp Business y sinergias con Haiku Casa de Té (retiros en El Pinar) y feria El Paseo del Pinar.\"]}]",
+                "[\"Guion interpretativo y fichas técnicas estandarizadas de las 2 Experiencias Turísticas ('Granja Educativa' y 'Bautismo Ecuestre').\",\"Protocolo de bioseguridad ecuestre, formulario de deslinde de responsabilidad y manual de bienestar animal.\",\"Prototipo impreso del Kit 'Pequeño Cuidador de Animales / Guardián de Lucero' (libreta, pin y empaque).\",\"Planilla paramétrica de costos con amortización de forraje invernal y tarifario comercial minorista/mayorista (B2C/B2B).\",\"Convenio de comercialización turística con al menos 2 agencias receptivas habilitadas de Esquel/Trevelin y catálogo digital publicado.\"]"
             ],
             [
                 'sabor',
@@ -2378,171 +2378,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'lucero-01',
                 'lucero',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
+                "Diagnóstico integral en predio, relevamiento de corrales y El Pinar",
                 'ter',
-                "Predio / Chacra",
-                '2026-09-12',
+                "Centro Integral Ecuestre Lucero (Ruta 259 km 25 / Los Cóndores)",
+                '2026-09-19',
                 "10:00",
-                "11:30",
+                "12:30",
                 'programada',
-                "Conocer el espacio real de trabajo de María Soledad Arrechea. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Centro Integral Ecuestre Lucero hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Visitar el predio en Ruta 259. Relevar el circuito de corrales de la granja educativa (chinchillas, ratas de laboratorio, cerdita Rita Uva, Pamperito de 35 años), la pista de monta y la matera histórica alemana. Evaluar la circulación peatonal de familias y accesibilidad para personas con movilidad reducida.",
+                "[\"¿Qué capacidad de carga simultánea tienen los corrales para que los animales no se estresen con contingentes familiares?\",\"¿Cómo organizamos los horarios de las actividades turísticas para que no interfieran con las sesiones de equinoterapia de los viernes?\",\"¿Qué mejoras inmediatas de cartelería y delimitación de senderos en El Pinar se requieren antes de recibir agencias?\"]",
+                "[\"Mapear el circuito físico de la visita a la granja y el sendero ecuestre por El Pinar.\",\"Identificar las necesidades de adecuación del puesto de recepción junto a la matera.\",\"Definir el cronograma de trabajo conjunto y disponibilidad horaria de Sol.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar corrales, boxes, pista de monta y matera histórica\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar el plano de zonificación: zona de granja, zona ecuestre y área de picnic\",\"done\":false},{\"id\":3,\"texto\":\"Establecer los días y horarios fijos semanales para visitas turísticas regulares\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'lucero-02',
                 'lucero',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
-                'ind',
-                "Turismo",
-                '2026-09-19',
-                "10:00",
-                "11:30",
+                "Estandarización de 2 Experiencias Turísticas y Protocolos de Bioseguridad",
+                'ter',
+                "Centro Ecuestre Lucero",
+                '2026-09-26',
+                "10:30",
+                "12:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Cerrar la ficha técnica y guion de las 2 experiencias turísticas: 1) Granja Educativa & Saberes Vivos (75 min, rescate animal, alimentación consciente y matera) y 2) Bautismo Ecuestre & Encuentro con el Caballo (90 min, vínculo pie a tierra, cepillado, monta consciente y paseo en El Pinar). Validar el protocolo de seguridad y deslindes de responsabilidad.",
+                "[\"¿Cuáles son los pasos etológicos previos a subir al caballo para que el turista sin experiencia pierda el miedo?\",\"¿Cómo articulamos la monta asistida o doble con terapeutas para nenes chiquitos o personas con discapacidad?\",\"¿Qué elementos de seguridad (cascos homologados, polainas) tenemos disponibles y cuáles debemos adquirir?\"]",
+                "[\"Redactar el guion didáctico paso a paso de la visita a la granja y el bautismo ecuestre.\",\"Formalizar el protocolo de bioseguridad, deslinde de responsabilidad y pautas de bienestar animal.\",\"Definir el cupo máximo por turno (granja: hasta 15 personas; ecuestre: hasta 4 montas simultáneas).\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el guion interpretativo de las 2 experiencias turísticas\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el formulario de deslinde de responsabilidad civil y seguro ecuestre\",\"done\":false},{\"id\":3,\"texto\":\"Verificar stock y condiciones de cascos de equitación y monturas de escuela\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'lucero-03',
                 'lucero',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Estructura de costos, forraje invernal y tarifario comercial B2C/B2B",
                 'ind',
-                "Turismo",
-                '2026-09-23',
-                "11:00",
+                "LAB Esquel / Secretaría de Turismo",
+                '2026-10-03',
+                "10:30",
                 "12:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Construir la planilla de costeo paramétrico de las experiencias. Desglosar alimentación y forraje de caballos (fardos de alfalfa, avena en pinar), veterinario, honorarios de guías/terapeutas, seguros y mantenimiento. Fijar tarifas minoristas y comisiones del 20-25% para agencias de viajes receptivas y mostradores de hoteles de Esquel y Trevelin.",
+                "[\"¿Cuánto cuesta sostener un caballo en invierno y cómo puede el turismo amortizar ese forraje?\",\"¿Qué tarifa diferencial resulta competitiva frente a cabalgatas tradicionales de la zona?\",\"¿Qué paquetes familiares (2 adultos + 2 niños) o promociones con merienda campesina podemos estructurar?\"]",
+                "[\"Parametrizar el costo unitario por visitante y calcular el punto de equilibrio financiero.\",\"Emitir la lista de precios oficial B2C (público general y residentes) y B2B (agencias EVyT).\",\"Diseñar la política de reservas, cancelaciones por mal tiempo y reprogramación.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y amortización de forraje en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir la ficha tarifaria comercial para agencias y prestadores hoteleros\",\"done\":false},{\"id\":3,\"texto\":\"Establecer el protocolo de contingencia climática en caso de lluvia o nieve\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'lucero-04',
                 'lucero',
                 4,
-                "Puesta en común Célula undefined",
-                'gru',
-                "Célula undefined (Turismo)",
-                '2026-09-30',
-                "09:30",
-                "12:00",
+                "Desarrollo del Kit Pequeño Cuidador y Merchandising con Identidad",
+                'ind',
+                "Centro Ecuestre Lucero",
+                '2026-10-10',
+                "10:30",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["adria"]
+                "Prototipar el kit físico infantil Pequeño Cuidador de Animales / Guardián de Lucero (libreta de campo ilustrada, lápiz ecológico de madera, guía de huellas y cuidados, pin metálico de guardián). Diseñar los cuadernos Historias de Lucero (cuentos de Pamperito y Rita Uva) y los sobres de semillas y compost de la granja como souvenirs de impacto.",
+                "[\"¿Qué ilustraciones e historias reales de los animales transmiten mejor el mensaje de bienestar y empatía?\",\"¿Qué costo de producción tienen los cuadernillos y pins para que el margen sea sustentable?\",\"¿Cómo involucramos a los niños que ya son Guardianes en la dinámica de bienvenida de los turistas?\"]",
+                "[\"Cerrar el diseño gráfico y contenidos pedagógicos del Kit del Pequeño Cuidador.\",\"Cotizar imprenta para una primera tirada de 100 cuadernillos y 100 pins.\",\"Organizar el espacio de exhibición y venta física en la matera histórica.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el boceto final de la libreta de actividades del Pequeño Cuidador\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar los stickers y packaging de semillas y compost de la granja\",\"done\":false},{\"id\":3,\"texto\":\"Definir el precio de venta del kit como opcional o incluido en el pase familiar\",\"done\":false}]",
+                ["adria","noelia"]
             ],
             [
                 'lucero-05',
                 'lucero',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Predio",
-                '2026-10-7',
+                "Producción fotográfica 4K, catálogo digital y canal de reservas",
+                'ter',
+                "Centro Ecuestre Lucero",
+                '2026-10-17',
                 "10:00",
-                "11:30",
+                "13:00",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
-                ["adria","noelia"]
+                "Sesión de fotografía y video profesional en El Pinar y corrales con animales y caballos. Registrar momentos de conexión íntima (cepillado, niños interactuando con Rita Uva y Pamperito, paseos a caballo entre los pinos). Maquetar el catálogo digital interactivo en PDF y configurar WhatsApp Business con respuestas automáticas y catálogo de servicios.",
+                "[\"¿Qué imágenes reflejan mejor la tranquilidad, la inclusión y la belleza del bosque?\",\"¿Cómo redactamos los textos de redes y catálogo para que quede claro que no es una cabalgata común?\",\"¿Qué link de pago digital (Mercado Pago) dejamos asociado a la confirmación de turnos?\"]",
+                "[\"Generar un banco de 30 fotografías profesionales de alta calidad y clips de video para reels.\",\"Publicar el catálogo digital oficial de experiencias de Centro Ecuestre Lucero.\",\"Configurar el canal de atención rápida y reservas por WhatsApp Business.\"]",
+                "[{\"id\":1,\"texto\":\"Realizar la sesión fotográfica con luz natural en El Pinar y granja\",\"done\":false},{\"id\":2,\"texto\":\"Seleccionar las 15 mejores tomas y redactar las fichas descriptivas\",\"done\":false},{\"id\":3,\"texto\":\"Cargar el catálogo de servicios con precios y enlaces de reserva en WhatsApp\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'lucero-06',
                 'lucero',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Rueda comercial B2B con agencias de Esquel/Trevelin y sinergias de cohorte",
                 'ind',
-                "Turismo",
-                '2026-10-15',
-                "10:00",
-                "11:30",
+                "Oficinas de Turismo / Centro Cultural Melipal",
+                '2026-10-24',
+                "10:30",
+                "12:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Presentar formalmente la propuesta a las principales agencias receptivas de Esquel y Trevelin (aprovechando la ubicación estratégica en Ruta 259). Coordinar sinergias con otros prestadores de la cohorte: meriendas y retiros combinados con Haiku Casa de Té, Pausa de Ñire y True Patagonia. Planificar la fecha de la próxima edición de El Paseo del Pinar.",
+                "[\"¿Qué interés manifiestan las agencias receptivas en incluir una parada de turismo rural/ecuestre camino a Trevelin?\",\"¿Cómo coordinamos con Haiku la provisión de blends de té para retiros holísticos en El Pinar?\",\"¿Qué fecha fijamos para El Paseo del Pinar de cara a la temporada turística de primavera/verano?\"]",
+                "[\"Reunirse con 3 agencias receptivas habilitadas y entregar material comercial.\",\"Firmar al menos 2 acuerdos marco de comercialización y derivación turística.\",\"Definir el cronograma y temática del próximo Paseo del Pinar.\"]",
+                "[{\"id\":1,\"texto\":\"Visitar agencias receptivas seleccionadas con catálogo y muestras del kit en mano\",\"done\":false},{\"id\":2,\"texto\":\"Firmar cartas de intención de comercialización turística\",\"done\":false},{\"id\":3,\"texto\":\"Coordinar una experiencia combinada piloto con Haiku o True Patagonia\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'lucero-07',
                 'lucero',
                 7,
-                "Comunicación digital, contenido y redes",
-                'ind',
-                "Turismo",
-                '2026-10-22',
-                "10:00",
-                "11:30",
+                "Simulacro vivencial en campo (Fam Tour con informantes turísticos y guías)",
+                'ter',
+                "Centro Ecuestre Lucero",
+                '2026-10-31',
+                "10:30",
+                "13:00",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
-                ["adria","noelia"]
+                "Salida piloto en terreno con un grupo de prueba (informantes de las Secretarías de Turismo de Esquel y Trevelin, guías y prestadores de la comarca). Recorrido guiado completo por la granja, demostración de bautismo ecuestre en El Pinar, entrega del Kit del Pequeño Cuidador y merienda en la matera histórica. Recolección de feedback técnico.",
+                "[\"¿Cómo respondieron los visitantes a las explicaciones pedagógicas de los animales de rescate?\",\"¿El ritmo de la actividad ecuestre y la atención del equipo resultaron fluidos y seguros?\",\"¿Qué sugerencias de mejora plantearon los informantes turísticos para recomendar el lugar en mostrador?\"]",
+                "[\"Validar los tiempos operativos reales de las dos experiencias en condiciones simuladas.\",\"Evaluar el impacto emocional de la interacción con los animales y la calidez del anfitrión.\",\"Ajustar detalles del guion verbal, cartelería de orientación y puesto de venta.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 10 participantes invitados\",\"done\":false},{\"id\":2,\"texto\":\"Completar encuestas de evaluación sobre seguridad, calidez y propuesta pedagógica\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales del tarifario y señalización interna del predio\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'lucero-08',
                 'lucero',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ter',
-                "Predio",
-                '2026-10-29',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'lucero-09',
-                'lucero',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-4',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'lucero-10',
-                'lucero',
-                10,
-                "Distinción, resultados y rueda de negocios",
-                'cie',
-                "Acto de cierre",
-                '2026-11-10',
-                "10:00",
+                "Ronda de negocios final, lanzamiento oficial y hoja de ruta post-LAB",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-07',
+                "09:30",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB. Montaje de mesa temática de Centro Ecuestre Lucero con exhibición de los kits de Pequeño Cuidador, semillas, fotos de El Pinar y banner informativo. Pitch de 3 minutos de María Soledad Arrechea presentando Lucero: Conexión Animal, Naturaleza y Bienestar Ecuestre. Firma de acuerdos comerciales y entrega del plan operativo post-incubación.",
+                "[\"¿Qué balance arrojan las primeras reservas turísticas ingresadas tras la ronda comercial?\",\"¿Cómo se organizará el calendario de Sol entre la docencia escolar y la atención en el centro?\",\"¿Qué pasos siguen para la postulación a créditos o subsidios para mejoras de infraestructura?\"]",
+                "[\"Exhibir la oferta integral de turismo rural y ecuestre ante la comunidad y los medios.\",\"Consolidar compromisos comerciales firmes con agencias y alojamientos para el verano.\",\"Entregar el informe final de consultoría y cronograma de actividades 2026/2027.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con material de granja, kits infantiles y fotos 4K\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante prestadores y autoridades municipales\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos de comercialización formal y balance de compromisos\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'sabor-01',
@@ -3142,7 +3108,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -4656,6 +4622,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $ra[0];
             foreach ($asistentes as $consId) {
                 $insAsistArroyo->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Centro Integral Ecuestre Lucero si todavía tiene la plantilla genérica inicial
+    $checkLucero = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'lucero-01'")->fetchColumn();
+    if ($checkLucero === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkLucero) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'lucero-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'lucero'");
+
+        $insReuLucero = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistLucero = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesLucero = [
+            [
+                'lucero-01',
+                'lucero',
+                1,
+                "Diagnóstico integral en predio, relevamiento de corrales y El Pinar",
+                'ter',
+                "Centro Integral Ecuestre Lucero (Ruta 259 km 25 / Los Cóndores)",
+                '2026-09-19',
+                "10:00",
+                "12:30",
+                'programada',
+                "Visitar el predio en Ruta 259. Relevar el circuito de corrales de la granja educativa (chinchillas, ratas de laboratorio, cerdita Rita Uva, Pamperito de 35 años), la pista de monta y la matera histórica alemana. Evaluar la circulación peatonal de familias y accesibilidad para personas con movilidad reducida.",
+                "[\"¿Qué capacidad de carga simultánea tienen los corrales para que los animales no se estresen con contingentes familiares?\",\"¿Cómo organizamos los horarios de las actividades turísticas para que no interfieran con las sesiones de equinoterapia de los viernes?\",\"¿Qué mejoras inmediatas de cartelería y delimitación de senderos en El Pinar se requieren antes de recibir agencias?\"]",
+                "[\"Mapear el circuito físico de la visita a la granja y el sendero ecuestre por El Pinar.\",\"Identificar las necesidades de adecuación del puesto de recepción junto a la matera.\",\"Definir el cronograma de trabajo conjunto y disponibilidad horaria de Sol.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar corrales, boxes, pista de monta y matera histórica\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar el plano de zonificación: zona de granja, zona ecuestre y área de picnic\",\"done\":false},{\"id\":3,\"texto\":\"Establecer los días y horarios fijos semanales para visitas turísticas regulares\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'lucero-02',
+                'lucero',
+                2,
+                "Estandarización de 2 Experiencias Turísticas y Protocolos de Bioseguridad",
+                'ter',
+                "Centro Ecuestre Lucero",
+                '2026-09-26',
+                "10:30",
+                "12:30",
+                'programada',
+                "Cerrar la ficha técnica y guion de las 2 experiencias turísticas: 1) Granja Educativa & Saberes Vivos (75 min, rescate animal, alimentación consciente y matera) y 2) Bautismo Ecuestre & Encuentro con el Caballo (90 min, vínculo pie a tierra, cepillado, monta consciente y paseo en El Pinar). Validar el protocolo de seguridad y deslindes de responsabilidad.",
+                "[\"¿Cuáles son los pasos etológicos previos a subir al caballo para que el turista sin experiencia pierda el miedo?\",\"¿Cómo articulamos la monta asistida o doble con terapeutas para nenes chiquitos o personas con discapacidad?\",\"¿Qué elementos de seguridad (cascos homologados, polainas) tenemos disponibles y cuáles debemos adquirir?\"]",
+                "[\"Redactar el guion didáctico paso a paso de la visita a la granja y el bautismo ecuestre.\",\"Formalizar el protocolo de bioseguridad, deslinde de responsabilidad y pautas de bienestar animal.\",\"Definir el cupo máximo por turno (granja: hasta 15 personas; ecuestre: hasta 4 montas simultáneas).\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el guion interpretativo de las 2 experiencias turísticas\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el formulario de deslinde de responsabilidad civil y seguro ecuestre\",\"done\":false},{\"id\":3,\"texto\":\"Verificar stock y condiciones de cascos de equitación y monturas de escuela\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'lucero-03',
+                'lucero',
+                3,
+                "Estructura de costos, forraje invernal y tarifario comercial B2C/B2B",
+                'ind',
+                "LAB Esquel / Secretaría de Turismo",
+                '2026-10-03',
+                "10:30",
+                "12:30",
+                'programada',
+                "Construir la planilla de costeo paramétrico de las experiencias. Desglosar alimentación y forraje de caballos (fardos de alfalfa, avena en pinar), veterinario, honorarios de guías/terapeutas, seguros y mantenimiento. Fijar tarifas minoristas y comisiones del 20-25% para agencias de viajes receptivas y mostradores de hoteles de Esquel y Trevelin.",
+                "[\"¿Cuánto cuesta sostener un caballo en invierno y cómo puede el turismo amortizar ese forraje?\",\"¿Qué tarifa diferencial resulta competitiva frente a cabalgatas tradicionales de la zona?\",\"¿Qué paquetes familiares (2 adultos + 2 niños) o promociones con merienda campesina podemos estructurar?\"]",
+                "[\"Parametrizar el costo unitario por visitante y calcular el punto de equilibrio financiero.\",\"Emitir la lista de precios oficial B2C (público general y residentes) y B2B (agencias EVyT).\",\"Diseñar la política de reservas, cancelaciones por mal tiempo y reprogramación.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y amortización de forraje en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir la ficha tarifaria comercial para agencias y prestadores hoteleros\",\"done\":false},{\"id\":3,\"texto\":\"Establecer el protocolo de contingencia climática en caso de lluvia o nieve\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'lucero-04',
+                'lucero',
+                4,
+                "Desarrollo del Kit Pequeño Cuidador y Merchandising con Identidad",
+                'ind',
+                "Centro Ecuestre Lucero",
+                '2026-10-10',
+                "10:30",
+                "12:30",
+                'programada',
+                "Prototipar el kit físico infantil Pequeño Cuidador de Animales / Guardián de Lucero (libreta de campo ilustrada, lápiz ecológico de madera, guía de huellas y cuidados, pin metálico de guardián). Diseñar los cuadernos Historias de Lucero (cuentos de Pamperito y Rita Uva) y los sobres de semillas y compost de la granja como souvenirs de impacto.",
+                "[\"¿Qué ilustraciones e historias reales de los animales transmiten mejor el mensaje de bienestar y empatía?\",\"¿Qué costo de producción tienen los cuadernillos y pins para que el margen sea sustentable?\",\"¿Cómo involucramos a los niños que ya son Guardianes en la dinámica de bienvenida de los turistas?\"]",
+                "[\"Cerrar el diseño gráfico y contenidos pedagógicos del Kit del Pequeño Cuidador.\",\"Cotizar imprenta para una primera tirada de 100 cuadernillos y 100 pins.\",\"Organizar el espacio de exhibición y venta física en la matera histórica.\"]",
+                "[{\"id\":1,\"texto\":\"Aprobar el boceto final de la libreta de actividades del Pequeño Cuidador\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar los stickers y packaging de semillas y compost de la granja\",\"done\":false},{\"id\":3,\"texto\":\"Definir el precio de venta del kit como opcional o incluido en el pase familiar\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'lucero-05',
+                'lucero',
+                5,
+                "Producción fotográfica 4K, catálogo digital y canal de reservas",
+                'ter',
+                "Centro Ecuestre Lucero",
+                '2026-10-17',
+                "10:00",
+                "13:00",
+                'programada',
+                "Sesión de fotografía y video profesional en El Pinar y corrales con animales y caballos. Registrar momentos de conexión íntima (cepillado, niños interactuando con Rita Uva y Pamperito, paseos a caballo entre los pinos). Maquetar el catálogo digital interactivo en PDF y configurar WhatsApp Business con respuestas automáticas y catálogo de servicios.",
+                "[\"¿Qué imágenes reflejan mejor la tranquilidad, la inclusión y la belleza del bosque?\",\"¿Cómo redactamos los textos de redes y catálogo para que quede claro que no es una cabalgata común?\",\"¿Qué link de pago digital (Mercado Pago) dejamos asociado a la confirmación de turnos?\"]",
+                "[\"Generar un banco de 30 fotografías profesionales de alta calidad y clips de video para reels.\",\"Publicar el catálogo digital oficial de experiencias de Centro Ecuestre Lucero.\",\"Configurar el canal de atención rápida y reservas por WhatsApp Business.\"]",
+                "[{\"id\":1,\"texto\":\"Realizar la sesión fotográfica con luz natural en El Pinar y granja\",\"done\":false},{\"id\":2,\"texto\":\"Seleccionar las 15 mejores tomas y redactar las fichas descriptivas\",\"done\":false},{\"id\":3,\"texto\":\"Cargar el catálogo de servicios con precios y enlaces de reserva en WhatsApp\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+            [
+                'lucero-06',
+                'lucero',
+                6,
+                "Rueda comercial B2B con agencias de Esquel/Trevelin y sinergias de cohorte",
+                'ind',
+                "Oficinas de Turismo / Centro Cultural Melipal",
+                '2026-10-24',
+                "10:30",
+                "12:30",
+                'programada',
+                "Presentar formalmente la propuesta a las principales agencias receptivas de Esquel y Trevelin (aprovechando la ubicación estratégica en Ruta 259). Coordinar sinergias con otros prestadores de la cohorte: meriendas y retiros combinados con Haiku Casa de Té, Pausa de Ñire y True Patagonia. Planificar la fecha de la próxima edición de El Paseo del Pinar.",
+                "[\"¿Qué interés manifiestan las agencias receptivas en incluir una parada de turismo rural/ecuestre camino a Trevelin?\",\"¿Cómo coordinamos con Haiku la provisión de blends de té para retiros holísticos en El Pinar?\",\"¿Qué fecha fijamos para El Paseo del Pinar de cara a la temporada turística de primavera/verano?\"]",
+                "[\"Reunirse con 3 agencias receptivas habilitadas y entregar material comercial.\",\"Firmar al menos 2 acuerdos marco de comercialización y derivación turística.\",\"Definir el cronograma y temática del próximo Paseo del Pinar.\"]",
+                "[{\"id\":1,\"texto\":\"Visitar agencias receptivas seleccionadas con catálogo y muestras del kit en mano\",\"done\":false},{\"id\":2,\"texto\":\"Firmar cartas de intención de comercialización turística\",\"done\":false},{\"id\":3,\"texto\":\"Coordinar una experiencia combinada piloto con Haiku o True Patagonia\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'lucero-07',
+                'lucero',
+                7,
+                "Simulacro vivencial en campo (Fam Tour con informantes turísticos y guías)",
+                'ter',
+                "Centro Ecuestre Lucero",
+                '2026-10-31',
+                "10:30",
+                "13:00",
+                'programada',
+                "Salida piloto en terreno con un grupo de prueba (informantes de las Secretarías de Turismo de Esquel y Trevelin, guías y prestadores de la comarca). Recorrido guiado completo por la granja, demostración de bautismo ecuestre en El Pinar, entrega del Kit del Pequeño Cuidador y merienda en la matera histórica. Recolección de feedback técnico.",
+                "[\"¿Cómo respondieron los visitantes a las explicaciones pedagógicas de los animales de rescate?\",\"¿El ritmo de la actividad ecuestre y la atención del equipo resultaron fluidos y seguros?\",\"¿Qué sugerencias de mejora plantearon los informantes turísticos para recomendar el lugar en mostrador?\"]",
+                "[\"Validar los tiempos operativos reales de las dos experiencias en condiciones simuladas.\",\"Evaluar el impacto emocional de la interacción con los animales y la calidez del anfitrión.\",\"Ajustar detalles del guion verbal, cartelería de orientación y puesto de venta.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 10 participantes invitados\",\"done\":false},{\"id\":2,\"texto\":\"Completar encuestas de evaluación sobre seguridad, calidez y propuesta pedagógica\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales del tarifario y señalización interna del predio\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+            [
+                'lucero-08',
+                'lucero',
+                8,
+                "Ronda de negocios final, lanzamiento oficial y hoja de ruta post-LAB",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-07',
+                "09:30",
+                "13:00",
+                'programada',
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB. Montaje de mesa temática de Centro Ecuestre Lucero con exhibición de los kits de Pequeño Cuidador, semillas, fotos de El Pinar y banner informativo. Pitch de 3 minutos de María Soledad Arrechea presentando Lucero: Conexión Animal, Naturaleza y Bienestar Ecuestre. Firma de acuerdos comerciales y entrega del plan operativo post-incubación.",
+                "[\"¿Qué balance arrojan las primeras reservas turísticas ingresadas tras la ronda comercial?\",\"¿Cómo se organizará el calendario de Sol entre la docencia escolar y la atención en el centro?\",\"¿Qué pasos siguen para la postulación a créditos o subsidios para mejoras de infraestructura?\"]",
+                "[\"Exhibir la oferta integral de turismo rural y ecuestre ante la comunidad y los medios.\",\"Consolidar compromisos comerciales firmes con agencias y alojamientos para el verano.\",\"Entregar el informe final de consultoría y cronograma de actividades 2026/2027.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con material de granja, kits infantiles y fotos 4K\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos ante prestadores y autoridades municipales\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos de comercialización formal y balance de compromisos\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+        ];
+
+        foreach ($reunionesLucero as $rl) {
+            $asistentes = array_pop($rl);
+            $insReuLucero->execute($rl);
+            $reuId = $rl[0];
+            foreach ($asistentes as $consId) {
+                $insAsistLucero->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
