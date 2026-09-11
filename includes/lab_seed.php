@@ -217,17 +217,17 @@ function lab_asegurar_datos(PDO $pdo): void
             [
                 'corcho',
                 14,
-                "Corchobike",
-                "Nestor andres colinecul",
+                "Corcho Bikes",
+                "Néstor Andrés Colinecul",
                 'Acelera',
                 3.13,
                 4,
                 'leandro',
                 'agustina',
-                "[\"Taller de ciclismo, salidas guiadas urbanas y periféricas, clínicas para niños y guardería.\",\"Gran conocimiento de los circuitos de pedaleo de Esquel y La Zeta.\",\"Emprendedor con fuerte arraigo comunitario.\"]",
-                "[\"Flota de bicicletas en óptimas condiciones para alquiler.\",\"Habilitación de guardería y seguros de actividad.\"]",
-                "[{\"t\":\"Circuitos Urbanos Guiados\",\"items\":[\"Diseño de 2 circuitos accesibles para familias.\",\"Tarifario de guiada + alquiler de bici + casco.\"]},{\"t\":\"Servicio al Alojamiento\",\"items\":[\"Entrega y retiro de bicicletas en hoteles y cabañas.\",\"Cartelería de guardería en eventos.\"]}]",
-                "[\"Mapa y ficha de los circuitos autoguiados y guiados.\",\"Tarifario de alquiler y salidas confirmado.\"]"
+                "[\"Néstor Andrés 'Corcho' Colinecul pedalea desde los 11 años de forma continua (cumpliendo 50 años). Su padre le construyó su primera bicicleta en 1989, iniciando una carrera con múltiples títulos provinciales y regionales en ruta y MTB. Posee una autoridad técnica, deportiva y territorial inobjetable.\",\"Su taller mecánico en Barrio Los Sauces (calle 44, casa 28) opera desde 2019 a solo 2 cuadras de La Trochita y 3 de la subida al cementerio. Funciona espontáneamente como un club social barrial donde clientes y ciclistas pasan horas tomando mate mientras él realiza services mecánicos.\",\"Emprendimiento familiar con rol activo de su compañera y su hija (competidora y estudiante). Su compañera elabora dulces caseros tradicionales con fruta de la zona, aportando un elemento gastronómico de enorme calidez para complementar las paradas de las guiadas.\",\"Cuenta con posicionamiento orgánico en Google Maps con excelentes reseñas espontáneas de turistas de distintas provincias y de Brasil, quienes destacan su honestidad, rapidez y rescate mecánico inmediato.\",\"Presentó un proyecto social aprobado por la sede vecinal Los Sauces para enseñar mecánica básica, reciclaje de piezas y destreza a niños del barrio. El desafío es reorientar esa vocación comunitaria hacia un modelo de turismo activo rentable y sostenible.\"]",
+                "[\"Carencia total de flota de bicicletas para excursionistas: Corcho solo cuenta con su propia bicicleta MTB de competición (habiendo vendido unidades previas). Se requiere resolver una flota puente de 6 a 8 unidades con cascos homologados.\",\"Protección del taller y delimitación horaria: El taller mecánico diario es el sustento de la familia. El cicloturismo debe circunscribirse estrictamente a martes, jueves y sábados por la tarde (a partir de las 14:30), preservando las mañanas para reparaciones.\",\"Reencuadre de guardería a turismo activo y seguros: Superar la idea original de 'guardería comunitaria' e inscribirse formalmente en el registro de Turismo Activo de Esquel, con póliza de seguro de accidentes personales para cicloturistas.\",\"Inexistencia de plataforma web institucional y material audiovisual profesional: Falta un sitio institucional que detalle los circuitos y permita reservas online. La conducción (Leandro) programará e implementará la plataforma web de forma gratuita.\",\"Fijación de costos y tarifario comercial: Superar la oferta ad-honorem o a la gorra, estructurando una matriz de costos que permita fijar tarifas rentables y ofrecer comisiones (15% a 20%) a agencias y recepciones de hoteles.\"]",
+                "[{\"t\":\"Paquetización de Experiencias y Cápsula Familiar\",\"items\":[\"Circuito Familiar 'Pedaleo y Merienda en las Vías': dinámica de 2 hs donde los niños tienen una clínica lúdica de destreza y mecánica básica en un entorno seguro, mientras los padres descansan con mateada y degustación de dulces caseros frente a La Trochita.\",\"Circuito 'Esquel Lado B y Taller Abierto': para jóvenes y parejas, con un 'mini service participativo' de 15 min en el taller (calibración de frenos y cadena, mate con anécdotas de competencia) y pedaleo por senderos panorámicos del cementerio y Calle 10.\",\"Souvenir identitario sustentable: lapicero o portallaves de escritorio confeccionado en el taller con piezas recicladas (eslabones, piñones, rayos) y frasco de dulce casero artesanal con etiqueta 'Corcho Bikes · Esquel'.\"]},{\"t\":\"Gestión de Flota, Operatividad y Normativa\",\"items\":[\"Esquema de provisión de flota puente mediante convenio con bicicleterías locales o rodados municipales (6 bicis calibradas) y fondo de amortización para flota propia.\",\"Adquisición de kit de seguridad homologado: cascos para niños y adultos, chalecos reflectivos, conos de señalización y botiquín de primeros auxilios.\",\"Inscripción en Turismo Activo de Esquel, contratación de póliza de seguro de accidentes personales para excursionistas y fichas de deslinde de responsabilidad.\"]},{\"t\":\"Plataforma Web, Producción Audiovisual y Comercialización\",\"items\":[\"Benchmarking internacional de sitios web de bike-tours de autor (EE.UU., Europa) para definir layout y narrativa.\",\"Desarrollo y puesta en línea de la plataforma web oficial de Corcho Bikes por parte de Leandro (historia de Corcho, circuitos, galería y botón de reserva WhatsApp Business).\",\"Producción audiovisual oficial con equipo de la Subsecretaría: video 4K con dron sobre las vías de La Trochita y tomas cinematográficas de taller.\",\"Diseño e impresión de la ficha comercial de una carilla para mostradores de hoteles, cabañas y agencias de viaje con tarifario y comisiones cerradas.\"]}]",
+                "[\"Guion técnico de los dos circuitos ('Familiar en las Vías' y 'Lado B Taller Abierto').\",\"Sitio web institucional de Corcho Bikes programado y puesto en línea (con motor de reservas WhatsApp).\",\"Banco audiovisual profesional (video 4K con dron en La Trochita + tomas de taller en alta resolución).\",\"Protocolo de flota operativa y kit de seguridad homologado (cascos y elementos de protección).\",\"Prototipo del souvenir identitario conector (lapicero de partes recicladas + dulce casero con packaging).\",\"Ficha comercial y tarifario cerrado con esquema de comisiones para el sector receptivo.\"]"
             ],
             [
                 'retro',
@@ -2072,159 +2072,125 @@ function lab_asegurar_datos(PDO $pdo): void
                 'corcho-01',
                 'corcho',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
-                'ind',
-                "Taller / Local",
-                '2026-09-12',
-                "10:00",
-                "11:30",
+                "Relevamiento en terreno: taller barrial y entorno La Trochita",
+                'ter',
+                "Taller Los Sauces (Calle 44 Casa 28)",
+                '2026-09-17',
+                "15:00",
+                "17:00",
                 'programada',
-                "Conocer el espacio real de trabajo de Nestor andres colinecul. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Corchobike hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Relevar el espacio físico del taller, layout de herramientas, rincón de recepción y mate, acceso desde la estación La Trochita y callejón hacia el cementerio. Probar el dulce casero y evaluar opciones de packaging.",
+                "[\"¿Dónde ubicamos a los turistas y a los niños para que estén seguros sin riesgo en el taller?\",\"¿Cómo integramos la degustación del dulce casero en el espacio de bienvenida?\",\"¿Qué estado mecánico tiene la bicicleta de competición y qué herramientas tenemos para mostrar?\"]",
+                "[\"Medir y delimitar el sector de visita en el taller.\",\"Fotografiar el taller y el acceso barrial.\",\"Relevar estado de la bicicleta y herramientas.\",\"Degustar el dulce casero y evaluar opciones de packaging.\"]",
+                "[{\"id\":1,\"texto\":\"Medir el espacio disponible para recepción\",\"done\":false},{\"id\":2,\"texto\":\"Fotografiar puntos críticos de acceso y vías del tren\",\"done\":false},{\"id\":3,\"texto\":\"Relevar herramientas y elementos de seguridad en taller\",\"done\":false},{\"id\":4,\"texto\":\"Definir el rincón de mateada y degustación de dulces\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'corcho-02',
                 'corcho',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
+                "Arquitectura web y benchmarking internacional",
                 'ind',
                 "Turismo",
-                '2026-09-19',
-                "10:00",
-                "11:30",
+                '2026-09-22',
+                "15:00",
+                "16:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Revisar el material de referencias internacionales recopilado por la familia (webs de EE.UU., Europa, etc.), estructurar el árbol de contenidos de la página web y redactar el borrador del relato de vida de Corcho.",
+                "[\"¿Qué secciones tendrá la web (Inicio, Historia de Corcho, Circuitos, Taller, Reservas)?\",\"¿Qué llamados a la acción priorizamos para que el turista reserve por WhatsApp?\"]",
+                "[\"Recibir el documento borrador con la historia deportiva de Corcho.\",\"Seleccionar referencias de diseño y animaciones.\",\"Definir estructura de hosting, dominio y layout que programará Leandro.\"]",
+                "[{\"id\":1,\"texto\":\"Revisar referencias web internacionales enviadas\",\"done\":false},{\"id\":2,\"texto\":\"Estructurar el árbol de navegación del sitio web\",\"done\":false},{\"id\":3,\"texto\":\"Redactar la biografía deportiva desde los 11 años\",\"done\":false},{\"id\":4,\"texto\":\"Configurar llamados a la acción para reservas\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'corcho-03',
                 'corcho',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Estrategia de flota puente, seguridad y normativa",
                 'ind',
                 "Turismo",
-                '2026-09-23',
-                "11:00",
-                "12:30",
+                '2026-09-24',
+                "15:00",
+                "16:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Definir la estrategia de provisión de bicicletas para la temporada de prueba, relevar costos de cascos homologados y encuadrar el seguro de turismo activo.",
+                "[\"¿A qué bicicleterías o prestadores podemos acudir para un acuerdo puente de alquiler?\",\"¿Cuánto cuesta el seguro de accidentes personales por excursionista por día?\"]",
+                "[\"Mapear 3 alternativas de provisión de 6 bicicletas.\",\"Cotizar póliza de seguro de turismo alternativo.\",\"Iniciar expediente de registro de prestador en la Subsecretaría de Turismo.\"]",
+                "[{\"id\":1,\"texto\":\"Contactar a 2 bicicleterías locales para convenio puente\",\"done\":false},{\"id\":2,\"texto\":\"Cotizar kit de 8 cascos homologados de diversos talles\",\"done\":false},{\"id\":3,\"texto\":\"Pedir presupuesto a aseguradora para turismo activo\",\"done\":false},{\"id\":4,\"texto\":\"Armar borrador de ficha médica y deslinde de responsabilidad\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'corcho-04',
                 'corcho',
                 4,
-                "Puesta en común Célula undefined",
+                "Canal, volumen y comercialización cruzada (Célula 4)",
                 'gru',
-                "Célula undefined (Turismo)",
+                "Célula 4 (Melipal)",
                 '2026-09-30',
                 "09:30",
-                "12:00",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["leandro"]
+                "Encuentro grupal de la Célula 4 (Canal y volumen). Analizar canales de venta, alianzas cruzadas entre prestadores de excursiones y agencias receptivas, y fijación de comisiones de intermediación.",
+                "[\"¿Cómo puede Yamamori Travel o True Patagonia incluir las guiadas de Corcho en sus paquetes de destino?\",\"¿Qué sinergias hay entre la merienda de Haiku y el cicloturismo?\"]",
+                "[\"Presentar la propuesta de Corcho Bikes a los colegas de célula.\",\"Analizar esquema de comisiones del 15% al 20%.\",\"Identificar derivaciones cruzadas de turistas.\"]",
+                "[{\"id\":1,\"texto\":\"Llevar la propuesta resumida de los 2 circuitos\",\"done\":false},{\"id\":2,\"texto\":\"Acordar con al menos 1 agencia receptiva de la célula una salida de prueba\",\"done\":false},{\"id\":3,\"texto\":\"Validar el esquema de comisiones de intermediación\",\"done\":false}]",
+                ["leandro","mariela","agustina"]
             ],
             [
                 'corcho-05',
                 'corcho',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Taller / Turismo",
-                '2026-10-7',
-                "10:00",
-                "11:30",
+                "Rodaje audiovisual profesional con dron y 4K",
+                'ter',
+                "La Trochita y Taller",
+                '2026-10-10',
+                "14:30",
+                "17:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
+                "Filmar el material publicitario oficial con cámaras 4K y dron en vuelo rasante sobre las vías del tren La Trochita y tomas de oficio y detalle en el taller.",
+                "[\"¿Cuáles son los ángulos más impactantes del pedaleo junto a los rieles históricos?\",\"¿Cómo capturamos la emoción y la maestría mecánica de Corcho en video?\"]",
+                "[\"Filmar secuencia de Corcho pedaleando junto a las vías con seguimiento de dron.\",\"Realizar tomas macro de ajuste de rayos, piñones y grasa en el taller.\",\"Grabar mensaje de invitación a cámara.\"]",
+                "[{\"id\":1,\"texto\":\"Coordinar con el camarógrafo y piloto de dron de Turismo\",\"done\":false},{\"id\":2,\"texto\":\"Preparar la bicicleta de competición impecable y ropa deportiva\",\"done\":false},{\"id\":3,\"texto\":\"Grabar tomas de taller, mates y herramientas\",\"done\":false},{\"id\":4,\"texto\":\"Hacer backup del material grabado en crudo\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'corcho-06',
                 'corcho',
                 6,
-                "Canales de comercialización y alianzas locales",
-                'ind',
-                "Turismo",
+                "Salida piloto y ensayo general de circuito familiar",
+                'ter',
+                "Taller y Mirador de las Vías",
                 '2026-10-15',
-                "10:00",
-                "11:30",
+                "15:00",
+                "17:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Ejecutar la experiencia familiar completa en condiciones reales para cronometrar la clínica para niños, la merienda con mate y dulce para los adultos, y validar protocolos de seguridad.",
+                "[\"¿Los niños comprendieron y disfrutaron la mecánica básica?\",\"¿Los padres sintieron que tuvieron un verdadero momento de descanso y relax?\",\"¿Cómo resultó el tiempo total?\"]",
+                "[\"Cronometrar cada bloque de la experiencia.\",\"Evaluar el funcionamiento de las bicis y cascos.\",\"Recabar feedback honesto de la familia invitada.\",\"Ajustar detalles del guion.\"]",
+                "[{\"id\":1,\"texto\":\"Convocar a una familia con 2 niños para la prueba\",\"done\":false},{\"id\":2,\"texto\":\"Probar el kit de cascos y señalización\",\"done\":false},{\"id\":3,\"texto\":\"Servir la merienda con dulce casero y mate cocido\",\"done\":false},{\"id\":4,\"texto\":\"Completar encuesta de satisfacción con los invitados\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'corcho-07',
                 'corcho',
                 7,
-                "Comunicación digital, contenido y redes",
+                "Presentación web oficial, tarifario y ficha comercial",
                 'ind',
                 "Turismo",
-                '2026-10-22',
-                "10:00",
-                "11:30",
+                '2026-10-27',
+                "15:00",
+                "16:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
+                "Presentar el sitio web terminado y publicado online, validar el prototipo del souvenir (lapicero reciclado + dulce) y cerrar el tarifario final para el sector comercial.",
+                "[\"¿Está operativo el botón de reserva directa por WhatsApp?\",\"¿El precio cubre todos los costos fijos y variables dejando margen de ganancia neto?\"]",
+                "[\"Revisar la web en vivo en computadoras y celulares.\",\"Validar el prototipo del souvenir reciclado.\",\"Imprimir 10 fichas comerciales para distribuir en hoteles.\",\"Configurar catálogo de WhatsApp Business.\"]",
+                "[{\"id\":1,\"texto\":\"Testear funcionamiento del sitio web y formularios\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar el packaging del souvenir reciclado con dulce\",\"done\":false},{\"id\":3,\"texto\":\"Fijar precio por persona y paquete familiar\",\"done\":false},{\"id\":4,\"texto\":\"Imprimir 10 fichas comerciales para el sector receptivo\",\"done\":false}]",
                 ["leandro","agustina"]
             ],
             [
                 'corcho-08',
                 'corcho',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ind',
-                "Taller / Local",
-                '2026-10-29',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["leandro","agustina"]
-            ],
-            [
-                'corcho-09',
-                'corcho',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-4',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["leandro","agustina"]
-            ],
-            [
-                'corcho-10',
-                'corcho',
-                10,
                 "Distinción, resultados y rueda de negocios",
                 'cie',
                 "Acto de cierre",
@@ -2232,10 +2198,10 @@ function lab_asegurar_datos(PDO $pdo): void
                 "10:00",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
+                "Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.",
+                "[\"¿Qué convenios comerciales quedan cerrados para el verano 2027?\"]",
+                "[\"Cerrar al menos dos convenios de derivación con agencias u hoteles.\",\"Presentar el sitio web y el video de dron en pantalla gigante.\"]",
+                "[{\"id\":1,\"texto\":\"Confirmar asistencia al plenario con la familia\",\"done\":false},{\"id\":2,\"texto\":\"Montar stand con bici histórica, piezas recicladas y dulces\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un convenio formal en la rueda de negocios\",\"done\":false}]",
                 ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
             ],
             [
@@ -3414,7 +3380,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -3584,6 +3550,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rn[0];
             foreach ($asistentes as $consId) {
                 $insAsistNire->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Corcho Bikes si todavía tiene la plantilla genérica inicial
+    $checkCorcho = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'corcho-01'")->fetchColumn();
+    if ($checkCorcho === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkCorcho) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'corcho-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'corcho'");
+
+        $insReuCorcho = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistCorcho = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesCorcho = [
+            [
+                'corcho-01',
+                'corcho',
+                1,
+                "Relevamiento en terreno: taller barrial y entorno La Trochita",
+                'ter',
+                "Taller Los Sauces (Calle 44 Casa 28)",
+                '2026-09-17',
+                "15:00",
+                "17:00",
+                'programada',
+                "Relevar el espacio físico del taller, layout de herramientas, rincón de recepción y mate, acceso desde la estación La Trochita y callejón hacia el cementerio. Probar el dulce casero y evaluar opciones de packaging.",
+                "[\"¿Dónde ubicamos a los turistas y a los niños para que estén seguros sin riesgo en el taller?\",\"¿Cómo integramos la degustación del dulce casero en el espacio de bienvenida?\",\"¿Qué estado mecánico tiene la bicicleta de competición y qué herramientas tenemos para mostrar?\"]",
+                "[\"Medir y delimitar el sector de visita en el taller.\",\"Fotografiar el taller y el acceso barrial.\",\"Relevar estado de la bicicleta y herramientas.\",\"Degustar el dulce casero y evaluar opciones de packaging.\"]",
+                "[{\"id\":1,\"texto\":\"Medir el espacio disponible para recepción\",\"done\":false},{\"id\":2,\"texto\":\"Fotografiar puntos críticos de acceso y vías del tren\",\"done\":false},{\"id\":3,\"texto\":\"Relevar herramientas y elementos de seguridad en taller\",\"done\":false},{\"id\":4,\"texto\":\"Definir el rincón de mateada y degustación de dulces\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'corcho-02',
+                'corcho',
+                2,
+                "Arquitectura web y benchmarking internacional",
+                'ind',
+                "Turismo",
+                '2026-09-22',
+                "15:00",
+                "16:30",
+                'programada',
+                "Revisar el material de referencias internacionales recopilado por la familia (webs de EE.UU., Europa, etc.), estructurar el árbol de contenidos de la página web y redactar el borrador del relato de vida de Corcho.",
+                "[\"¿Qué secciones tendrá la web (Inicio, Historia de Corcho, Circuitos, Taller, Reservas)?\",\"¿Qué llamados a la acción priorizamos para que el turista reserve por WhatsApp?\"]",
+                "[\"Recibir el documento borrador con la historia deportiva de Corcho.\",\"Seleccionar referencias de diseño y animaciones.\",\"Definir estructura de hosting, dominio y layout que programará Leandro.\"]",
+                "[{\"id\":1,\"texto\":\"Revisar referencias web internacionales enviadas\",\"done\":false},{\"id\":2,\"texto\":\"Estructurar el árbol de navegación del sitio web\",\"done\":false},{\"id\":3,\"texto\":\"Redactar la biografía deportiva desde los 11 años\",\"done\":false},{\"id\":4,\"texto\":\"Configurar llamados a la acción para reservas\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'corcho-03',
+                'corcho',
+                3,
+                "Estrategia de flota puente, seguridad y normativa",
+                'ind',
+                "Turismo",
+                '2026-09-24',
+                "15:00",
+                "16:30",
+                'programada',
+                "Definir la estrategia de provisión de bicicletas para la temporada de prueba, relevar costos de cascos homologados y encuadrar el seguro de turismo activo.",
+                "[\"¿A qué bicicleterías o prestadores podemos acudir para un acuerdo puente de alquiler?\",\"¿Cuánto cuesta el seguro de accidentes personales por excursionista por día?\"]",
+                "[\"Mapear 3 alternativas de provisión de 6 bicicletas.\",\"Cotizar póliza de seguro de turismo alternativo.\",\"Iniciar expediente de registro de prestador en la Subsecretaría de Turismo.\"]",
+                "[{\"id\":1,\"texto\":\"Contactar a 2 bicicleterías locales para convenio puente\",\"done\":false},{\"id\":2,\"texto\":\"Cotizar kit de 8 cascos homologados de diversos talles\",\"done\":false},{\"id\":3,\"texto\":\"Pedir presupuesto a aseguradora para turismo activo\",\"done\":false},{\"id\":4,\"texto\":\"Armar borrador de ficha médica y deslinde de responsabilidad\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'corcho-04',
+                'corcho',
+                4,
+                "Canal, volumen y comercialización cruzada (Célula 4)",
+                'gru',
+                "Célula 4 (Melipal)",
+                '2026-09-30',
+                "09:30",
+                "12:30",
+                'programada',
+                "Encuentro grupal de la Célula 4 (Canal y volumen). Analizar canales de venta, alianzas cruzadas entre prestadores de excursiones y agencias receptivas, y fijación de comisiones de intermediación.",
+                "[\"¿Cómo puede Yamamori Travel o True Patagonia incluir las guiadas de Corcho en sus paquetes de destino?\",\"¿Qué sinergias hay entre la merienda de Haiku y el cicloturismo?\"]",
+                "[\"Presentar la propuesta de Corcho Bikes a los colegas de célula.\",\"Analizar esquema de comisiones del 15% al 20%.\",\"Identificar derivaciones cruzadas de turistas.\"]",
+                "[{\"id\":1,\"texto\":\"Llevar la propuesta resumida de los 2 circuitos\",\"done\":false},{\"id\":2,\"texto\":\"Acordar con al menos 1 agencia receptiva de la célula una salida de prueba\",\"done\":false},{\"id\":3,\"texto\":\"Validar el esquema de comisiones de intermediación\",\"done\":false}]",
+                ["leandro","mariela","agustina"]
+            ],
+            [
+                'corcho-05',
+                'corcho',
+                5,
+                "Rodaje audiovisual profesional con dron y 4K",
+                'ter',
+                "La Trochita y Taller",
+                '2026-10-10',
+                "14:30",
+                "17:30",
+                'programada',
+                "Filmar el material publicitario oficial con cámaras 4K y dron en vuelo rasante sobre las vías del tren La Trochita y tomas de oficio y detalle en el taller.",
+                "[\"¿Cuáles son los ángulos más impactantes del pedaleo junto a los rieles históricos?\",\"¿Cómo capturamos la emoción y la maestría mecánica de Corcho en video?\"]",
+                "[\"Filmar secuencia de Corcho pedaleando junto a las vías con seguimiento de dron.\",\"Realizar tomas macro de ajuste de rayos, piñones y grasa en el taller.\",\"Grabar mensaje de invitación a cámara.\"]",
+                "[{\"id\":1,\"texto\":\"Coordinar con el camarógrafo y piloto de dron de Turismo\",\"done\":false},{\"id\":2,\"texto\":\"Preparar la bicicleta de competición impecable y ropa deportiva\",\"done\":false},{\"id\":3,\"texto\":\"Grabar tomas de taller, mates y herramientas\",\"done\":false},{\"id\":4,\"texto\":\"Hacer backup del material grabado en crudo\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'corcho-06',
+                'corcho',
+                6,
+                "Salida piloto y ensayo general de circuito familiar",
+                'ter',
+                "Taller y Mirador de las Vías",
+                '2026-10-15',
+                "15:00",
+                "17:30",
+                'programada',
+                "Ejecutar la experiencia familiar completa en condiciones reales para cronometrar la clínica para niños, la merienda con mate y dulce para los adultos, y validar protocolos de seguridad.",
+                "[\"¿Los niños comprendieron y disfrutaron la mecánica básica?\",\"¿Los padres sintieron que tuvieron un verdadero momento de descanso y relax?\",\"¿Cómo resultó el tiempo total?\"]",
+                "[\"Cronometrar cada bloque de la experiencia.\",\"Evaluar el funcionamiento de las bicis y cascos.\",\"Recabar feedback honesto de la familia invitada.\",\"Ajustar detalles del guion.\"]",
+                "[{\"id\":1,\"texto\":\"Convocar a una familia con 2 niños para la prueba\",\"done\":false},{\"id\":2,\"texto\":\"Probar el kit de cascos y señalización\",\"done\":false},{\"id\":3,\"texto\":\"Servir la merienda con dulce casero y mate cocido\",\"done\":false},{\"id\":4,\"texto\":\"Completar encuesta de satisfacción con los invitados\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'corcho-07',
+                'corcho',
+                7,
+                "Presentación web oficial, tarifario y ficha comercial",
+                'ind',
+                "Turismo",
+                '2026-10-27',
+                "15:00",
+                "16:30",
+                'programada',
+                "Presentar el sitio web terminado y publicado online, validar el prototipo del souvenir (lapicero reciclado + dulce) y cerrar el tarifario final para el sector comercial.",
+                "[\"¿Está operativo el botón de reserva directa por WhatsApp?\",\"¿El precio cubre todos los costos fijos y variables dejando margen de ganancia neto?\"]",
+                "[\"Revisar la web en vivo en computadoras y celulares.\",\"Validar el prototipo del souvenir reciclado.\",\"Imprimir 10 fichas comerciales para distribuir en hoteles.\",\"Configurar catálogo de WhatsApp Business.\"]",
+                "[{\"id\":1,\"texto\":\"Testear funcionamiento del sitio web y formularios\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar el packaging del souvenir reciclado con dulce\",\"done\":false},{\"id\":3,\"texto\":\"Fijar precio por persona y paquete familiar\",\"done\":false},{\"id\":4,\"texto\":\"Imprimir 10 fichas comerciales para el sector receptivo\",\"done\":false}]",
+                ["leandro","agustina"]
+            ],
+            [
+                'corcho-08',
+                'corcho',
+                8,
+                "Distinción, resultados y rueda de negocios",
+                'cie',
+                "Acto de cierre",
+                '2026-11-10',
+                "10:00",
+                "13:00",
+                'programada',
+                "Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.",
+                "[\"¿Qué convenios comerciales quedan cerrados para el verano 2027?\"]",
+                "[\"Cerrar al menos dos convenios de derivación con agencias u hoteles.\",\"Presentar el sitio web y el video de dron en pantalla gigante.\"]",
+                "[{\"id\":1,\"texto\":\"Confirmar asistencia al plenario con la familia\",\"done\":false},{\"id\":2,\"texto\":\"Montar stand con bici histórica, piezas recicladas y dulces\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un convenio formal en la rueda de negocios\",\"done\":false}]",
+                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+            ],
+        ];
+
+        foreach ($reunionesCorcho as $rc) {
+            $asistentes = array_pop($rc);
+            $insReuCorcho->execute($rc);
+            $reuId = $rc[0];
+            foreach ($asistentes as $consId) {
+                $insAsistCorcho->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

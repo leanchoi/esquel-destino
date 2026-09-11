@@ -545,41 +545,61 @@
     {
       "id": "corcho",
       "app_id": 14,
-      "nombre": "Corchobike",
-      "titular": "Nestor andres colinecul",
+      "nombre": "Corcho Bikes",
+      "titular": "Néstor Andrés Colinecul",
       "linea": "Acelera",
       "puntaje": 3.13,
       "celula": 4,
       "sr": "leandro",
       "jr": "agustina",
       "diagnostico": [
-        "Taller de ciclismo, salidas guiadas urbanas y periféricas, clínicas para niños y guardería.",
-        "Gran conocimiento de los circuitos de pedaleo de Esquel y La Zeta.",
-        "Emprendedor con fuerte arraigo comunitario."
+        "Néstor Andrés 'Corcho' Colinecul pedalea desde los 11 años de forma continua (cumpliendo 50 años). Su padre le construyó su primera bicicleta en 1989, iniciando una carrera con múltiples títulos provinciales y regionales en ruta y MTB. Posee una autoridad técnica, deportiva y territorial inobjetable.",
+        "Su taller mecánico en Barrio Los Sauces (calle 44, casa 28) opera desde 2019 a solo 2 cuadras de La Trochita y 3 de la subida al cementerio. Funciona espontáneamente como un club social barrial donde clientes y ciclistas pasan horas tomando mate mientras él realiza services mecánicos.",
+        "Emprendimiento familiar con rol activo de su compañera y su hija (competidora y estudiante). Su compañera elabora dulces caseros tradicionales con fruta de la zona, aportando un elemento gastronómico de enorme calidez para complementar las paradas de las guiadas.",
+        "Cuenta con posicionamiento orgánico en Google Maps con excelentes reseñas espontáneas de turistas de distintas provincias y de Brasil, quienes destacan su honestidad, rapidez y rescate mecánico inmediato.",
+        "Presentó un proyecto social aprobado por la sede vecinal Los Sauces para enseñar mecánica básica, reciclaje de piezas y destreza a niños del barrio. El desafío es reorientar esa vocación comunitaria hacia un modelo de turismo activo rentable y sostenible."
       ],
       "trabas": [
-        "Flota de bicicletas en óptimas condiciones para alquiler.",
-        "Habilitación de guardería y seguros de actividad."
+        "Carencia total de flota de bicicletas para excursionistas: Corcho solo cuenta con su propia bicicleta MTB de competición (habiendo vendido unidades previas). Se requiere resolver una flota puente de 6 a 8 unidades con cascos homologados.",
+        "Protección del taller y delimitación horaria: El taller mecánico diario es el sustento de la familia. El cicloturismo debe circunscribirse estrictamente a martes, jueves y sábados por la tarde (a partir de las 14:30), preservando las mañanas para reparaciones.",
+        "Reencuadre de guardería a turismo activo y seguros: Superar la idea original de 'guardería comunitaria' e inscribirse formalmente en el registro de Turismo Activo de Esquel, con póliza de seguro de accidentes personales para cicloturistas.",
+        "Inexistencia de plataforma web institucional y material audiovisual profesional: Falta un sitio institucional que detalle los circuitos y permita reservas online. La conducción (Leandro) programará e implementará la plataforma web de forma gratuita.",
+        "Fijación de costos y tarifario comercial: Superar la oferta ad-honorem o a la gorra, estructurando una matriz de costos que permita fijar tarifas rentables y ofrecer comisiones (15% a 20%) a agencias y recepciones de hoteles."
       ],
       "ejes": [
         {
-          "t": "Circuitos Urbanos Guiados",
+          "t": "Paquetización de Experiencias y Cápsula Familiar",
           "items": [
-            "Diseño de 2 circuitos accesibles para familias.",
-            "Tarifario de guiada + alquiler de bici + casco."
+            "Circuito Familiar 'Pedaleo y Merienda en las Vías': dinámica de 2 hs donde los niños tienen una clínica lúdica de destreza y mecánica básica en un entorno seguro, mientras los padres descansan con mateada y degustación de dulces caseros frente a La Trochita.",
+            "Circuito 'Esquel Lado B y Taller Abierto': para jóvenes y parejas, con un 'mini service participativo' de 15 min en el taller (calibración de frenos y cadena, mate con anécdotas de competencia) y pedaleo por senderos panorámicos del cementerio y Calle 10.",
+            "Souvenir identitario sustentable: lapicero o portallaves de escritorio confeccionado en el taller con piezas recicladas (eslabones, piñones, rayos) y frasco de dulce casero artesanal con etiqueta 'Corcho Bikes · Esquel'."
           ]
         },
         {
-          "t": "Servicio al Alojamiento",
+          "t": "Gestión de Flota, Operatividad y Normativa",
           "items": [
-            "Entrega y retiro de bicicletas en hoteles y cabañas.",
-            "Cartelería de guardería en eventos."
+            "Esquema de provisión de flota puente mediante convenio con bicicleterías locales o rodados municipales (6 bicis calibradas) y fondo de amortización para flota propia.",
+            "Adquisición de kit de seguridad homologado: cascos para niños y adultos, chalecos reflectivos, conos de señalización y botiquín de primeros auxilios.",
+            "Inscripción en Turismo Activo de Esquel, contratación de póliza de seguro de accidentes personales para excursionistas y fichas de deslinde de responsabilidad."
+          ]
+        },
+        {
+          "t": "Plataforma Web, Producción Audiovisual y Comercialización",
+          "items": [
+            "Benchmarking internacional de sitios web de bike-tours de autor (EE.UU., Europa) para definir layout y narrativa.",
+            "Desarrollo y puesta en línea de la plataforma web oficial de Corcho Bikes por parte de Leandro (historia de Corcho, circuitos, galería y botón de reserva WhatsApp Business).",
+            "Producción audiovisual oficial con equipo de la Subsecretaría: video 4K con dron sobre las vías de La Trochita y tomas cinematográficas de taller.",
+            "Diseño e impresión de la ficha comercial de una carilla para mostradores de hoteles, cabañas y agencias de viaje con tarifario y comisiones cerradas."
           ]
         }
       ],
       "entregables": [
-        "Mapa y ficha de los circuitos autoguiados y guiados.",
-        "Tarifario de alquiler y salidas confirmado."
+        "Guion técnico de los dos circuitos ('Familiar en las Vías' y 'Lado B Taller Abierto').",
+        "Sitio web institucional de Corcho Bikes programado y puesto en línea (con motor de reservas WhatsApp).",
+        "Banco audiovisual profesional (video 4K con dron en La Trochita + tomas de taller en alta resolución).",
+        "Protocolo de flota operativa y kit de seguridad homologado (cascos y elementos de protección).",
+        "Prototipo del souvenir identitario conector (lapicero de partes recicladas + dulce casero con packaging).",
+        "Ficha comercial y tarifario cerrado con esquema de comisiones para el sector receptivo."
       ]
     },
     {

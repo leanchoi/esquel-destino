@@ -239,6 +239,56 @@ const exactMeetings = {
       objetivos: ['Cerrar al menos dos convenios de derivación con agencias u hoteles.', 'Presentar el souvenir botánico en el stand.'],
       check: ['Confirmar asistencia al plenario', 'Llevar muestras de la infusión de ñire para degustación', 'Cerrar al menos una alianza comercial en la rueda']
     }
+  ],
+  corcho: [
+    { num: 1, f: '2026-09-17', t: 'ter', lugar: 'Taller Los Sauces (Calle 44 Casa 28)', hora: '15:00 a 17:00', titulo: 'Relevamiento en terreno: taller barrial y entorno La Trochita', asistentes: ['leandro', 'agustina'],
+      guia: 'Relevar el espacio físico del taller, layout de herramientas, rincón de recepción y mate, acceso desde la estación La Trochita y callejón hacia el cementerio. Probar el dulce casero y evaluar opciones de packaging.',
+      preguntas: ['¿Dónde ubicamos a los turistas y a los niños para que estén seguros sin riesgo en el taller?', '¿Cómo integramos la degustación del dulce casero en el espacio de bienvenida?', '¿Qué estado mecánico tiene la bicicleta de competición y qué herramientas tenemos para mostrar?'],
+      objetivos: ['Medir y delimitar el sector de visita en el taller.', 'Fotografiar el taller y el acceso barrial.', 'Relevar estado de la bicicleta y herramientas.', 'Degustar el dulce casero y evaluar opciones de packaging.'],
+      check: ['Medir el espacio disponible para recepción', 'Fotografiar puntos críticos de acceso y vías del tren', 'Relevar herramientas y elementos de seguridad en taller', 'Definir el rincón de mateada y degustación de dulces']
+    },
+    { num: 2, f: '2026-09-22', t: 'ind', lugar: 'Turismo', hora: '15:00 a 16:30', titulo: 'Arquitectura web y benchmarking internacional', asistentes: ['leandro', 'agustina'],
+      guia: 'Revisar el material de referencias internacionales recopilado por la familia (webs de EE.UU., Europa, etc.), estructurar el árbol de contenidos de la página web y redactar el borrador del relato de vida de Corcho.',
+      preguntas: ['¿Qué secciones tendrá la web (Inicio, Historia de Corcho, Circuitos, Taller, Reservas)?', '¿Qué llamados a la acción priorizamos para que el turista reserve por WhatsApp?'],
+      objetivos: ['Recibir el documento borrador con la historia deportiva de Corcho.', 'Seleccionar referencias de diseño y animaciones.', 'Definir estructura de hosting, dominio y layout que programará Leandro.'],
+      check: ['Revisar referencias web internacionales enviadas', 'Estructurar el árbol de navegación del sitio web', 'Redactar la biografía deportiva desde los 11 años', 'Configurar llamados a la acción para reservas']
+    },
+    { num: 3, f: '2026-09-24', t: 'ind', lugar: 'Turismo', hora: '15:00 a 16:30', titulo: 'Estrategia de flota puente, seguridad y normativa', asistentes: ['leandro', 'agustina'],
+      guia: 'Definir la estrategia de provisión de bicicletas para la temporada de prueba, relevar costos de cascos homologados y encuadrar el seguro de turismo activo.',
+      preguntas: ['¿A qué bicicleterías o prestadores podemos acudir para un acuerdo puente de alquiler?', '¿Cuánto cuesta el seguro de accidentes personales por excursionista por día?'],
+      objetivos: ['Mapear 3 alternativas de provisión de 6 bicicletas.', 'Cotizar póliza de seguro de turismo alternativo.', 'Iniciar expediente de registro de prestador en la Subsecretaría de Turismo.'],
+      check: ['Contactar a 2 bicicleterías locales para convenio puente', 'Cotizar kit de 8 cascos homologados de diversos talles', 'Pedir presupuesto a aseguradora para turismo activo', 'Armar borrador de ficha médica y deslinde de responsabilidad']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 4 (Melipal)', hora: '09:30 a 12:30', titulo: 'Canal, volumen y comercialización cruzada (Célula 4)', asistentes: ['leandro', 'mariela', 'agustina'],
+      guia: 'Encuentro grupal de la Célula 4 (Canal y volumen). Analizar canales de venta, alianzas cruzadas entre prestadores de excursiones y agencias receptivas, y fijación de comisiones de intermediación.',
+      preguntas: ['¿Cómo puede Yamamori Travel o True Patagonia incluir las guiadas de Corcho en sus paquetes de destino?', '¿Qué sinergias hay entre la merienda de Haiku y el cicloturismo?'],
+      objetivos: ['Presentar la propuesta de Corcho Bikes a los colegas de célula.', 'Analizar esquema de comisiones del 15% al 20%.', 'Identificar derivaciones cruzadas de turistas.'],
+      check: ['Llevar la propuesta resumida de los 2 circuitos', 'Acordar con al menos 1 agencia receptiva de la célula una salida de prueba', 'Validar el esquema de comisiones de intermediación']
+    },
+    { num: 5, f: '2026-10-10', t: 'ter', lugar: 'La Trochita y Taller', hora: '14:30 a 17:30', titulo: 'Rodaje audiovisual profesional con dron y 4K', asistentes: ['leandro', 'agustina'],
+      guia: 'Filmar el material publicitario oficial con cámaras 4K y dron en vuelo rasante sobre las vías del tren La Trochita y tomas de oficio y detalle en el taller.',
+      preguntas: ['¿Cuáles son los ángulos más impactantes del pedaleo junto a los rieles históricos?', '¿Cómo capturamos la emoción y la maestría mecánica de Corcho en video?'],
+      objetivos: ['Filmar secuencia de Corcho pedaleando junto a las vías con seguimiento de dron.', 'Realizar tomas macro de ajuste de rayos, piñones y grasa en el taller.', 'Grabar mensaje de invitación a cámara.'],
+      check: ['Coordinar con el camarógrafo y piloto de dron de Turismo', 'Preparar la bicicleta de competición impecable y ropa deportiva', 'Grabar tomas de taller, mates y herramientas', 'Hacer backup del material grabado en crudo']
+    },
+    { num: 6, f: '2026-10-15', t: 'ter', lugar: 'Taller y Mirador de las Vías', hora: '15:00 a 17:30', titulo: 'Salida piloto y ensayo general de circuito familiar', asistentes: ['leandro', 'agustina'],
+      guia: 'Ejecutar la experiencia familiar completa en condiciones reales para cronometrar la clínica para niños, la merienda con mate y dulce para los adultos, y validar protocolos de seguridad.',
+      preguntas: ['¿Los niños comprendieron y disfrutaron la mecánica básica?', '¿Los padres sintieron que tuvieron un verdadero momento de descanso y relax?', '¿Cómo resultó el tiempo total?'],
+      objetivos: ['Cronometrar cada bloque de la experiencia.', 'Evaluar el funcionamiento de las bicis y cascos.', 'Recabar feedback honesto de la familia invitada.', 'Ajustar detalles del guion.'],
+      check: ['Convocar a una familia con 2 niños para la prueba', 'Probar el kit de cascos y señalización', 'Servir la merienda con dulce casero y mate cocido', 'Completar encuesta de satisfacción con los invitados']
+    },
+    { num: 7, f: '2026-10-27', t: 'ind', lugar: 'Turismo', hora: '15:00 a 16:30', titulo: 'Presentación web oficial, tarifario y ficha comercial', asistentes: ['leandro', 'agustina'],
+      guia: 'Presentar el sitio web terminado y publicado online, validar el prototipo del souvenir (lapicero reciclado + dulce) y cerrar el tarifario final para el sector comercial.',
+      preguntas: ['¿Está operativo el botón de reserva directa por WhatsApp?', '¿El precio cubre todos los costos fijos y variables dejando margen de ganancia neto?'],
+      objetivos: ['Revisar la web en vivo en computadoras y celulares.', 'Validar el prototipo del souvenir reciclado.', 'Imprimir 10 fichas comerciales para distribuir en hoteles.', 'Configurar catálogo de WhatsApp Business.'],
+      check: ['Testear funcionamiento del sitio web y formularios', 'Aprobar el packaging del souvenir reciclado con dulce', 'Fijar precio por persona y paquete familiar', 'Imprimir 10 fichas comerciales para el sector receptivo']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Acto de cierre', hora: '10:00 a 13:00', titulo: 'Distinción, resultados y rueda de negocios', asistentes: ['leandro', 'adria', 'mariela', 'francisco', 'agustina', 'cesia', 'noelia'],
+      guia: 'Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del producto ante agencias, prestadores y prensa.',
+      preguntas: ['¿Qué convenios comerciales quedan cerrados para el verano 2027?'],
+      objetivos: ['Cerrar al menos dos convenios de derivación con agencias u hoteles.', 'Presentar el sitio web y el video de dron en pantalla gigante.'],
+      check: ['Confirmar asistencia al plenario con la familia', 'Montar stand con bici histórica, piezas recicladas y dulces', 'Cerrar al menos un convenio formal en la rueda de negocios']
+    }
   ]
 };
 
@@ -538,7 +588,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -606,8 +656,71 @@ php += `        ];
         }
         $pdo->commit();
     }
+
+    // Sincronizar reuniones de Corcho Bikes si todavía tiene la plantilla genérica inicial
+    $checkCorcho = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'corcho-01'")->fetchColumn();
+    if ($checkCorcho === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkCorcho) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'corcho-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'corcho'");
+
+        $insReuCorcho = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistCorcho = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesCorcho = [
+`;
+
+const corchoMeetingsList = exactMeetings.corcho;
+for (const m of corchoMeetingsList) {
+  const reuId = `corcho-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['leandro', 'agustina'];
+
+  php += `            [
+                '${reuId}',
+                'corcho',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesCorcho as $rc) {
+            $asistentes = array_pop($rc);
+            $insReuCorcho->execute($rc);
+            $reuId = $rc[0];
+            foreach ($asistentes as $consId) {
+                $insAsistCorcho->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
 }
 `;
 
 fs.writeFileSync(path.join(__dirname, '../includes/lab_seed.php'), php, 'utf8');
 console.log('includes/lab_seed.php written successfully!');
+
