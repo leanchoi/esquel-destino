@@ -278,16 +278,16 @@ function lab_asegurar_datos(PDO $pdo): void
                 'sabor',
                 7,
                 "Sabor Mapuche",
-                "Lauriano Jose Rios",
+                "Lauriano Jose Rios y Nora Yanina Nahuelpan",
                 'Raíz',
                 3.74,
                 3,
                 'adria',
                 'francisco',
-                "[\"Gastronomía ancestral de comunidades originarias, cocina de territorio y curanto.\",\"Gran potencia cultural, identidad e interés para turismo internacional y nacional.\",\"Cocineros y anfitriones reconocidos.\"]",
-                "[\"Regularización bromatológica del espacio de elaboración.\",\"Continuidad de fechas regulares frente a la estacionalidad.\"]",
-                "[{\"t\":\"Eventos Gastronómicos Fijos\",\"items\":[\"Establecer fechas de curanto y fuegos quincenales.\",\"Sistema de venta de cubiertos anticipados.\"]},{\"t\":\"Relato y Cultura\",\"items\":[\"Integrar la cosmovisión y el significado de los alimentos.\",\"Souvenir gastronómico (especias y conservas).\"]}]",
-                "[\"Calendario de banquetes ancestrales con reserva.\",\"Ficha técnica para operadores de turismo receptivo.\"]"
+                "[\"Baluarte patrimonial, cultural y gastronómico de turismo rural comunitario en la histórica Comunidad Nahuelpan (a 15 km de Esquel), sobre paisaje de transición precordillera-estepa. Epicentro en 'Casa de Piedra', la antigua escuela comunitaria recuperada y techada por la familia de Nora Yanina Nahuelpan.\",\"Trayectoria de 15 años liderada por Lauriano Ríos (formado en producción avícola en Rauch, exdirigente juvenil de Federación Agraria y delegado RENAP) junto a Yanina Nahuelpan. Antecedente emblemático de las 5 ediciones del Festival 'Sabor Mapuche - Alimentos de la Tierra', apadrinado por Rubén Patagonia y con renombrados chefs patagónicos (Fefe Domínguez, Bruno de Berbina, Freddy Álvarez).\",\"Propuesta integral multidimensional: 1) Producción de alimentos con identidad (sales de la abuela, merkén ahumado, alfajores de ñaco, licores); 2) Conservación genética de la Gallina Mapuche (huevo celeste/verde de cáscara gruesa, incubadora comunitaria de 1.000 huevos); 3) Sendero interpretativo 'La Huella del Cóndor' con taller de amasado participativo y merienda campesina en Casa de Piedra; y 4) Ceremonia ancestral del Curanto al Hoyo con ramas de Maqui de Los Alerces.\"]",
+                "[\"Cuello de botella en infraestructura sanitaria en Casa de Piedra: cámara séptica y pozo ciego ya terminados y operativos, pero faltan terminaciones finas (cerámicos, grifería, artefactos sanitarios y pintura exterior) para habilitar contingentes regulares.\",\"Logística e insumo regulado para el Curanto Ancestral: necesidad de autorización formal de Parques Nacionales para que el poblador Paulo Rosales pueda extraer sustentablemente 5 m³ de ramas de maqui en Los Alerces (que reemplazan la nalca evitando sabores amargos y optimizando retención de calor).\",\"Dispersión comunicacional y falta de canal transaccional: marcas divididas (@sabormapucheok vs @huelladelcondor), ausencia de sitio web y necesidad de visibilizar y empoderar a Nora Yanina Nahuelpan como la portadora legítima del linaje e identidad comunitaria.\"]",
+                "[{\"t\":\"Curaduría de Experiencias Turísticas, Bienestar Animal y Sendero\",\"items\":[\"Estandarización de la experiencia 'Sendero La Huella del Cóndor & Taller de Amasado Comunitario' (2h 30min), con Yanina Nahuelpan al frente de los panificados campesinos y merienda en Casa de Piedra.\",\"Protocolo estricto de bienestar animal (erradicación total de prácticas invasivas, circuito avícola delimitado con pallets y postes, observación de incubadora y Gallina Mapuche) y guion ceremonial del respeto al agua en la vertiente.\"]},{\"t\":\"Plataforma Web Transaccional, Identidad Paraguas y Estrategia Audiovisual\",\"items\":[\"Desarrollo de la plataforma web transaccional (sabormapuche.com.ar) con tienda online de productos gourmet y sistema de reservas con cupos por turno (hasta 15 personas).\",\"Estrategia audiovisual en redes: 5 microvideos dinámicos de 15 segundos (fuego en las piedras, amasado, destape de curanto, ritual del agua), banco de 30 fotos 4K y diseño de tazas enlosadas institucionales con logo Sabor Mapuche.\"]},{\"t\":\"Costeo Paramétrico, Comercialización B2B, Habilitación Sanitaria y Curanto Mensual\",\"items\":[\"Planilla paramétrica de costos y tarifario dual (general turista vs social residente), más 20-25% de comisión para agencias receptivas de Esquel y Trevelin.\",\"Gestión de financiamiento ante Producción/CAPEC (Paula Botto) para terminación de sanitarios en Casa de Piedra, seguimiento de la autorización de Parques Nacionales para ramas de maqui y estandarización del curanto mensual.\"]}]",
+                "[\"Ficha técnica estandarizada y guion interpretativo de la experiencia 'Sendero La Huella del Cóndor & Taller de Amasado Comunitario en Casa de Piedra', con protocolo de bienestar animal.\",\"Manual operativo y de seguridad del 'Curanto de Nahuelpan', con circuito sustentable de recolección de ramas de maqui autorizado por Parques Nacionales.\",\"Plataforma web transaccional operativa (sabormapuche.com.ar) con pasarela de pagos integrada, tienda online y sistema de reservas de experiencias.\",\"Banco de contenidos audiovisuales profesionales: 30 fotografías 4K en alta resolución y serie de 5 microvideos de 15 segundos para redes sociales.\",\"Planilla paramétrica de costos y tarifario comercial minorista/mayorista (B2C y B2B) oficializado para agencias receptivas y prestadores.\",\"Expediente técnico de financiamiento ante Producción/CAPEC para la terminación de sanitarios en Casa de Piedra y acuerdos comerciales con al menos 2 agencias receptivas.\"]"
             ],
             [
                 'laberin',
@@ -2480,171 +2480,137 @@ function lab_asegurar_datos(PDO $pdo): void
                 'sabor-01',
                 'sabor',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
+                "Diagnóstico integral en Casa de Piedra, sendero Huella del Cóndor y sanitarios",
                 'ter',
-                "Predio / Chacra",
-                '2026-09-13',
+                "Casa de Piedra (Comunidad Nahuelpan)",
+                '2026-09-18',
                 "10:00",
-                "11:30",
+                "12:30",
                 'programada',
-                "Conocer el espacio real de trabajo de Lauriano Jose Rios. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de Sabor Mapuche hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
+                "Visita a la Comunidad Nahuelpan. Inspección ocular de Casa de Piedra (antigua escuela comunitaria recuperada), sector de cocina, corrales de gallinas y sendero La Huella del Cóndor. Relevamiento técnico del estado de los baños: verificación de la cámara séptica y pozo ciego ya ejecutados, y detalle de los materiales faltantes (cerámicos, artefactos, grifería y pintura) para su terminación.",
+                "[\"¿Cuáles son los costos y tiempos exactos para finalizar los baños antes del inicio de la temporada alta?\",\"¿Cómo delimitamos el sector de corrales avícolas con pallets y postes para que el turista observe sin invadir la zona productiva?\",\"¿Qué disponibilidad horaria tienen Lauriano y Yanina para establecer días y turnos fijos de recepción turística?\"]",
+                "[\"Mapear el circuito peatonal: recepción en Casa de Piedra, ascenso por La Huella del Cóndor y regreso al salón.\",\"Elaborar el cómputo de materiales y presupuesto necesario para la terminación de los sanitarios.\",\"Definir el cronograma semanal de trabajo conjunto y roles de Lauriano y Yanina.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar Casa de Piedra, cocina, corrales avícolas y sendero\",\"done\":false},{\"id\":2,\"texto\":\"Relevar estado de obra civil de los sanitarios y confeccionar listado de materiales faltantes\",\"done\":false},{\"id\":3,\"texto\":\"Acordar el calendario de las 8 semanas de incubación con el equipo de Célula 3\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'sabor-02',
                 'sabor',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
-                'ind',
-                "Turismo",
-                '2026-09-20',
-                "10:00",
-                "11:30",
+                "Estandarización del taller de amasado, protocolo de bienestar animal y guion del agua",
+                'ter',
+                "Casa de Piedra (Comunidad Nahuelpan)",
+                '2026-09-25',
+                "10:30",
+                "12:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Cerrar la estructura pedagógica de la experiencia \"Sendero La Huella del Cóndor & Taller de Amasado Comunitario\". Empoderar a Nora Yanina Nahuelpan en la conducción del momento de panificados. Formalizar el protocolo de bienestar animal (erradicación total de prácticas invasivas como descolada o castraciones, priorizando la observación de la Gallina Mapuche y la incubadora comunitaria de 1.000 huevos). Redactar el guion interpretativo de la vertiente y el ritual de respeto al agua.",
+                "[\"¿Cómo estructuramos el taller de amasado de Yanina para que sea dinámico, participativo y se integre con los tiempos del leudado y horneado?\",\"¿Qué reglas de interacción y distanciamiento con las aves de corral se explicarán a los visitantes antes de entrar al sendero?\",\"¿Cómo transmitir el significado ancestral del ritual del agua de forma pedagógica y respetuosa para todo público?\"]",
+                "[\"Redactar la ficha técnica y guion paso a paso de la experiencia del sendero y amasado.\",\"Aprobar el protocolo de bienestar animal y pautas de visita responsable a corrales.\",\"Ensayar con Yanina la bienvenida y el taller participativo de masas campesinas.\"]",
+                "[{\"id\":1,\"texto\":\"Validar el guion didáctico del taller de panificados con Yanina\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el protocolo de bienestar animal y reglas de comportamiento para visitantes\",\"done\":false},{\"id\":3,\"texto\":\"Fijar el cupo máximo por turno (hasta 15 personas) para preservar la intimidad comunitaria\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'sabor-03',
                 'sabor',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Costeo paramétrico, tarifario dual B2C/B2B y expediente de subsidio sanitario",
                 'ind',
-                "Turismo",
-                '2026-09-24',
-                "11:00",
+                "Oficinas LAB / Secretaría de Turismo de Esquel",
+                '2026-10-02',
+                "10:30",
                 "12:30",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Construir la planilla paramétrica de costos de las experiencias y productos. Desglosar insumos de panificación, leña seca, mantenimiento de Casa de Piedra y honorarios de guías/cocineros. Establecer un esquema tarifario dual: tarifa general para turistas y tarifa social comunitaria para residentes de Esquel y Trevelin, más 20-25% de comisión para agencias EVyT. Formulación técnica del pedido de financiamiento ante Producción/CAPEC (Paula Botto) para los sanitarios.",
+                "[\"¿Cuál es el costo unitario por visitante en la merienda campesina y cuál es el punto de equilibrio mínimo por grupo?\",\"¿Qué precios fijamos para las agencias de turismo receptivo para que resulte un producto atractivo en sus paquetes?\",\"¿Qué línea de crédito o subsidio municipal/provincial se adapta mejor a la culminación de los baños?\"]",
+                "[\"Parametrizar los costos operativos y punto de equilibrio de la merienda y el sendero.\",\"Emitir la lista oficial de precios: público general, residentes comarcales y agencias de viaje.\",\"Cerrar el documento de solicitud de fondos para la terminación de la obra sanitaria.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir el tarifario oficial minorista y mayorista (B2C y B2B)\",\"done\":false},{\"id\":3,\"texto\":\"Presentar el expediente de apoyo financiero ante la Secretaría de Producción\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'sabor-04',
                 'sabor',
                 4,
-                "Puesta en común Célula undefined",
-                'gru',
-                "Célula undefined (Turismo)",
-                '2026-09-30',
-                "09:30",
-                "12:00",
+                "Logística de ramas de Maqui (Parques Nacionales), Curanto mensual y tazas identitarias",
+                'ind',
+                "Oficinas LAB / Melipal",
+                '2026-10-09',
+                "10:30",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["adria"]
+                "Hacer seguimiento de la nota oficial enviada a Parques Nacionales por indicación del Intendente Matías Taccetta autorizando al poblador Paulo Rosales la extracción sustentable de 5 m³ de ramas de maqui en Los Alerces. Protocolizar el manual operativo y de seguridad del \"Curanto de Nahuelpan\" (fuego, piedras calientes, técnica de tapado y tiempos de cocción). Cotizar y encargar la primera partida de tazas enlosadas con el logo institucional de Sabor Mapuche para las meriendas.",
+                "[\"¿Cuál es el estado de la autorización de Parques Nacionales y la coordinación logística con Paulo Rosales?\",\"¿Qué calendario fijo mensual de curantos se establecerá para generar previsibilidad en agencias y público?\",\"¿Qué costo y plazos de entrega maneja el proveedor de las tazas enlosadas serigrafiadas?\"]",
+                "[\"Monitorear la resolución administrativa de Parques Nacionales sobre el maqui.\",\"Estandarizar la receta, gramaje y procedimiento del Curanto al Hoyo de Nahuelpan.\",\"Aprobar el diseño y mandar a producción la primera tirada de tazas de losa institucionales.\"]",
+                "[{\"id\":1,\"texto\":\"Verificar avance del permiso de recolección de maqui con la Intendencia de Parques\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el manual técnico y de bioseguridad del Curanto tradicional\",\"done\":false},{\"id\":3,\"texto\":\"Aprobar la muestra gráfica de las tazas enlosadas serigrafiadas\",\"done\":false}]",
+                ["adria","francisco"]
             ],
             [
                 'sabor-05',
                 'sabor',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Predio",
-                '2026-10-8',
+                "Producción audiovisual de microvideos (15s), fotografía 4K y arquitectura web",
+                'ter',
+                "Casa de Piedra y Sendero Huella del Cóndor",
+                '2026-10-16',
                 "10:00",
-                "11:30",
+                "13:00",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
-                ["adria","francisco"]
+                "Jornada de producción de contenidos en Casa de Piedra y sendero. Rodaje de una serie de 5 microvideos dinámicos de 15 segundos para reels e Instagram (técnica de calentamiento de piedras, encendido del fuego, atado de cordero, amasado participativo con Yanina y ritual en la vertiente). Sesión de 30 fotos 4K de alta calidad de productos gourmet, huevos celestes y paisaje. Revisión técnica con Leandro Choi de la arquitectura de la plataforma web sabormapuche.com.ar.",
+                "[\"¿Qué tomas y detalles transmiten con mayor autenticidad la mística de la cocina a leña y la calidez del hogar?\",\"¿Cómo organizamos la tienda web para despachar sales, merkén y alfajores a nivel nacional?\",\"¿Qué pasarela de pagos y sistema de confirmación de turnos dejamos integrado en la plataforma web?\"]",
+                "[\"Completar el plan de rodaje de los 5 microvideos y banco de 30 imágenes profesionales.\",\"Validar la interfaz y navegación de la plataforma web desarrollada por Leandro Choi.\",\"Entrenar a Lauriano y Yanina en la administración del panel de control de reservas y tienda online.\"]",
+                "[{\"id\":1,\"texto\":\"Rodar los 5 microvideos de 15 segundos y seleccionar las 15 mejores fotografías 4K\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar la estructura funcional y catálogo de la plataforma web sabormapuche.com.ar\",\"done\":false},{\"id\":3,\"texto\":\"Configurar el botón de pago y canal directo de WhatsApp Business\",\"done\":false}]",
+                ["adria","francisco","leandro"]
             ],
             [
                 'sabor-06',
                 'sabor',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Rueda comercial B2B con agencias receptivas, La Trochita y sinergias de cohorte",
                 'ind',
-                "Turismo",
-                '2026-10-16',
-                "10:00",
-                "11:30",
+                "Secretaría de Turismo / Melipal",
+                '2026-10-23',
+                "10:30",
+                "12:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Presentar formalmente el catálogo de experiencias y tarifario a tres agencias receptivas habilitadas de Esquel y Trevelin. Coordinar la articulación operativa con los servicios regulares del Viejo Expreso Patagónico La Trochita para recibir contingentes en Casa de Piedra tras el arribo a la estación Nahuelpan. Planificar sinergias de cohorte: articulación de circuitos culturales con \"El Arroyo Que Nos Ve Crecer...\" (Marcelo Troiano) y meriendas campesinas combinadas.",
+                "[\"¿Qué interés y receptividad muestran las agencias en ofrecer el curanto mensual y el sendero como excursión fija?\",\"¿Cómo coordinamos los traslados desde la estación del tren hacia Casa de Piedra en los días de viaje?\",\"¿Qué acuerdos de reciprocidad podemos establecer con otros prestadores de la comarca?\"]",
+                "[\"Reunirse con 3 agencias de viaje receptivas y entregarles material comercial y muestras de productos.\",\"Firmar al menos 2 acuerdos marco de comercialización y derivación turística.\",\"Establecer el protocolo de recepción de pasajeros del tren con las autoridades de La Trochita.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar el catálogo comercial en agencias receptivas de Esquel y Trevelin\",\"done\":false},{\"id\":2,\"texto\":\"Firmar acuerdos de comercialización turística con agencias locales\",\"done\":false},{\"id\":3,\"texto\":\"Acordar la coordinación operativa con los horarios de La Trochita\",\"done\":false}]",
                 ["adria","francisco"]
             ],
             [
                 'sabor-07',
                 'sabor',
                 7,
-                "Comunicación digital, contenido y redes",
-                'ind',
-                "Turismo",
-                '2026-10-23',
-                "10:00",
-                "11:30",
+                "Fam Tour vivencial en Casa de Piedra con informantes turísticos y test de la web",
+                'ter',
+                "Casa de Piedra (Comunidad Nahuelpan)",
+                '2026-10-30',
+                "10:30",
+                "13:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
-                ["adria","francisco"]
+                "Simulacro vivencial completo con 12 invitados especiales (informantes de las Secretarías de Turismo de Esquel y Trevelin, guías del Parque y prestadores de la cohorte). Prueba en vivo del sistema de reservas web. Recepción y bienvenida protocolar a cargo de Nora Yanina Nahuelpan, taller de amasado participativo, caminata por La Huella del Cóndor hasta la vertiente, visita guiada al corral de Gallinas Mapuches y merienda comunitaria en Casa de Piedra con las tazas institucionales.",
+                "[\"¿El proceso de reserva digital y confirmación previa resultó fluido e intuitivo para los usuarios?\",\"¿Cómo respondieron los informantes turísticos a la conducción de Yanina en el taller de panificados?\",\"¿Qué devoluciones técnicas surgieron respecto a la señalización del sendero y los tiempos del recorrido?\"]",
+                "[\"Validar los tiempos operativos reales de la experiencia completa en condiciones simuladas.\",\"Consolidar la seguridad y liderazgo de Yanina al frente de la conducción de contingentes.\",\"Recoger encuestas de satisfacción y sugerencias de mejora de informantes y guías turísticos.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 12 participantes del sector turístico comarcal\",\"done\":false},{\"id\":2,\"texto\":\"Completar encuestas de evaluación técnica sobre hospitalidad, guion y tiempos\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales de señalética y servicio de merienda antes del lanzamiento\",\"done\":false}]",
+                ["adria","francisco","leandro"]
             ],
             [
                 'sabor-08',
                 'sabor',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ter',
-                "Predio",
-                '2026-10-30',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["adria","francisco"]
-            ],
-            [
-                'sabor-09',
-                'sabor',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-5',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["adria","francisco"]
-            ],
-            [
-                'sabor-10',
-                'sabor',
-                10,
-                "Distinción, resultados y rueda de negocios",
-                'cie',
-                "Acto de cierre",
-                '2026-11-10',
-                "10:00",
+                "Ronda de negocios final, pitch de Yanina y Lauriano, y relanzamiento de Sabor Mapuche",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-06',
+                "09:30",
                 "13:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
-                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB. Montaje de mesa temática con productos gourmet, tazas enlosadas, huevos celestes y frascos de sales de la abuela. Presentación en vivo de la plataforma web sabormapuche.com.ar. Pitch institucional de 3 minutos co-conducido por Nora Yanina Nahuelpan y Lauriano Ríos ante autoridades municipales, prestadores y prensa. Anuncio oficial de la 6ª edición del Festival Sabor Mapuche y firma de convenios comerciales.",
+                "[\"¿Qué impacto y visibilidad generó la presentación conjunta de Yanina y Lauriano en la comunidad turística?\",\"¿Cuáles son las reservas confirmadas en la plataforma web para el verano 2026/2027?\",\"¿Qué pasos inmediatos seguirán para la organización y sponsoreo de la 6ª edición del festival en noviembre?\"]",
+                "[\"Exhibir la oferta consolidada de turismo rural comunitario ante autoridades y medios de comunicación.\",\"Consolidar convenios comerciales formales con agencias receptivas y comercios regionales.\",\"Entregar el informe final de consultoría técnica y plan de acción para la temporada estival.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con degustación de productos, tazas y terminal web\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos co-liderado por Yanina y Lauriano\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos de comercialización formal y entrega de la hoja de ruta 2026/2027\",\"done\":false}]",
+                ["adria","francisco","leandro"]
             ],
             [
                 'laberin-01',
@@ -3074,7 +3040,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -4924,6 +4890,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rf[0];
             foreach ($asistentes as $consId) {
                 $insAsistFlypark->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Sabor Mapuche si todavía tiene la plantilla genérica inicial
+    $checkSabor = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'sabor-01'")->fetchColumn();
+    if ($checkSabor === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkSabor) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'sabor-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'sabor'");
+
+        $insReuSabor = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistSabor = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesSabor = [
+            [
+                'sabor-01',
+                'sabor',
+                1,
+                "Diagnóstico integral en Casa de Piedra, sendero Huella del Cóndor y sanitarios",
+                'ter',
+                "Casa de Piedra (Comunidad Nahuelpan)",
+                '2026-09-18',
+                "10:00",
+                "12:30",
+                'programada',
+                "Visita a la Comunidad Nahuelpan. Inspección ocular de Casa de Piedra (antigua escuela comunitaria recuperada), sector de cocina, corrales de gallinas y sendero La Huella del Cóndor. Relevamiento técnico del estado de los baños: verificación de la cámara séptica y pozo ciego ya ejecutados, y detalle de los materiales faltantes (cerámicos, artefactos, grifería y pintura) para su terminación.",
+                "[\"¿Cuáles son los costos y tiempos exactos para finalizar los baños antes del inicio de la temporada alta?\",\"¿Cómo delimitamos el sector de corrales avícolas con pallets y postes para que el turista observe sin invadir la zona productiva?\",\"¿Qué disponibilidad horaria tienen Lauriano y Yanina para establecer días y turnos fijos de recepción turística?\"]",
+                "[\"Mapear el circuito peatonal: recepción en Casa de Piedra, ascenso por La Huella del Cóndor y regreso al salón.\",\"Elaborar el cómputo de materiales y presupuesto necesario para la terminación de los sanitarios.\",\"Definir el cronograma semanal de trabajo conjunto y roles de Lauriano y Yanina.\"]",
+                "[{\"id\":1,\"texto\":\"Inspeccionar Casa de Piedra, cocina, corrales avícolas y sendero\",\"done\":false},{\"id\":2,\"texto\":\"Relevar estado de obra civil de los sanitarios y confeccionar listado de materiales faltantes\",\"done\":false},{\"id\":3,\"texto\":\"Acordar el calendario de las 8 semanas de incubación con el equipo de Célula 3\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'sabor-02',
+                'sabor',
+                2,
+                "Estandarización del taller de amasado, protocolo de bienestar animal y guion del agua",
+                'ter',
+                "Casa de Piedra (Comunidad Nahuelpan)",
+                '2026-09-25',
+                "10:30",
+                "12:30",
+                'programada',
+                "Cerrar la estructura pedagógica de la experiencia \"Sendero La Huella del Cóndor & Taller de Amasado Comunitario\". Empoderar a Nora Yanina Nahuelpan en la conducción del momento de panificados. Formalizar el protocolo de bienestar animal (erradicación total de prácticas invasivas como descolada o castraciones, priorizando la observación de la Gallina Mapuche y la incubadora comunitaria de 1.000 huevos). Redactar el guion interpretativo de la vertiente y el ritual de respeto al agua.",
+                "[\"¿Cómo estructuramos el taller de amasado de Yanina para que sea dinámico, participativo y se integre con los tiempos del leudado y horneado?\",\"¿Qué reglas de interacción y distanciamiento con las aves de corral se explicarán a los visitantes antes de entrar al sendero?\",\"¿Cómo transmitir el significado ancestral del ritual del agua de forma pedagógica y respetuosa para todo público?\"]",
+                "[\"Redactar la ficha técnica y guion paso a paso de la experiencia del sendero y amasado.\",\"Aprobar el protocolo de bienestar animal y pautas de visita responsable a corrales.\",\"Ensayar con Yanina la bienvenida y el taller participativo de masas campesinas.\"]",
+                "[{\"id\":1,\"texto\":\"Validar el guion didáctico del taller de panificados con Yanina\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el protocolo de bienestar animal y reglas de comportamiento para visitantes\",\"done\":false},{\"id\":3,\"texto\":\"Fijar el cupo máximo por turno (hasta 15 personas) para preservar la intimidad comunitaria\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'sabor-03',
+                'sabor',
+                3,
+                "Costeo paramétrico, tarifario dual B2C/B2B y expediente de subsidio sanitario",
+                'ind',
+                "Oficinas LAB / Secretaría de Turismo de Esquel",
+                '2026-10-02',
+                "10:30",
+                "12:30",
+                'programada',
+                "Construir la planilla paramétrica de costos de las experiencias y productos. Desglosar insumos de panificación, leña seca, mantenimiento de Casa de Piedra y honorarios de guías/cocineros. Establecer un esquema tarifario dual: tarifa general para turistas y tarifa social comunitaria para residentes de Esquel y Trevelin, más 20-25% de comisión para agencias EVyT. Formulación técnica del pedido de financiamiento ante Producción/CAPEC (Paula Botto) para los sanitarios.",
+                "[\"¿Cuál es el costo unitario por visitante en la merienda campesina y cuál es el punto de equilibrio mínimo por grupo?\",\"¿Qué precios fijamos para las agencias de turismo receptivo para que resulte un producto atractivo en sus paquetes?\",\"¿Qué línea de crédito o subsidio municipal/provincial se adapta mejor a la culminación de los baños?\"]",
+                "[\"Parametrizar los costos operativos y punto de equilibrio de la merienda y el sendero.\",\"Emitir la lista oficial de precios: público general, residentes comarcales y agencias de viaje.\",\"Cerrar el documento de solicitud de fondos para la terminación de la obra sanitaria.\"]",
+                "[{\"id\":1,\"texto\":\"Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel\",\"done\":false},{\"id\":2,\"texto\":\"Emitir el tarifario oficial minorista y mayorista (B2C y B2B)\",\"done\":false},{\"id\":3,\"texto\":\"Presentar el expediente de apoyo financiero ante la Secretaría de Producción\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'sabor-04',
+                'sabor',
+                4,
+                "Logística de ramas de Maqui (Parques Nacionales), Curanto mensual y tazas identitarias",
+                'ind',
+                "Oficinas LAB / Melipal",
+                '2026-10-09',
+                "10:30",
+                "12:30",
+                'programada',
+                "Hacer seguimiento de la nota oficial enviada a Parques Nacionales por indicación del Intendente Matías Taccetta autorizando al poblador Paulo Rosales la extracción sustentable de 5 m³ de ramas de maqui en Los Alerces. Protocolizar el manual operativo y de seguridad del \"Curanto de Nahuelpan\" (fuego, piedras calientes, técnica de tapado y tiempos de cocción). Cotizar y encargar la primera partida de tazas enlosadas con el logo institucional de Sabor Mapuche para las meriendas.",
+                "[\"¿Cuál es el estado de la autorización de Parques Nacionales y la coordinación logística con Paulo Rosales?\",\"¿Qué calendario fijo mensual de curantos se establecerá para generar previsibilidad en agencias y público?\",\"¿Qué costo y plazos de entrega maneja el proveedor de las tazas enlosadas serigrafiadas?\"]",
+                "[\"Monitorear la resolución administrativa de Parques Nacionales sobre el maqui.\",\"Estandarizar la receta, gramaje y procedimiento del Curanto al Hoyo de Nahuelpan.\",\"Aprobar el diseño y mandar a producción la primera tirada de tazas de losa institucionales.\"]",
+                "[{\"id\":1,\"texto\":\"Verificar avance del permiso de recolección de maqui con la Intendencia de Parques\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el manual técnico y de bioseguridad del Curanto tradicional\",\"done\":false},{\"id\":3,\"texto\":\"Aprobar la muestra gráfica de las tazas enlosadas serigrafiadas\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'sabor-05',
+                'sabor',
+                5,
+                "Producción audiovisual de microvideos (15s), fotografía 4K y arquitectura web",
+                'ter',
+                "Casa de Piedra y Sendero Huella del Cóndor",
+                '2026-10-16',
+                "10:00",
+                "13:00",
+                'programada',
+                "Jornada de producción de contenidos en Casa de Piedra y sendero. Rodaje de una serie de 5 microvideos dinámicos de 15 segundos para reels e Instagram (técnica de calentamiento de piedras, encendido del fuego, atado de cordero, amasado participativo con Yanina y ritual en la vertiente). Sesión de 30 fotos 4K de alta calidad de productos gourmet, huevos celestes y paisaje. Revisión técnica con Leandro Choi de la arquitectura de la plataforma web sabormapuche.com.ar.",
+                "[\"¿Qué tomas y detalles transmiten con mayor autenticidad la mística de la cocina a leña y la calidez del hogar?\",\"¿Cómo organizamos la tienda web para despachar sales, merkén y alfajores a nivel nacional?\",\"¿Qué pasarela de pagos y sistema de confirmación de turnos dejamos integrado en la plataforma web?\"]",
+                "[\"Completar el plan de rodaje de los 5 microvideos y banco de 30 imágenes profesionales.\",\"Validar la interfaz y navegación de la plataforma web desarrollada por Leandro Choi.\",\"Entrenar a Lauriano y Yanina en la administración del panel de control de reservas y tienda online.\"]",
+                "[{\"id\":1,\"texto\":\"Rodar los 5 microvideos de 15 segundos y seleccionar las 15 mejores fotografías 4K\",\"done\":false},{\"id\":2,\"texto\":\"Aprobar la estructura funcional y catálogo de la plataforma web sabormapuche.com.ar\",\"done\":false},{\"id\":3,\"texto\":\"Configurar el botón de pago y canal directo de WhatsApp Business\",\"done\":false}]",
+                ["adria","francisco","leandro"]
+            ],
+            [
+                'sabor-06',
+                'sabor',
+                6,
+                "Rueda comercial B2B con agencias receptivas, La Trochita y sinergias de cohorte",
+                'ind',
+                "Secretaría de Turismo / Melipal",
+                '2026-10-23',
+                "10:30",
+                "12:30",
+                'programada',
+                "Presentar formalmente el catálogo de experiencias y tarifario a tres agencias receptivas habilitadas de Esquel y Trevelin. Coordinar la articulación operativa con los servicios regulares del Viejo Expreso Patagónico La Trochita para recibir contingentes en Casa de Piedra tras el arribo a la estación Nahuelpan. Planificar sinergias de cohorte: articulación de circuitos culturales con \"El Arroyo Que Nos Ve Crecer...\" (Marcelo Troiano) y meriendas campesinas combinadas.",
+                "[\"¿Qué interés y receptividad muestran las agencias en ofrecer el curanto mensual y el sendero como excursión fija?\",\"¿Cómo coordinamos los traslados desde la estación del tren hacia Casa de Piedra en los días de viaje?\",\"¿Qué acuerdos de reciprocidad podemos establecer con otros prestadores de la comarca?\"]",
+                "[\"Reunirse con 3 agencias de viaje receptivas y entregarles material comercial y muestras de productos.\",\"Firmar al menos 2 acuerdos marco de comercialización y derivación turística.\",\"Establecer el protocolo de recepción de pasajeros del tren con las autoridades de La Trochita.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar el catálogo comercial en agencias receptivas de Esquel y Trevelin\",\"done\":false},{\"id\":2,\"texto\":\"Firmar acuerdos de comercialización turística con agencias locales\",\"done\":false},{\"id\":3,\"texto\":\"Acordar la coordinación operativa con los horarios de La Trochita\",\"done\":false}]",
+                ["adria","francisco"]
+            ],
+            [
+                'sabor-07',
+                'sabor',
+                7,
+                "Fam Tour vivencial en Casa de Piedra con informantes turísticos y test de la web",
+                'ter',
+                "Casa de Piedra (Comunidad Nahuelpan)",
+                '2026-10-30',
+                "10:30",
+                "13:30",
+                'programada',
+                "Simulacro vivencial completo con 12 invitados especiales (informantes de las Secretarías de Turismo de Esquel y Trevelin, guías del Parque y prestadores de la cohorte). Prueba en vivo del sistema de reservas web. Recepción y bienvenida protocolar a cargo de Nora Yanina Nahuelpan, taller de amasado participativo, caminata por La Huella del Cóndor hasta la vertiente, visita guiada al corral de Gallinas Mapuches y merienda comunitaria en Casa de Piedra con las tazas institucionales.",
+                "[\"¿El proceso de reserva digital y confirmación previa resultó fluido e intuitivo para los usuarios?\",\"¿Cómo respondieron los informantes turísticos a la conducción de Yanina en el taller de panificados?\",\"¿Qué devoluciones técnicas surgieron respecto a la señalización del sendero y los tiempos del recorrido?\"]",
+                "[\"Validar los tiempos operativos reales de la experiencia completa en condiciones simuladas.\",\"Consolidar la seguridad y liderazgo de Yanina al frente de la conducción de contingentes.\",\"Recoger encuestas de satisfacción y sugerencias de mejora de informantes y guías turísticos.\"]",
+                "[{\"id\":1,\"texto\":\"Ejecutar el Fam Tour con 12 participantes del sector turístico comarcal\",\"done\":false},{\"id\":2,\"texto\":\"Completar encuestas de evaluación técnica sobre hospitalidad, guion y tiempos\",\"done\":false},{\"id\":3,\"texto\":\"Ajustar detalles finales de señalética y servicio de merienda antes del lanzamiento\",\"done\":false}]",
+                ["adria","francisco","leandro"]
+            ],
+            [
+                'sabor-08',
+                'sabor',
+                8,
+                "Ronda de negocios final, pitch de Yanina y Lauriano, y relanzamiento de Sabor Mapuche",
+                'col',
+                "Centro Cultural Melipal / Espacio LAB",
+                '2026-11-06',
+                "09:30",
+                "13:00",
+                'programada',
+                "Participación protagónica en el Encuentro de Cierre de Esquel LAB. Montaje de mesa temática con productos gourmet, tazas enlosadas, huevos celestes y frascos de sales de la abuela. Presentación en vivo de la plataforma web sabormapuche.com.ar. Pitch institucional de 3 minutos co-conducido por Nora Yanina Nahuelpan y Lauriano Ríos ante autoridades municipales, prestadores y prensa. Anuncio oficial de la 6ª edición del Festival Sabor Mapuche y firma de convenios comerciales.",
+                "[\"¿Qué impacto y visibilidad generó la presentación conjunta de Yanina y Lauriano en la comunidad turística?\",\"¿Cuáles son las reservas confirmadas en la plataforma web para el verano 2026/2027?\",\"¿Qué pasos inmediatos seguirán para la organización y sponsoreo de la 6ª edición del festival en noviembre?\"]",
+                "[\"Exhibir la oferta consolidada de turismo rural comunitario ante autoridades y medios de comunicación.\",\"Consolidar convenios comerciales formales con agencias receptivas y comercios regionales.\",\"Entregar el informe final de consultoría técnica y plan de acción para la temporada estival.\"]",
+                "[{\"id\":1,\"texto\":\"Montar stand interactivo con degustación de productos, tazas y terminal web\",\"done\":false},{\"id\":2,\"texto\":\"Exponer el pitch de 3 minutos co-liderado por Yanina y Lauriano\",\"done\":false},{\"id\":3,\"texto\":\"Firmar acuerdos de comercialización formal y entrega de la hoja de ruta 2026/2027\",\"done\":false}]",
+                ["adria","francisco","leandro"]
+            ],
+        ];
+
+        foreach ($reunionesSabor as $rs) {
+            $asistentes = array_pop($rs);
+            $insReuSabor->execute($rs);
+            $reuId = $rs[0];
+            foreach ($asistentes as $consId) {
+                $insAsistSabor->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

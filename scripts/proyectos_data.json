@@ -817,40 +817,52 @@
       "id": "sabor",
       "app_id": 7,
       "nombre": "Sabor Mapuche",
-      "titular": "Lauriano Jose Rios",
+      "titular": "Lauriano Jose Rios y Nora Yanina Nahuelpan",
       "linea": "Raíz",
       "puntaje": 3.74,
       "celula": 3,
       "sr": "adria",
       "jr": "francisco",
       "diagnostico": [
-        "Gastronomía ancestral de comunidades originarias, cocina de territorio y curanto.",
-        "Gran potencia cultural, identidad e interés para turismo internacional y nacional.",
-        "Cocineros y anfitriones reconocidos."
+        "Baluarte patrimonial, cultural y gastronómico de turismo rural comunitario en la histórica Comunidad Nahuelpan (a 15 km de Esquel), sobre paisaje de transición precordillera-estepa. Epicentro en 'Casa de Piedra', la antigua escuela comunitaria recuperada y techada por la familia de Nora Yanina Nahuelpan.",
+        "Trayectoria de 15 años liderada por Lauriano Ríos (formado en producción avícola en Rauch, exdirigente juvenil de Federación Agraria y delegado RENAP) junto a Yanina Nahuelpan. Antecedente emblemático de las 5 ediciones del Festival 'Sabor Mapuche - Alimentos de la Tierra', apadrinado por Rubén Patagonia y con renombrados chefs patagónicos (Fefe Domínguez, Bruno de Berbina, Freddy Álvarez).",
+        "Propuesta integral multidimensional: 1) Producción de alimentos con identidad (sales de la abuela, merkén ahumado, alfajores de ñaco, licores); 2) Conservación genética de la Gallina Mapuche (huevo celeste/verde de cáscara gruesa, incubadora comunitaria de 1.000 huevos); 3) Sendero interpretativo 'La Huella del Cóndor' con taller de amasado participativo y merienda campesina en Casa de Piedra; y 4) Ceremonia ancestral del Curanto al Hoyo con ramas de Maqui de Los Alerces."
       ],
       "trabas": [
-        "Regularización bromatológica del espacio de elaboración.",
-        "Continuidad de fechas regulares frente a la estacionalidad."
+        "Cuello de botella en infraestructura sanitaria en Casa de Piedra: cámara séptica y pozo ciego ya terminados y operativos, pero faltan terminaciones finas (cerámicos, grifería, artefactos sanitarios y pintura exterior) para habilitar contingentes regulares.",
+        "Logística e insumo regulado para el Curanto Ancestral: necesidad de autorización formal de Parques Nacionales para que el poblador Paulo Rosales pueda extraer sustentablemente 5 m³ de ramas de maqui en Los Alerces (que reemplazan la nalca evitando sabores amargos y optimizando retención de calor).",
+        "Dispersión comunicacional y falta de canal transaccional: marcas divididas (@sabormapucheok vs @huelladelcondor), ausencia de sitio web y necesidad de visibilizar y empoderar a Nora Yanina Nahuelpan como la portadora legítima del linaje e identidad comunitaria."
       ],
       "ejes": [
         {
-          "t": "Eventos Gastronómicos Fijos",
+          "t": "Curaduría de Experiencias Turísticas, Bienestar Animal y Sendero",
           "items": [
-            "Establecer fechas de curanto y fuegos quincenales.",
-            "Sistema de venta de cubiertos anticipados."
+            "Estandarización de la experiencia 'Sendero La Huella del Cóndor & Taller de Amasado Comunitario' (2h 30min), con Yanina Nahuelpan al frente de los panificados campesinos y merienda en Casa de Piedra.",
+            "Protocolo estricto de bienestar animal (erradicación total de prácticas invasivas, circuito avícola delimitado con pallets y postes, observación de incubadora y Gallina Mapuche) y guion ceremonial del respeto al agua en la vertiente."
           ]
         },
         {
-          "t": "Relato y Cultura",
+          "t": "Plataforma Web Transaccional, Identidad Paraguas y Estrategia Audiovisual",
           "items": [
-            "Integrar la cosmovisión y el significado de los alimentos.",
-            "Souvenir gastronómico (especias y conservas)."
+            "Desarrollo de la plataforma web transaccional (sabormapuche.com.ar) con tienda online de productos gourmet y sistema de reservas con cupos por turno (hasta 15 personas).",
+            "Estrategia audiovisual en redes: 5 microvideos dinámicos de 15 segundos (fuego en las piedras, amasado, destape de curanto, ritual del agua), banco de 30 fotos 4K y diseño de tazas enlosadas institucionales con logo Sabor Mapuche."
+          ]
+        },
+        {
+          "t": "Costeo Paramétrico, Comercialización B2B, Habilitación Sanitaria y Curanto Mensual",
+          "items": [
+            "Planilla paramétrica de costos y tarifario dual (general turista vs social residente), más 20-25% de comisión para agencias receptivas de Esquel y Trevelin.",
+            "Gestión de financiamiento ante Producción/CAPEC (Paula Botto) para terminación de sanitarios en Casa de Piedra, seguimiento de la autorización de Parques Nacionales para ramas de maqui y estandarización del curanto mensual."
           ]
         }
       ],
       "entregables": [
-        "Calendario de banquetes ancestrales con reserva.",
-        "Ficha técnica para operadores de turismo receptivo."
+        "Ficha técnica estandarizada y guion interpretativo de la experiencia 'Sendero La Huella del Cóndor & Taller de Amasado Comunitario en Casa de Piedra', con protocolo de bienestar animal.",
+        "Manual operativo y de seguridad del 'Curanto de Nahuelpan', con circuito sustentable de recolección de ramas de maqui autorizado por Parques Nacionales.",
+        "Plataforma web transaccional operativa (sabormapuche.com.ar) con pasarela de pagos integrada, tienda online y sistema de reservas de experiencias.",
+        "Banco de contenidos audiovisuales profesionales: 30 fotografías 4K en alta resolución y serie de 5 microvideos de 15 segundos para redes sociales.",
+        "Planilla paramétrica de costos y tarifario comercial minorista/mayorista (B2C y B2B) oficializado para agencias receptivas y prestadores.",
+        "Expediente técnico de financiamiento ante Producción/CAPEC para la terminación de sanitarios en Casa de Piedra y acuerdos comerciales con al menos 2 agencias receptivas."
       ]
     },
     {

@@ -490,6 +490,56 @@ const exactMeetings = {
       check: ['Presentar informe de balance y métricas del viaje piloto', 'Exponer calendario 2027 en la rueda de negocios', 'Firmar al menos 2 acuerdos comerciales con prestadores locales']
     }
   ],
+  sabor: [
+    { num: 1, f: '2026-09-18', t: 'ter', lugar: 'Casa de Piedra (Comunidad Nahuelpan)', hora: '10:00 a 12:30', titulo: 'Diagnóstico integral en Casa de Piedra, sendero Huella del Cóndor y sanitarios', asistentes: ['adria', 'francisco'],
+      guia: 'Visita a la Comunidad Nahuelpan. Inspección ocular de Casa de Piedra (antigua escuela comunitaria recuperada), sector de cocina, corrales de gallinas y sendero La Huella del Cóndor. Relevamiento técnico del estado de los baños: verificación de la cámara séptica y pozo ciego ya ejecutados, y detalle de los materiales faltantes (cerámicos, artefactos, grifería y pintura) para su terminación.',
+      preguntas: ['¿Cuáles son los costos y tiempos exactos para finalizar los baños antes del inicio de la temporada alta?', '¿Cómo delimitamos el sector de corrales avícolas con pallets y postes para que el turista observe sin invadir la zona productiva?', '¿Qué disponibilidad horaria tienen Lauriano y Yanina para establecer días y turnos fijos de recepción turística?'],
+      objetivos: ['Mapear el circuito peatonal: recepción en Casa de Piedra, ascenso por La Huella del Cóndor y regreso al salón.', 'Elaborar el cómputo de materiales y presupuesto necesario para la terminación de los sanitarios.', 'Definir el cronograma semanal de trabajo conjunto y roles de Lauriano y Yanina.'],
+      check: ['Inspeccionar Casa de Piedra, cocina, corrales avícolas y sendero', 'Relevar estado de obra civil de los sanitarios y confeccionar listado de materiales faltantes', 'Acordar el calendario de las 8 semanas de incubación con el equipo de Célula 3']
+    },
+    { num: 2, f: '2026-09-25', t: 'ter', lugar: 'Casa de Piedra (Comunidad Nahuelpan)', hora: '10:30 a 12:30', titulo: 'Estandarización del taller de amasado, protocolo de bienestar animal y guion del agua', asistentes: ['adria', 'francisco'],
+      guia: 'Cerrar la estructura pedagógica de la experiencia "Sendero La Huella del Cóndor & Taller de Amasado Comunitario". Empoderar a Nora Yanina Nahuelpan en la conducción del momento de panificados. Formalizar el protocolo de bienestar animal (erradicación total de prácticas invasivas como descolada o castraciones, priorizando la observación de la Gallina Mapuche y la incubadora comunitaria de 1.000 huevos). Redactar el guion interpretativo de la vertiente y el ritual de respeto al agua.',
+      preguntas: ['¿Cómo estructuramos el taller de amasado de Yanina para que sea dinámico, participativo y se integre con los tiempos del leudado y horneado?', '¿Qué reglas de interacción y distanciamiento con las aves de corral se explicarán a los visitantes antes de entrar al sendero?', '¿Cómo transmitir el significado ancestral del ritual del agua de forma pedagógica y respetuosa para todo público?'],
+      objetivos: ['Redactar la ficha técnica y guion paso a paso de la experiencia del sendero y amasado.', 'Aprobar el protocolo de bienestar animal y pautas de visita responsable a corrales.', 'Ensayar con Yanina la bienvenida y el taller participativo de masas campesinas.'],
+      check: ['Validar el guion didáctico del taller de panificados con Yanina', 'Redactar el protocolo de bienestar animal y reglas de comportamiento para visitantes', 'Fijar el cupo máximo por turno (hasta 15 personas) para preservar la intimidad comunitaria']
+    },
+    { num: 3, f: '2026-10-02', t: 'ind', lugar: 'Oficinas LAB / Secretaría de Turismo de Esquel', hora: '10:30 a 12:30', titulo: 'Costeo paramétrico, tarifario dual B2C/B2B y expediente de subsidio sanitario', asistentes: ['adria', 'francisco'],
+      guia: 'Construir la planilla paramétrica de costos de las experiencias y productos. Desglosar insumos de panificación, leña seca, mantenimiento de Casa de Piedra y honorarios de guías/cocineros. Establecer un esquema tarifario dual: tarifa general para turistas y tarifa social comunitaria para residentes de Esquel y Trevelin, más 20-25% de comisión para agencias EVyT. Formulación técnica del pedido de financiamiento ante Producción/CAPEC (Paula Botto) para los sanitarios.',
+      preguntas: ['¿Cuál es el costo unitario por visitante en la merienda campesina y cuál es el punto de equilibrio mínimo por grupo?', '¿Qué precios fijamos para las agencias de turismo receptivo para que resulte un producto atractivo en sus paquetes?', '¿Qué línea de crédito o subsidio municipal/provincial se adapta mejor a la culminación de los baños?'],
+      objetivos: ['Parametrizar los costos operativos y punto de equilibrio de la merienda y el sendero.', 'Emitir la lista oficial de precios: público general, residentes comarcales y agencias de viaje.', 'Cerrar el documento de solicitud de fondos para la terminación de la obra sanitaria.'],
+      check: ['Cargar la planilla de costos y márgenes de rentabilidad en Drive/Excel', 'Emitir el tarifario oficial minorista y mayorista (B2C y B2B)', 'Presentar el expediente de apoyo financiero ante la Secretaría de Producción']
+    },
+    { num: 4, f: '2026-10-09', t: 'ind', lugar: 'Oficinas LAB / Melipal', hora: '10:30 a 12:30', titulo: 'Logística de ramas de Maqui (Parques Nacionales), Curanto mensual y tazas identitarias', asistentes: ['adria', 'francisco'],
+      guia: 'Hacer seguimiento de la nota oficial enviada a Parques Nacionales por indicación del Intendente Matías Taccetta autorizando al poblador Paulo Rosales la extracción sustentable de 5 m³ de ramas de maqui en Los Alerces. Protocolizar el manual operativo y de seguridad del "Curanto de Nahuelpan" (fuego, piedras calientes, técnica de tapado y tiempos de cocción). Cotizar y encargar la primera partida de tazas enlosadas con el logo institucional de Sabor Mapuche para las meriendas.',
+      preguntas: ['¿Cuál es el estado de la autorización de Parques Nacionales y la coordinación logística con Paulo Rosales?', '¿Qué calendario fijo mensual de curantos se establecerá para generar previsibilidad en agencias y público?', '¿Qué costo y plazos de entrega maneja el proveedor de las tazas enlosadas serigrafiadas?'],
+      objetivos: ['Monitorear la resolución administrativa de Parques Nacionales sobre el maqui.', 'Estandarizar la receta, gramaje y procedimiento del Curanto al Hoyo de Nahuelpan.', 'Aprobar el diseño y mandar a producción la primera tirada de tazas de losa institucionales.'],
+      check: ['Verificar avance del permiso de recolección de maqui con la Intendencia de Parques', 'Redactar el manual técnico y de bioseguridad del Curanto tradicional', 'Aprobar la muestra gráfica de las tazas enlosadas serigrafiadas']
+    },
+    { num: 5, f: '2026-10-16', t: 'ter', lugar: 'Casa de Piedra y Sendero Huella del Cóndor', hora: '10:00 a 13:00', titulo: 'Producción audiovisual de microvideos (15s), fotografía 4K y arquitectura web', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Jornada de producción de contenidos en Casa de Piedra y sendero. Rodaje de una serie de 5 microvideos dinámicos de 15 segundos para reels e Instagram (técnica de calentamiento de piedras, encendido del fuego, atado de cordero, amasado participativo con Yanina y ritual en la vertiente). Sesión de 30 fotos 4K de alta calidad de productos gourmet, huevos celestes y paisaje. Revisión técnica con Leandro Choi de la arquitectura de la plataforma web sabormapuche.com.ar.',
+      preguntas: ['¿Qué tomas y detalles transmiten con mayor autenticidad la mística de la cocina a leña y la calidez del hogar?', '¿Cómo organizamos la tienda web para despachar sales, merkén y alfajores a nivel nacional?', '¿Qué pasarela de pagos y sistema de confirmación de turnos dejamos integrado en la plataforma web?'],
+      objetivos: ['Completar el plan de rodaje de los 5 microvideos y banco de 30 imágenes profesionales.', 'Validar la interfaz y navegación de la plataforma web desarrollada por Leandro Choi.', 'Entrenar a Lauriano y Yanina en la administración del panel de control de reservas y tienda online.'] ,
+      check: ['Rodar los 5 microvideos de 15 segundos y seleccionar las 15 mejores fotografías 4K', 'Aprobar la estructura funcional y catálogo de la plataforma web sabormapuche.com.ar', 'Configurar el botón de pago y canal directo de WhatsApp Business']
+    },
+    { num: 6, f: '2026-10-23', t: 'ind', lugar: 'Secretaría de Turismo / Melipal', hora: '10:30 a 12:30', titulo: 'Rueda comercial B2B con agencias receptivas, La Trochita y sinergias de cohorte', asistentes: ['adria', 'francisco'],
+      guia: 'Presentar formalmente el catálogo de experiencias y tarifario a tres agencias receptivas habilitadas de Esquel y Trevelin. Coordinar la articulación operativa con los servicios regulares del Viejo Expreso Patagónico La Trochita para recibir contingentes en Casa de Piedra tras el arribo a la estación Nahuelpan. Planificar sinergias de cohorte: articulación de circuitos culturales con "El Arroyo Que Nos Ve Crecer..." (Marcelo Troiano) y meriendas campesinas combinadas.',
+      preguntas: ['¿Qué interés y receptividad muestran las agencias en ofrecer el curanto mensual y el sendero como excursión fija?', '¿Cómo coordinamos los traslados desde la estación del tren hacia Casa de Piedra en los días de viaje?', '¿Qué acuerdos de reciprocidad podemos establecer con otros prestadores de la comarca?'],
+      objetivos: ['Reunirse con 3 agencias de viaje receptivas y entregarles material comercial y muestras de productos.', 'Firmar al menos 2 acuerdos marco de comercialización y derivación turística.', 'Establecer el protocolo de recepción de pasajeros del tren con las autoridades de La Trochita.'] ,
+      check: ['Presentar el catálogo comercial en agencias receptivas de Esquel y Trevelin', 'Firmar acuerdos de comercialización turística con agencias locales', 'Acordar la coordinación operativa con los horarios de La Trochita']
+    },
+    { num: 7, f: '2026-10-30', t: 'ter', lugar: 'Casa de Piedra (Comunidad Nahuelpan)', hora: '10:30 a 13:30', titulo: 'Fam Tour vivencial en Casa de Piedra con informantes turísticos y test de la web', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Simulacro vivencial completo con 12 invitados especiales (informantes de las Secretarías de Turismo de Esquel y Trevelin, guías del Parque y prestadores de la cohorte). Prueba en vivo del sistema de reservas web. Recepción y bienvenida protocolar a cargo de Nora Yanina Nahuelpan, taller de amasado participativo, caminata por La Huella del Cóndor hasta la vertiente, visita guiada al corral de Gallinas Mapuches y merienda comunitaria en Casa de Piedra con las tazas institucionales.',
+      preguntas: ['¿El proceso de reserva digital y confirmación previa resultó fluido e intuitivo para los usuarios?', '¿Cómo respondieron los informantes turísticos a la conducción de Yanina en el taller de panificados?', '¿Qué devoluciones técnicas surgieron respecto a la señalización del sendero y los tiempos del recorrido?'],
+      objetivos: ['Validar los tiempos operativos reales de la experiencia completa en condiciones simuladas.', 'Consolidar la seguridad y liderazgo de Yanina al frente de la conducción de contingentes.', 'Recoger encuestas de satisfacción y sugerencias de mejora de informantes y guías turísticos.'] ,
+      check: ['Ejecutar el Fam Tour con 12 participantes del sector turístico comarcal', 'Completar encuestas de evaluación técnica sobre hospitalidad, guion y tiempos', 'Ajustar detalles finales de señalética y servicio de merienda antes del lanzamiento']
+    },
+    { num: 8, f: '2026-11-06', t: 'col', lugar: 'Centro Cultural Melipal / Espacio LAB', hora: '09:30 a 13:00', titulo: 'Ronda de negocios final, pitch de Yanina y Lauriano, y relanzamiento de Sabor Mapuche', asistentes: ['adria', 'francisco', 'leandro'],
+      guia: 'Participación protagónica en el Encuentro de Cierre de Esquel LAB. Montaje de mesa temática con productos gourmet, tazas enlosadas, huevos celestes y frascos de sales de la abuela. Presentación en vivo de la plataforma web sabormapuche.com.ar. Pitch institucional de 3 minutos co-conducido por Nora Yanina Nahuelpan y Lauriano Ríos ante autoridades municipales, prestadores y prensa. Anuncio oficial de la 6ª edición del Festival Sabor Mapuche y firma de convenios comerciales.',
+      preguntas: ['¿Qué impacto y visibilidad generó la presentación conjunta de Yanina y Lauriano en la comunidad turística?', '¿Cuáles son las reservas confirmadas en la plataforma web para el verano 2026/2027?', '¿Qué pasos inmediatos seguirán para la organización y sponsoreo de la 6ª edición del festival en noviembre?'],
+      objetivos: ['Exhibir la oferta consolidada de turismo rural comunitario ante autoridades y medios de comunicación.', 'Consolidar convenios comerciales formales con agencias receptivas y comercios regionales.', 'Entregar el informe final de consultoría técnica y plan de acción para la temporada estival.'] ,
+      check: ['Montar stand interactivo con degustación de productos, tazas y terminal web', 'Exponer el pitch de 3 minutos co-liderado por Yanina y Lauriano', 'Firmar acuerdos de comercialización formal y entrega de la hoja de ruta 2026/2027']
+    }
+  ],
   flypark: [
     { num: 1, f: '2026-09-17', t: 'ter', lugar: 'Predio de la Sociedad Rural de Esquel', hora: '14:00 a 16:30', titulo: 'Relevamiento de terreno en Sociedad Rural y planificación de montaje', asistentes: ['leandro', 'agustina'],
       guia: 'Visitar el predio de la Sociedad Rural junto a Fabricio y Paula Botto. Inspeccionar el declive natural del terreno con pasto, evaluar las dimensiones para el trazado de la pista modular de 100 m² (1 tira continua con desnivel) y verificar acometida eléctrica, baños y seguridad perimetral. Coordinar la solicitud formal de préstamo temporal por 3 semanas.',
@@ -1038,7 +1088,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin', 'truepat', 'yamamori', 'senderos', 'carpint', 'arroyo', 'lucero', 'flypark', 'sabor'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -1722,6 +1772,68 @@ php += `        ];
             $reuId = $rf[0];
             foreach ($asistentes as $consId) {
                 $insAsistFlypark->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de Sabor Mapuche si todavía tiene la plantilla genérica inicial
+    $checkSabor = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'sabor-01'")->fetchColumn();
+    if ($checkSabor === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkSabor) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'sabor-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'sabor'");
+
+        $insReuSabor = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistSabor = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesSabor = [
+`;
+
+const saborMeetingsList = exactMeetings.sabor;
+for (const m of saborMeetingsList) {
+  const reuId = `sabor-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'francisco'];
+
+  php += `            [
+                '${reuId}',
+                'sabor',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesSabor as $rs) {
+            $asistentes = array_pop($rs);
+            $insReuSabor->execute($rs);
+            $reuId = $rs[0];
+            foreach ($asistentes as $consId) {
+                $insAsistSabor->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
