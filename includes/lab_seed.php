@@ -8,6 +8,9 @@ require_once __DIR__ . '/db.php';
 
 function lab_asegurar_datos(PDO $pdo): void
 {
+    // Asegurar acceso para el usuario de Leandro
+    $pdo->exec("INSERT OR IGNORE INTO lab_user_access (user_id, granted_by) SELECT id, 1 FROM users WHERE LOWER(username) = 'leandro'");
+
     // 1. Consultores
     $countCons = (int) $pdo->query("SELECT COUNT(*) FROM lab_consultores")->fetchColumn();
     if ($countCons === 0) {
