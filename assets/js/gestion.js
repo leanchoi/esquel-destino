@@ -18,6 +18,12 @@
 
   const { meta, celulas, consultores, proyectos, reuniones, compromisos, csrf, yo } = DATA;
 
+  // Correlación de sesión con el consultor
+  const miConsultorId = (yo && yo.consultor_id && consultores[yo.consultor_id]) 
+    ? yo.consultor_id 
+    : (yo && yo.username ? Object.keys(consultores).find(k => k.toLowerCase() === yo.username.toLowerCase()) : null);
+  const miConsultor = miConsultorId ? consultores[miConsultorId] : null;
+
   // Helpers de fecha y formato
   const DOWL = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   const DOWS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
@@ -450,6 +456,15 @@
   // 5. VISTA 2: EXPEDIENTE 360° POR EMPRENDIMIENTO
   // -------------------------------------------------------------------------
   let proyectoActivoId = Object.keys(proyectos)[0] || null;
+  // Si el usuario logueado es consultor, preseleccionar su primer proyecto asignado
+  if (miConsultorId) {
+    const primerMio = Object.values(proyectos).find(p => p.consultor_sr_id === miConsultorId || p.consultor_jr_id === miConsultorId);
+    if (primerMio) {
+      proyectoActivoId = primerMio.id;
+    }
+  }
+
+  let filtroProyectosModo = 'todos'; // 'todos' | 'mios'
 
   function renderExpedienteSidebar() {
     const list = document.getElementById('proyectosNavList');
@@ -458,16 +473,30 @@
     const q = (document.getElementById('searchProyecto')?.value || '').toLowerCase().trim();
 
     list.innerHTML = Object.values(proyectos).filter(p => {
+      if (filtroProyectosModo === 'mios' && miConsultorId) {
+        if (p.consultor_sr_id !== miConsultorId && p.consultor_jr_id !== miConsultorId) {
+          return false;
+        }
+      }
       if (!q) return true;
       return p.nombre.toLowerCase().includes(q) || p.titular.toLowerCase().includes(q) || p.linea.toLowerCase().includes(q);
     }).map(p => {
       const isSel = p.id === proyectoActivoId;
       const celColor = celulas[p.celula]?.color || '#888';
+      const esSr = miConsultorId && p.consultor_sr_id === miConsultorId;
+      const esJr = miConsultorId && p.consultor_jr_id === miConsultorId;
+      const rolBadge = esSr 
+        ? '<span class="badge" style="font-size:9px;padding:1px 5px;background:#2F7D5D;color:#fff;margin-left:4px">Senior</span>' 
+        : (esJr ? '<span class="badge" style="font-size:9px;padding:1px 5px;background:#4A7FA8;color:#fff;margin-left:4px">Junior</span>' : '');
+
       return `
         <button type="button" class="pnav-item ${isSel ? 'is-active' : ''}" data-pid="${esc(p.id)}">
           <span class="pnav-cel-tag" style="background:${celColor}"></span>
           <div class="pnav-info">
-            <strong>${esc(p.nombre)}</strong>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <strong>${esc(p.nombre)}</strong>
+              ${rolBadge}
+            </div>
             <span class="pnav-meta">${esc(p.titular)} · ${esc(p.linea)} (${Number(p.puntaje).toFixed(2)})</span>
           </div>
         </button>
@@ -744,12 +773,13 @@
       return '<p class="sub">Sin votos registrados para este proyecto.</p>';
     }
 
-    return votos.map(v => {
+    return votos.map((v, idx) => {
       const score = (v.rating_perfil * 1.5 + v.rating_diferenciacion + v.rating_impacto + v.rating_viabilidad + v.rating_producto_fisico * 0.5) / 5;
+      const juradoLabel = (v.username && v.username.startsWith('Jurado')) ? v.username : ('Jurado #' + (idx + 1));
       return `
         <div class="voto-card">
           <div class="voto-head">
-            <strong>Juez: ${esc(v.username)}</strong>
+            <strong>${esc(juradoLabel)}</strong>
             <span class="voto-score-badge">${score.toFixed(2)} / 5.00</span>
           </div>
           <div class="voto-breakdown">
@@ -838,12 +868,16 @@
       // Calcular posibles choques FIT
       const choquesFIT = mios.filter(r => enFIT(r.fecha) && ['francisco', 'agustina'].includes(c.id)).length;
 
+      const esYo = miConsultorId === c.id;
       return `
-        <div class="consultor-card" data-cid="${esc(c.id)}">
+        <div class="consultor-card ${esYo ? 'is-me' : ''}" data-cid="${esc(c.id)}">
           <div class="cons-head">
             <div class="cons-avatar" style="background:${c.color}">${c.nombre.slice(0, 2).toUpperCase()}</div>
             <div>
-              <h3 class="cons-name">${esc(c.nombre)}</h3>
+              <div style="display:flex;align-items:center;gap:6px">
+                <h3 class="cons-name">${esc(c.nombre)}</h3>
+                ${esYo ? '<span class="badge is-mine" style="font-size:10px;padding:2px 6px">Tu perfil</span>' : ''}
+              </div>
               <span class="cons-rol-badge">${esc(c.rol)}</span>
             </div>
             <div class="cons-kpi">
@@ -997,7 +1031,11 @@
       ${LABEL_TIPO[r.tipo] || r.tipo} · <strong>${esc(p.nombre || r.proyecto_id)}</strong>
     `;
     document.getElementById('drawerTitle').textContent = `#${r.numero_reunion} · ${r.titulo}`;
-    document.getElementById('drawerMeta').textContent = `${fLarga(r.fecha)} ${r.hora_inicio ? `· ${r.hora_inicio} a ${r.hora_fin}` : ''} · ${r.lugar}`;
+    const esMio = miConsultorId && r.asistentes.includes(miConsultorId);
+    document.getElementById('drawerMeta').innerHTML = `
+      ${fLarga(r.fecha)} ${r.hora_inicio ? `· ${r.hora_inicio} a ${r.hora_fin}` : ''} · ${esc(r.lugar)}
+      ${esMio ? `<span class="badge is-mine" style="font-size:10.5px;padding:2px 7px;margin-left:8px;vertical-align:middle">⭐ Asignado a vos</span>` : ''}
+    `;
 
     renderDrawerBody();
 
@@ -1333,6 +1371,65 @@
     renderExpedienteSidebar();
   });
 
+  // Funciones de personalización y correlación de consultor
+  function setupUserPill() {
+    const pill = document.getElementById('userPill');
+    if (!pill) return;
+    if (miConsultor) {
+      pill.innerHTML = `
+        <span class="user-pill-tag" style="background:${miConsultor.color}"></span>
+        <span>Sesión: <strong>${esc(miConsultor.nombre)}</strong> (${esc(miConsultor.rol)})</span>
+      `;
+      pill.style.display = 'inline-flex';
+    } else if (yo && yo.username) {
+      pill.innerHTML = `<span>Sesión: <strong>${esc(yo.username)}</strong> (${esc(yo.role)})</span>`;
+      pill.style.display = 'inline-flex';
+    }
+  }
+
+  let soloMiosActivo = false;
+  function setupSoloMios() {
+    const box = document.getElementById('boxSoloMios');
+    const btn = document.getElementById('btnSoloMios');
+    if (!box || !btn || !miConsultor) return;
+
+    box.style.display = 'block';
+    btn.addEventListener('click', () => {
+      soloMiosActivo = !soloMiosActivo;
+      const select = document.getElementById('filtroConsultor');
+      if (soloMiosActivo) {
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-primary');
+        btn.innerHTML = `✓ Mis encuentros (${esc(miConsultor.nombre)})`;
+        if (select) select.value = miConsultor.id;
+      } else {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+        btn.innerHTML = `⭐ Solo mis encuentros`;
+        if (select) select.value = '';
+      }
+      renderCalendario();
+      renderDiaPorDia();
+      renderGantt();
+    });
+  }
+
+  function setupFiltroProyectos() {
+    const btnMios = document.getElementById('btnFiltroMisProyectos');
+    if (btnMios && miConsultor) {
+      btnMios.style.display = 'block';
+    }
+
+    document.querySelectorAll('#proyectosFiltroPills .spill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#proyectosFiltroPills .spill-btn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        filtroProyectosModo = btn.dataset.pfilter || 'todos';
+        renderExpedienteSidebar();
+      });
+    });
+  }
+
   // Helpers de red
   function apiPost(payload, cb) {
     payload.csrf_token = csrf;
@@ -1368,6 +1465,9 @@
   }
 
   // Inicialización
+  setupUserPill();
+  setupSoloMios();
+  setupFiltroProyectos();
   refrescarTodo();
 
 })();

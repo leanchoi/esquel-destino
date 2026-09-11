@@ -8,8 +8,38 @@ require_once __DIR__ . '/db.php';
 
 function lab_asegurar_datos(PDO $pdo): void
 {
-    // Asegurar acceso para el usuario de Leandro
-    $pdo->exec("INSERT OR IGNORE INTO lab_user_access (user_id, granted_by) SELECT id, 1 FROM users WHERE LOWER(username) = 'leandro'");
+    // 0. Asegurar usuarios del equipo técnico de Esquel LAB
+    $equipoCuentas = [
+        ['mariela',   'Mariela',   'editor', 'Mariela.Lab2026'],
+        ['francisco', 'Francisco', 'editor', 'Francisco.Lab2026'],
+        ['agustina',  'Agustina',  'editor', 'Agustina.Lab2026'],
+        ['noelia',    'Noelia',    'editor', 'Noelia.Lab2026'],
+        ['cesia',     'Cesia',     'editor', 'Cesia.Lab2026'],
+    ];
+
+    $insUser = $pdo->prepare("
+        INSERT INTO users (username, password, role, must_change_password, created_at)
+        VALUES (?, ?, ?, 0, datetime('now'))
+    ");
+
+    $checkUser = $pdo->prepare("SELECT 1 FROM users WHERE LOWER(username) = LOWER(?)");
+    foreach ($equipoCuentas as $uRow) {
+        $checkUser->execute([$uRow[0]]);
+        if (!$checkUser->fetchColumn()) {
+            $insUser->execute([
+                $uRow[1],
+                password_hash($uRow[3], PASSWORD_DEFAULT),
+                $uRow[2]
+            ]);
+        }
+    }
+
+    // Asegurar acceso a Gestión LAB para todo el equipo consultor (conducción, seniors y juniors)
+    $pdo->exec("
+        INSERT OR IGNORE INTO lab_user_access (user_id, granted_by)
+        SELECT id, 1 FROM users 
+        WHERE LOWER(username) IN ('leandro', 'adria', 'mariela', 'francisco', 'agustina', 'noelia', 'cesia')
+    ");
 
     // 1. Consultores
     $countCons = (int) $pdo->query("SELECT COUNT(*) FROM lab_consultores")->fetchColumn();

@@ -1,0 +1,40 @@
+================================================================================
+GUÍA RÁPIDA · CÓMO NOS ORGANIZAMOS EN TERRITORIO (ESQUEL LAB 2026)
+Instrucciones operativas para Consultores Seniors, Juniors y Conducción
+================================================================================
+
+1. ANTES DE SALIR (Preparación previa desde el celular o computadora):
+   • Ingresá a: https://esquel.site/admin/gestion.php con tu usuario y contraseña.
+   • En "📅 Agenda Global", tocá el botón "⭐ Solo mis encuentros" para ver tu
+     cronograma semanal sin el ruido de los demás proyectos.
+   • Tocá el encuentro del día para abrir el Playbook:
+     - Leé la "Guía del Consultor": te da el foco táctico y pedagógico de la sesión.
+     - Repasá las 2 o 3 "Preguntas clave": son punzantes para no perder tiempo.
+   • En "📂 Emprendimientos", revisá el Diagnóstico, las Trabas y los Votos anónimos
+     del Jurado para entender qué se espera de ese proyecto.
+
+2. DURANTE LA VISITA O ENCUENTRO EN TERRENO:
+   • Foco estricto: Cada reunión tiene un número y un objetivo delimitado (costeo,
+     guion, relevamiento físico, etc.). No intentes resolver los 8 temas juntos.
+   • Dispará las preguntas clave: Están diseñadas para destrabar decisiones que el
+     emprendedor posterga (precios, horarios, mermas, público objetivo).
+   • Verificación ocular: En reuniones de terreno ('ter'), fotografiar accesos,
+     medir espacios y probar conectividad in situ.
+
+3. AL FINALIZAR EL ENCUENTRO (Cierre y registro en tiempo real):
+   • Abrí el encuentro en la plataforma y tildá los ítems del "Checklist de objetivos".
+     (Se guardan de inmediato con guardado automático).
+   • En "Asistencia y Horario Real":
+     - Cambiá el estado de "Programada" a "Realizada".
+     - Cargá la hora real de inicio y fin (sirve para auditar tu carga horaria).
+   • En "Minuta y acuerdos del encuentro":
+     - Escribí 3 o 4 viñetas telegráficas: qué se validó, qué objeción puso el titular
+       y cuál es el siguiente paso.
+   • En la ficha del proyecto ("Compromisos"):
+     - Creá la tarea concreta que debe traer el emprendedor para la próxima cita.
+
+================================================================================
+REGLA DE ORO DEL PROGRAMA:
+Lo que no se tilda ni se registra en Gestión LAB, no ocurrió para el equipo.
+Cuidemos los tiempos de viaje, respetemos los cupos y garanticemos entregables reales.
+================================================================================

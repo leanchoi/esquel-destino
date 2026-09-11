@@ -66,9 +66,16 @@ if ($appIds) {
     }
 }
 
-// Votos de los jurados para los 18 proyectos
+// Votos de los jurados para los 18 proyectos (Anonimizados para confidencialidad)
 $votosApp = evaluaciones_de($pdo, $appIds);
 $juradoLista = jurado($pdo);
+
+// Mapa determinista anónimo para los jurados (Jurado #1, Jurado #2, etc.)
+$mapaAnonimo = [];
+$jIdx = 1;
+foreach ($juradoLista as $jl) {
+    $mapaAnonimo[$jl['username']] = 'Jurado #' . $jIdx++;
+}
 
 $proyectos = [];
 foreach ($proyectosRaw as $p) {
@@ -79,7 +86,15 @@ foreach ($proyectosRaw as $p) {
     $p['detalles_postulacion'] = $detallesApp[$p['application_id']] ?? [];
     
     $vs = $votosApp[$p['application_id']] ?? [];
-    $p['votos_jurado'] = $vs;
+    $vsAnon = [];
+    $vNum = 1;
+    foreach ($vs as $v) {
+        $uName = $v['username'] ?? '';
+        $v['username'] = $mapaAnonimo[$uName] ?? ('Jurado #' . $vNum++);
+        unset($v['user_id']); // Nunca exponer user_id en el frontend de gestión
+        $vsAnon[] = $v;
+    }
+    $p['votos_jurado'] = $vsAnon;
     $p['consolidado_jurado'] = consolidado_para(consolidar($vs, $juradoLista), true);
 
     $proyectos[$p['id']] = $p;
@@ -122,6 +137,7 @@ require __DIR__ . '/_header.php';
         <p class="gestion-sub">1ª cohorte · 18 proyectos seleccionados · 9 sep → 10 nov 2026 · Subsecretaría de Turismo</p>
       </div>
       <div class="gestion-actions">
+        <div class="gestion-user-pill" id="userPill" style="display:none"></div>
         <button type="button" class="btn btn-secondary btn-sm" id="btnExportJSON">Exportar JSON</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnExportTXT">Exportar Agenda TXT</button>
       </div>
@@ -194,6 +210,10 @@ require __DIR__ . '/_header.php';
             <option value="cie">Acto de cierre</option>
           </select>
         </div>
+        <div class="agenda-filter" id="boxSoloMios" style="display:none">
+          <label>&nbsp;</label>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSoloMios">⭐ Solo mis encuentros</button>
+        </div>
       </div>
 
       <!-- Sub-tabs de la agenda: Calendario / Timeline / Día por Día -->
@@ -237,6 +257,10 @@ require __DIR__ . '/_header.php';
     <div class="expediente-layout">
       <!-- Selector lateral de emprendimientos -->
       <aside class="expediente-sidebar">
+        <div class="sidebar-pills" id="proyectosFiltroPills">
+          <button type="button" class="spill-btn is-active" data-pfilter="todos">Todos (18)</button>
+          <button type="button" class="spill-btn" id="btnFiltroMisProyectos" data-pfilter="mios" style="display:none">⭐ Mis proyectos</button>
+        </div>
         <div class="sidebar-search">
           <input type="text" id="searchProyecto" placeholder="Buscar emprendimiento...">
         </div>
@@ -308,9 +332,10 @@ require __DIR__ . '/_header.php';
     'compromisos' => $compromisos,
     'csrf'        => csrf_token(),
     'yo'          => [
-        'id'       => (int) $u['id'],
-        'username' => $u['username'],
-        'role'     => $u['role']
+        'id'           => (int) $u['id'],
+        'username'     => $u['username'],
+        'role'         => $u['role'],
+        'consultor_id' => strtolower(trim((string)$u['username']))
     ]
 ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?>
 </script>

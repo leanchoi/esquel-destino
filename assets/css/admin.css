@@ -968,3 +968,14 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
   .form-grid-3 { grid-template-columns: 1fr; }
   .form-grid-2 { grid-template-columns: 1fr; }
 }
+
+/* Sesión de usuario & correlación de consultor */
+.gestion-user-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+.user-pill-tag { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.sidebar-pills { display: flex; gap: 6px; margin-bottom: 8px; }
+.spill-btn { flex: 1; font-size: 11.5px; font-weight: 600; padding: 6px 8px; border: 1px solid var(--line-2); border-radius: 4px; background: var(--paper); color: var(--ink-2); cursor: pointer; transition: all .12s; text-align: center; }
+.spill-btn:hover { background: var(--surface); color: var(--ink); }
+.spill-btn.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.consultor-card.is-me { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.badge.is-mine { background: var(--green); color: #fff; font-weight: 600; }
+
