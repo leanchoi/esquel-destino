@@ -784,40 +784,59 @@
       "id": "laberin",
       "app_id": 44,
       "nombre": "El secreto del laberinto",
-      "titular": "Marta isabel San Martin",
+      "titular": "Marta Isabel San Martín",
       "linea": "Raíz",
       "puntaje": 3.63,
       "celula": 2,
       "sr": "adria",
       "jr": "noelia",
       "diagnostico": [
-        "Laberinto vegetal, senderos de chacra y entorno natural.",
-        "Atractivo visual de alto impacto para fotografía y turismo familiar.",
-        "Chacra consolidada en la comarca."
+        "Predio de 75 hectáreas (chacra familiar histórica, sucesión Austin) a 4 km de Esquel sobre Ruta 259, con frente de faldeo de monte y vistas panorámicas. Situación dominial resuelta y saneada. Parcela de casi 2 hectáreas asignada exclusivamente al laberinto vegetal.",
+        "Equipo familiar con saberes complementarios: Marcelo Codesal (trabajo de campo y equinos), Florencia (Ingeniera Agrónoma que se recibe en diciembre 2026 y aporta rigor edáfico/botánico), Rocío (Lic. en Negocios Agropecuarios) y Joaquín (estudiante de Zootecnia y operador de cabalgatas). Marta posee amplia trayectoria en gastronomía (confitería concesionada) y terapias naturales.",
+        "Infraestructura base avanzada: Perforación de agua nueva con bomba de alto caudal para riego por goteo, agua de vertiente para consumo, electricidad de red y platea de hormigón construida con acopio de materiales para salón de eventos/té de campo de 120 m² con sanitarios.",
+        "Elección botánica perenne de 4 estaciones: Ligustro (Ligustrum) como especie estructurante para mantener el follaje verde en otoño e invierno bajo la nieve, complementado con especies florales nativas y arbustos decorativos en canteros centrales.",
+        "Potencial de unidades puente inmediatas: En el predio habitan 14 a 15 caballos (6 propios mansos aptos para cabalgatas de faldeo), posibilitando activar paseos ecuestres, visitas al vivero de propagación y servicio de casa de té antes de la maduración definitiva del laberinto."
       ],
       "trabas": [
-        "Extensión de temporada más allá de los meses pico de verano.",
-        "Servicios complementarios de merienda y sanitarios."
+        "Tiempos biológicos de crecimiento: El ligustro tarda de 3 a 5 temporadas en alcanzar altura adulta (1,80 a 2 m), aunque puede habilitarse prematuramente a 1 metro de altura con dinámicas lúdicas escolares y familiares. Se requiere estructurar actividades puente para generar ingresos inmediatos.",
+        "Inversión económica inicial y necesidad de autoabastecimiento: Adquirir 4.000 plantas desarrolladas en viveros comerciales ($7.000 c/u) exigiría decenas de millones de pesos. Es imprescindible montar un vivero propio de multiplicación por esquejes con bioestimulación de sauce y riego asistido.",
+        "Acondicionamiento del suelo árido y compactado: Para que los esquejes enraícen con vigor y ganen meses de crecimiento, se requiere un análisis agronómico de nutrientes/pH y una fuerte enmienda orgánica con abono de oveja (disponible en corrales familiares) y tierra negra antes de plantar.",
+        "Trazado geométrico y replanteo de senderos: La traza circular concéntrica exige un Master Plan con mojones topográficos y asesoramiento paisajístico previo al zanjeo, además de rectificar la curva del camino de servidumbre que invadió parte de la parcela.",
+        "Accesibilidad y validación comercial: Ubicado a 4 km del centro, debe validarse el perfil de transporte del visitante (auto particular vs taxi/receptivo), delimitar un estacionamiento para 30 vehículos y realizar encuestas de demanda (product-market fit) para afinar tarifas."
       ],
       "ejes": [
         {
-          "t": "Desestacionalización",
+          "t": "Proyecto Agronómico, Suelo y Vivero de Multiplicación",
           "items": [
-            "Juegos temáticos de búsqueda para otoño y primavera.",
-            "Noches de luna llena en el laberinto."
+            "Muestreo y análisis de suelo en 4 sectores de la parcela para determinar pH, textura y nutrientes (conducido por Florencia Codesal), con enmienda masiva de abono de oveja y tierra negra.",
+            "Diseño y montaje de un módulo rústico de vivero en el predio para propagar 4.000 esquejes de ligustro con enraizante natural de sauce y sistema de riego por goteo automatizado.",
+            "Implantación de una parcela testigo con ligustros bajo condiciones óptimas para monitorear la tasa mensual de crecimiento y cerramiento perimetral con malla anti-liebres."
           ]
         },
         {
-          "t": "Oferta Gastronómica",
+          "t": "Master Plan Paisajístico y Geometría del Laberinto",
           "items": [
-            "Té al paso y productos de la comarca.",
-            "Tienda de recuerdos de la chacra."
+            "Plano técnico del laberinto en formato circular concéntrico con senderos de 1,80 a 2,00 m de ancho, caminos ciegos, plazoleta central de descanso y mirador elevado.",
+            "Asesoramiento paisajístico (Carolina de INTA) para fijar la densidad exacta de plantación por metro lineal y dimensionar la red de mangueras de goteo autocompensante.",
+            "Zonificación del predio: sector laberinto, estacionamiento para 30 vehículos, salón de té/eventos, sendero de faldeo y corrales ecuestres."
+          ]
+        },
+        {
+          "t": "Prefactibilidad Económica, Fases de Apertura y Servicios Puente",
+          "items": [
+            "Matriz económica y presupuesto integral por etapas (Fase 1: cerco, vivero y salón de té; Fase 2: plantación y apertura a 1 m de altura; Fase 3: consolidación a 2 m todo el año).",
+            "Estructuración de servicios puente inmediatos: casa de té de campo con repostería artesanal de Marta, cabalgatas guiadas de faldeo por Joaquín y visitas educativas al vivero.",
+            "Encuesta de validación de demanda (product-market fit) para turistas en Esquel sobre movilidad, interés en atractivos rurales y disposición a pagar."
           ]
         }
       ],
       "entregables": [
-        "Programa de actividades de media estación.",
-        "Tarifario y ficha comercial para agencias."
+        "Master Plan paisajístico y zonificación del predio (escala 1:500) con traza circular y replanteo de senderos.",
+        "Informe agronómico de suelo y plan de enmienda orgánica con abono de oveja y tierra negra.",
+        "Guía técnica y diseño del módulo de vivero para multiplicación de 4.000 esquejes de ligustro.",
+        "Estudio de prefactibilidad económica y presupuesto por etapas a 3 años para búsqueda de financiamiento.",
+        "Ficha técnica y operativa de los 'Servicios Puente' (casa de té de campo, cabalgatas y agroturismo).",
+        "Informe de validación comercial y resultados de la encuesta de demanda turística en Esquel."
       ]
     },
     {

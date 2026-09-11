@@ -293,16 +293,16 @@ function lab_asegurar_datos(PDO $pdo): void
                 'laberin',
                 44,
                 "El secreto del laberinto",
-                "Marta isabel San Martin",
+                "Marta Isabel San Martín",
                 'Raíz',
                 3.63,
                 2,
                 'adria',
                 'noelia',
-                "[\"Laberinto vegetal, senderos de chacra y entorno natural.\",\"Atractivo visual de alto impacto para fotografía y turismo familiar.\",\"Chacra consolidada en la comarca.\"]",
-                "[\"Extensión de temporada más allá de los meses pico de verano.\",\"Servicios complementarios de merienda y sanitarios.\"]",
-                "[{\"t\":\"Desestacionalización\",\"items\":[\"Juegos temáticos de búsqueda para otoño y primavera.\",\"Noches de luna llena en el laberinto.\"]},{\"t\":\"Oferta Gastronómica\",\"items\":[\"Té al paso y productos de la comarca.\",\"Tienda de recuerdos de la chacra.\"]}]",
-                "[\"Programa de actividades de media estación.\",\"Tarifario y ficha comercial para agencias.\"]"
+                "[\"Predio de 75 hectáreas (chacra familiar histórica, sucesión Austin) a 4 km de Esquel sobre Ruta 259, con frente de faldeo de monte y vistas panorámicas. Situación dominial resuelta y saneada. Parcela de casi 2 hectáreas asignada exclusivamente al laberinto vegetal.\",\"Equipo familiar con saberes complementarios: Marcelo Codesal (trabajo de campo y equinos), Florencia (Ingeniera Agrónoma que se recibe en diciembre 2026 y aporta rigor edáfico/botánico), Rocío (Lic. en Negocios Agropecuarios) y Joaquín (estudiante de Zootecnia y operador de cabalgatas). Marta posee amplia trayectoria en gastronomía (confitería concesionada) y terapias naturales.\",\"Infraestructura base avanzada: Perforación de agua nueva con bomba de alto caudal para riego por goteo, agua de vertiente para consumo, electricidad de red y platea de hormigón construida con acopio de materiales para salón de eventos/té de campo de 120 m² con sanitarios.\",\"Elección botánica perenne de 4 estaciones: Ligustro (Ligustrum) como especie estructurante para mantener el follaje verde en otoño e invierno bajo la nieve, complementado con especies florales nativas y arbustos decorativos en canteros centrales.\",\"Potencial de unidades puente inmediatas: En el predio habitan 14 a 15 caballos (6 propios mansos aptos para cabalgatas de faldeo), posibilitando activar paseos ecuestres, visitas al vivero de propagación y servicio de casa de té antes de la maduración definitiva del laberinto.\"]",
+                "[\"Tiempos biológicos de crecimiento: El ligustro tarda de 3 a 5 temporadas en alcanzar altura adulta (1,80 a 2 m), aunque puede habilitarse prematuramente a 1 metro de altura con dinámicas lúdicas escolares y familiares. Se requiere estructurar actividades puente para generar ingresos inmediatos.\",\"Inversión económica inicial y necesidad de autoabastecimiento: Adquirir 4.000 plantas desarrolladas en viveros comerciales ($7.000 c/u) exigiría decenas de millones de pesos. Es imprescindible montar un vivero propio de multiplicación por esquejes con bioestimulación de sauce y riego asistido.\",\"Acondicionamiento del suelo árido y compactado: Para que los esquejes enraícen con vigor y ganen meses de crecimiento, se requiere un análisis agronómico de nutrientes/pH y una fuerte enmienda orgánica con abono de oveja (disponible en corrales familiares) y tierra negra antes de plantar.\",\"Trazado geométrico y replanteo de senderos: La traza circular concéntrica exige un Master Plan con mojones topográficos y asesoramiento paisajístico previo al zanjeo, además de rectificar la curva del camino de servidumbre que invadió parte de la parcela.\",\"Accesibilidad y validación comercial: Ubicado a 4 km del centro, debe validarse el perfil de transporte del visitante (auto particular vs taxi/receptivo), delimitar un estacionamiento para 30 vehículos y realizar encuestas de demanda (product-market fit) para afinar tarifas.\"]",
+                "[{\"t\":\"Proyecto Agronómico, Suelo y Vivero de Multiplicación\",\"items\":[\"Muestreo y análisis de suelo en 4 sectores de la parcela para determinar pH, textura y nutrientes (conducido por Florencia Codesal), con enmienda masiva de abono de oveja y tierra negra.\",\"Diseño y montaje de un módulo rústico de vivero en el predio para propagar 4.000 esquejes de ligustro con enraizante natural de sauce y sistema de riego por goteo automatizado.\",\"Implantación de una parcela testigo con ligustros bajo condiciones óptimas para monitorear la tasa mensual de crecimiento y cerramiento perimetral con malla anti-liebres.\"]},{\"t\":\"Master Plan Paisajístico y Geometría del Laberinto\",\"items\":[\"Plano técnico del laberinto en formato circular concéntrico con senderos de 1,80 a 2,00 m de ancho, caminos ciegos, plazoleta central de descanso y mirador elevado.\",\"Asesoramiento paisajístico (Carolina de INTA) para fijar la densidad exacta de plantación por metro lineal y dimensionar la red de mangueras de goteo autocompensante.\",\"Zonificación del predio: sector laberinto, estacionamiento para 30 vehículos, salón de té/eventos, sendero de faldeo y corrales ecuestres.\"]},{\"t\":\"Prefactibilidad Económica, Fases de Apertura y Servicios Puente\",\"items\":[\"Matriz económica y presupuesto integral por etapas (Fase 1: cerco, vivero y salón de té; Fase 2: plantación y apertura a 1 m de altura; Fase 3: consolidación a 2 m todo el año).\",\"Estructuración de servicios puente inmediatos: casa de té de campo con repostería artesanal de Marta, cabalgatas guiadas de faldeo por Joaquín y visitas educativas al vivero.\",\"Encuesta de validación de demanda (product-market fit) para turistas en Esquel sobre movilidad, interés en atractivos rurales y disposición a pagar.\"]}]",
+                "[\"Master Plan paisajístico y zonificación del predio (escala 1:500) con traza circular y replanteo de senderos.\",\"Informe agronómico de suelo y plan de enmienda orgánica con abono de oveja y tierra negra.\",\"Guía técnica y diseño del módulo de vivero para multiplicación de 4.000 esquejes de ligustro.\",\"Estudio de prefactibilidad económica y presupuesto por etapas a 3 años para búsqueda de financiamiento.\",\"Ficha técnica y operativa de los 'Servicios Puente' (casa de té de campo, cabalgatas y agroturismo).\",\"Informe de validación comercial y resultados de la encuesta de demanda turística en Esquel.\"]"
             ],
             [
                 'nire',
@@ -2854,170 +2854,136 @@ function lab_asegurar_datos(PDO $pdo): void
                 'laberin-01',
                 'laberin',
                 1,
-                "Diagnóstico en terreno y relevamiento de recursos",
+                "Relevamiento en terreno: replanteo, suelo y punto cero del laberinto",
                 'ter',
-                "Predio / Chacra",
-                '2026-09-11',
-                "10:00",
-                "11:30",
+                "Chacra Austin (Ruta 259 km 4)",
+                '2026-09-15',
+                "15:00",
+                "17:30",
                 'programada',
-                "Conocer el espacio real de trabajo de Marta isabel San Martin. Relevar recursos físicos, maquinarias, accesos y validar las expectativas para las 8 semanas.",
-                "[\"¿Cuál es el corazón de El secreto del laberinto hoy y qué es lo que más te enorgullece?\",\"¿Con qué tiempo real contás por semana para trabajar en los entregables?\"]",
-                "[\"Completar la ficha de relevamiento inicial.\",\"Identificar el principal cuello de botella operativo.\"]",
-                "[{\"id\":1,\"texto\":\"Fotografiar instalaciones y equipamiento\",\"done\":false},{\"id\":2,\"texto\":\"Firmar carta de compromiso de participación\",\"done\":false},{\"id\":3,\"texto\":\"Validar disponibilidad horaria para los encuentros\",\"done\":false}]",
-                ["adria","noelia"]
+                "Relevar el terreno destinado al laberinto, verificar la perforación de agua, estado del camino de servidumbre y platea del salón de eventos. Fijar el punto cero de replanteo.",
+                "[\"¿Dónde fijamos el punto central de replanteo del laberinto?\",\"¿Cómo resolvemos la curva de la máquina vial que invadió la parcela?\",\"¿Qué presión y caudal entrega la bomba de agua de la perforación?\"]",
+                "[\"Medir con cinta y GPS el perímetro de las 2 hectáreas.\",\"Fotografiar el suelo, platea y puntos de acceso.\",\"Probar caudal de la perforación.\",\"Tomar 4 muestras de suelo para envío a análisis.\"]",
+                "[{\"id\":1,\"texto\":\"Medir perímetro del predio asignado\",\"done\":false},{\"id\":2,\"texto\":\"Verificar caudal de la perforación de agua\",\"done\":false},{\"id\":3,\"texto\":\"Fotografiar la platea del salón de eventos\",\"done\":false},{\"id\":4,\"texto\":\"Extraer 4 muestras de suelo para análisis agronómico\",\"done\":false}]",
+                ["adria","noelia","leandro"]
             ],
             [
                 'laberin-02',
                 'laberin',
                 2,
-                "Propuesta de valor y segmentación de visitantes",
+                "Modelo agronómico: suelo, enmiendas y vivero de esquejes",
                 'ind',
                 "Turismo",
-                '2026-09-18',
+                '2026-09-22',
                 "10:00",
                 "11:30",
                 'programada',
-                "Definir con precisión el diferencial de la propuesta frente al resto de la oferta de Esquel y delimitar el perfil de cliente objetivo.",
-                "[\"¿Quién es tu cliente ideal: familias, parejas, aventureros, corporativo?\",\"¿Por qué te elegirían a vos frente a otra opción?\"]",
-                "[\"Redactar el texto de propuesta de valor en 3 párrafos.\",\"Definir el público objetivo prioritario.\"]",
-                "[{\"id\":1,\"texto\":\"Escribir la propuesta de valor diferenciada\",\"done\":false},{\"id\":2,\"texto\":\"Definir los 2 perfiles de visitante objetivo\",\"done\":false},{\"id\":3,\"texto\":\"Revisar antecedentes de ventas o consultas previas\",\"done\":false}]",
+                "Analizar los resultados del suelo, estructurar el plan de enmienda con abono de oveja y diseñar el módulo de multiplicación por esquejes de ligustro.",
+                "[\"¿Cuántas camionadas de tierra negra y abono se necesitan para la franja de plantación?\",\"¿Cómo organizamos la recolección y estacado de 4.000 esquejes de ligustro?\"]",
+                "[\"Revisar informe preliminar de suelo.\",\"Diseñar el bancal del vivero de esquejes.\",\"Cotizar mangueras de goteo y goteros autocompensantes.\",\"Planificar la parcela testigo.\"]",
+                "[{\"id\":1,\"texto\":\"Calcular volumen de abono de oveja necesario\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar módulo de vivero para 4.000 esquejes\",\"done\":false},{\"id\":3,\"texto\":\"Cotizar sistema de riego por goteo\",\"done\":false},{\"id\":4,\"texto\":\"Definir protocolo de enraizante natural de sauce\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'laberin-03',
                 'laberin',
                 3,
-                "Estructura de costos, fijación de precios y márgenes",
+                "Geometría del laberinto y consulta técnica paisajística",
                 'ind',
                 "Turismo",
-                '2026-09-22',
-                "11:00",
-                "12:30",
+                '2026-09-29',
+                "10:00",
+                "12:00",
                 'programada',
-                "Calcular el costo unitario por visitante o por pieza. Establecer tarifas que dejen margen comercial para comisionar a intermediarios.",
-                "[\"¿Cuánto te cuesta producir cada servicio/pieza incluyendo tu tiempo?\",\"¿Qué precio tolera el mercado actual?\"]",
-                "[\"Armar planilla de costos fijos y variables.\",\"Fijar el precio al público y la tarifa neta para agencias.\"]",
-                "[{\"id\":1,\"texto\":\"Calcular el costo por hora o por experiencia\",\"done\":false},{\"id\":2,\"texto\":\"Fijar precio de venta al público (PVP)\",\"done\":false},{\"id\":3,\"texto\":\"Establecer margen de comisión para intermediarios\",\"done\":false}]",
+                "Definir la traza geométrica final del laberinto (ancho de senderos, radio exterior, plazoleta central) y calcular metros lineales de cerco vivo.",
+                "[\"¿Qué distancia exacta entre plantas garantiza cierre tupido sin asfixia de raíces?\",\"¿Qué elementos lúdicos o miradores incluimos en el centro?\"]",
+                "[\"Dibujar el plano del laberinto a escala.\",\"Calcular cantidad exacta de plantas necesarias.\",\"Dimensionar el circuito hidráulico de riego.\",\"Fijar puntos de mojones en plano.\"]",
+                "[{\"id\":1,\"texto\":\"Definir ancho de senderos (1,80 a 2 m)\",\"done\":false},{\"id\":2,\"texto\":\"Calcular metros lineales totales de cerco vivo\",\"done\":false},{\"id\":3,\"texto\":\"Fijar plazoleta central con mirador panorámico\",\"done\":false},{\"id\":4,\"texto\":\"Establecer puntos de bifurcación y caminos ciegos\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'laberin-04',
                 'laberin',
                 4,
-                "Puesta en común Célula undefined",
+                "Predios rurales y alianzas de corredor (Célula 2)",
                 'gru',
-                "Célula undefined (Turismo)",
+                "Célula 2 (Melipal)",
                 '2026-09-30',
                 "09:30",
-                "12:00",
+                "12:30",
                 'programada',
-                "Encuentro grupal de la Célula undefined. Poner en común avances, sinergias y resolver trabas compartidas.",
-                "[\"¿Qué alianza podemos hacer con otro proyecto de la misma célula?\"]",
-                "[\"Generar al menos un cruce o paquete combinado entre proyectos.\"]",
-                "[{\"id\":1,\"texto\":\"Llevar la planilla de costeo y precios\",\"done\":false},{\"id\":2,\"texto\":\"Presentar propuesta de sinergia con otro proyecto\",\"done\":false}]",
-                ["adria"]
+                "Encuentro grupal de la Célula 2 (Campo y gran superficie). Poner en común costos de infraestructura rural, manejo de visitantes en chacras, alianzas de derivación mutua en la Ruta 259 y seguros colectivos.",
+                "[\"¿Cómo conectamos el laberinto con las cabalgatas de Lucero o el tambo de Sofía?\",\"¿Qué paquetes combinados de día de campo podemos prefigurar en la Ruta 259?\"]",
+                "[\"Presentar el proyecto a los colegas de célula.\",\"Mapear circuito de la Ruta 259.\",\"Analizar normativas de turismo rural y de recreación al aire libre.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar el Master Plan del laberinto ante la célula\",\"done\":false},{\"id\":2,\"texto\":\"Mapear sinergias con Tambo, Margherita y Lucero\",\"done\":false},{\"id\":3,\"texto\":\"Analizar requisitos de habilitación de turismo rural\",\"done\":false}]",
+                ["adria","noelia"]
             ],
             [
                 'laberin-05',
                 'laberin',
                 5,
-                "Paquetización de la experiencia y guion del anfitrión",
-                'ind',
-                "Predio",
-                '2026-10-6',
-                "10:00",
-                "11:30",
+                "Supervisión de vivero de esquejes y parcela testigo",
+                'ter',
+                "Chacra Austin (Ruta 259 km 4)",
+                '2026-10-08',
+                "15:00",
+                "17:30",
                 'programada',
-                "Estructurar el paso a paso de la experiencia: bienvenida, nudo vivencial, despedida y momento de compra/recuerdo.",
-                "[\"¿Qué siente el visitante en los primeros 5 minutos al llegar?\",\"¿Cómo cerramos la experiencia para que recomiende y compre?\"]",
-                "[\"Escribir el guion de recepción y despedida.\",\"Definir el objeto o souvenir conector.\"]",
-                "[{\"id\":1,\"texto\":\"Redactar el guion del anfitrión paso a paso\",\"done\":false},{\"id\":2,\"texto\":\"Definir duración exacta y cupos por turno\",\"done\":false},{\"id\":3,\"texto\":\"Seleccionar el producto físico o recuerdo de cierre\",\"done\":false}]",
+                "Verificar la implantación de la parcela testigo con enmienda orgánica y supervisar el enraizamiento de los primeros lotes de esquejes bajo riego por goteo.",
+                "[\"¿Qué brotación muestran los esquejes con enraizante de sauce?\",\"¿Cómo responde la humedad del suelo tras la aplicación de abono de oveja?\"]",
+                "[\"Medir desarrollo de brotes en la parcela testigo.\",\"Inspeccionar sistema de riego y presión de goteros.\",\"Controlar estado del cerco anti-liebres.\",\"Tomar registros fotográficos.\"]",
+                "[{\"id\":1,\"texto\":\"Medir longitud de brotes en parcela testigo\",\"done\":false},{\"id\":2,\"texto\":\"Controlar funcionamiento de goteros y presión de agua\",\"done\":false},{\"id\":3,\"texto\":\"Inspeccionar cerco con malla anti-liebres\",\"done\":false},{\"id\":4,\"texto\":\"Verificar avance del salón de té/eventos\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'laberin-06',
                 'laberin',
                 6,
-                "Canales de comercialización y alianzas locales",
+                "Estructuración de servicios puente: casa de té y cabalgatas",
                 'ind',
                 "Turismo",
-                '2026-10-14',
+                '2026-10-20',
                 "10:00",
                 "11:30",
                 'programada',
-                "Mapear los canales de venta: agencias receptivas, recepción de hoteles, comercios y venta digital.",
-                "[\"¿Qué prestadores de Esquel te pueden enviar pasajeros de forma regular?\"]",
-                "[\"Listar 5 prestadores aliados en Esquel y la comarca.\",\"Armar modelo de acuerdo de derivación.\"]",
-                "[{\"id\":1,\"texto\":\"Armar lista de 5 aliados comerciales estratégicos\",\"done\":false},{\"id\":2,\"texto\":\"Redactar ficha de producto para derivadores\",\"done\":false},{\"id\":3,\"texto\":\"Fijar protocolo de reserva y cancelación\",\"done\":false}]",
+                "Estructurar la propuesta comercial de los servicios puente: apertura de la casa de té de campo, visitas al predio y paseos a caballo para la temporada 2027.",
+                "[\"¿Qué menú de repostería y té artesanal ofrecerá Marta?\",\"¿Qué tarifa y protocolo tendrán las cabalgatas de faldeo guiadas por Joaquín?\"]",
+                "[\"Armar la carta gastronómica de la casa de té.\",\"Definir circuito y seguridad de cabalgatas.\",\"Redactar ficha comercial de actividades de campo.\"]",
+                "[{\"id\":1,\"texto\":\"Definir propuesta de repostería casera y té de campo\",\"done\":false},{\"id\":2,\"texto\":\"Trazar el circuito de cabalgatas de faldeo con los 6 caballos\",\"done\":false},{\"id\":3,\"texto\":\"Fijar tarifas de la casa de té y paseos ecuestres\",\"done\":false},{\"id\":4,\"texto\":\"Redactar deslinde de responsabilidad para cabalgatas\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'laberin-07',
                 'laberin',
                 7,
-                "Comunicación digital, contenido y redes",
+                "Prefactibilidad económica y presupuesto por etapas",
                 'ind',
                 "Turismo",
-                '2026-10-21',
+                '2026-11-03',
                 "10:00",
                 "11:30",
                 'programada',
-                "Optimizar la presencia digital y el material visual. Definir biografía, fotos de calidad y llamado a la acción claro.",
-                "[\"¿Tu perfil de Instagram o Google Maps dice claramente cómo comprar y cuánto cuesta?\"]",
-                "[\"Optimizar perfil de redes y fichas en Google Maps.\",\"Definir calendario básico de publicaciones.\"]",
-                "[{\"id\":1,\"texto\":\"Revisar bio de Instagram y botón de WhatsApp directo\",\"done\":false},{\"id\":2,\"texto\":\"Subir al menos 5 fotos de alta resolución\",\"done\":false},{\"id\":3,\"texto\":\"Crear o actualizar ficha de Google Maps\",\"done\":false}]",
+                "Consolidar la matriz económica del proyecto a 3 años, cerrar el presupuesto por etapas y preparar el dossier para inversores o financiamiento productivo.",
+                "[\"¿Cuál es la inversión neta de la Fase 1 (vivero y salón de té)?\",\"¿En qué mes proyectamos el punto de equilibrio operativo?\"]",
+                "[\"Cerrar la planilla de costos y flujo de fondos.\",\"Redactar el resumen ejecutivo de prefactibilidad.\",\"Preparar presentación visual para la ronda de negocios.\"]",
+                "[{\"id\":1,\"texto\":\"Consolidar la planilla de costos a 3 años\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el resumen ejecutivo de prefactibilidad\",\"done\":false},{\"id\":3,\"texto\":\"Armar lámina visual del Master Plan para inversores\",\"done\":false},{\"id\":4,\"texto\":\"Preparar discurso de presentación de 3 minutos\",\"done\":false}]",
                 ["adria","noelia"]
             ],
             [
                 'laberin-08',
                 'laberin',
                 8,
-                "Ensayo piloto y validación con público de prueba",
-                'ter',
-                "Predio",
-                '2026-10-28',
-                "10:00",
-                "12:00",
-                'programada',
-                "Llevar adelante un ensayo general de la experiencia con un grupo reducido de prueba (consultores o invitados). Medir tiempos y ajustar.",
-                "[\"¿Qué salió según lo planeado y qué generó fricción o demoras?\"]",
-                "[\"Validar tiempos reales del guion.\",\"Recoger feedback inmediato para correcciones.\"]",
-                "[{\"id\":1,\"texto\":\"Realizar la prueba piloto completa con público invitado\",\"done\":false},{\"id\":2,\"texto\":\"Cronometrar cada etapa\",\"done\":false},{\"id\":3,\"texto\":\"Registrar devoluciones y puntos de mejora\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'laberin-09',
-                'laberin',
-                9,
-                "Ficha comercial definitiva y preparación del pitch",
-                'ind',
-                "Turismo",
-                '2026-11-3',
-                "10:00",
-                "11:30",
-                'programada',
-                "Cerrar la carpeta comercial con fotos, precios y condiciones. Entrenar la presentación de 5 minutos para la rueda de negocios.",
-                "[\"¿Podés explicar tu producto y propuesta en 3 minutos con seguridad?\"]",
-                "[\"Dejar lista la ficha comercial impresa y digital.\",\"Simular la reunión de negocios.\"]",
-                "[{\"id\":1,\"texto\":\"Aprobar versión final de la ficha comercial\",\"done\":false},{\"id\":2,\"texto\":\"Practicar el pitch de 5 minutos\",\"done\":false},{\"id\":3,\"texto\":\"Definir las empresas con las que se reunirá en el cierre\",\"done\":false}]",
-                ["adria","noelia"]
-            ],
-            [
-                'laberin-10',
-                'laberin',
-                10,
-                "Distinción, resultados y rueda de negocios",
+                "Distinción, presentación del Master Plan y rueda de negocios",
                 'cie',
                 "Acto de cierre",
                 '2026-11-10',
                 "10:00",
-                "13:00",
+                "14:00",
                 'programada',
-                "Acto plenario final de la cohorte con autoridades, prensa y empresarios.",
-                "[\"¿Qué balance hacés del proceso y qué compromiso asumís para 2027?\"]",
-                "[\"Participar de la rueda de negocios y concretar acuerdos.\"]",
-                "[{\"id\":1,\"texto\":\"Confirmar asistencia al acto\",\"done\":false},{\"id\":2,\"texto\":\"Llevar piezas y folletería para el stand\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos un contacto comercial en la rueda\",\"done\":false}]",
+                "Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del Master Plan ante agencias, prestadores, autoridades y prensa.",
+                "[\"¿Qué alianzas o apoyos institucionales se concretan para la ejecución de la Fase 1?\"]",
+                "[\"Presentar el Master Plan del laberinto en el stand.\",\"Ofrecer degustación de repostería de la futura casa de té.\",\"Cerrar al menos una carta de intención con el sector receptivo.\"]",
+                "[{\"id\":1,\"texto\":\"Montar maqueta/lámina del Master Plan en el stand\",\"done\":false},{\"id\":2,\"texto\":\"Llevar plantines de ligustro y muestras de repostería casera\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos una alianza comercial en la rueda\",\"done\":false}]",
                 ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
             ],
             [
@@ -3346,7 +3312,7 @@ function lab_asegurar_datos(PDO $pdo): void
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -3852,6 +3818,174 @@ function lab_asegurar_datos(PDO $pdo): void
             $reuId = $rv[0];
             foreach ($asistentes as $consId) {
                 $insAsistVicotita->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de El secreto del laberinto si todavía tiene la plantilla genérica inicial
+    $checkLaberin = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'laberin-01'")->fetchColumn();
+    if ($checkLaberin === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkLaberin) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'laberin-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'laberin'");
+
+        $insReuLaberin = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistLaberin = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesLaberin = [
+            [
+                'laberin-01',
+                'laberin',
+                1,
+                "Relevamiento en terreno: replanteo, suelo y punto cero del laberinto",
+                'ter',
+                "Chacra Austin (Ruta 259 km 4)",
+                '2026-09-15',
+                "15:00",
+                "17:30",
+                'programada',
+                "Relevar el terreno destinado al laberinto, verificar la perforación de agua, estado del camino de servidumbre y platea del salón de eventos. Fijar el punto cero de replanteo.",
+                "[\"¿Dónde fijamos el punto central de replanteo del laberinto?\",\"¿Cómo resolvemos la curva de la máquina vial que invadió la parcela?\",\"¿Qué presión y caudal entrega la bomba de agua de la perforación?\"]",
+                "[\"Medir con cinta y GPS el perímetro de las 2 hectáreas.\",\"Fotografiar el suelo, platea y puntos de acceso.\",\"Probar caudal de la perforación.\",\"Tomar 4 muestras de suelo para envío a análisis.\"]",
+                "[{\"id\":1,\"texto\":\"Medir perímetro del predio asignado\",\"done\":false},{\"id\":2,\"texto\":\"Verificar caudal de la perforación de agua\",\"done\":false},{\"id\":3,\"texto\":\"Fotografiar la platea del salón de eventos\",\"done\":false},{\"id\":4,\"texto\":\"Extraer 4 muestras de suelo para análisis agronómico\",\"done\":false}]",
+                ["adria","noelia","leandro"]
+            ],
+            [
+                'laberin-02',
+                'laberin',
+                2,
+                "Modelo agronómico: suelo, enmiendas y vivero de esquejes",
+                'ind',
+                "Turismo",
+                '2026-09-22',
+                "10:00",
+                "11:30",
+                'programada',
+                "Analizar los resultados del suelo, estructurar el plan de enmienda con abono de oveja y diseñar el módulo de multiplicación por esquejes de ligustro.",
+                "[\"¿Cuántas camionadas de tierra negra y abono se necesitan para la franja de plantación?\",\"¿Cómo organizamos la recolección y estacado de 4.000 esquejes de ligustro?\"]",
+                "[\"Revisar informe preliminar de suelo.\",\"Diseñar el bancal del vivero de esquejes.\",\"Cotizar mangueras de goteo y goteros autocompensantes.\",\"Planificar la parcela testigo.\"]",
+                "[{\"id\":1,\"texto\":\"Calcular volumen de abono de oveja necesario\",\"done\":false},{\"id\":2,\"texto\":\"Diseñar módulo de vivero para 4.000 esquejes\",\"done\":false},{\"id\":3,\"texto\":\"Cotizar sistema de riego por goteo\",\"done\":false},{\"id\":4,\"texto\":\"Definir protocolo de enraizante natural de sauce\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'laberin-03',
+                'laberin',
+                3,
+                "Geometría del laberinto y consulta técnica paisajística",
+                'ind',
+                "Turismo",
+                '2026-09-29',
+                "10:00",
+                "12:00",
+                'programada',
+                "Definir la traza geométrica final del laberinto (ancho de senderos, radio exterior, plazoleta central) y calcular metros lineales de cerco vivo.",
+                "[\"¿Qué distancia exacta entre plantas garantiza cierre tupido sin asfixia de raíces?\",\"¿Qué elementos lúdicos o miradores incluimos en el centro?\"]",
+                "[\"Dibujar el plano del laberinto a escala.\",\"Calcular cantidad exacta de plantas necesarias.\",\"Dimensionar el circuito hidráulico de riego.\",\"Fijar puntos de mojones en plano.\"]",
+                "[{\"id\":1,\"texto\":\"Definir ancho de senderos (1,80 a 2 m)\",\"done\":false},{\"id\":2,\"texto\":\"Calcular metros lineales totales de cerco vivo\",\"done\":false},{\"id\":3,\"texto\":\"Fijar plazoleta central con mirador panorámico\",\"done\":false},{\"id\":4,\"texto\":\"Establecer puntos de bifurcación y caminos ciegos\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'laberin-04',
+                'laberin',
+                4,
+                "Predios rurales y alianzas de corredor (Célula 2)",
+                'gru',
+                "Célula 2 (Melipal)",
+                '2026-09-30',
+                "09:30",
+                "12:30",
+                'programada',
+                "Encuentro grupal de la Célula 2 (Campo y gran superficie). Poner en común costos de infraestructura rural, manejo de visitantes en chacras, alianzas de derivación mutua en la Ruta 259 y seguros colectivos.",
+                "[\"¿Cómo conectamos el laberinto con las cabalgatas de Lucero o el tambo de Sofía?\",\"¿Qué paquetes combinados de día de campo podemos prefigurar en la Ruta 259?\"]",
+                "[\"Presentar el proyecto a los colegas de célula.\",\"Mapear circuito de la Ruta 259.\",\"Analizar normativas de turismo rural y de recreación al aire libre.\"]",
+                "[{\"id\":1,\"texto\":\"Presentar el Master Plan del laberinto ante la célula\",\"done\":false},{\"id\":2,\"texto\":\"Mapear sinergias con Tambo, Margherita y Lucero\",\"done\":false},{\"id\":3,\"texto\":\"Analizar requisitos de habilitación de turismo rural\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'laberin-05',
+                'laberin',
+                5,
+                "Supervisión de vivero de esquejes y parcela testigo",
+                'ter',
+                "Chacra Austin (Ruta 259 km 4)",
+                '2026-10-08',
+                "15:00",
+                "17:30",
+                'programada',
+                "Verificar la implantación de la parcela testigo con enmienda orgánica y supervisar el enraizamiento de los primeros lotes de esquejes bajo riego por goteo.",
+                "[\"¿Qué brotación muestran los esquejes con enraizante de sauce?\",\"¿Cómo responde la humedad del suelo tras la aplicación de abono de oveja?\"]",
+                "[\"Medir desarrollo de brotes en la parcela testigo.\",\"Inspeccionar sistema de riego y presión de goteros.\",\"Controlar estado del cerco anti-liebres.\",\"Tomar registros fotográficos.\"]",
+                "[{\"id\":1,\"texto\":\"Medir longitud de brotes en parcela testigo\",\"done\":false},{\"id\":2,\"texto\":\"Controlar funcionamiento de goteros y presión de agua\",\"done\":false},{\"id\":3,\"texto\":\"Inspeccionar cerco con malla anti-liebres\",\"done\":false},{\"id\":4,\"texto\":\"Verificar avance del salón de té/eventos\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'laberin-06',
+                'laberin',
+                6,
+                "Estructuración de servicios puente: casa de té y cabalgatas",
+                'ind',
+                "Turismo",
+                '2026-10-20',
+                "10:00",
+                "11:30",
+                'programada',
+                "Estructurar la propuesta comercial de los servicios puente: apertura de la casa de té de campo, visitas al predio y paseos a caballo para la temporada 2027.",
+                "[\"¿Qué menú de repostería y té artesanal ofrecerá Marta?\",\"¿Qué tarifa y protocolo tendrán las cabalgatas de faldeo guiadas por Joaquín?\"]",
+                "[\"Armar la carta gastronómica de la casa de té.\",\"Definir circuito y seguridad de cabalgatas.\",\"Redactar ficha comercial de actividades de campo.\"]",
+                "[{\"id\":1,\"texto\":\"Definir propuesta de repostería casera y té de campo\",\"done\":false},{\"id\":2,\"texto\":\"Trazar el circuito de cabalgatas de faldeo con los 6 caballos\",\"done\":false},{\"id\":3,\"texto\":\"Fijar tarifas de la casa de té y paseos ecuestres\",\"done\":false},{\"id\":4,\"texto\":\"Redactar deslinde de responsabilidad para cabalgatas\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'laberin-07',
+                'laberin',
+                7,
+                "Prefactibilidad económica y presupuesto por etapas",
+                'ind',
+                "Turismo",
+                '2026-11-03',
+                "10:00",
+                "11:30",
+                'programada',
+                "Consolidar la matriz económica del proyecto a 3 años, cerrar el presupuesto por etapas y preparar el dossier para inversores o financiamiento productivo.",
+                "[\"¿Cuál es la inversión neta de la Fase 1 (vivero y salón de té)?\",\"¿En qué mes proyectamos el punto de equilibrio operativo?\"]",
+                "[\"Cerrar la planilla de costos y flujo de fondos.\",\"Redactar el resumen ejecutivo de prefactibilidad.\",\"Preparar presentación visual para la ronda de negocios.\"]",
+                "[{\"id\":1,\"texto\":\"Consolidar la planilla de costos a 3 años\",\"done\":false},{\"id\":2,\"texto\":\"Redactar el resumen ejecutivo de prefactibilidad\",\"done\":false},{\"id\":3,\"texto\":\"Armar lámina visual del Master Plan para inversores\",\"done\":false},{\"id\":4,\"texto\":\"Preparar discurso de presentación de 3 minutos\",\"done\":false}]",
+                ["adria","noelia"]
+            ],
+            [
+                'laberin-08',
+                'laberin',
+                8,
+                "Distinción, presentación del Master Plan y rueda de negocios",
+                'cie',
+                "Acto de cierre",
+                '2026-11-10',
+                "10:00",
+                "14:00",
+                'programada',
+                "Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del Master Plan ante agencias, prestadores, autoridades y prensa.",
+                "[\"¿Qué alianzas o apoyos institucionales se concretan para la ejecución de la Fase 1?\"]",
+                "[\"Presentar el Master Plan del laberinto en el stand.\",\"Ofrecer degustación de repostería de la futura casa de té.\",\"Cerrar al menos una carta de intención con el sector receptivo.\"]",
+                "[{\"id\":1,\"texto\":\"Montar maqueta/lámina del Master Plan en el stand\",\"done\":false},{\"id\":2,\"texto\":\"Llevar plantines de ligustro y muestras de repostería casera\",\"done\":false},{\"id\":3,\"texto\":\"Cerrar al menos una alianza comercial en la rueda\",\"done\":false}]",
+                ["leandro","adria","mariela","francisco","agustina","cesia","noelia"]
+            ],
+        ];
+
+        foreach ($reunionesLaberin as $rl) {
+            $asistentes = array_pop($rl);
+            $insReuLaberin->execute($rl);
+            $reuId = $rl[0];
+            foreach ($asistentes as $consId) {
+                $insAsistLaberin->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();

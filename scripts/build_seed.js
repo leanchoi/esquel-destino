@@ -339,6 +339,56 @@ const exactMeetings = {
       objetivos: ['Cerrar al menos dos convenios de provisión con alojamientos o agencias.', 'Exhibir la colección completa en el stand oficial.'],
       check: ['Confirmar asistencia de ambas socias al plenario', 'Montar stand de exhibición con marbetes y packaging terminado', 'Cerrar al menos un acuerdo comercial formal en la rueda']
     }
+  ],
+  laberin: [
+    { num: 1, f: '2026-09-15', t: 'ter', lugar: 'Chacra Austin (Ruta 259 km 4)', hora: '15:00 a 17:30', titulo: 'Relevamiento en terreno: replanteo, suelo y punto cero del laberinto', asistentes: ['adria', 'noelia', 'leandro'],
+      guia: 'Relevar el terreno destinado al laberinto, verificar la perforación de agua, estado del camino de servidumbre y platea del salón de eventos. Fijar el punto cero de replanteo.',
+      preguntas: ['¿Dónde fijamos el punto central de replanteo del laberinto?', '¿Cómo resolvemos la curva de la máquina vial que invadió la parcela?', '¿Qué presión y caudal entrega la bomba de agua de la perforación?'],
+      objetivos: ['Medir con cinta y GPS el perímetro de las 2 hectáreas.', 'Fotografiar el suelo, platea y puntos de acceso.', 'Probar caudal de la perforación.', 'Tomar 4 muestras de suelo para envío a análisis.'],
+      check: ['Medir perímetro del predio asignado', 'Verificar caudal de la perforación de agua', 'Fotografiar la platea del salón de eventos', 'Extraer 4 muestras de suelo para análisis agronómico']
+    },
+    { num: 2, f: '2026-09-22', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Modelo agronómico: suelo, enmiendas y vivero de esquejes', asistentes: ['adria', 'noelia'],
+      guia: 'Analizar los resultados del suelo, estructurar el plan de enmienda con abono de oveja y diseñar el módulo de multiplicación por esquejes de ligustro.',
+      preguntas: ['¿Cuántas camionadas de tierra negra y abono se necesitan para la franja de plantación?', '¿Cómo organizamos la recolección y estacado de 4.000 esquejes de ligustro?'],
+      objetivos: ['Revisar informe preliminar de suelo.', 'Diseñar el bancal del vivero de esquejes.', 'Cotizar mangueras de goteo y goteros autocompensantes.', 'Planificar la parcela testigo.'],
+      check: ['Calcular volumen de abono de oveja necesario', 'Diseñar módulo de vivero para 4.000 esquejes', 'Cotizar sistema de riego por goteo', 'Definir protocolo de enraizante natural de sauce']
+    },
+    { num: 3, f: '2026-09-29', t: 'ind', lugar: 'Turismo', hora: '10:00 a 12:00', titulo: 'Geometría del laberinto y consulta técnica paisajística', asistentes: ['adria', 'noelia'],
+      guia: 'Definir la traza geométrica final del laberinto (ancho de senderos, radio exterior, plazoleta central) y calcular metros lineales de cerco vivo.',
+      preguntas: ['¿Qué distancia exacta entre plantas garantiza cierre tupido sin asfixia de raíces?', '¿Qué elementos lúdicos o miradores incluimos en el centro?'],
+      objetivos: ['Dibujar el plano del laberinto a escala.', 'Calcular cantidad exacta de plantas necesarias.', 'Dimensionar el circuito hidráulico de riego.', 'Fijar puntos de mojones en plano.'],
+      check: ['Definir ancho de senderos (1,80 a 2 m)', 'Calcular metros lineales totales de cerco vivo', 'Fijar plazoleta central con mirador panorámico', 'Establecer puntos de bifurcación y caminos ciegos']
+    },
+    { num: 4, f: '2026-09-30', t: 'gru', lugar: 'Célula 2 (Melipal)', hora: '09:30 a 12:30', titulo: 'Predios rurales y alianzas de corredor (Célula 2)', asistentes: ['adria', 'noelia'],
+      guia: 'Encuentro grupal de la Célula 2 (Campo y gran superficie). Poner en común costos de infraestructura rural, manejo de visitantes en chacras, alianzas de derivación mutua en la Ruta 259 y seguros colectivos.',
+      preguntas: ['¿Cómo conectamos el laberinto con las cabalgatas de Lucero o el tambo de Sofía?', '¿Qué paquetes combinados de día de campo podemos prefigurar en la Ruta 259?'],
+      objetivos: ['Presentar el proyecto a los colegas de célula.', 'Mapear circuito de la Ruta 259.', 'Analizar normativas de turismo rural y de recreación al aire libre.'],
+      check: ['Presentar el Master Plan del laberinto ante la célula', 'Mapear sinergias con Tambo, Margherita y Lucero', 'Analizar requisitos de habilitación de turismo rural']
+    },
+    { num: 5, f: '2026-10-08', t: 'ter', lugar: 'Chacra Austin (Ruta 259 km 4)', hora: '15:00 a 17:30', titulo: 'Supervisión de vivero de esquejes y parcela testigo', asistentes: ['adria', 'noelia'],
+      guia: 'Verificar la implantación de la parcela testigo con enmienda orgánica y supervisar el enraizamiento de los primeros lotes de esquejes bajo riego por goteo.',
+      preguntas: ['¿Qué brotación muestran los esquejes con enraizante de sauce?', '¿Cómo responde la humedad del suelo tras la aplicación de abono de oveja?'],
+      objetivos: ['Medir desarrollo de brotes en la parcela testigo.', 'Inspeccionar sistema de riego y presión de goteros.', 'Controlar estado del cerco anti-liebres.', 'Tomar registros fotográficos.'],
+      check: ['Medir longitud de brotes en parcela testigo', 'Controlar funcionamiento de goteros y presión de agua', 'Inspeccionar cerco con malla anti-liebres', 'Verificar avance del salón de té/eventos']
+    },
+    { num: 6, f: '2026-10-20', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Estructuración de servicios puente: casa de té y cabalgatas', asistentes: ['adria', 'noelia'],
+      guia: 'Estructurar la propuesta comercial de los servicios puente: apertura de la casa de té de campo, visitas al predio y paseos a caballo para la temporada 2027.',
+      preguntas: ['¿Qué menú de repostería y té artesanal ofrecerá Marta?', '¿Qué tarifa y protocolo tendrán las cabalgatas de faldeo guiadas por Joaquín?'],
+      objetivos: ['Armar la carta gastronómica de la casa de té.', 'Definir circuito y seguridad de cabalgatas.', 'Redactar ficha comercial de actividades de campo.'],
+      check: ['Definir propuesta de repostería casera y té de campo', 'Trazar el circuito de cabalgatas de faldeo con los 6 caballos', 'Fijar tarifas de la casa de té y paseos ecuestres', 'Redactar deslinde de responsabilidad para cabalgatas']
+    },
+    { num: 7, f: '2026-11-03', t: 'ind', lugar: 'Turismo', hora: '10:00 a 11:30', titulo: 'Prefactibilidad económica y presupuesto por etapas', asistentes: ['adria', 'noelia'],
+      guia: 'Consolidar la matriz económica del proyecto a 3 años, cerrar el presupuesto por etapas y preparar el dossier para inversores o financiamiento productivo.',
+      preguntas: ['¿Cuál es la inversión neta de la Fase 1 (vivero y salón de té)?', '¿En qué mes proyectamos el punto de equilibrio operativo?'],
+      objetivos: ['Cerrar la planilla de costos y flujo de fondos.', 'Redactar el resumen ejecutivo de prefactibilidad.', 'Preparar presentación visual para la ronda de negocios.'],
+      check: ['Consolidar la planilla de costos a 3 años', 'Redactar el resumen ejecutivo de prefactibilidad', 'Armar lámina visual del Master Plan para inversores', 'Preparar discurso de presentación de 3 minutos']
+    },
+    { num: 8, f: '2026-11-10', t: 'cie', lugar: 'Acto de cierre', hora: '10:00 a 14:00', titulo: 'Distinción, presentación del Master Plan y rueda de negocios', asistentes: ['leandro', 'adria', 'mariela', 'francisco', 'agustina', 'cesia', 'noelia'],
+      guia: 'Cierre plenario y rueda comercial con el sector turístico comarcal. Presentación del Master Plan ante agencias, prestadores, autoridades y prensa.',
+      preguntas: ['¿Qué alianzas o apoyos institucionales se concretan para la ejecución de la Fase 1?'],
+      objetivos: ['Presentar el Master Plan del laberinto en el stand.', 'Ofrecer degustación de repostería de la futura casa de té.', 'Cerrar al menos una carta de intención con el sector receptivo.'],
+      check: ['Montar maqueta/lámina del Master Plan en el stand', 'Llevar plantines de ligustro y muestras de repostería casera', 'Cerrar al menos una alianza comercial en la rueda']
+    }
   ]
 };
 
@@ -638,7 +688,7 @@ php += `        ];
         SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?
         WHERE id = ?
     ");
-    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita'];
+    $curados = ['crova', 'haiku', 'tambo', 'nire', 'corcho', 'vicotita', 'laberin'];
     foreach ($proyectos as $p) {
         if (in_array($p[0], $curados, true)) {
             $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);
@@ -826,6 +876,68 @@ php += `        ];
             $reuId = $rv[0];
             foreach ($asistentes as $consId) {
                 $insAsistVicotita->execute([$reuId, $consId, 'asistente']);
+            }
+        }
+        $pdo->commit();
+    }
+
+    // Sincronizar reuniones de El secreto del laberinto si todavía tiene la plantilla genérica inicial
+    $checkLaberin = $pdo->query("SELECT titulo FROM lab_reuniones WHERE id = 'laberin-01'")->fetchColumn();
+    if ($checkLaberin === 'Diagnóstico en terreno y relevamiento de recursos' || !$checkLaberin) {
+        $pdo->beginTransaction();
+        $pdo->exec("DELETE FROM lab_reunion_asistentes WHERE reunion_id LIKE 'laberin-%'");
+        $pdo->exec("DELETE FROM lab_reuniones WHERE proyecto_id = 'laberin'");
+
+        $insReuLaberin = $pdo->prepare("
+            INSERT INTO lab_reuniones (
+                id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin,
+                estado, guia_consultor, preguntas_clave, objetivos, checklist
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $insAsistLaberin = $pdo->prepare("
+            INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol)
+            VALUES (?, ?, ?)
+        ");
+
+        $reunionesLaberin = [
+`;
+
+const laberinMeetingsList = exactMeetings.laberin;
+for (const m of laberinMeetingsList) {
+  const reuId = `laberin-${String(m.num).padStart(2, '0')}`;
+  const horaParts = (m.hora || '').split(' a ');
+  const horaInicio = horaParts[0] ? horaParts[0].trim() : '';
+  const horaFin = horaParts[1] ? horaParts[1].trim() : '';
+  const checkObjs = (m.check || []).map((txt, i) => ({ id: i + 1, texto: txt, done: false }));
+  const asistList = m.asistentes || ['adria', 'noelia'];
+
+  php += `            [
+                '${reuId}',
+                'laberin',
+                ${m.num},
+                ${JSON.stringify(m.titulo)},
+                '${m.t}',
+                ${JSON.stringify(m.lugar || 'A confirmar')},
+                '${m.f}',
+                ${JSON.stringify(horaInicio)},
+                ${JSON.stringify(horaFin)},
+                'programada',
+                ${JSON.stringify(m.guia || '')},
+                ${JSON.stringify(JSON.stringify(m.preguntas || []))},
+                ${JSON.stringify(JSON.stringify(m.objetivos || []))},
+                ${JSON.stringify(JSON.stringify(checkObjs))},
+                ${JSON.stringify(asistList)}
+            ],\n`;
+}
+
+php += `        ];
+
+        foreach ($reunionesLaberin as $rl) {
+            $asistentes = array_pop($rl);
+            $insReuLaberin->execute($rl);
+            $reuId = $rl[0];
+            foreach ($asistentes as $consId) {
+                $insAsistLaberin->execute([$reuId, $consId, 'asistente']);
             }
         }
         $pdo->commit();
