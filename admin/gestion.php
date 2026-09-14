@@ -345,6 +345,6 @@ require __DIR__ . '/_header.php';
 ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?>
 </script>
 
-<script src="../assets/js/gestion.js"></script>
+<script src="../<?= asset('assets/js/gestion.js') ?>"></script>
 
 <?php require __DIR__ . '/_footer.php'; ?>
