@@ -19,7 +19,7 @@ $pdo = db();
 $tipo = trim((string)($_GET['tipo'] ?? 'plan'));
 $id = trim((string)($_GET['id'] ?? ''));
 
-if ($tipo !== 'plan' && $tipo !== 'reunion') {
+if ($tipo !== 'plan' && $tipo !== 'reunion' && $tipo !== 'minutacero') {
     $tipo = 'plan';
 }
 
@@ -64,7 +64,7 @@ function fecha_formateada(string $f): string {
     if (!$f) return 'A confirmar';
     $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     $meses = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    $ts = strtotime($f);
+    $ts = strtotime(str_replace('/', '-', $f));
     if (!$ts) return $f;
     $diaSem = $dias[(int)date('w', $ts)];
     $diaNum = (int)date('j', $ts);
@@ -75,7 +75,7 @@ function fecha_formateada(string $f): string {
 
 function fecha_corta_ar(string $f): string {
     if (!$f) return '';
-    $ts = strtotime($f);
+    $ts = strtotime(str_replace('/', '-', $f));
     return $ts ? date('d-m-Y', $ts) : $f;
 }
 
@@ -100,6 +100,7 @@ if ($tipo === 'plan') {
     $trabas = json_decode($p['trabas'] ?? '[]', true) ?: [];
     $ejes = json_decode($p['ejes'] ?? '[]', true) ?: [];
     $entregables = json_decode($p['entregables'] ?? '[]', true) ?: [];
+    $minutaCero = json_decode($p['minuta_cero'] ?? '', true) ?: [];
 
     // Cargar todas las reuniones
     $rStmt = $pdo->prepare("
@@ -206,12 +207,60 @@ if ($tipo === 'reunion') {
     $cleanPhone = clean_phone_wa($r['phone']);
     $waUrl = "https://wa.me/" . ($cleanPhone ? $cleanPhone : '') . "?text=" . urlencode($msgReuWa);
 }
+
+// -----------------------------------------------------------------------------
+// CASO 3: MINUTA CERO (ENTREVISTA DIAGNÓSTICA PRELIMINAR)
+// -----------------------------------------------------------------------------
+if ($tipo === 'minutacero') {
+    $stmt = $pdo->prepare("
+        SELECT p.*, a.contact_name, a.email, a.phone, a.program, a.stage
+        FROM lab_proyectos p
+        LEFT JOIN applications a ON a.id = p.application_id
+        WHERE p.id = ?
+    ");
+    $stmt->execute([$id]);
+    $p = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$p) {
+        die('Proyecto no encontrado.');
+    }
+
+    $mc = json_decode($p['minuta_cero'] ?? '', true) ?: [];
+    $srNom = $consultores[$p['consultor_sr_id']]['nombre'] ?? $p['consultor_sr_id'];
+    $jrNom = $consultores[$p['consultor_jr_id']]['nombre'] ?? $p['consultor_jr_id'];
+    $celInfo = $celulasInfo[$p['celula']] ?? ['nombre' => 'General', 'color' => '#132B43'];
+
+    $mcParticipantes = !empty($mc['participantes']) 
+        ? (is_array($mc['participantes']) ? implode(', ', $mc['participantes']) : $mc['participantes'])
+        : ($mc['asistentes'] ?? ($p['titular'] . ', Equipo Consultor'));
+    $mcDiagPuntos = $mc['diagnostico_claves'] ?? $mc['diagnostico_puntos'] ?? [];
+    $mcTrabas = $mc['trabas_detectadas'] ?? [];
+    $mcAcuerdos = $mc['acuerdos_previos'] ?? $mc['acuerdos'] ?? [];
+    $mcCitas = $mc['citas_textuales'] ?? $mc['citas_clave'] ?? [];
+    $mcNotas = $mc['texto_completo'] ?? $mc['desgrabacion_notas'] ?? '';
+
+    $projSlug = mb_strtoupper(preg_replace('/[^a-zA-Z0-9áéíóúñÁÉÍÓÚÑ]/u', ' ', $p['nombre']), 'UTF-8');
+    $projSlug = trim(preg_replace('/\s+/', ' ', $projSlug));
+    $mcFecha = $mc['fecha'] ?? '2026-09-01';
+    $nombreDriveOficial = $projSlug . " - REUNION CERO - " . fecha_corta_ar($mcFecha);
+
+    $msgMcWa = "Hola " . ($p['titular'] ?: 'Emprendedor/a') . "! 👋 Te comparto el resumen oficial de nuestra *Minuta Cero (Entrevista Diagnóstica Preliminar)* de *" . $p['nombre'] . "* en *Esquel LAB*:\n\n"
+             . "📅 *Encuentro Diagnóstico*: " . fecha_corta_ar($mcFecha) . "\n"
+             . "📍 *Lugar*: " . ($mc['lugar'] ?? 'Esquel') . "\n"
+             . "👥 *Participantes*: " . $mcParticipantes . "\n\n"
+             . (!empty($mc['resumen']) ? "📋 *Diagnóstico y síntesis*: " . mb_substr(strip_tags($mc['resumen']), 0, 240) . "...\n\n" : "")
+             . (!empty($mcAcuerdos) ? "🤝 *Acuerdos hacia Reunión 1*: " . (is_array($mcAcuerdos) ? implode(' | ', array_slice($mcAcuerdos, 0, 2)) : mb_substr($mcAcuerdos, 0, 150)) . "\n\n" : "")
+             . "¡Nos encontramos este miércoles para dar inicio formal al cronograma de aceleración!";
+
+    $cleanPhone = clean_phone_wa($p['phone']);
+    $waUrl = "https://wa.me/" . ($cleanPhone ? $cleanPhone : '') . "?text=" . urlencode($msgMcWa);
+}
 ?><!doctype html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?= $tipo === 'plan' ? 'Plan de Trabajo · ' . e($p['nombre']) : 'Minuta #' . e($r['numero_reunion']) . ' · ' . e($r['proyecto_nombre']) ?> · Esquel LAB 2026</title>
+<title><?= $tipo === 'plan' ? 'Plan de Trabajo · ' . e($p['nombre']) : ($tipo === 'minutacero' ? 'Minuta Cero · ' . e($p['nombre']) : 'Minuta #' . e($r['numero_reunion']) . ' · ' . e($r['proyecto_nombre'])) ?> · Esquel LAB 2026</title>
 <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -535,7 +584,7 @@ ul.bullet-list li { margin-bottom: 5px; font-size: 12.5px; }
 <nav class="toolbar-noprint">
   <div class="tb-left">
     <a href="gestion.php" class="tb-btn tb-btn-subtle">← Volver a Gestión LAB</a>
-    <span><strong>Esquel LAB · Vista de Impresión</strong> (<?= $tipo === 'plan' ? 'Plan de Trabajo' : 'Minuta de Reunión' ?>)</span>
+    <span><strong>Esquel LAB · Vista de Impresión</strong> (<?= $tipo === 'plan' ? 'Plan de Trabajo' : ($tipo === 'minutacero' ? 'Minuta Cero Diagnóstica' : 'Minuta de Reunión') ?>)</span>
   </div>
   <div class="tb-right">
     <a href="<?= e($waUrl) ?>" target="_blank" rel="noopener" class="tb-btn tb-btn-wa" title="Abrir mensaje de WhatsApp predeterminado">
@@ -559,7 +608,7 @@ ul.bullet-list li { margin-bottom: 5px; font-size: 12.5px; }
       </div>
     </div>
     <div class="inst-doc-tag">
-      <strong><?= $tipo === 'plan' ? 'DOCUMENTO OFICIAL DE PLANIFICACIÓN' : 'ACTA Y MINUTA DE ENCUENTRO' ?></strong>
+      <strong><?= $tipo === 'plan' ? 'DOCUMENTO OFICIAL DE PLANIFICACIÓN' : ($tipo === 'minutacero' ? 'ACTA Y MINUTA CERO (DIAGNÓSTICO INICIAL)' : 'ACTA Y MINUTA DE ENCUENTRO') ?></strong>
       <span>Emitido el <?= date('d/m/Y H:i') ?> hs</span>
     </div>
   </header>
@@ -600,6 +649,18 @@ ul.bullet-list li { margin-bottom: 5px; font-size: 12.5px; }
         </div>
       </div>
     </div>
+
+    <!-- VINCULO MINUTA CERO PRELIMINAR -->
+    <?php if (!empty($minutaCero) && ($minutaCero['estado'] ?? '') !== 'pendiente'): ?>
+      <div class="box-col" style="border-left: 4px solid #8A1E47; margin-bottom: 16px; background:#FDF8F9;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <h4 style="color:#8A1E47; margin:0">🎙️ Minuta Cero · Entrevista Diagnóstica Preliminar (<?= e(fecha_corta_ar($minutaCero['fecha'] ?? '')) ?>)</h4>
+          <a href="imprimir.php?tipo=minutacero&id=<?= urlencode($p['id']) ?>" target="_blank" style="font-size:11.5px; color:#8A1E47; font-weight:700; text-decoration:underline;">Ver Minuta Cero completa ↗</a>
+        </div>
+        <p style="font-size:12px; color:var(--ink-2); margin-bottom:6px;"><strong>Lugar:</strong> <?= e($minutaCero['lugar'] ?? 'Esquel') ?> &nbsp;|&nbsp; <strong>Participantes:</strong> <?= e($minutaCero['asistentes'] ?? '') ?></p>
+        <p style="font-size:12.5px; color:var(--ink); line-height:1.5;"><?= e(mb_substr($minutaCero['resumen'] ?? '', 0, 320)) ?><?php if (mb_strlen($minutaCero['resumen'] ?? '') > 320) echo '...'; ?></p>
+      </div>
+    <?php endif; ?>
 
     <!-- DIAGNOSTICO Y TRABAS -->
     <div class="grid-2col">
@@ -734,6 +795,172 @@ ul.bullet-list li { margin-bottom: 5px; font-size: 12.5px; }
     <?php endif; ?>
 
     <!-- FIRMAS FORMALES -->
+    <div class="signature-block">
+      <div class="sig-line">
+        <strong><?= e($p['titular'] ?: 'Titular del Emprendimiento') ?></strong>
+        Emprendimiento Seleccionado
+      </div>
+      <div class="sig-line">
+        <strong><?= e($srNom) ?></strong>
+        Consultor Senior Referente
+      </div>
+      <div class="sig-line">
+        <strong>Leandro Choi</strong>
+        Coordinación Técnica · Esquel LAB
+      </div>
+    </div>
+
+  <?php elseif ($tipo === 'minutacero'): ?>
+    <!-- =================================================================== -->
+    <!-- CUERPO: MINUTA CERO (ENTREVISTA DIAGNÓSTICA PRELIMINAR)             -->
+    <!-- =================================================================== -->
+
+    <div class="data-card">
+      <div class="dc-title-row">
+        <div>
+          <span class="badge" style="background:<?= e($celInfo['color']) ?>;color:#FFF">Célula <?= e($p['celula']) ?>: <?= e($celInfo['nombre']) ?></span>
+          <span class="badge"><?= e($p['linea']) ?></span>
+          <h2 class="dc-proy-name" style="margin-top:6px"><?= e($p['nombre']) ?></h2>
+          <div style="font-size:13px;color:var(--ink-2);margin-top:2px">
+            👤 Titular: <strong><?= e($p['titular']) ?></strong> · 📞 <?= e($p['phone'] ?: 'No registrado') ?>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <?php if (($mc['estado'] ?? '') === 'pendiente'): ?>
+            <span class="badge" style="font-size:13px;padding:5px 10px;background:#FEF2F2;color:#991B1B;border:1px solid #F87171">⚠️ Encuentro Pendiente</span>
+          <?php else: ?>
+            <span class="badge badge-ok" style="font-size:13px;padding:5px 10px">🎙️ Minuta Cero Realizada</span>
+          <?php endif; ?>
+        </div>
+      </div>
+      <div class="data-grid-4">
+        <div class="dg-item">
+          <span class="lbl">Fecha de la entrevista</span>
+          <span class="val"><?= !empty($mc['fecha']) ? e(fecha_formateada($mc['fecha'])) : 'A coordinar' ?></span>
+        </div>
+        <div class="dg-item">
+          <span class="lbl">Lugar / Sede</span>
+          <span class="val"><?= e($mc['lugar'] ?? 'Esquel') ?></span>
+        </div>
+        <div class="dg-item">
+          <span class="lbl">Consultor Senior Referente</span>
+          <span class="val"><?= e($srNom) ?></span>
+        </div>
+        <div class="dg-item">
+          <span class="lbl">Participantes / Asistentes</span>
+          <span class="val"><?= e($mcParticipantes) ?></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENLACE Y NOMENCLATURA GOOGLE DRIVE -->
+    <div class="drive-box">
+      <div class="drive-box-head">
+        <strong>📁 Resguardo y Desgrabación en Google Drive</strong>
+        <a href="<?= e($DRIVE_FOLDER_URL) ?>" target="_blank" rel="noopener" style="font-size:11.5px;color:#1E40AF;font-weight:700">Abrir carpeta compartida ↗</a>
+      </div>
+      <p style="font-size:11.5px;color:var(--ink-2);margin-bottom:6px">
+        Nomenclatura oficial para el archivo de audio y transcripción en la carpeta del programa:
+      </p>
+      <div class="drive-file-code"><?= e($nombreDriveOficial) ?></div>
+    </div>
+
+    <?php if (($mc['estado'] ?? '') === 'pendiente'): ?>
+      <div class="box-col is-warn" style="margin-bottom:20px; padding:20px;">
+        <h4 style="font-size:15px; margin-bottom:10px;">⏳ Entrevista diagnóstica preliminar pendiente de registro</h4>
+        <p style="font-size:13px; color:var(--ink-2); line-height:1.5;">
+          Este proyecto no cuenta aún con transcripción ni acta preliminar de Minuta Cero cargada. La sesión diagnóstica se coordinará e incorporará durante los primeros encuentros de campo del programa.
+        </p>
+      </div>
+    <?php else: ?>
+
+      <!-- RESUMEN EJECUTIVO -->
+      <?php if (!empty($mc['resumen'])): ?>
+        <h3 class="sec-title">Síntesis Ejecutiva del Diagnóstico</h3>
+        <div class="box-col is-info" style="font-size:13px; line-height:1.55; margin-bottom:16px;">
+          <?= nl2br(e($mc['resumen'])) ?>
+        </div>
+      <?php endif; ?>
+
+      <!-- DIAGNÓSTICO Y TRABAS EN 2 COLUMNAS -->
+      <div class="grid-2col">
+        <div class="box-col">
+          <h4 style="color:#132B43">🔍 Hallazgos Principales del Diagnóstico</h4>
+          <?php if (!empty($mcDiagPuntos) && is_array($mcDiagPuntos)): ?>
+            <ul class="bullet-list">
+              <?php foreach ($mcDiagPuntos as $dp): ?>
+                <li><?= e($dp) ?></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php elseif (!empty($mcDiagPuntos)): ?>
+            <p style="font-size:12.5px"><?= nl2br(e($mcDiagPuntos)) ?></p>
+          <?php else: ?>
+            <p style="font-size:12px; color:var(--ink-3)">Sin puntos diagnósticos desagregados.</p>
+          <?php endif; ?>
+        </div>
+
+        <div class="box-col is-warn">
+          <h4 style="color:#C4442E">⚠️ Trabas y Puntos Críticos Declarados</h4>
+          <?php if (!empty($mcTrabas) && is_array($mcTrabas)): ?>
+            <ul class="bullet-list">
+              <?php foreach ($mcTrabas as $td): ?>
+                <li><?= e($td) ?></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php elseif (!empty($mcTrabas)): ?>
+            <p style="font-size:12.5px"><?= nl2br(e($mcTrabas)) ?></p>
+          <?php else: ?>
+            <p style="font-size:12px; color:var(--ink-3)">Sin trabas críticas registradas.</p>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <!-- ACUERDOS Y CITAS CLAVE -->
+      <div class="grid-2col">
+        <div class="box-col is-ok">
+          <h4 style="color:#2F7D5D">🤝 Acuerdos de Trabajo hacia Reunión 1</h4>
+          <?php if (!empty($mcAcuerdos) && is_array($mcAcuerdos)): ?>
+            <ul class="bullet-list">
+              <?php foreach ($mcAcuerdos as $ac): ?>
+                <li><?= e($ac) ?></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php elseif (!empty($mcAcuerdos)): ?>
+            <p style="font-size:12.5px"><?= nl2br(e($mcAcuerdos)) ?></p>
+          <?php else: ?>
+            <p style="font-size:12px; color:var(--ink-3)">Sin acuerdos registrados.</p>
+          <?php endif; ?>
+        </div>
+
+        <div class="box-col" style="background:#FFFBF2; border-color:#FDE68A; border-left:4px solid #D97706;">
+          <h4 style="color:#92400E">💬 Frases Textuales Clave del Emprendedor</h4>
+          <?php if (!empty($mcCitas) && is_array($mcCitas)): ?>
+            <ul style="list-style:none; padding-left:0; margin:0;">
+              <?php foreach ($mcCitas as $cita): ?>
+                <li style="margin-bottom:8px; font-size:12px; font-style:italic; color:#78350F; border-left:2px solid #F59E0B; padding-left:8px;">
+                  «<?= e($cita) ?>»
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          <?php elseif (!empty($mcCitas)): ?>
+            <p style="font-size:12.5px; font-style:italic; color:#78350F">«<?= e($mcCitas) ?>»</p>
+          <?php else: ?>
+            <p style="font-size:12px; color:var(--ink-3)">Sin citas textuales registradas.</p>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <!-- NOTAS DE CAMPO / DESGRABACIÓN EXPANDIDA -->
+      <?php if (!empty($mcNotas)): ?>
+        <h3 class="sec-title">Desgrabación y Notas de Campo Detalladas</h3>
+        <div class="box-col" style="white-space: pre-wrap; font-size: 12px; line-height:1.6; color:var(--ink-2); background:#FAFAFC; margin-bottom:20px;">
+          <?= nl2br(e($mcNotas)) ?>
+        </div>
+      <?php endif; ?>
+
+    <?php endif; ?>
+
+    <!-- FIRMAS DE CONFORMIDAD -->
     <div class="signature-block">
       <div class="sig-line">
         <strong><?= e($p['titular'] ?: 'Titular del Emprendimiento') ?></strong>

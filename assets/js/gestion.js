@@ -91,6 +91,42 @@
     window.open(`imprimir.php?tipo=reunion&id=${encodeURIComponent(rid)}`, '_blank');
   };
 
+  const abrirImpresionMinutaCero = pid => {
+    window.open(`imprimir.php?tipo=minutacero&id=${encodeURIComponent(pid)}`, '_blank');
+  };
+
+  const enviarWhatsAppMinutaCero = pid => {
+    const p = proyectos[pid];
+    if (!p) return;
+    const mc = p.minuta_cero || {};
+    if (!mc || mc.estado === 'pendiente' || !mc.resumen) {
+      alert('La Minuta Cero aún no ha sido registrada para este emprendimiento.');
+      return;
+    }
+    const fechaStr = mc.fecha ? `${mc.fecha}${mc.hora ? ' · ' + mc.hora + ' hs' : ''}` : 'Encuentro diagnóstico preliminar';
+    const lugarStr = mc.lugar || 'Sede a confirmar';
+    const asistentes = (mc.participantes || []).join(', ');
+    const acuerdos = (mc.acuerdos_previos || []).slice(0, 3).map(a => `• ${a}`).join('\n');
+
+    let msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto la síntesis de la *Minuta Cero (Entrevista Inicial de Diagnóstico)* de *${p.nombre}* en *Esquel LAB 2026*.\n\n`
+            + `🎙️ *Encuentro Diagnóstico Preliminar*\n`
+            + `• Fecha: ${fechaStr}\n`
+            + `• Sede: ${lugarStr}\n`
+            + (asistentes ? `• Asistentes: ${asistentes}\n\n` : '\n')
+            + (mc.resumen ? `📝 *Síntesis*: ${mc.resumen}\n\n` : '')
+            + (acuerdos ? `🤝 *Acuerdos para arrancar (Hacia Reunión 1)*:\n${acuerdos}\n\n` : '')
+            + `Podés consultar el expediente completo en la plataforma. ¡Seguimos en contacto para el primer encuentro formal!`;
+
+    let tel = cleanPhoneWA(p.phone);
+    if (!tel) {
+      const inputTel = prompt(`El emprendimiento no tiene teléfono cargado en la ficha.\nIngresá el número de WhatsApp de ${p.titular || p.nombre} (ej: 2945...):`, '');
+      if (inputTel) tel = cleanPhoneWA(inputTel);
+    }
+
+    const url = tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  };
+
   const enviarWhatsAppPlan = pid => {
     const p = proyectos[pid];
     if (!p) return;
@@ -657,6 +693,7 @@
 
         <nav class="p360-tabs" role="tablist">
           <button type="button" class="p360-tab-btn is-active" data-ptab="plan">📋 Plan Estratégico (10 Semanas)</button>
+          <button type="button" class="p360-tab-btn" data-ptab="minutacero">🎙️ Minuta Cero</button>
           <button type="button" class="p360-tab-btn" data-ptab="postulacion">📝 Postulación Original</button>
           <button type="button" class="p360-tab-btn" data-ptab="jurado">⚖️ Votos del Jurado</button>
           <button type="button" class="p360-tab-btn" data-ptab="encuentros">📅 Encuentros (${evs.length})</button>
@@ -702,6 +739,11 @@
             <button type="button" class="btn btn-secondary btn-sm" id="btnGuardarNotasProy" data-pid="${esc(p.id)}">Guardar notas del proyecto</button>
           </div>
         </div>
+      </div>
+
+      <!-- Sub-Pestaña: Minuta Cero -->
+      <div id="ptab-minutacero" class="p360-tab-content" style="display:none">
+        ${renderMinutaCero(p)}
       </div>
 
       <!-- Sub-Pestaña: Postulación Original -->
@@ -802,6 +844,55 @@
     body.querySelector('.btn-print-plan')?.addEventListener('click', () => abrirImpresionPlan(p.id));
     body.querySelector('.btn-wa-plan')?.addEventListener('click', () => enviarWhatsAppPlan(p.id));
 
+    // Imprimir, WhatsApp y Guardar de Minuta Cero
+    body.querySelector('.btn-print-mc')?.addEventListener('click', () => abrirImpresionMinutaCero(p.id));
+    body.querySelector('.btn-wa-mc')?.addEventListener('click', () => enviarWhatsAppMinutaCero(p.id));
+    body.querySelectorAll('.btn-guardar-mc').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let mc = p.minuta_cero || {};
+        const txtBox = document.getElementById('p360MinutaCeroTexto');
+        const txtNuevo = document.getElementById('mcNuevoTexto');
+        
+        if (txtBox) {
+          mc.texto_completo = txtBox.value;
+          mc.estado = 'completada';
+        } else if (txtNuevo) {
+          mc = {
+            estado: 'completada',
+            titulo: 'Minuta Cero · Entrevista Inicial de Diagnóstico',
+            fecha: document.getElementById('mcNuevaFecha')?.value || '',
+            lugar: document.getElementById('mcNuevoLugar')?.value || '',
+            participantes: (document.getElementById('mcNuevosAsistentes')?.value || '').split(',').map(s => s.trim()).filter(Boolean),
+            resumen: txtNuevo.value.substring(0, 300),
+            diagnostico_claves: [],
+            trabas_detectadas: [],
+            acuerdos_previos: [],
+            citas_textuales: [],
+            texto_completo: txtNuevo.value
+          };
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+
+        apiPost({
+          accion: 'guardar_minuta_cero',
+          proyecto_id: p.id,
+          minuta_cero: mc
+        }, res => {
+          btn.disabled = false;
+          btn.textContent = '💾 Guardar Minuta Cero';
+          if (res.ok) {
+            p.minuta_cero = mc;
+            showToast('Minuta Cero guardada correctamente.');
+            renderProyecto360(p);
+            const mcTabBtn = body.querySelector('.p360-tab-btn[data-ptab="minutacero"]');
+            if (mcTabBtn) mcTabBtn.click();
+          }
+        });
+      });
+    });
+
     // Abrir meetings, imprimir y WhatsApp desde el listado de encuentros
     body.querySelectorAll('.btn-open-meeting').forEach(btn => {
       btn.addEventListener('click', () => abrirDrawer(btn.dataset.rid));
@@ -838,6 +929,131 @@
     }
 
     attachCompromisosEvents();
+  }
+
+  function renderMinutaCero(p) {
+    const mc = p.minuta_cero;
+    if (!mc || mc.estado === 'pendiente' || !mc.resumen) {
+      return `
+        <div class="empty-minuta-cero" style="padding:36px 24px;text-align:center;background:var(--panel,#F1F5F8);border:1px dashed var(--linea,#DCE4EB);border-radius:8px">
+          <div style="font-size:42px;margin-bottom:12px">🎙️</div>
+          <h3 style="margin:0 0 8px;color:var(--t1,#132B43);font-size:18px">Minuta Cero Pendiente de Realización</h3>
+          <p style="margin:0 auto 16px;max-width:580px;color:var(--t2,#5C768D);font-size:14px;line-height:1.5">
+            <strong>${esc(p.titular || p.nombre)}</strong> fue seleccionado/a en la cohorte (${esc(p.linea)}), pero el encuentro diagnóstico preliminar aún no se ha llevado a cabo o no se ha cargado en el sistema.
+          </p>
+          <div style="max-width:680px;margin:24px auto 0;text-align:left;background:var(--papel,#FFF);border:1px solid var(--linea,#DCE4EB);border-radius:8px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <h4 style="margin:0 0 12px;font-size:14px;color:var(--t1,#132B43);display:flex;align-items:center;gap:6px">
+              <span>✍️</span> Registrar Minuta Cero para ${esc(p.nombre)}
+            </h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:var(--t2)">Fecha del encuentro</label>
+                <input type="date" id="mcNuevaFecha" class="form-input" style="width:100%">
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:var(--t2)">Lugar / Sede</label>
+                <input type="text" id="mcNuevoLugar" class="form-input" placeholder="Ej: Taller, Finca o Sede Turismo" style="width:100%">
+              </div>
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:var(--t2)">Asistentes (separados por coma)</label>
+              <input type="text" id="mcNuevosAsistentes" class="form-input" placeholder="Ej: Leandro, Mariela, ${esc(p.titular)}" style="width:100%">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:var(--t2)">Síntesis / Bitácora de la reunión diagnóstica</label>
+              <textarea id="mcNuevoTexto" class="form-textarea" rows="6" placeholder="Escribí o pegá aquí la minuta de la reunión inicial..." style="width:100%"></textarea>
+            </div>
+            <div style="text-align:right">
+              <button type="button" class="btn btn-primary btn-sm btn-guardar-mc" data-pid="${esc(p.id)}">💾 Guardar Minuta Cero</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const participantes = (mc.participantes || []).map(a => `<span class="badge" style="background:var(--panel,#F1F5F8);color:var(--t1,#132B43);border:1px solid var(--linea,#DCE4EB);font-size:11.5px">👤 ${esc(a)}</span>`).join(' ');
+    const diagnosticos = (mc.diagnostico_claves || []).map(d => `<li>${esc(d)}</li>`).join('');
+    const trabas = (mc.trabas_detectadas || []).map(t => `<li>${esc(t)}</li>`).join('');
+    const acuerdos = (mc.acuerdos_previos || []).map(a => `<li>${esc(a)}</li>`).join('');
+    const citas = (mc.citas_textuales || []).map(c => `<blockquote style="margin:8px 0;padding:8px 14px;border-left:3px solid #2F7D5D;background:rgba(47,125,93,0.06);font-style:italic;font-size:13px;border-radius:0 4px 4px 0">${esc(c)}</blockquote>`).join('');
+
+    return `
+      <div class="minuta-cero-view">
+        <!-- Barra superior de acciones -->
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--linea,#DCE4EB)">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span class="badge badge-ok" style="font-size:12px;padding:5px 10px">🎙️ Entrevista Inicial de Diagnóstico</span>
+            ${mc.fecha ? `<span class="badge" style="font-size:12px;padding:5px 10px">📅 ${esc(mc.fecha)}${mc.hora ? ' · ' + esc(mc.hora) + ' hs' : ''}</span>` : ''}
+            ${mc.lugar ? `<span class="badge" style="font-size:12px;padding:5px 10px">📍 ${esc(mc.lugar)}</span>` : ''}
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-secondary btn-sm btn-print-mc" data-pid="${esc(p.id)}" title="Imprimir carátula y reporte de Minuta Cero">🖨️ Imprimir Minuta</button>
+            <button type="button" class="btn btn-secondary btn-sm btn-wa-mc" data-pid="${esc(p.id)}" style="color:#128C7E;border-color:#25D366" title="Compartir síntesis de Minuta Cero por WhatsApp">📲 Compartir por WhatsApp</button>
+          </div>
+        </div>
+
+        ${participantes ? `
+          <div style="margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="font-size:12px;font-weight:600;color:var(--t2,#5C768D);text-transform:uppercase;letter-spacing:0.5px">Asistentes:</span>
+            ${participantes}
+          </div>
+        ` : ''}
+
+        <!-- Resumen Ejecutivo -->
+        <div class="panel-box" style="margin-bottom:16px;background:rgba(47,125,93,0.03);border-left:4px solid #2F7D5D">
+          <h4 style="margin:0 0 8px;color:#2F7D5D;font-size:15px;display:flex;align-items:center;gap:6px">
+            <span>📝</span> Resumen Ejecutivo del Encuentro Diagnóstico
+          </h4>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:var(--t1,#132B43)">
+            ${esc(mc.resumen || '')}
+          </p>
+        </div>
+
+        <!-- Grilla de Diagnóstico y Trabas -->
+        <div class="grid-2col" style="margin-bottom:16px">
+          <div class="panel-box">
+            <h4 style="margin:0 0 10px;font-size:14px;color:var(--t1,#132B43)">🔍 Diagnóstico y Hallazgos Iniciales</h4>
+            <ul class="bullet-list">
+              ${diagnosticos || '<li>Sin registros de diagnóstico.</li>'}
+            </ul>
+          </div>
+
+          <div class="panel-box">
+            <h4 style="margin:0 0 10px;font-size:14px;color:#C4442E">⚠️ Trabas y Puntos Críticos Declarados</h4>
+            <ul class="bullet-list is-warning">
+              ${trabas || '<li>Sin trabas específicas relevadas.</li>'}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Acuerdos de Inicio y Citas Clave -->
+        <div class="grid-2col" style="margin-bottom:16px">
+          <div class="panel-box">
+            <h4 style="margin:0 0 10px;font-size:14px;color:#2F7D5D">🤝 Acuerdos de Arranque (Hacia Reunión 1)</h4>
+            <ul class="bullet-list is-ok">
+              ${acuerdos || '<li>Sin acuerdos previos formalizados.</li>'}
+            </ul>
+          </div>
+
+          <div class="panel-box">
+            <h4 style="margin:0 0 10px;font-size:14px;color:var(--t1,#132B43)">💬 Citas Clave de la Desgrabación</h4>
+            ${citas || '<p class="sub">Sin citas textuales registradas.</p>'}
+          </div>
+        </div>
+
+        <!-- Bitácora Editorial y Transcripción Sintetizada -->
+        <div class="panel-box" style="margin-top:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h4 style="margin:0;font-size:14px;color:var(--t1,#132B43)">📄 Bitácora Editorial y Transcripción Sintetizada</h4>
+            <span style="font-size:12px;color:var(--t2,#5C768D)">Editable por el equipo consultor</span>
+          </div>
+          <textarea id="p360MinutaCeroTexto" class="form-textarea" rows="8" style="font-family:monospace;font-size:13px;line-height:1.5" placeholder="Escribí o editá aquí el texto completo de la minuta...">${esc(mc.texto_completo || '')}</textarea>
+          <div style="text-align:right;margin-top:10px">
+            <button type="button" class="btn btn-primary btn-sm btn-guardar-mc" data-pid="${esc(p.id)}">💾 Guardar Minuta Cero</button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   function renderPostulacionOriginal(p) {

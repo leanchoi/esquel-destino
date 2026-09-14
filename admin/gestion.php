@@ -83,6 +83,7 @@ foreach ($proyectosRaw as $p) {
     $p['trabas'] = json_decode($p['trabas'], true) ?: [];
     $p['ejes'] = json_decode($p['ejes'], true) ?: [];
     $p['entregables'] = json_decode($p['entregables'], true) ?: [];
+    $p['minuta_cero'] = json_decode($p['minuta_cero'] ?? '', true) ?: ($p['minuta_cero'] ?? null);
     $p['detalles_postulacion'] = $detallesApp[$p['application_id']] ?? [];
     
     $vs = $votosApp[$p['application_id']] ?? [];

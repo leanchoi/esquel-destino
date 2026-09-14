@@ -4103,12 +4103,12 @@ php += '    }\n\n';
 php += '    // 2. Proyectos de la cohorte\n';
 php += '    $proyectos = [\n';
 for (const p of proyectos) {
-    php += '        [' + JSON.stringify(p.id) + ', ' + p.app_id + ', ' + JSON.stringify(p.nombre) + ', ' + JSON.stringify(p.titular) + ', ' + JSON.stringify(p.linea) + ', ' + p.puntaje + ', ' + p.celula + ', ' + JSON.stringify(p.sr) + ', ' + JSON.stringify(p.jr) + ', ' + JSON.stringify(JSON.stringify(p.diagnostico || [])) + ', ' + JSON.stringify(JSON.stringify(p.trabas || [])) + ', ' + JSON.stringify(JSON.stringify(p.ejes || [])) + ', ' + JSON.stringify(JSON.stringify(p.entregables || [])) + '],\n';
+    php += '        [' + JSON.stringify(p.id) + ', ' + p.app_id + ', ' + JSON.stringify(p.nombre) + ', ' + JSON.stringify(p.titular) + ', ' + JSON.stringify(p.linea) + ', ' + p.puntaje + ', ' + p.celula + ', ' + JSON.stringify(p.sr) + ', ' + JSON.stringify(p.jr) + ', ' + JSON.stringify(JSON.stringify(p.diagnostico || [])) + ', ' + JSON.stringify(JSON.stringify(p.trabas || [])) + ', ' + JSON.stringify(JSON.stringify(p.ejes || [])) + ', ' + JSON.stringify(JSON.stringify(p.entregables || [])) + ', ' + JSON.stringify(JSON.stringify(p.minuta_cero || null)) + '],\n';
 }
 php += '    ];\n';
 php += '    $countProy = (int) $pdo->query("SELECT COUNT(*) FROM lab_proyectos")->fetchColumn();\n';
 php += '    if ($countProy === 0) {\n';
-php += '        $insProy = $pdo->prepare("INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");\n';
+php += '        $insProy = $pdo->prepare("INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables, minuta_cero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");\n';
 php += '        $checkApp = $pdo->prepare("SELECT 1 FROM applications WHERE id = ?");\n';
 php += '        foreach ($proyectos as $p) {\n';
 php += '            $checkApp->execute([(int)$p[1]]);\n';
@@ -4117,9 +4117,9 @@ php += '            $insProy->execute($p);\n';
 php += '        }\n';
 php += '    }\n\n';
 php += '    // 3. Sincronización continua de proyectos\n';
-php += '    $updProy = $pdo->prepare("UPDATE lab_proyectos SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ? WHERE id = ?");\n';
+php += '    $updProy = $pdo->prepare("UPDATE lab_proyectos SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?, minuta_cero = ? WHERE id = ?");\n';
 php += '    foreach ($proyectos as $p) {\n';
-php += '        $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[0]]);\n';
+php += '        $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[13], $p[0]]);\n';
 php += '    }\n\n';
 php += '    // 4. Reuniones oficiales (4 Fuertes + 3-4 Toques Base + 1 Cierre Plenario)\n';
 php += '    $reunionesOficiales = [\n';
@@ -4139,7 +4139,7 @@ for (let idx = 0; idx < proyectos.length; idx++) {
 php += '    ];\n\n';
 php += '    // 5. Sincronización inteligente en SQLite\n';
 php += '    $dbSeedVersion = (int) $pdo->query("PRAGMA user_version")->fetchColumn();\n';
-php += '    $TARGET_SEED_VERSION = 20260916;\n\n';
+php += '    $TARGET_SEED_VERSION = 20260917;\n\n';
 php += '    if ($dbSeedVersion < $TARGET_SEED_VERSION) {\n';
 php += '        $pdo->beginTransaction();\n';
 php += '        $checkReu = $pdo->prepare("SELECT estado, minuta_notas FROM lab_reuniones WHERE id = ?");\n';

@@ -252,6 +252,7 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         ejes TEXT NOT NULL DEFAULT '[]',
         entregables TEXT NOT NULL DEFAULT '[]',
         notas_generales TEXT NOT NULL DEFAULT '',
+        minuta_cero TEXT NOT NULL DEFAULT '',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE SET NULL
@@ -332,6 +333,9 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         ],
         'interesados' => [
             'instagram' => "TEXT NOT NULL DEFAULT ''",
+        ],
+        'lab_proyectos' => [
+            'minuta_cero' => "TEXT NOT NULL DEFAULT ''",
         ],
         // Un criterio nuevo en CRITERIOS aparece solo en las bases que ya existen.
         'evaluaciones' => array_fill_keys(array_keys(CRITERIOS), "INTEGER NOT NULL DEFAULT 0") + [

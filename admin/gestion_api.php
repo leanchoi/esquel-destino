@@ -182,6 +182,26 @@ try {
         exit;
     }
 
+    if ($accion === 'guardar_minuta_cero') {
+        $proyectoId = trim((string) ($data['proyecto_id'] ?? ''));
+        $minutaCero = $data['minuta_cero'] ?? '';
+        if (is_array($minutaCero)) {
+            $minutaCero = json_encode($minutaCero, JSON_UNESCAPED_UNICODE);
+        } else {
+            $minutaCero = (string) $minutaCero;
+        }
+
+        $stmt = $pdo->prepare("
+            UPDATE lab_proyectos
+            SET minuta_cero = ?, updated_at = datetime('now')
+            WHERE id = ?
+        ");
+        $stmt->execute([$minutaCero, $proyectoId]);
+
+        echo json_encode(['ok' => true]);
+        exit;
+    }
+
     throw new InvalidArgumentException('Acción no reconocida.');
 
 } catch (Throwable $ex) {
