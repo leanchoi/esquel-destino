@@ -25,11 +25,11 @@ if (file_exists(__DIR__ . '/../includes/lab_seed.php')) {
 
 // 1. Metadatos de la cohorte
 $meta = [
-    'inicio'   => '2026-09-09',
-    'fin'      => '2026-11-10',
+    'inicio'   => '2026-09-16',
+    'fin'      => '2026-11-20',
     'fit'      => ['2026-09-24', '2026-09-30'],
-    'feriados' => ['2026-10-12'],
-    'cierre'   => '2026-11-10'
+    'feriados' => ['2026-10-12', '2026-11-20'],
+    'cierre'   => '2026-11-19'
 ];
 
 $celulasInfo = [
@@ -134,7 +134,7 @@ require __DIR__ . '/_header.php';
     <div class="gestion-title-row">
       <div>
         <h1 class="gestion-h1">Esquel LAB <span>· Gestión y Aceleración 2026</span></h1>
-        <p class="gestion-sub">1ª cohorte · 18 proyectos seleccionados · 9 sep → 10 nov 2026 · Subsecretaría de Turismo</p>
+        <p class="gestion-sub">1ª cohorte · 18 proyectos seleccionados · 16 sep → 20 nov 2026 · Subsecretaría de Turismo</p>
       </div>
       <div class="gestion-actions">
         <div class="gestion-user-pill" id="userPill" style="display:none"></div>

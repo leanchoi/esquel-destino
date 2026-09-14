@@ -1288,7 +1288,7 @@
   });
 
   document.getElementById('btnExportTXT')?.addEventListener('click', () => {
-    let txt = `ESQUEL LAB · AGENDA Y GESTIÓN DE LA 1ª COHORTE\n9 de septiembre al 10 de noviembre de 2026\n=======================================================\n\n`;
+    let txt = `ESQUEL LAB · AGENDA Y GESTIÓN DE LA 1ª COHORTE\n16 de septiembre al 20 de noviembre de 2026\n=======================================================\n\n`;
     const idx = getIdxFecha();
     DIAS.filter(f => (idx[f] || []).length).forEach(f => {
       txt += `${fLarga(f).toUpperCase()}${enFIT(f) ? ' [PERÍODO FIT]' : ''}\n-------------------------------------------------------\n`;
