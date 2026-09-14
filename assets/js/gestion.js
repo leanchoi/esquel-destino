@@ -58,6 +58,99 @@
   const enFIT = f => f >= meta.fit[0] && f <= meta.fit[1];
   const esFeriado = f => meta.feriados.includes(f);
 
+  const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1RjISZm40UnLkYgFIFWzD67smXeghceOP?usp=sharing';
+
+  const cleanPhoneWA = tel => {
+    if (!tel) return '';
+    let digits = String(tel).replace(/\D/g, '');
+    if (digits.startsWith('549')) return digits;
+    if (digits.startsWith('54')) return '549' + digits.slice(2);
+    if (digits.startsWith('0')) digits = digits.slice(1);
+    if (digits.startsWith('15')) digits = digits.slice(2);
+    return '549' + digits;
+  };
+
+  const getNombreDrive = (p, r) => {
+    const projSlug = (p.nombre || r.proyecto_id || '')
+      .toUpperCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^A-Z0-9]/g, ' ')
+      .trim()
+      .replace(/\s+/g, ' ');
+    const fParts = (r.fecha || '').split('-');
+    const fCortaStr = fParts.length === 3 ? `${fParts[2]}-${fParts[1]}-${fParts[0]}` : r.fecha;
+    return `${projSlug} - REUNION ${r.numero_reunion} - ${fCortaStr}`;
+  };
+
+  const abrirImpresionPlan = pid => {
+    window.open(`imprimir.php?tipo=plan&id=${encodeURIComponent(pid)}`, '_blank');
+  };
+
+  const abrirImpresionReunion = rid => {
+    window.open(`imprimir.php?tipo=reunion&id=${encodeURIComponent(rid)}`, '_blank');
+  };
+
+  const enviarWhatsAppPlan = pid => {
+    const p = proyectos[pid];
+    if (!p) return;
+    const celInfo = celulas[p.celula] || { nombre: 'General' };
+    const srNom = consultores[p.consultor_sr_id]?.nombre || p.consultor_sr_id;
+    const jrNom = consultores[p.consultor_jr_id]?.nombre || p.consultor_jr_id;
+    const evs = getReunionesProyecto(p.id);
+    const ejes = (p.ejes || []).slice(0, 3).map(e => e.t).filter(Boolean).join(', ');
+
+    let msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto el *Plan de Trabajo Estratégico* de *${p.nombre}* en *Esquel LAB (1ª Cohorte 2026)*.\n\n`
+            + `🏛️ *Subsecretaría de Turismo · Municipalidad de Esquel*\n`
+            + `• Célula temática: Célula ${p.celula} (${celInfo.nombre})\n`
+            + `• Equipo técnico: ${srNom} (Senior) y ${jrNom} (Junior)\n`
+            + `• Duración: 10 semanas (16 sep → 20 nov 2026)\n`
+            + `• Encuentros programados: ${evs.length} sesiones\n\n`
+            + (ejes ? `🎯 *Ejes principales*: ${ejes}\n\n` : '')
+            + `Cualquier consulta sobre las fechas y etapas coordinamos con el equipo. ¡Seguimos trabajando juntos!`;
+
+    let tel = cleanPhoneWA(p.phone);
+    if (!tel) {
+      const inputTel = prompt(`El emprendimiento no tiene teléfono cargado en la ficha.\nIngresá el número de WhatsApp de ${p.titular || p.nombre} (ej: 2945...):`, '');
+      if (inputTel) tel = cleanPhoneWA(inputTel);
+    }
+
+    const url = tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  };
+
+  const enviarWhatsAppReunion = rid => {
+    const r = reuniones.find(x => x.id === rid);
+    if (!r) return;
+    const p = proyectos[r.proyecto_id] || {};
+    const fParts = (r.fecha || '').split('-');
+    const fStr = fParts.length === 3 ? `${fParts[2]}/${fParts[1]}/${fParts[0]}` : r.fecha;
+    const asistNom = (r.asistentes || []).map(aid => consultores[aid]?.nombre || aid).join(', ');
+
+    const doneTasks = (r.checklist || []).filter(it => it.done).slice(0, 3);
+    const tasksTxt = doneTasks.length 
+      ? doneTasks.map(t => `• ${t.texto}`).join('\n')
+      : (r.checklist || []).slice(0, 3).map(t => `• ${t.texto}`).join('\n');
+
+    let msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto el resumen de nuestro encuentro de acompañamiento en *Esquel LAB*:\n\n`
+            + `📅 *Encuentro #${r.numero_reunion}: ${r.titulo}*\n`
+            + `• Fecha: ${fStr} (${r.hora_inicio || 'A conf.'} a ${r.hora_fin || 'A conf.'})\n`
+            + `• Lugar: ${r.lugar}\n`
+            + `• Consultores: ${asistNom}\n\n`
+            + (tasksTxt ? `✅ *Objetivos y avances*: \n${tasksTxt}\n\n` : '')
+            + (r.minuta_notas ? `📝 *Acuerdos principales*: ${r.minuta_notas.slice(0, 160)}...\n\n` : '')
+            + `¡Seguimos en contacto para coordinar la próxima cita!`;
+
+    let tel = cleanPhoneWA(p.phone);
+    if (!tel) {
+      const inputTel = prompt(`El proyecto no tiene teléfono cargado.\nIngresá el número de WhatsApp de ${p.titular || p.nombre} (ej: 2945...):`, '');
+      if (inputTel) tel = cleanPhoneWA(inputTel);
+    }
+
+    const url = tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  };
+
   const COLOR_TIPO = {
     ind: 'var(--ind, #4A7FA8)',
     gru: 'var(--gru, #E8A33D)',
@@ -537,6 +630,14 @@
             <span class="badge ok">Puntaje ${Number(p.puntaje).toFixed(2)}</span>
             <h2 class="p360-title">${esc(p.nombre)}</h2>
             <div class="p360-titular">👤 <strong>${esc(p.titular)}</strong> · ${p.email ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>` : ''} · ${p.phone ? `<span>📞 ${esc(p.phone)}</span>` : ''}</div>
+            <div class="p360-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <button type="button" class="btn btn-secondary btn-sm btn-print-plan" data-pid="${esc(p.id)}" title="Imprimir o guardar PDF del Plan de Trabajo completo">
+                🖨️ Imprimir Plan de Trabajo
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm btn-wa-plan" data-pid="${esc(p.id)}" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al titular">
+                📲 Enviar Plan por WhatsApp
+              </button>
+            </div>
           </div>
           <div class="p360-equipo-box">
             <span class="sub">Equipo consultor asignado:</span>
@@ -555,7 +656,7 @@
         </div>
 
         <nav class="p360-tabs" role="tablist">
-          <button type="button" class="p360-tab-btn is-active" data-ptab="plan">📋 Plan Estratégico (8 Semanas)</button>
+          <button type="button" class="p360-tab-btn is-active" data-ptab="plan">📋 Plan Estratégico (10 Semanas)</button>
           <button type="button" class="p360-tab-btn" data-ptab="postulacion">📝 Postulación Original</button>
           <button type="button" class="p360-tab-btn" data-ptab="jurado">⚖️ Votos del Jurado</button>
           <button type="button" class="p360-tab-btn" data-ptab="encuentros">📅 Encuentros (${evs.length})</button>
@@ -630,8 +731,10 @@
                   <strong>#${e.numero_reunion} · ${esc(e.titulo)}</strong>
                   <div class="sub">📍 ${esc(e.lugar)} ${e.hora_inicio ? `· ⏰ ${esc(e.hora_inicio)}` : ''} · 👥 ${esc(e.asistentes.map(aid => consultores[aid]?.nombre || aid).join(', '))}</div>
                 </div>
-                <div class="penc-right">
+                <div class="penc-right" style="display:flex;align-items:center;gap:6px">
                   ${pr ? `<span class="prog-pill">${pr.hechos}/${pr.total} tareas</span>` : ''}
+                  <button type="button" class="btn btn-secondary btn-sm btn-print-meeting" data-rid="${esc(e.id)}" title="Imprimir minuta del encuentro">🖨️ Minuta</button>
+                  <button type="button" class="btn btn-secondary btn-sm btn-wa-meeting" data-rid="${esc(e.id)}" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al titular">📲 WhatsApp</button>
                   <button type="button" class="btn btn-secondary btn-sm btn-open-meeting" data-rid="${esc(e.id)}">Abrir Playbook</button>
                 </div>
               </div>
@@ -695,9 +798,19 @@
       });
     }
 
-    // Abrir meetings desde el listado
+    // Imprimir y WhatsApp del Plan completo
+    body.querySelector('.btn-print-plan')?.addEventListener('click', () => abrirImpresionPlan(p.id));
+    body.querySelector('.btn-wa-plan')?.addEventListener('click', () => enviarWhatsAppPlan(p.id));
+
+    // Abrir meetings, imprimir y WhatsApp desde el listado de encuentros
     body.querySelectorAll('.btn-open-meeting').forEach(btn => {
       btn.addEventListener('click', () => abrirDrawer(btn.dataset.rid));
+    });
+    body.querySelectorAll('.btn-print-meeting').forEach(btn => {
+      btn.addEventListener('click', () => abrirImpresionReunion(btn.dataset.rid));
+    });
+    body.querySelectorAll('.btn-wa-meeting').forEach(btn => {
+      btn.addEventListener('click', () => enviarWhatsAppReunion(btn.dataset.rid));
     });
 
     // Formulario de nuevo compromiso
@@ -1068,8 +1181,29 @@
       warningHtml += `<div class="alert-strip-warning">⚠️ Feriado probable sin verificar (12 de octubre).</div>`;
     }
 
+    const nombreDriveOficial = getNombreDrive(p, r);
+
     body.innerHTML = `
       ${warningHtml}
+
+      <!-- CARPETA DE DESGRABACIONES Y GOOGLE DRIVE -->
+      <div class="rsec" style="background:#F0F7FF;border:1px solid #BFDBFE;border-left:4px solid #2563EB;border-radius:6px;padding:12px 14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <h5 style="margin:0;color:#1E40AF">📁 Desgrabación & Memoria en Google Drive</h5>
+          <a href="${esc(DRIVE_FOLDER_URL)}" target="_blank" rel="noopener" style="font-size:11.5px;color:#2563EB;font-weight:700;text-decoration:none">
+            Abrir carpeta Drive ↗
+          </a>
+        </div>
+        <p style="font-size:11.5px;color:#334155;margin-bottom:6px">
+          Guardar el archivo de audio o texto en Drive con la siguiente tipificación estandarizada para habilitar el enriquecimiento de IA:
+        </p>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <code style="background:#DBEAFE;color:#1E3A8A;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:700" id="drwDriveCode">${esc(nombreDriveOficial)}</code>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnCopyDriveName" style="font-size:11.5px;padding:3px 9px">
+            📋 Copiar nombre
+          </button>
+        </div>
+      </div>
 
       <!-- PROGRAMACION Y HORARIOS -->
       <div class="rsec">
@@ -1221,6 +1355,14 @@
         }
       });
     });
+
+    body.querySelector('#btnCopyDriveName')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(nombreDriveOficial).then(() => {
+        showToast('Nombre copiado para Drive: ' + nombreDriveOficial);
+      }).catch(() => {
+        showToast('Nombre: ' + nombreDriveOficial);
+      });
+    });
   }
 
   // Guardar cambios globales del encuentro
@@ -1258,6 +1400,13 @@
         cerrarDrawer();
       }
     });
+  });
+
+  document.getElementById('btnDrawerPrint')?.addEventListener('click', () => {
+    if (reunionActiva) abrirImpresionReunion(reunionActiva.id);
+  });
+  document.getElementById('btnDrawerWA')?.addEventListener('click', () => {
+    if (reunionActiva) enviarWhatsAppReunion(reunionActiva.id);
   });
 
   document.getElementById('drawerClose')?.addEventListener('click', cerrarDrawer);

@@ -979,3 +979,15 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .consultor-card.is-me { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
 .badge.is-mine { background: var(--green); color: #fff; font-weight: 600; }
 
+/* Acciones de impresión y WhatsApp */
+.p360-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.btn-wa { color: #128C7E !important; border-color: #25D366 !important; }
+.btn-wa:hover { background: rgba(37,211,102,0.08) !important; }
+
+/* Reglas para impresión limpia */
+@media print {
+  .admin-header, .gestion-header, .gestion-nav, .agenda-bar, .drawer-scrim, .reunion-drawer, .no-print, .toolbar-noprint {
+    display: none !important;
+  }
+}
+
