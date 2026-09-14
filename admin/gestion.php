@@ -317,10 +317,6 @@ require __DIR__ . '/_header.php';
   </div>
   <div class="rdrawer-body" id="drawerBody"></div>
   <div class="rdrawer-footer" id="drawerFooter">
-    <div style="display:flex;gap:8px;margin-right:auto">
-      <button type="button" class="btn btn-secondary btn-sm" id="btnDrawerPrint" title="Imprimir o guardar PDF de esta minuta">🖨️ Imprimir Minuta</button>
-      <button type="button" class="btn btn-secondary btn-sm" id="btnDrawerWA" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al emprendedor">📲 WhatsApp</button>
-    </div>
     <button type="button" class="btn btn-secondary btn-sm" id="btnDrawerCancel">Cerrar</button>
     <button type="button" class="btn btn-primary btn-sm" id="btnDrawerSave">Guardar cambios</button>
   </div>

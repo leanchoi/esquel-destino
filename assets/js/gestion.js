@@ -83,82 +83,30 @@
     return `${projSlug} - REUNION ${r.numero_reunion} - ${fCortaStr}`;
   };
 
-  const abrirImpresionPlan = pid => {
-    window.open(`imprimir.php?tipo=plan&id=${encodeURIComponent(pid)}`, '_blank');
-  };
-
-  const abrirImpresionReunion = rid => {
-    window.open(`imprimir.php?tipo=reunion&id=${encodeURIComponent(rid)}`, '_blank');
-  };
-
-  const abrirImpresionMinutaCero = pid => {
-    window.open(`imprimir.php?tipo=minutacero&id=${encodeURIComponent(pid)}`, '_blank');
-  };
-
-  const enviarWhatsAppMinutaCero = pid => {
-    const p = proyectos[pid];
-    if (!p) return;
-    const mc = p.minuta_cero || {};
-    if (!mc || mc.estado === 'pendiente' || !mc.resumen) {
-      alert('La Minuta Cero aún no ha sido registrada para este emprendimiento.');
-      return;
-    }
-    const fechaStr = mc.fecha ? `${mc.fecha}${mc.hora ? ' · ' + mc.hora + ' hs' : ''}` : 'Encuentro diagnóstico preliminar';
-    const lugarStr = mc.lugar || 'Sede a confirmar';
-    const asistentes = (mc.participantes || []).join(', ');
-    const acuerdos = (mc.acuerdos_previos || []).slice(0, 3).map(a => `• ${a}`).join('\n');
-
-    let msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto la síntesis de la *Minuta Cero (Entrevista Inicial de Diagnóstico)* de *${p.nombre}* en *Esquel LAB 2026*.\n\n`
-            + `🎙️ *Encuentro Diagnóstico Preliminar*\n`
-            + `• Fecha: ${fechaStr}\n`
-            + `• Sede: ${lugarStr}\n`
-            + (asistentes ? `• Asistentes: ${asistentes}\n\n` : '\n')
-            + (mc.resumen ? `📝 *Síntesis*: ${mc.resumen}\n\n` : '')
-            + (acuerdos ? `🤝 *Acuerdos para arrancar (Hacia Reunión 1)*:\n${acuerdos}\n\n` : '')
-            + `Podés consultar el expediente completo en la plataforma. ¡Seguimos en contacto para el primer encuentro formal!`;
-
-    let tel = cleanPhoneWA(p.phone);
-    if (!tel) {
-      const inputTel = prompt(`El emprendimiento no tiene teléfono cargado en la ficha.\nIngresá el número de WhatsApp de ${p.titular || p.nombre} (ej: 2945...):`, '');
-      if (inputTel) tel = cleanPhoneWA(inputTel);
-    }
-
-    const url = tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
-  };
-
-  const enviarWhatsAppPlan = pid => {
-    const p = proyectos[pid];
-    if (!p) return;
+  const getUrlWaPlan = p => {
+    if (!p) return '#';
     const celInfo = celulas[p.celula] || { nombre: 'General' };
     const srNom = consultores[p.consultor_sr_id]?.nombre || p.consultor_sr_id;
     const jrNom = consultores[p.consultor_jr_id]?.nombre || p.consultor_jr_id;
     const evs = getReunionesProyecto(p.id);
     const ejes = (p.ejes || []).slice(0, 3).map(e => e.t).filter(Boolean).join(', ');
 
-    let msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto el *Plan de Trabajo Estratégico* de *${p.nombre}* en *Esquel LAB (1ª Cohorte 2026)*.\n\n`
-            + `🏛️ *Subsecretaría de Turismo · Municipalidad de Esquel*\n`
-            + `• Célula temática: Célula ${p.celula} (${celInfo.nombre})\n`
-            + `• Equipo técnico: ${srNom} (Senior) y ${jrNom} (Junior)\n`
-            + `• Duración: 10 semanas (16 sep → 20 nov 2026)\n`
-            + `• Encuentros programados: ${evs.length} sesiones\n\n`
-            + (ejes ? `🎯 *Ejes principales*: ${ejes}\n\n` : '')
-            + `Cualquier consulta sobre las fechas y etapas coordinamos con el equipo. ¡Seguimos trabajando juntos!`;
+    const msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto el *Plan de Trabajo Estratégico* de *${p.nombre}* en *Esquel LAB (1ª Cohorte 2026)*.\n\n`
+              + `🏛️ *Subsecretaría de Turismo · Municipalidad de Esquel*\n`
+              + `• Célula temática: Célula ${p.celula} (${celInfo.nombre})\n`
+              + `• Equipo técnico: ${srNom} (Senior) y ${jrNom} (Junior)\n`
+              + `• Duración: 10 semanas (16 sep → 20 nov 2026)\n`
+              + `• Encuentros programados: ${evs.length} sesiones\n\n`
+              + (ejes ? `🎯 *Ejes principales*: ${ejes}\n\n` : '')
+              + `Cualquier consulta sobre las fechas y etapas coordinamos con el equipo. ¡Seguimos trabajando juntos!`;
 
-    let tel = cleanPhoneWA(p.phone);
-    if (!tel) {
-      const inputTel = prompt(`El emprendimiento no tiene teléfono cargado en la ficha.\nIngresá el número de WhatsApp de ${p.titular || p.nombre} (ej: 2945...):`, '');
-      if (inputTel) tel = cleanPhoneWA(inputTel);
-    }
-
-    const url = tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
+    const tel = cleanPhoneWA(p.phone);
+    return tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
   };
 
-  const enviarWhatsAppReunion = rid => {
-    const r = reuniones.find(x => x.id === rid);
-    if (!r) return;
-    const p = proyectos[r.proyecto_id] || {};
+  const getUrlWaReunion = (r, p) => {
+    if (!r) return '#';
+    p = p || proyectos[r.proyecto_id] || {};
     const fParts = (r.fecha || '').split('-');
     const fStr = fParts.length === 3 ? `${fParts[2]}/${fParts[1]}/${fParts[0]}` : r.fecha;
     const asistNom = (r.asistentes || []).map(aid => consultores[aid]?.nombre || aid).join(', ');
@@ -168,23 +116,38 @@
       ? doneTasks.map(t => `• ${t.texto}`).join('\n')
       : (r.checklist || []).slice(0, 3).map(t => `• ${t.texto}`).join('\n');
 
-    let msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto el resumen de nuestro encuentro de acompañamiento en *Esquel LAB*:\n\n`
-            + `📅 *Encuentro #${r.numero_reunion}: ${r.titulo}*\n`
-            + `• Fecha: ${fStr} (${r.hora_inicio || 'A conf.'} a ${r.hora_fin || 'A conf.'})\n`
-            + `• Lugar: ${r.lugar}\n`
-            + `• Consultores: ${asistNom}\n\n`
-            + (tasksTxt ? `✅ *Objetivos y avances*: \n${tasksTxt}\n\n` : '')
-            + (r.minuta_notas ? `📝 *Acuerdos principales*: ${r.minuta_notas.slice(0, 160)}...\n\n` : '')
-            + `¡Seguimos en contacto para coordinar la próxima cita!`;
+    const msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto el resumen de nuestro encuentro de acompañamiento en *Esquel LAB*:\n\n`
+              + `📅 *Encuentro #${r.numero_reunion}: ${r.titulo}*\n`
+              + `• Fecha: ${fStr} (${r.hora_inicio || 'A conf.'} a ${r.hora_fin || 'A conf.'})\n`
+              + `• Lugar: ${r.lugar}\n`
+              + `• Consultores: ${asistNom}\n\n`
+              + (tasksTxt ? `✅ *Objetivos y avances*: \n${tasksTxt}\n\n` : '')
+              + (r.minuta_notas ? `📝 *Acuerdos principales*: ${r.minuta_notas.slice(0, 160)}...\n\n` : '')
+              + `¡Seguimos en contacto para coordinar la próxima cita!`;
 
-    let tel = cleanPhoneWA(p.phone);
-    if (!tel) {
-      const inputTel = prompt(`El proyecto no tiene teléfono cargado.\nIngresá el número de WhatsApp de ${p.titular || p.nombre} (ej: 2945...):`, '');
-      if (inputTel) tel = cleanPhoneWA(inputTel);
-    }
+    const tel = cleanPhoneWA(p.phone);
+    return tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  };
 
-    const url = tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
+  const getUrlWaMinutaCero = p => {
+    if (!p) return '#';
+    const mc = p.minuta_cero || {};
+    const fechaStr = mc.fecha ? `${mc.fecha}${mc.hora ? ' · ' + mc.hora + ' hs' : ''}` : 'Encuentro diagnóstico preliminar';
+    const lugarStr = mc.lugar || 'Sede a confirmar';
+    const asistentes = Array.isArray(mc.participantes) ? mc.participantes.join(', ') : (mc.asistentes || '');
+    const acuerdos = Array.isArray(mc.acuerdos_previos) ? mc.acuerdos_previos.slice(0, 3).map(a => `• ${a}`).join('\n') : '';
+
+    const msg = `Hola ${p.titular || 'Emprendedor/a'}! 👋 Te comparto la síntesis de la *Minuta Cero (Entrevista Inicial de Diagnóstico)* de *${p.nombre}* en *Esquel LAB 2026*.\n\n`
+              + `🎙️ *Encuentro Diagnóstico Preliminar*\n`
+              + `• Fecha: ${fechaStr}\n`
+              + `• Sede: ${lugarStr}\n`
+              + (asistentes ? `• Asistentes: ${asistentes}\n\n` : '\n')
+              + (mc.resumen ? `📝 *Síntesis*: ${mc.resumen}\n\n` : '')
+              + (acuerdos ? `🤝 *Acuerdos para arrancar (Hacia Reunión 1)*:\n${acuerdos}\n\n` : '')
+              + `Podés consultar el expediente completo en la plataforma. ¡Seguimos en contacto para el primer encuentro formal!`;
+
+    const tel = cleanPhoneWA(p.phone);
+    return tel ? `https://wa.me/${tel}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
   };
 
   const COLOR_TIPO = {
@@ -666,13 +629,13 @@
             <span class="badge ok">Puntaje ${Number(p.puntaje).toFixed(2)}</span>
             <h2 class="p360-title">${esc(p.nombre)}</h2>
             <div class="p360-titular">👤 <strong>${esc(p.titular)}</strong> · ${p.email ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>` : ''} · ${p.phone ? `<span>📞 ${esc(p.phone)}</span>` : ''}</div>
-            <div class="p360-actions" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-              <button type="button" class="btn btn-secondary btn-sm btn-print-plan" data-pid="${esc(p.id)}" title="Imprimir o guardar PDF del Plan de Trabajo completo">
+            <div class="p360-header-actions">
+              <a href="imprimir.php?tipo=plan&id=${encodeURIComponent(p.id)}" target="_blank" class="btn btn-secondary btn-sm" title="Imprimir o guardar PDF del Plan de Trabajo completo">
                 🖨️ Imprimir Plan de Trabajo
-              </button>
-              <button type="button" class="btn btn-secondary btn-sm btn-wa-plan" data-pid="${esc(p.id)}" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al titular">
+              </a>
+              <a href="${esc(getUrlWaPlan(p))}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al titular">
                 📲 Enviar Plan por WhatsApp
-              </button>
+              </a>
             </div>
           </div>
           <div class="p360-equipo-box">
@@ -775,9 +738,9 @@
                 </div>
                 <div class="penc-right" style="display:flex;align-items:center;gap:6px">
                   ${pr ? `<span class="prog-pill">${pr.hechos}/${pr.total} tareas</span>` : ''}
-                  <button type="button" class="btn btn-secondary btn-sm btn-print-meeting" data-rid="${esc(e.id)}" title="Imprimir minuta del encuentro">🖨️ Minuta</button>
-                  <button type="button" class="btn btn-secondary btn-sm btn-wa-meeting" data-rid="${esc(e.id)}" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al titular">📲 WhatsApp</button>
-                  <button type="button" class="btn btn-secondary btn-sm btn-open-meeting" data-rid="${esc(e.id)}">Abrir Playbook</button>
+                  <a href="imprimir.php?tipo=reunion&id=${encodeURIComponent(e.id)}" target="_blank" class="btn btn-secondary btn-sm" title="Imprimir minuta del encuentro">🖨️ Minuta</a>
+                  <a href="${esc(getUrlWaReunion(e, p))}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al titular">📲 WhatsApp</a>
+                  <button type="button" class="btn btn-primary btn-sm btn-open-meeting" data-rid="${esc(e.id)}">Abrir Playbook</button>
                 </div>
               </div>
             `;
@@ -840,13 +803,7 @@
       });
     }
 
-    // Imprimir y WhatsApp del Plan completo
-    body.querySelector('.btn-print-plan')?.addEventListener('click', () => abrirImpresionPlan(p.id));
-    body.querySelector('.btn-wa-plan')?.addEventListener('click', () => enviarWhatsAppPlan(p.id));
-
-    // Imprimir, WhatsApp y Guardar de Minuta Cero
-    body.querySelector('.btn-print-mc')?.addEventListener('click', () => abrirImpresionMinutaCero(p.id));
-    body.querySelector('.btn-wa-mc')?.addEventListener('click', () => enviarWhatsAppMinutaCero(p.id));
+    // Guardar Minuta Cero
     body.querySelectorAll('.btn-guardar-mc').forEach(btn => {
       btn.addEventListener('click', () => {
         let mc = p.minuta_cero || {};
@@ -885,7 +842,7 @@
           if (res.ok) {
             p.minuta_cero = mc;
             showToast('Minuta Cero guardada correctamente.');
-            renderProyecto360(p);
+            renderExpedienteDetalle();
             const mcTabBtn = body.querySelector('.p360-tab-btn[data-ptab="minutacero"]');
             if (mcTabBtn) mcTabBtn.click();
           }
@@ -893,15 +850,9 @@
       });
     });
 
-    // Abrir meetings, imprimir y WhatsApp desde el listado de encuentros
+    // Abrir Playbook desde el listado de encuentros
     body.querySelectorAll('.btn-open-meeting').forEach(btn => {
       btn.addEventListener('click', () => abrirDrawer(btn.dataset.rid));
-    });
-    body.querySelectorAll('.btn-print-meeting').forEach(btn => {
-      btn.addEventListener('click', () => abrirImpresionReunion(btn.dataset.rid));
-    });
-    body.querySelectorAll('.btn-wa-meeting').forEach(btn => {
-      btn.addEventListener('click', () => enviarWhatsAppReunion(btn.dataset.rid));
     });
 
     // Formulario de nuevo compromiso
@@ -987,8 +938,8 @@
             ${mc.lugar ? `<span class="badge" style="font-size:12px;padding:5px 10px">📍 ${esc(mc.lugar)}</span>` : ''}
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button type="button" class="btn btn-secondary btn-sm btn-print-mc" data-pid="${esc(p.id)}" title="Imprimir carátula y reporte de Minuta Cero">🖨️ Imprimir Minuta</button>
-            <button type="button" class="btn btn-secondary btn-sm btn-wa-mc" data-pid="${esc(p.id)}" style="color:#128C7E;border-color:#25D366" title="Compartir síntesis de Minuta Cero por WhatsApp">📲 Compartir por WhatsApp</button>
+            <a href="imprimir.php?tipo=minutacero&id=${encodeURIComponent(p.id)}" target="_blank" class="btn btn-secondary btn-sm" title="Imprimir carátula y reporte de Minuta Cero">🖨️ Imprimir Minuta Cero</a>
+            <a href="${esc(getUrlWaMinutaCero(p))}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="color:#128C7E;border-color:#25D366" title="Compartir síntesis de Minuta Cero por WhatsApp">📲 Compartir por WhatsApp</a>
           </div>
         </div>
 
@@ -1402,6 +1353,16 @@
     body.innerHTML = `
       ${warningHtml}
 
+      <!-- ACCIONES RÁPIDAS DEL ENCUENTRO -->
+      <div class="drawer-action-strip">
+        <a href="imprimir.php?tipo=reunion&id=${encodeURIComponent(r.id)}" target="_blank" class="btn btn-secondary btn-sm" title="Imprimir o guardar PDF de esta minuta">
+          🖨️ Imprimir Minuta
+        </a>
+        <a href="${esc(getUrlWaReunion(r, p))}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="color:#128C7E;border-color:#25D366" title="Enviar resumen por WhatsApp al emprendedor">
+          📲 Enviar por WhatsApp
+        </a>
+      </div>
+
       <!-- CARPETA DE DESGRABACIONES Y GOOGLE DRIVE -->
       <div class="rsec" style="background:#F0F7FF;border:1px solid #BFDBFE;border-left:4px solid #2563EB;border-radius:6px;padding:12px 14px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
@@ -1616,13 +1577,6 @@
         cerrarDrawer();
       }
     });
-  });
-
-  document.getElementById('btnDrawerPrint')?.addEventListener('click', () => {
-    if (reunionActiva) abrirImpresionReunion(reunionActiva.id);
-  });
-  document.getElementById('btnDrawerWA')?.addEventListener('click', () => {
-    if (reunionActiva) enviarWhatsAppReunion(reunionActiva.id);
   });
 
   document.getElementById('drawerClose')?.addEventListener('click', cerrarDrawer);
