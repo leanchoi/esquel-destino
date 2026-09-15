@@ -48,24 +48,26 @@ function tarea_propia(PDO $pdo, int $id, array $u): ?array
 }
 
 /**
- * Resuelve el estudiante a partir de consultor_id ('est-xyz') o username ('iset01').
+ * Resuelve el estudiante a partir de consultor_id ('est-xyz') o username.
  */
-function resolver_estudiante(PDO $pdo, string $idOrUser): ?array
-{
-    $idOrUser = trim($idOrUser);
-    if ($idOrUser === '') {
-        return null;
+if (!function_exists('resolver_estudiante')) {
+    function resolver_estudiante(PDO $pdo, string $idOrUser): ?array
+    {
+        $idOrUser = trim($idOrUser);
+        if ($idOrUser === '') {
+            return null;
+        }
+        $st = $pdo->prepare("
+            SELECT e.consultor_id, e.user_id, e.proyecto_id, e.legajo,
+                   c.nombre, u.username
+            FROM lab_estudiantes e
+            JOIN lab_consultores c ON c.id = e.consultor_id
+            LEFT JOIN users u ON u.id = e.user_id
+            WHERE e.consultor_id = ? OR u.username = ?
+        ");
+        $st->execute([$idOrUser, $idOrUser]);
+        return $st->fetch(PDO::FETCH_ASSOC) ?: null;
     }
-    $st = $pdo->prepare("
-        SELECT e.consultor_id, e.user_id, e.proyecto_id, e.legajo,
-               c.nombre, u.username
-        FROM lab_estudiantes e
-        JOIN lab_consultores c ON c.id = e.consultor_id
-        LEFT JOIN users u ON u.id = e.user_id
-        WHERE e.consultor_id = ? OR u.username = ?
-    ");
-    $st->execute([$idOrUser, $idOrUser]);
-    return $st->fetch(PDO::FETCH_ASSOC) ?: null;
 }
 
 // ---------------------------------------------------- guardar una entrega
@@ -247,6 +249,58 @@ if ($accion === 'crear_intermedia') {
         'ok' => true,
         'tarea_id' => $tareaNuevaId,
         'mensaje' => 'Tarea intermedia asignada correctamente al estudiante.'
+    ], JSON_UNESCAPED_UNICODE));
+}
+
+// --------------------------------- asignar emprendimiento al estudiante desde ficha
+if ($accion === 'asignar_proyecto') {
+    if (!puede_gestionar_lab($u) && ($u['role'] ?? '') !== 'admin') {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'No tenés permisos para asignar emprendimientos.']));
+    }
+
+    $estInput = trim((string) ($data['estudiante_id'] ?? ''));
+    $proyId = trim((string) ($data['proyecto_id'] ?? ''));
+
+    if (!$estInput) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Falta identificar al estudiante.']));
+    }
+
+    $estRow = resolver_estudiante($pdo, $estInput);
+    if (!$estRow) {
+        http_response_code(404);
+        exit(json_encode(['ok' => false, 'error' => 'Estudiante no encontrado.']));
+    }
+    $estId = $estRow['consultor_id'];
+
+    $proyNombre = '';
+    $reunionesTocadas = 0;
+
+    if ($proyId !== '') {
+        $stP = $pdo->prepare("SELECT nombre FROM lab_proyectos WHERE id = ?");
+        $stP->execute([$proyId]);
+        $proyNombre = $stP->fetchColumn();
+        if (!$proyNombre) {
+            http_response_code(404);
+            exit(json_encode(['ok' => false, 'error' => 'El emprendimiento seleccionado no existe.']));
+        }
+
+        $pdo->prepare("UPDATE lab_estudiantes SET proyecto_id = ? WHERE consultor_id = ?")->execute([$proyId, $estId]);
+        $reunionesTocadas = iset_enganchar_reuniones($pdo, $estId);
+        $mensaje = "Asignado a «{$proyNombre}»." . ($reunionesTocadas > 0 ? " Se vincularon {$reunionesTocadas} reuniones futuras." : '');
+    } else {
+        $pdo->prepare("UPDATE lab_estudiantes SET proyecto_id = NULL WHERE consultor_id = ?")->execute([$estId]);
+        $mensaje = 'Emprendimiento desvinculado.';
+    }
+
+    exit(json_encode([
+        'ok'              => true,
+        'estudiante_id'   => $estId,
+        'proyecto_id'     => $proyId ?: null,
+        'proyecto_nombre' => $proyNombre ?: null,
+        'reuniones'       => $reunionesTocadas,
+        'mensaje'         => $mensaje,
     ], JSON_UNESCAPED_UNICODE));
 }
 

@@ -42,10 +42,332 @@ if (($u['role'] ?? '') === 'admin' && !empty($_GET['est'])) {
 $pageTitle = 'Mi emprendimiento';
 $nav = 'estudiante';
 
-if (!$ficha) {
+if (!$ficha || empty($ficha['proyecto_id'])) {
+    $nombreAlumno = $ficha ? ($ficha['nombre'] ?: $u['username']) : $u['username'];
+    $pageTitle = 'Esquel LAB · Prácticas ISET 815';
     require __DIR__ . '/_header.php';
-    echo '<div class="admin-content"><div class="empty-state">Todavía no tenés un emprendimiento asignado. '
-       . 'Escribile a la coordinación del programa para que te asignen uno.</div></div>';
+    ?>
+    <style>
+    .espera-container {
+      max-width: 860px;
+      margin: 16px auto 40px;
+    }
+    .espera-hero {
+      background: linear-gradient(135deg, #132B43 0%, #2F5D7C 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 34px 30px;
+      box-shadow: 0 12px 32px -8px rgba(19, 43, 67, 0.35);
+      margin-bottom: 22px;
+    }
+    .espera-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+    .espera-hero h1 {
+      font-size: 26px;
+      margin: 0 0 12px 0;
+      font-family: var(--font-title, serif);
+      line-height: 1.25;
+      color: #ffffff;
+    }
+    .espera-hero p {
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.94;
+      margin: 0;
+      max-width: 720px;
+    }
+
+    /* Cuenta Regresiva */
+    .countdown-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px -4px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .countdown-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 6px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .countdown-sub {
+      font-size: 14px;
+      color: #64748b;
+      margin: 0 auto 18px;
+      max-width: 620px;
+      line-height: 1.5;
+    }
+    .countdown-sub strong {
+      color: #dc2626;
+    }
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .countdown-box {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      min-width: 84px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .countdown-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #2F5D7C;
+      font-family: var(--font-mono, monospace);
+      line-height: 1;
+    }
+    .countdown-lbl {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 700;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Tarjetas Explicativas */
+    .grid-info-espera {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    @media (max-width: 700px) {
+      .grid-info-espera { grid-template-columns: 1fr; }
+    }
+    .card-info-espera {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .card-info-espera h3 {
+      margin: 0;
+      font-size: 16.5px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-info-espera p, .card-info-espera li {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #334155;
+    }
+    .card-info-espera ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .pasos-consignas {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-top: 10px;
+    }
+    .pasos-consignas h4 {
+      margin: 0 0 14px 0;
+      color: #166534;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pasos-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .paso-item {
+      display: flex;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #1e293b;
+      align-items: flex-start;
+    }
+    .paso-pill {
+      background: #166534;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      height: fit-content;
+      white-space: nowrap;
+    }
+    </style>
+
+    <div class="admin-content espera-container">
+      <!-- Banner Hero -->
+      <div class="espera-hero">
+        <div class="espera-tag">🎓 Convenio ISET 815 · Cohorte 2026</div>
+        <h1>¡Hola, <?= e($nombreAlumno) ?>! Tu postulación fue registrada</h1>
+        <p>
+          Recibimos correctamente tu formulario y respuestas de autopercepción. Estamos en la etapa de inscripción de toda la cohorte del instituto. Cuando todos los compañeros y compañeras terminen de completar sus fichas, la coordinación evaluará cada perfil para asignarles estratégicamente el emprendimiento turístico que acompañarán durante las 7 semanas.
+        </p>
+      </div>
+
+      <!-- Cuenta Regresiva -->
+      <div class="countdown-card">
+        <div class="countdown-title">
+          <span>⏳ Cierre definitivo de postulaciones</span>
+        </div>
+        <div class="countdown-sub">
+          El plazo máximo para registrarse es este <strong>viernes 18 de septiembre a las 21:00 hs</strong>. Luego de ese horario se cierra el padrón y no podremos vincular al acompañamiento a quienes no hayan completado el formulario.
+        </div>
+
+        <div class="countdown-grid" id="countdownGrid">
+          <div class="countdown-box">
+            <span class="countdown-num" id="cd-dias">00</span>
+            <span class="countdown-lbl">Días</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-num" id="cd-horas">00</span>
+            <span class="countdown-lbl">Horas</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-num" id="cd-min">00</span>
+            <span class="countdown-lbl">Minutos</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-num" id="cd-seg">00</span>
+            <span class="countdown-lbl">Segundos</span>
+          </div>
+        </div>
+        <div id="countdownFin" style="display:none;font-weight:700;color:#166534;font-size:15px;margin-top:10px;">
+          ✓ ¡Plazo de postulación completado! La coordinación está definiendo las asignaciones estratégicas.
+        </div>
+      </div>
+
+      <!-- Explicativo Esquel LAB y Rol -->
+      <div class="grid-info-espera">
+        <div class="card-info-espera">
+          <h3>🚀 ¿Qué es Esquel LAB?</h3>
+          <p>
+            Es el programa oficial de aceleración turística impulsado por la <strong>Subsecretaría de Turismo, Deporte y Cultura de la Municipalidad de Esquel</strong>.
+          </p>
+          <p>
+            Acompaña a <strong>18 emprendimientos turísticos locales</strong> de alto valor diferenciador (agroturismo, experiencias de montaña, artesanías, gastronomía con identidad y operadores receptivos) para potenciar su modelo de negocio y posicionamiento en el destino.
+          </p>
+        </div>
+
+        <div class="card-info-espera">
+          <h3>🤝 ¿Cómo colaborarás vos?</h3>
+          <p>
+            Cada estudiante del ISET 815 tendrá una <strong>asignación 1 a 1</strong> con un emprendimiento específico, acreditando aproximadamente <strong>60 horas de práctica profesionalizante</strong> en territorio real.
+          </p>
+          <p>
+            No harás tareas administrativas ficticias ni resúmenes escolares: trabajarás codo a codo con los <strong>consultores seniors y juniors</strong> en reuniones de trabajo reales y directas con el emprendedor.
+          </p>
+        </div>
+      </div>
+
+      <!-- Cómo funciona la dinámica de consignas -->
+      <div class="pasos-consignas">
+        <h4>📋 Los tres momentos de tu aporte en cada reunión:</h4>
+        <div class="pasos-lista">
+          <div class="paso-item">
+            <span class="paso-pill">1. ANTES</span>
+            <div>
+              <strong>Insumo previo de preparación:</strong> Investigás precios de mercado, normativa que aplica, proveedores de la zona y competidores para que el consultor senior entre informado a la reunión.
+            </div>
+          </div>
+          <div class="paso-item">
+            <span class="paso-pill">2. DURANTE</span>
+            <div>
+              <strong>Presencia viva y registro fiel:</strong> Participás en la mesa de consultoría capturando frases textuales del titular, números clave del negocio y oportunidades que surjan en la conversación.
+            </div>
+          </div>
+          <div class="paso-item">
+            <span class="paso-pill">3. DESPUÉS</span>
+            <div>
+              <strong>Entregable concreto:</strong> Desarrollás una pieza tangible que haga avanzar el proyecto: una tabla de costos, una ficha de venta o una propuesta de itinerario.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Próximos Pasos -->
+      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-top:22px;display:flex;align-items:center;gap:16px;">
+        <div style="font-size:36px;flex-shrink:0;">🔔</div>
+        <div style="font-size:14px;color:#334155;line-height:1.5;">
+          <strong>¿Qué tenés que hacer ahora?</strong><br>
+          Nada más por el momento. Una vez cumplido el plazo del viernes a las 21:00 hs, la coordinación te notificará tu emprendimiento asignado y se activará en esta misma pantalla tu caso con toda su información, fechas de reuniones y consignas de trabajo.
+        </div>
+      </div>
+    </div>
+
+    <script>
+    // Countdown hacia el viernes 18 de septiembre de 2026 a las 21:00 hs (ART / UTC-3)
+    (function() {
+      const deadline = new Date('2026-09-18T21:00:00-03:00').getTime();
+
+      function actualizarReloj() {
+        const ahora = new Date().getTime();
+        const resto = deadline - ahora;
+
+        if (resto <= 0) {
+          const grid = document.getElementById('countdownGrid');
+          const fin = document.getElementById('countdownFin');
+          if (grid) grid.style.display = 'none';
+          if (fin) fin.style.display = 'block';
+          return;
+        }
+
+        const dias = Math.floor(resto / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((resto % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((resto % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((resto % (1000 * 60)) / 1000);
+
+        const pad = (n) => String(n).padStart(2, '0');
+
+        const elDias = document.getElementById('cd-dias');
+        const elHoras = document.getElementById('cd-horas');
+        const elMin = document.getElementById('cd-min');
+        const elSeg = document.getElementById('cd-seg');
+
+        if (elDias) elDias.textContent = pad(dias);
+        if (elHoras) elHoras.textContent = pad(horas);
+        if (elMin) elMin.textContent = pad(minutos);
+        if (elSeg) elSeg.textContent = pad(segundos);
+      }
+
+      actualizarReloj();
+      setInterval(actualizarReloj, 1000);
+    })();
+    </script>
+    <?php
     require __DIR__ . '/_footer.php';
     exit;
 }

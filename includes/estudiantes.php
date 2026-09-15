@@ -480,73 +480,15 @@ function panel_estudiante(PDO $pdo, string $estudianteId): array
  */
 function iset_asegurar_estudiantes(PDO $pdo): array
 {
-    // Los estudiantes entran después de FIT. Antes de esa fecha no se les
-    // generan consignas: no tienen por qué responder por reuniones que no
-    // vivieron.
-    $altaDesde = ISET_ALTA_DESDE;
-
-    $proyectos = $pdo->query('SELECT id, nombre FROM lab_proyectos ORDER BY celula, nombre')->fetchAll();
-    if (!$proyectos) {
-        return ['creados' => 0, 'total' => 0, 'aviso' => 'Todavía no hay emprendimientos cargados.'];
-    }
-
-    $insUser = $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES (?, ?, 'estudiante', 1, datetime('now'))");
+    // El profesor: un solo usuario con la mirada global (si no existe aún).
     $buscaUser = $pdo->prepare('SELECT id FROM users WHERE LOWER(username) = LOWER(?)');
-    $insCons = $pdo->prepare("INSERT INTO lab_consultores (id, nombre, rol, tipo, disponibilidad, restricciones, color, activo) VALUES (?, ?, 'Estudiante ISET', 'estudiante', ?, ?, ?, 1)");
-    $existeCons = $pdo->prepare('SELECT 1 FROM lab_consultores WHERE id = ?');
-    $insFicha = $pdo->prepare(
-        "INSERT INTO lab_estudiantes (consultor_id, user_id, instituto, legajo, proyecto_id, horas_presupuesto, alta_desde, activo)
-         VALUES (?, ?, 'ISET 815', '', ?, ?, ?, 1)"
-    );
-    $existeFicha = $pdo->prepare('SELECT 1 FROM lab_estudiantes WHERE consultor_id = ?');
-
-    // Disponibilidad por defecto: tarde, que es cuando un estudiante de
-    // terciario puede. Se ajusta uno por uno desde la ficha.
-    $disponibilidad = json_encode(['14–20', '14–20', '14–20', '14–20', '14–20'], JSON_UNESCAPED_UNICODE);
-
-    $creados = 0;
-    $n = 0;
-    foreach ($proyectos as $p) {
-        $n++;
-        $slug = 'est-' . $p['id'];
-        $usuario = 'iset' . str_pad((string) $n, 2, '0', STR_PAD_LEFT);
-        $nombre = 'Estudiante ' . str_pad((string) $n, 2, '0', STR_PAD_LEFT);
-
-        $buscaUser->execute([$usuario]);
-        $userId = $buscaUser->fetchColumn();
-        if (!$userId) {
-            // Contraseña provisoria dictable, la misma mecánica que el resto
-            // del panel: se genera una y se cambia al entrar.
-            $insUser->execute([$usuario, password_hash(clave_dictable(), PASSWORD_DEFAULT)]);
-            $userId = (int) $pdo->lastInsertId();
-        }
-
-        $existeCons->execute([$slug]);
-        if (!$existeCons->fetchColumn()) {
-            $insCons->execute([$slug, $nombre, $disponibilidad, 'Convenio ISET 815. Disponible después de FIT.', ISET_COLOR]);
-        }
-
-        $existeFicha->execute([$slug]);
-        if (!$existeFicha->fetchColumn()) {
-            $insFicha->execute([$slug, (int) $userId, $p['id'], ISET_HORAS, $altaDesde]);
-            $creados++;
-        }
-
-        // OJO: al estudiante NO se le da lab_user_access. Ese permiso abre
-        // gestion.php, que es el módulo completo —los 18 emprendimientos, la
-        // agenda de todo el equipo, la matriz de carga—. El estudiante entra
-        // por estudiante.php, que tiene su propia puerta y le muestra sólo su
-        // caso. Dárselo "para que vea su ficha" le abría los 17 restantes.
-    }
-
-    // El profesor: un solo usuario con la mirada global.
     $buscaUser->execute(['profesor']);
     if (!$buscaUser->fetchColumn()) {
         $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES ('profesor', ?, 'profesor', 1, datetime('now'))")
             ->execute([password_hash(clave_dictable(), PASSWORD_DEFAULT)]);
     }
 
-    return ['creados' => $creados, 'total' => count($proyectos), 'aviso' => ''];
+    return ['creados' => 0, 'total' => 0, 'aviso' => ''];
 }
 
 /**
@@ -575,4 +517,27 @@ function iset_enganchar_reuniones(PDO $pdo, string $estudianteId): int
         $tocadas++;
     }
     return $tocadas;
+}
+
+/**
+ * Resuelve el estudiante a partir de consultor_id ('est-xyz') o username.
+ */
+if (!function_exists('resolver_estudiante')) {
+    function resolver_estudiante(PDO $pdo, string $idOrUser): ?array
+    {
+        $idOrUser = trim($idOrUser);
+        if ($idOrUser === '') {
+            return null;
+        }
+        $st = $pdo->prepare("
+            SELECT e.consultor_id, e.user_id, e.proyecto_id, e.legajo,
+                   c.nombre, u.username
+            FROM lab_estudiantes e
+            JOIN lab_consultores c ON c.id = e.consultor_id
+            LEFT JOIN users u ON u.id = e.user_id
+            WHERE e.consultor_id = ? OR u.username = ?
+        ");
+        $st->execute([$idOrUser, $idOrUser]);
+        return $st->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
 }

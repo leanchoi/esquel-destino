@@ -12,7 +12,7 @@ $msg = null;
 // La contraseña recién generada, para mostrarla una sola vez en esta página.
 $claveNueva = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if (!csrf_valido($_POST['csrf_token'] ?? null)) {
         $msg = ['tipo' => 'error', 'texto' => 'La sesión expiró. Volvé a intentar.'];
     } else {
@@ -117,6 +117,7 @@ $estudiantesIset = $pdo->query("
       JOIN lab_consultores c ON c.id = e.consultor_id
       LEFT JOIN users u ON u.id = e.user_id
       LEFT JOIN lab_proyectos p ON p.id = e.proyecto_id
+     WHERE (u.username NOT LIKE 'iset%' AND u.username NOT GLOB 'iset[0-9][0-9]') OR u.username IS NULL
      ORDER BY e.consultor_id ASC
 ")->fetchAll();
 
@@ -446,55 +447,64 @@ require __DIR__ . '/_header.php';
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($estudiantesIset as $est): ?>
-            <tr id="fila-est-<?= e($est['consultor_id']) ?>">
-              <td>
-                <code style="font-weight:700;color:var(--iset-color,#2F5D7C)"><?= e($est['username']) ?></code>
-              </td>
-              <td data-col="Nombre real">
-                <input type="text" class="input-sm input-est-nombre"
-                       id="nombre-<?= e($est['consultor_id']) ?>"
-                       value="<?= e($est['nombre_real']) ?>"
-                       placeholder="Nombre y apellido"
-                       style="width:100%;max-width:240px">
-              </td>
-              <td data-col="Legajo">
-                <input type="text" class="input-sm input-est-legajo"
-                       id="legajo-<?= e($est['consultor_id']) ?>"
-                       value="<?= e($est['legajo'] ?? '') ?>"
-                       placeholder="Legajo"
-                       style="width:90px">
-              </td>
-              <td data-col="Emprendimiento">
-                <select class="input-sm select-est-proy"
-                        id="proy-<?= e($est['consultor_id']) ?>"
-                        style="width:100%;max-width:260px">
-                  <option value="">— Sin asignar —</option>
-                  <?php foreach ($proyectosDisponibles as $pr): ?>
-                    <option value="<?= e($pr['id']) ?>" <?= $est['proyecto_id'] === $pr['id'] ? 'selected' : '' ?>>
-                      <?= e($pr['nombre']) ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </td>
-              <td class="sub" id="estado-clave-<?= e($est['consultor_id']) ?>" data-col="Estado">
-                <?= $est['must_change_password'] ? 'Provisoria' : 'Activo' ?>
-              </td>
-              <td class="right nowrap">
-                <button type="button" class="btn btn-secondary btn-sm btn-guardar-est"
-                        data-est="<?= e($est['consultor_id']) ?>"
-                        title="Guardar nombre, legajo y asignación de emprendimiento">
-                  Guardar
-                </button>
-                <button type="button" class="btn btn-secondary btn-sm btn-clave-est"
-                        data-est="<?= e($est['consultor_id']) ?>"
-                        data-usuario="<?= e($est['username']) ?>"
-                        title="Generar contraseña dictable y mensaje WhatsApp">
-                  🔑 Clave
-                </button>
+          <?php if (empty($estudiantesIset)): ?>
+            <tr>
+              <td colspan="6" style="text-align:center;padding:36px 16px;color:var(--ink-2)">
+                🎓 Todavía no hay estudiantes registrados en el convenio.<br>
+                <small style="color:var(--ink-3)">Los alumnos aparecerán aquí automáticamente al completar el formulario público de registro y autopercepción.</small>
               </td>
             </tr>
-          <?php endforeach; ?>
+          <?php else: ?>
+            <?php foreach ($estudiantesIset as $est): ?>
+              <tr id="fila-est-<?= e($est['consultor_id']) ?>">
+                <td>
+                  <code style="font-weight:700;color:var(--iset-color,#2F5D7C)"><?= e($est['username']) ?></code>
+                </td>
+                <td data-col="Nombre real">
+                  <input type="text" class="input-sm input-est-nombre"
+                         id="nombre-<?= e($est['consultor_id']) ?>"
+                         value="<?= e($est['nombre_real']) ?>"
+                         placeholder="Nombre y apellido"
+                         style="width:100%;max-width:240px">
+                </td>
+                <td data-col="Legajo">
+                  <input type="text" class="input-sm input-est-legajo"
+                         id="legajo-<?= e($est['consultor_id']) ?>"
+                         value="<?= e($est['legajo'] ?? '') ?>"
+                         placeholder="Legajo"
+                         style="width:90px">
+                </td>
+                <td data-col="Emprendimiento">
+                  <select class="input-sm select-est-proy"
+                          id="proy-<?= e($est['consultor_id']) ?>"
+                          style="width:100%;max-width:260px">
+                    <option value="">— Sin asignar —</option>
+                    <?php foreach ($proyectosDisponibles as $pr): ?>
+                      <option value="<?= e($pr['id']) ?>" <?= $est['proyecto_id'] === $pr['id'] ? 'selected' : '' ?>>
+                        <?= e($pr['nombre']) ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
+                </td>
+                <td class="sub" id="estado-clave-<?= e($est['consultor_id']) ?>" data-col="Estado">
+                  <?= $est['must_change_password'] ? 'Provisoria' : 'Activo' ?>
+                </td>
+                <td class="right nowrap">
+                  <button type="button" class="btn btn-secondary btn-sm btn-guardar-est"
+                          data-est="<?= e($est['consultor_id']) ?>"
+                          title="Guardar nombre, legajo y asignación de emprendimiento">
+                    Guardar
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm btn-clave-est"
+                          data-est="<?= e($est['consultor_id']) ?>"
+                          data-usuario="<?= e($est['username']) ?>"
+                          title="Generar contraseña dictable y mensaje WhatsApp">
+                    🔑 Clave
+                  </button>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>

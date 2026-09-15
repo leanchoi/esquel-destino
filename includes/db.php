@@ -531,6 +531,70 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         require_once __DIR__ . '/lab_seed.php';
         lab_asegurar_datos($pdo);
     }
+
+    // Depuración automática de mocks sintéticos iset01..iset18 (preservando postulantes reales)
+    iset_limpiar_mocks_estudiantes($pdo);
+}
+
+/**
+ * Pone fin y limpia los 18 estudiantes sintéticos creados por la plantilla inicial
+ * (iset01 a iset18), dejando únicamente a los alumnos reales que se postularon.
+ */
+function iset_limpiar_mocks_estudiantes(PDO $pdo): void
+{
+    $tCons = $pdo->query("SELECT 1 FROM sqlite_master WHERE type='table' AND name='lab_consultores'")->fetchColumn();
+    $tEst  = $pdo->query("SELECT 1 FROM sqlite_master WHERE type='table' AND name='lab_estudiantes'")->fetchColumn();
+    if (!$tCons || !$tEst) {
+        return;
+    }
+
+    // 1. Tareas de estudiantes mock
+    $pdo->exec("
+        DELETE FROM lab_tareas_estudiante
+         WHERE estudiante_id IN (
+             SELECT consultor_id FROM lab_estudiantes
+              WHERE user_id IN (SELECT id FROM users WHERE username GLOB 'iset[0-9][0-9]' OR username LIKE 'iset%')
+                 OR (consultor_id IN (SELECT 'est-' || id FROM lab_proyectos) AND r_planificacion = '' AND foto_perfil = '')
+         )
+    ");
+
+    // 2. Asistencias a reuniones de estudiantes mock
+    $pdo->exec("
+        DELETE FROM lab_reunion_asistentes
+         WHERE rol = 'estudiante'
+           AND (
+             consultor_id IN (
+                 SELECT consultor_id FROM lab_estudiantes
+                  WHERE user_id IN (SELECT id FROM users WHERE username GLOB 'iset[0-9][0-9]' OR username LIKE 'iset%')
+                     OR (consultor_id IN (SELECT 'est-' || id FROM lab_proyectos) AND r_planificacion = '' AND foto_perfil = '')
+             )
+             OR consultor_id IN (SELECT 'est-' || id FROM lab_proyectos)
+           )
+    ");
+
+    // 3. Fichas de estudiantes mock
+    $pdo->exec("
+        DELETE FROM lab_estudiantes
+         WHERE user_id IN (SELECT id FROM users WHERE username GLOB 'iset[0-9][0-9]' OR username LIKE 'iset%')
+            OR (consultor_id IN (SELECT 'est-' || id FROM lab_proyectos) AND r_planificacion = '' AND foto_perfil = '')
+    ");
+
+    // 4. Consultores mock correspondientes
+    $pdo->exec("
+        DELETE FROM lab_consultores
+         WHERE tipo = 'estudiante'
+           AND (
+             id IN (SELECT 'est-' || id FROM lab_proyectos)
+             OR (nombre LIKE 'Estudiante %' AND id NOT IN (SELECT consultor_id FROM lab_estudiantes))
+           )
+    ");
+
+    // 5. Cuentas de usuario iset01..iset18
+    $pdo->exec("
+        DELETE FROM users
+         WHERE role = 'estudiante'
+           AND (username GLOB 'iset[0-9][0-9]' OR username LIKE 'iset%')
+    ");
 }
 
 

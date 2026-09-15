@@ -27,7 +27,7 @@ function calcular_edad(?string $fechaNac): ?int
     }
 }
 
-// Consultar nómina de estudiantes con datos de perfil y respuestas
+// Consultar nómina de estudiantes con datos de perfil y respuestas (excluyendo mocks)
 $st = $pdo->query("
     SELECT e.*, c.nombre AS consultor_nombre, c.activo AS consultor_activo,
            u.username, u.created_at AS user_created_at,
@@ -36,9 +36,17 @@ $st = $pdo->query("
       JOIN lab_consultores c ON c.id = e.consultor_id
       LEFT JOIN users u ON u.id = e.user_id
       LEFT JOIN lab_proyectos p ON p.id = e.proyecto_id
+     WHERE (u.username NOT LIKE 'iset%' AND u.username NOT GLOB 'iset[0-9][0-9]') OR u.username IS NULL
      ORDER BY (e.r_planificacion != '' OR e.foto_perfil != '') DESC, e.created_at DESC, e.consultor_id ASC
 ");
 $postulantes = $st->fetchAll(PDO::FETCH_ASSOC);
+
+// Emprendimientos para asignación estratégica 1 a 1
+$proyectosDisponibles = $pdo->query("
+    SELECT id, nombre, celula
+      FROM lab_proyectos
+     ORDER BY celula ASC, nombre ASC
+")->fetchAll(PDO::FETCH_ASSOC);
 
 // ==========================================================================
 // EXPORTACIÓN ZIP (CSV tabulado + Carpeta con fotos de perfil)
@@ -674,11 +682,11 @@ require __DIR__ . '/_header.php';
           </div>
         </div>
 
-        <div style="font-size:13px;color:#475569;margin-bottom:12px;line-height:1.4;">
+        <div id="card-badge-proy-<?= e($p['consultor_id']) ?>" style="font-size:13px;color:#475569;margin-bottom:12px;line-height:1.4;">
           <?php if (!empty($p['proyecto_nombre'])): ?>
-            🏢 <strong>Asignado:</strong> <?= e($p['proyecto_nombre']) ?>
+            🏢 <strong>Asignado:</strong> <span class="txt-badge-proy"><?= e($p['proyecto_nombre']) ?></span>
           <?php else: ?>
-            <span style="color:#64748b;">⏳ Pendiente de asignación</span>
+            <span class="txt-badge-proy" style="color:#64748b;">⏳ Pendiente de asignación</span>
           <?php endif; ?>
         </div>
 
@@ -726,6 +734,8 @@ require __DIR__ . '/_header.php';
 
 <script>
 const postulantesData = <?= json_encode($postulantes, JSON_UNESCAPED_UNICODE) ?>;
+const proyectosLista = <?= json_encode($proyectosDisponibles, JSON_UNESCAPED_UNICODE) ?>;
+const csrfToken = <?= json_encode(csrf_token()) ?>;
 
 function abrirFicha(index) {
   const p = postulantesData[index];
@@ -745,6 +755,15 @@ function abrirFicha(index) {
 
   const nombreCompleto = (p.nombre ? p.nombre : p.consultor_nombre) + (p.apellido ? ' ' + p.apellido : '');
   const fotoSrc = p.foto_perfil ? '../' + p.foto_perfil.replace(/^\/+/, '') : '../assets/images/placeholder-avatar.svg';
+
+  // Opciones de emprendimientos para el selector de asignación
+  let proyectosOptionsHtml = '';
+  proyectosLista.forEach(pr => {
+    const asignadoAOtro = postulantesData.find(other => other.consultor_id !== p.consultor_id && other.proyecto_id === pr.id);
+    const selected = (p.proyecto_id === pr.id) ? 'selected' : '';
+    const tagOcupado = asignadoAOtro ? ` (Ocupado: ${asignadoAOtro.nombre || asignadoAOtro.consultor_nombre})` : '';
+    proyectosOptionsHtml += `<option value="${escapeHtml(pr.id)}" ${selected}>${escapeHtml(pr.nombre)}${escapeHtml(tagOcupado)}</option>`;
+  });
 
   // Instagram link directo
   let igHtml = '—';
@@ -849,6 +868,31 @@ function abrirFicha(index) {
         <div style="margin-top:14px;background:#f8fafc;border:1px solid #e2e8f0;padding:10px 14px;border-radius:8px;font-size:13.5px;">
           <strong>Situación Laboral:</strong> ${p.trabaja_actualmente == 1 ? `💼 <em>Trabaja en ${escapeHtml(p.trabajo_lugar || '—')} (${escapeHtml(p.trabajo_horario || '—')}) como ${escapeHtml(p.trabajo_rol || '—')}</em>` : '🎓 <em>Dedicación exclusiva al terciario y prácticas</em>'}
         </div>
+
+        <!-- Asignación de Emprendimiento Esquel LAB -->
+        <div class="ficha-asignacion-box" style="margin-top:14px;background:#f0f7ff;border:1.5px solid #bae6fd;padding:12px 16px;border-radius:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <div style="flex:1;min-width:200px;">
+              <label for="select-proy-${escapeHtml(p.consultor_id)}" style="display:block;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#0284c7;margin-bottom:3px;">
+                🏢 Emprendimiento Asignado (Esquel LAB)
+              </label>
+              <div style="font-size:13.5px;color:#1e293b;" id="estado-asignacion-${escapeHtml(p.consultor_id)}">
+                ${p.proyecto_nombre ? `Vinculado actualmente con <strong>${escapeHtml(p.proyecto_nombre)}</strong>` : '<span style="color:#64748b;">⏳ Sin vinculación activa todavía</span>'}
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <select id="select-proy-${escapeHtml(p.consultor_id)}"
+                      class="select-asignar-proy no-print"
+                      onchange="guardarAsignacionProyecto('${escapeHtml(p.consultor_id)}', this.value, ${index})"
+                      style="font-size:13.5px;padding:7px 12px;border:1.5px solid #0284c7;border-radius:6px;background:#ffffff;color:#0f172a;font-weight:600;outline:none;cursor:pointer;max-width:320px;">
+                <option value="">— Sin asignar / Pendiente —</option>
+                ${proyectosOptionsHtml}
+              </select>
+              <span id="spinner-proy-${escapeHtml(p.consultor_id)}" style="display:none;font-size:12.5px;color:#0284c7;font-weight:600;">⏳ Guardando...</span>
+            </div>
+          </div>
+          <div id="feedback-proy-${escapeHtml(p.consultor_id)}" style="display:none;margin-top:8px;font-size:12.5px;padding:6px 10px;border-radius:6px;font-weight:600;"></div>
+        </div>
       </div>
     </div>
 
@@ -871,6 +915,87 @@ function abrirFicha(index) {
 
   document.getElementById('modalFichaContent').innerHTML = content;
   document.getElementById('modalFichaOverlay').classList.add('is-open');
+}
+
+async function guardarAsignacionProyecto(consultorId, proyId, index) {
+  const spinner = document.getElementById(`spinner-proy-${consultorId}`);
+  const feedback = document.getElementById(`feedback-proy-${consultorId}`);
+  const estadoTxt = document.getElementById(`estado-asignacion-${consultorId}`);
+  const cardBadge = document.getElementById(`card-badge-proy-${consultorId}`);
+
+  if (spinner) spinner.style.display = 'inline';
+  if (feedback) feedback.style.display = 'none';
+
+  try {
+    const res = await fetch('estudiantes_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        csrf: csrfToken,
+        accion: 'asignar_proyecto',
+        estudiante_id: consultorId,
+        proyecto_id: proyId
+      })
+    });
+
+    const data = await res.json();
+    if (spinner) spinner.style.display = 'none';
+
+    if (data.ok) {
+      postulantesData[index].proyecto_id = data.proyecto_id;
+      postulantesData[index].proyecto_nombre = data.proyecto_nombre;
+
+      if (data.proyecto_id) {
+        postulantesData.forEach((other, oIdx) => {
+          if (oIdx !== index && other.proyecto_id === data.proyecto_id) {
+            other.proyecto_id = null;
+            other.proyecto_nombre = null;
+            const otherBadge = document.getElementById(`card-badge-proy-${other.consultor_id}`);
+            if (otherBadge) {
+              otherBadge.innerHTML = '<span class="txt-badge-proy" style="color:#64748b;">⏳ Pendiente de asignación</span>';
+            }
+          }
+        });
+      }
+
+      if (estadoTxt) {
+        estadoTxt.innerHTML = data.proyecto_nombre
+          ? `Vinculado actualmente con <strong>${escapeHtml(data.proyecto_nombre)}</strong>`
+          : '<span style="color:#64748b;">⏳ Sin vinculación activa todavía</span>';
+      }
+
+      if (cardBadge) {
+        cardBadge.innerHTML = data.proyecto_nombre
+          ? `🏢 <strong>Asignado:</strong> <span class="txt-badge-proy">${escapeHtml(data.proyecto_nombre)}</span>`
+          : '<span class="txt-badge-proy" style="color:#64748b;">⏳ Pendiente de asignación</span>';
+      }
+
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = '#dcfce7';
+        feedback.style.color = '#166534';
+        feedback.style.border = '1px solid #bbf7d0';
+        feedback.textContent = '✓ ' + data.mensaje;
+      }
+    } else {
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = '#fee2e2';
+        feedback.style.color = '#991b1b';
+        feedback.style.border = '1px solid #fecaca';
+        feedback.textContent = '✕ Error: ' + (data.error || 'No se pudo guardar la asignación.');
+      }
+    }
+  } catch (err) {
+    if (spinner) spinner.style.display = 'none';
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.background = '#fee2e2';
+      feedback.style.color = '#991b1b';
+      feedback.style.border = '1px solid #fecaca';
+      feedback.textContent = '✕ Error de conexión al guardar.';
+    }
+  }
 }
 
 function cerrarModal() {
