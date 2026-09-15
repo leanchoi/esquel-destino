@@ -226,6 +226,16 @@ const ROLES_INFO = [
         'ayuda'  => 'Todo lo anterior y además emite su voto con comentario. Es el jurado.',
         'vota'   => true,
     ],
+    'estudiante' => [
+        'label'  => 'Estudiante ISET',
+        'ayuda'  => 'Convenio ISET 815. Ve su emprendimiento asignado y sus consignas. No entra a las postulaciones ni vota.',
+        'vota'   => false,
+    ],
+    'profesor' => [
+        'label'  => 'Profesor ISET',
+        'ayuda'  => 'Sigue a los estudiantes del convenio: presencia, entregas y utilidad del aporte. No entra a las postulaciones.',
+        'vota'   => false,
+    ],
     'admin' => [
         'label'  => 'Administrador',
         'ayuda'  => 'Coordina: mueve de etapa, gestiona usuarios y ve la analítica. No vota.',
@@ -277,6 +287,16 @@ const PISTAS_PROYECTO = [
     'Qué podría ver, hacer o probar alguien que te visite.',
     'Qué te falta para poder recibir visitantes.',
 ];
+
+// --- Convenio ISET 815 ----------------------------------------------------
+/**
+ * Los estudiantes entran después de FIT (24 al 30 de septiembre) y trabajan
+ * hasta el cierre de la cohorte. Son unas siete semanas.
+ */
+const ISET_ALTA_DESDE = '2026-10-01';
+const ISET_HORAS = 60;
+/** Azul: los distingue en la agenda de los consultores, que van en berry y verde. */
+const ISET_COLOR = '#2F5D7C';
 
 // --- Estados del CRM ------------------------------------------------------
 const ESTADOS = [

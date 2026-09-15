@@ -416,6 +416,11 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
         'lab_proyectos' => [
             'minuta_cero' => "TEXT NOT NULL DEFAULT ''",
         ],
+        // Un estudiante del ISET es, para la agenda, un participante más: por eso
+        // vive acá con tipo='estudiante' y la agenda global lo toma sin cambios.
+        'lab_consultores' => [
+            'tipo' => "TEXT NOT NULL DEFAULT 'consultor'",
+        ],
         // Un criterio nuevo en CRITERIOS aparece solo en las bases que ya existen.
         'evaluaciones' => array_fill_keys(array_keys(CRITERIOS), "INTEGER NOT NULL DEFAULT 0") + [
             'comentario' => "TEXT NOT NULL DEFAULT ''",

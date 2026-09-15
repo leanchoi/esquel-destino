@@ -23,20 +23,38 @@ $nav = $nav ?? '';
 </head>
 <body class="admin-body">
 
+<?php
+// A dónde va el logo y el menú depende del rol. El estudiante y el profesor
+// están fuera de la escala de permisos y no pueden abrir dashboard.php: si el
+// logo los mandara ahí, su primer clic en el panel sería un 403.
+$inicioPanel = 'dashboard.php';
+if (es_estudiante($u)) {
+    $inicioPanel = 'estudiante.php';
+} elseif (es_profesor($u)) {
+    $inicioPanel = 'profesor.php';
+}
+?>
 <header class="admin-header">
   <div class="admin-header-inner">
-    <a href="dashboard.php" class="admin-brand">
+    <a href="<?= e($inicioPanel) ?>" class="admin-brand">
       <img src="../assets/images/logo-esquel-lab.png" alt="Esquel LAB">
     </a>
     <nav class="admin-nav">
-      <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>
-      <?php if (puede_gestionar_lab($u)): ?>
-        <a href="gestion.php" class="<?= $nav === 'gestion' ? 'is-active' : '' ?>">Gestión LAB</a>
-      <?php endif; ?>
-      <?php if (puede('admin')): ?>
-        <a href="interesados.php" class="<?= $nav === 'interesados' ? 'is-active' : '' ?>">Interesados</a>
-        <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>
-        <a href="usuarios.php" class="<?= $nav === 'usuarios' ? 'is-active' : '' ?>">Usuarios</a>
+      <?php if (es_estudiante($u)): ?>
+        <a href="estudiante.php" class="<?= $nav === 'estudiante' ? 'is-active' : '' ?>">Mi emprendimiento</a>
+      <?php elseif (es_profesor($u)): ?>
+        <a href="profesor.php" class="<?= $nav === 'profesor' ? 'is-active' : '' ?>">Mis estudiantes</a>
+      <?php else: ?>
+        <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>
+        <?php if (puede_gestionar_lab($u)): ?>
+          <a href="gestion.php" class="<?= $nav === 'gestion' ? 'is-active' : '' ?>">Gestión LAB</a>
+        <?php endif; ?>
+        <?php if (puede('admin')): ?>
+          <a href="profesor.php" class="<?= $nav === 'profesor' ? 'is-active' : '' ?>">Estudiantes ISET</a>
+          <a href="interesados.php" class="<?= $nav === 'interesados' ? 'is-active' : '' ?>">Interesados</a>
+          <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>
+          <a href="usuarios.php" class="<?= $nav === 'usuarios' ? 'is-active' : '' ?>">Usuarios</a>
+        <?php endif; ?>
       <?php endif; ?>
     </nav>
     <div class="admin-user">

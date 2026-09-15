@@ -2,11 +2,22 @@
 /**
  * Autenticación del panel /admin.
  * Roles: admin (todo) > editor (evalúa) > viewer (solo lectura).
+ *
+ * Aparte de esa escala hay dos roles del convenio ISET que NO entran en ella:
+ * 'estudiante' y 'profesor'. Van en cero a propósito.
+ *
+ * Es importante entender por qué. ROLES es una jerarquía y puede() compara
+ * hacia arriba: cualquier rol con valor 1 o más pasa el control de 'viewer', y
+ * 'viewer' ve todas las postulaciones con sus datos de contacto y los votos del
+ * jurado. Un estudiante del ISET no tiene nada que hacer ahí: entra a ver su
+ * emprendimiento asignado y sus consignas, y nada más. Con valor 0 no pasa
+ * ningún control de la escala, y su acceso se resuelve con puertas propias
+ * —es_estudiante(), es_profesor()— que preguntan por el rol exacto.
  */
 
 require_once __DIR__ . '/db.php';
 
-const ROLES = ['viewer' => 1, 'editor' => 2, 'admin' => 3];
+const ROLES = ['estudiante' => 0, 'profesor' => 0, 'viewer' => 1, 'editor' => 2, 'admin' => 3];
 
 function usuario_actual(): ?array
 {
@@ -319,4 +330,68 @@ function clave_dictable(): string
     }
 
     return implode('-', $elegidas) . '-' . random_int(10, 99);
+}
+
+// --- Convenio ISET 815: puertas propias -----------------------------------
+//
+// Van por rol exacto y no por puede(), que compara jerarquías. El estudiante y
+// el profesor están fuera de la escala justamente para que ningún control de
+// 'viewer' los deje pasar a las postulaciones.
+
+/** ¿Es un estudiante del convenio? */
+function es_estudiante(?array $u = null): bool
+{
+    $u = $u ?? usuario_actual();
+    return $u !== null && ($u['role'] ?? '') === 'estudiante';
+}
+
+/** ¿Es el profesor que evalúa a los estudiantes? */
+function es_profesor(?array $u = null): bool
+{
+    $u = $u ?? usuario_actual();
+    return $u !== null && ($u['role'] ?? '') === 'profesor';
+}
+
+/**
+ * La ficha del estudiante que corresponde a este usuario.
+ * Devuelve null si el usuario no es estudiante o todavía no tiene ficha.
+ */
+function ficha_estudiante(?array $u = null): ?array
+{
+    $u = $u ?? usuario_actual();
+    if (!$u) {
+        return null;
+    }
+    $st = db()->prepare(
+        "SELECT e.*, c.nombre, c.color, p.nombre AS proyecto_nombre, p.titular, p.celula, p.linea
+           FROM lab_estudiantes e
+           JOIN lab_consultores c ON c.id = e.consultor_id
+           LEFT JOIN lab_proyectos p ON p.id = e.proyecto_id
+          WHERE e.user_id = ? AND e.activo = 1 LIMIT 1"
+    );
+    $st->execute([(int) $u['id']]);
+    return $st->fetch() ?: null;
+}
+
+/** Puerta de la vista del estudiante. */
+function requiere_estudiante(): array
+{
+    $u = requiere_login();
+    if (!es_estudiante($u) && ($u['role'] ?? '') !== 'admin') {
+        pagina_sin_permiso($u, 'Vista de estudiante ISET');
+    }
+    return $u;
+}
+
+/**
+ * Puerta del panel del profesor.
+ * El admin también entra: es quien coordina el convenio.
+ */
+function requiere_profesor(): array
+{
+    $u = requiere_login();
+    if (!es_profesor($u) && ($u['role'] ?? '') !== 'admin') {
+        pagina_sin_permiso($u, 'Panel del profesor ISET');
+    }
+    return $u;
 }

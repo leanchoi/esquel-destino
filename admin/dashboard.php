@@ -3,7 +3,13 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/jurado.php';
 
-$u = requiere_login();
+// requiere_rol('viewer') y no requiere_login().
+//
+// Con los roles del convenio ISET hay usuarios por DEBAJO de viewer —el
+// estudiante y el profesor están en cero—, y requiere_login() sólo pide estar
+// logueado: cualquiera de ellos entraba acá y veía todas las postulaciones con
+// sus datos de contacto y los votos del jurado.
+$u = requiere_rol('viewer');
 $pdo = db();
 
 // Alternar pausa de evaluaciones (solo administrador)

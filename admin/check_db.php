@@ -1,4 +1,19 @@
 <?php
+/**
+ * Diagnóstico de la base. SOLO ADMIN.
+ *
+ * Antes de este candado el archivo abría la base y devolvía JSON sin pedir
+ * sesión: entrando a /admin/check_db.php desde cualquier navegador salía el
+ * esquema y la lista de usuarios con sus roles. Eso es media entrada: con los
+ * nombres de usuario a la vista, sólo falta la contraseña.
+ *
+ * No hace falta que sea público para lo que sirve —mirar la base cuando algo
+ * falla—, así que va detrás del rol admin como el resto del panel.
+ */
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
+requiere_rol('admin');
+
 // Creado para el Laboratorio de Destino Esquel
 // admin/check_db.php
 header('Content-Type: application/json');

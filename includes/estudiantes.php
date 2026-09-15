@@ -64,6 +64,14 @@ const VALORACIONES_APORTE = [
  * consultor que estuvo en la reunión los ve al lado de su propia minuta. Ese
  * contraste es lo que hace honesto el sistema.
  */
+/**
+ * Largo mínimo de un ítem para que cuente como tal.
+ *
+ * No mide calidad —nada la mide automáticamente— pero corta el caso obvio: dos
+ * letras y un Enter no son dos frases del emprendedor.
+ */
+const MINIMO_ITEM_ESPECIFICO = 15;
+
 const ESPECIFICOS_REUNION = [
     'citas' => [
         'label'  => 'Frases textuales del emprendedor',
@@ -117,7 +125,13 @@ function plantillas_consignas(): array
             'consigna' => "Completá los cuatro campos durante la reunión o apenas termine. No es un resumen: son datos.\n\n"
                 . "El consultor que estuvo con vos va a leer esto al lado de su propia minuta, así que la precisión importa "
                 . "más que la prolijidad. Una frase textual mal transcrita vale menos que una bien copiada.",
-            'min_caracteres' => 700,
+            // Sin mínimo de caracteres, y es deliberado. Esta consigna se
+            // aprueba trayendo los cuatro específicos, no escribiendo largo:
+            // cuatro citas y cuatro números bien tomados entran en 300
+            // caracteres. Un mínimo de 700 acá empujaría a rellenar con
+            // palabrerío, que es justo lo que esta consigna existe para evitar.
+            // El control es especificos_cumplidos(), más abajo.
+            'min_caracteres' => 0,
             'horas'   => 0.5,
             'vence_horas_despues' => 12,
         ],
@@ -211,9 +225,14 @@ function especificos_cumplidos(array $especificos): array
 
     foreach (ESPECIFICOS_REUNION as $clave => $def) {
         $valor = $especificos[$clave] ?? '';
-        $items = is_array($valor)
-            ? array_filter(array_map('trim', $valor), fn($x) => $x !== '')
-            : array_filter(array_map('trim', preg_split('/\r?\n/', (string) $valor)), fn($x) => $x !== '');
+        $crudos = is_array($valor)
+            ? array_map('trim', $valor)
+            : array_map('trim', preg_split('/\r?\n/', (string) $valor));
+
+        // Un ítem cuenta si dice algo. Sin este piso, "a" y "b" en dos líneas
+        // pasaban como dos frases textuales del emprendedor, y el control se
+        // volvía un trámite de apretar Enter.
+        $items = array_filter($crudos, fn($x) => mb_strlen($x) >= MINIMO_ITEM_ESPECIFICO);
 
         $cuantos = count($items);
         $ok = $cuantos >= $def['minimo'];
@@ -309,16 +328,18 @@ function generar_consignas_reunion(PDO $pdo, string $reunionId): int
          (estudiante_id, proyecto_id, reunion_id, momento, plantilla_id, titulo, consigna, min_caracteres, horas_estimadas, vence_at)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    $actualizaVence = $pdo->prepare('UPDATE lab_tareas_estudiante SET vence_at = ?, updated_at = datetime(\'now\') WHERE id = ?');
+    $actualizaVence = $pdo->prepare('UPDATE lab_tareas_estudiante SET vence_at = ?, min_caracteres = ?, horas_estimadas = ?, updated_at = datetime(\'now\') WHERE id = ?');
 
     foreach ($plantillas as $momento => $p) {
         $vence = vencimiento_consigna($reunion, $p);
 
         $existe->execute([$reunionId, $momento, $reunion['estudiante_id']]);
         if ($id = $existe->fetchColumn()) {
-            // Ya existe: sólo se recalcula el vencimiento, porque la reunión
-            // pudo haberse movido de fecha. Lo entregado no se toca nunca.
-            $actualizaVence->execute([$vence, $id]);
+            // Ya existe: se recalculan el vencimiento —la reunión pudo
+            // moverse de fecha— y las condiciones de la consigna, para que un
+            // ajuste de la plantilla llegue a las que ya están creadas. Lo
+            // entregado no se toca nunca.
+            $actualizaVence->execute([$vence, $p['min_caracteres'], $p['horas'], $id]);
             continue;
         }
 
@@ -434,4 +455,118 @@ function panel_estudiante(PDO $pdo, string $estudianteId): array
             'minutos_panel' => round(((int) $actividad['seg']) / 60),
         ],
     ];
+}
+
+// --- Alta del convenio ----------------------------------------------------
+
+/**
+ * Deja listos los 18 estudiantes, uno por emprendimiento.
+ *
+ * Idempotente: se puede llamar en cada carga de página sin duplicar nada, que
+ * es como funciona el resto de la semilla de este proyecto.
+ *
+ * Los nombres van con un marcador de plantilla a propósito. Todavía no tenemos
+ * la lista real del instituto, y poner nombres inventados que después nadie
+ * corrige es peor que dejar el lugar marcado: desde Usuarios se renombra cada
+ * uno cuando llegue la nómina. Lo que sí queda armado es la estructura —el
+ * usuario, la ficha, el emprendimiento asignado y el presupuesto de horas—,
+ * que es lo que hace falta para que el sistema funcione.
+ */
+function iset_asegurar_estudiantes(PDO $pdo): array
+{
+    // Los estudiantes entran después de FIT. Antes de esa fecha no se les
+    // generan consignas: no tienen por qué responder por reuniones que no
+    // vivieron.
+    $altaDesde = ISET_ALTA_DESDE;
+
+    $proyectos = $pdo->query('SELECT id, nombre FROM lab_proyectos ORDER BY celula, nombre')->fetchAll();
+    if (!$proyectos) {
+        return ['creados' => 0, 'total' => 0, 'aviso' => 'Todavía no hay emprendimientos cargados.'];
+    }
+
+    $insUser = $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES (?, ?, 'estudiante', 1, datetime('now'))");
+    $buscaUser = $pdo->prepare('SELECT id FROM users WHERE LOWER(username) = LOWER(?)');
+    $insCons = $pdo->prepare("INSERT INTO lab_consultores (id, nombre, rol, tipo, disponibilidad, restricciones, color, activo) VALUES (?, ?, 'Estudiante ISET', 'estudiante', ?, ?, ?, 1)");
+    $existeCons = $pdo->prepare('SELECT 1 FROM lab_consultores WHERE id = ?');
+    $insFicha = $pdo->prepare(
+        "INSERT INTO lab_estudiantes (consultor_id, user_id, instituto, legajo, proyecto_id, horas_presupuesto, alta_desde, activo)
+         VALUES (?, ?, 'ISET 815', '', ?, ?, ?, 1)"
+    );
+    $existeFicha = $pdo->prepare('SELECT 1 FROM lab_estudiantes WHERE consultor_id = ?');
+
+    // Disponibilidad por defecto: tarde, que es cuando un estudiante de
+    // terciario puede. Se ajusta uno por uno desde la ficha.
+    $disponibilidad = json_encode(['14–20', '14–20', '14–20', '14–20', '14–20'], JSON_UNESCAPED_UNICODE);
+
+    $creados = 0;
+    $n = 0;
+    foreach ($proyectos as $p) {
+        $n++;
+        $slug = 'est-' . $p['id'];
+        $usuario = 'iset' . str_pad((string) $n, 2, '0', STR_PAD_LEFT);
+        $nombre = 'Estudiante ' . str_pad((string) $n, 2, '0', STR_PAD_LEFT);
+
+        $buscaUser->execute([$usuario]);
+        $userId = $buscaUser->fetchColumn();
+        if (!$userId) {
+            // Contraseña provisoria dictable, la misma mecánica que el resto
+            // del panel: se genera una y se cambia al entrar.
+            $insUser->execute([$usuario, password_hash(clave_dictable(), PASSWORD_DEFAULT)]);
+            $userId = (int) $pdo->lastInsertId();
+        }
+
+        $existeCons->execute([$slug]);
+        if (!$existeCons->fetchColumn()) {
+            $insCons->execute([$slug, $nombre, $disponibilidad, 'Convenio ISET 815. Disponible después de FIT.', ISET_COLOR]);
+        }
+
+        $existeFicha->execute([$slug]);
+        if (!$existeFicha->fetchColumn()) {
+            $insFicha->execute([$slug, (int) $userId, $p['id'], ISET_HORAS, $altaDesde]);
+            $creados++;
+        }
+
+        // OJO: al estudiante NO se le da lab_user_access. Ese permiso abre
+        // gestion.php, que es el módulo completo —los 18 emprendimientos, la
+        // agenda de todo el equipo, la matriz de carga—. El estudiante entra
+        // por estudiante.php, que tiene su propia puerta y le muestra sólo su
+        // caso. Dárselo "para que vea su ficha" le abría los 17 restantes.
+    }
+
+    // El profesor: un solo usuario con la mirada global.
+    $buscaUser->execute(['profesor']);
+    if (!$buscaUser->fetchColumn()) {
+        $pdo->prepare("INSERT INTO users (username, password, role, must_change_password, created_at) VALUES ('profesor', ?, 'profesor', 1, datetime('now'))")
+            ->execute([password_hash(clave_dictable(), PASSWORD_DEFAULT)]);
+    }
+
+    return ['creados' => $creados, 'total' => count($proyectos), 'aviso' => ''];
+}
+
+/**
+ * Asigna un estudiante a todas las reuniones futuras de su emprendimiento y
+ * les genera las consignas.
+ *
+ * Se llama al dar de alta el convenio y cada vez que se crea una reunión.
+ */
+function iset_enganchar_reuniones(PDO $pdo, string $estudianteId): int
+{
+    $f = $pdo->prepare('SELECT proyecto_id, alta_desde FROM lab_estudiantes WHERE consultor_id = ?');
+    $f->execute([$estudianteId]);
+    $ficha = $f->fetch();
+    if (!$ficha || !$ficha['proyecto_id']) {
+        return 0;
+    }
+
+    $reu = $pdo->prepare('SELECT id FROM lab_reuniones WHERE proyecto_id = ? AND fecha >= ?');
+    $reu->execute([$ficha['proyecto_id'], $ficha['alta_desde'] ?: '0000-00-00']);
+
+    $ins = $pdo->prepare("INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol, asistio) VALUES (?, ?, 'estudiante', 1)");
+    $tocadas = 0;
+    foreach ($reu->fetchAll(PDO::FETCH_COLUMN) as $reunionId) {
+        $ins->execute([$reunionId, $estudianteId]);
+        generar_consignas_reunion($pdo, $reunionId);
+        $tocadas++;
+    }
+    return $tocadas;
 }
