@@ -3538,33 +3538,6 @@ const exactMeetings = {
     },
     {
       "num": 8,
-      "f": "2026-11-16",
-      "t": "ind",
-      "lugar": "Centro Cultural Melipal / Espacio LAB",
-      "hora": "14:00 a 16:00",
-      "titulo": "Ronda de Negocios Final, Lanzamiento Oficial y Hoja de Ruta Post-LAB",
-      "asistentes": [
-        "agustina"
-      ],
-      "guia": "Participación protagónica de FLYPARK en el Encuentro de Cierre de Esquel LAB como proyecto #1 de Acelera. Montaje de stand temático con placas de alfombra Powplast, esquís de freestyle, indumentaria oficial y proyección audiovisual de la demo en La Rural. Pitch de 3 minutos de Fabricio Guglielmetti. Anuncio de la radicación definitiva y entrega del plan operativo post-incubación.",
-      "preguntas": [
-        "¿Qué balance arroja el proceso tras haber superado la urgencia del Plan Galina?",
-        "¿Cuál es el cronograma de radicación definitiva para la temporada de verano 2026/2027?",
-        "¿Qué articulación se proyecta con el Ministerio de Turismo y Deportes provincial?"
-      ],
-      "objetivos": [
-        "Presentar oficialmente a FLYPARK como el primer parque urbano de esquí y snowboard de la provincia.",
-        "Consolidar compromisos comerciales con operadores turísticos y sponsors privados.",
-        "Entregar el informe de cierre de asistencia técnica y plan de expansión a 3 años."
-      ],
-      "check": [
-        "Montar stand interactivo de freestyle con equipamiento e indumentaria",
-        "Exponer el pitch de 3 minutos ante autoridades, prensa y sector privado",
-        "Firmar acuerdos comerciales y presentar la hoja de ruta definitiva"
-      ]
-    },
-    {
-      "num": 9,
       "f": "2026-11-19",
       "t": "cie",
       "lugar": "Centro Cultural Melipal",
@@ -4139,7 +4112,7 @@ for (let idx = 0; idx < proyectos.length; idx++) {
 php += '    ];\n\n';
 php += '    // 5. Sincronización inteligente en SQLite\n';
 php += '    $dbSeedVersion = (int) $pdo->query("PRAGMA user_version")->fetchColumn();\n';
-php += '    $TARGET_SEED_VERSION = 20260917;\n\n';
+php += '    $TARGET_SEED_VERSION = 20260918;\n\n';
 php += '    if ($dbSeedVersion < $TARGET_SEED_VERSION) {\n';
 php += '        $pdo->beginTransaction();\n';
 php += '        $checkReu = $pdo->prepare("SELECT estado, minuta_notas FROM lab_reuniones WHERE id = ?");\n';
@@ -4167,7 +4140,7 @@ php += '            }\n';
 php += '        }\n';
 php += '        if (!empty($validReuIds)) {\n';
 php += '            $inClause = implode(\x27,\x27, array_fill(0, count($validReuIds), \x27?\x27));\n';
-php += '            $stmtObs = $pdo->prepare("SELECT id FROM lab_reuniones WHERE estado = \x27programada\x27 AND id NOT IN ($inClause)");\n';
+php += '            $stmtObs = $pdo->prepare("SELECT id FROM lab_reuniones WHERE (estado = \x27programada\x27 OR id = \x27flypark-09\x27) AND id NOT IN ($inClause)");\n';
 php += '            $stmtObs->execute($validReuIds);\n';
 php += '            $obsoletas = $stmtObs->fetchAll(PDO::FETCH_COLUMN);\n';
 php += '            foreach ($obsoletas as $obsId) {\n';
