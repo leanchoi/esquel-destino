@@ -119,7 +119,7 @@
         "No busca masificar la venta. Quiere movimiento dentro de un nicho definido."
       ],
       "trabas": [
-        "Camino de acceso al taller detonado. Condiciona cualquier visita organizada.",
+        "Camino de acceso al taller severamente deteriorado. Condiciona cualquier visita organizada.",
         "No disponible lunes ni miércoles por la mañana.",
         "Costo y logística de envío internacional, hoy artesanal."
       ],
@@ -142,7 +142,7 @@
         {
           "t": "Vinculación institucional y comercial",
           "items": [
-            "Presencia con respaldo de Turismo en encuentros locales (Carao, Hotel Welches, Cifarm), no solo stand.",
+            "Presencia con respaldo de Turismo en encuentros locales (Carao, Hotel Tehuelche, CIEFAP), no solo stand.",
             "Circuito de regalo institucional y empresarial.",
             "Gestión del camino de acceso ante el área que corresponda."
           ]

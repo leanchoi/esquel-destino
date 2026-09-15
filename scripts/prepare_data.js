@@ -22,14 +22,14 @@ const proyectos = [
       'No busca masificar la venta. Quiere movimiento dentro de un nicho definido.'
     ],
     trabas: [
-      'Camino de acceso al taller detonado. Condiciona cualquier visita organizada.',
+      'Camino de acceso al taller severamente deteriorado. Condiciona cualquier visita organizada.',
       'No disponible lunes ni miércoles por la mañana.',
       'Costo y logística de envío internacional, hoy artesanal.'
     ],
     ejes: [
       { t: 'Monetizar la visita al taller', items: ['Cuantificar el tiempo de producción que cede en cada visita.', 'Guion segmentado: cofrades y coleccionistas por un lado, turistas y familias por otro.', 'Precio por visita más esquema de escasez: de 3 a 5 días por pieza significa agenda acotada.'] },
       { t: 'Contenido y comunicación', items: ['Producción audiovisual 4K y dron con equipo de la Subsecretaría, vinculando la pipa al entorno patagónico.', 'Curaduría del canal de YouTube existente y de las redes.'] },
-      { t: 'Vinculación institucional y comercial', items: ['Presencia con respaldo de Turismo en encuentros locales (Carao, Hotel Welches, Cifarm), no solo stand.', 'Circuito de regalo institucional y empresarial.', 'Gestión del camino de acceso ante el área que corresponda.'] }
+      { t: 'Vinculación institucional y comercial', items: ['Presencia con respaldo de Turismo en encuentros locales (Carao, Hotel Tehuelche, CIEFAP), no solo stand.', 'Circuito de regalo institucional y empresarial.', 'Gestión del camino de acceso ante el área que corresponda.'] }
     ],
     entregables: [
       'Precio de visita guiada fijado y comunicado.',
