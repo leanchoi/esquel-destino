@@ -501,6 +501,14 @@ require __DIR__ . '/_header.php';
                           title="Generar contraseña dictable y mensaje WhatsApp">
                     🔑 Clave
                   </button>
+                  <?php if (($u['role'] ?? '') === 'admin'): ?>
+                    <button type="button" class="btn btn-secondary btn-sm danger btn-borrar-est"
+                            data-est="<?= e($est['consultor_id']) ?>"
+                            data-nombre="<?= e($est['nombre_real'] ?: $est['username']) ?>"
+                            title="Eliminar estudiante definitivamente">
+                      Eliminar
+                    </button>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -707,6 +715,49 @@ document.querySelectorAll('.btn-clave-est').forEach(function(btn) {
     .catch(function(err) {
       btn.disabled = false;
       btn.textContent = originalBtnText;
+      alert('Error de conexión con el servidor.');
+    });
+  });
+// Eliminar estudiante definitivamente (sólo admin)
+document.querySelectorAll('.btn-borrar-est').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var estId = this.getAttribute('data-est');
+    var nombre = this.getAttribute('data-nombre') || 'Estudiante';
+
+    if (!confirm('¿Estás seguro de que deseás eliminar a «' + nombre + '»? Se borrarán su usuario, ficha de estudiante y datos asociados.')) {
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Borrando...';
+
+    fetch('estudiantes_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        accion: 'eliminar_estudiante',
+        estudiante_id: estId,
+        csrf: CSRF_TOKEN
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(res) {
+      if (res.ok) {
+        var fila = document.getElementById('fila-est-' + estId);
+        if (fila) {
+          fila.style.transition = 'opacity 0.25s ease';
+          fila.style.opacity = '0';
+          setTimeout(function() { fila.remove(); }, 250);
+        }
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Eliminar';
+        alert(res.error || 'Ocurrió un error al eliminar al estudiante.');
+      }
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'Eliminar';
       alert('Error de conexión con el servidor.');
     });
   });

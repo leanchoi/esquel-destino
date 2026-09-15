@@ -370,6 +370,67 @@ if ($accion === 'generar_clave_estudiante') {
         'clave' => $nuevaClave,
         'mensaje' => "Contraseña generada para {$info['nombre']}."
     ], JSON_UNESCAPED_UNICODE));
+// --------------------------------- eliminar estudiante definitivamente (SOLO ADMIN)
+if ($accion === 'eliminar_estudiante') {
+    if (($u['role'] ?? '') !== 'admin') {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Sólo un administrador puede eliminar estudiantes.']));
+    }
+
+    $estInput = trim((string) ($data['estudiante_id'] ?? ''));
+    if (!$estInput) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Falta identificar al estudiante a eliminar.']));
+    }
+
+    $info = resolver_estudiante($pdo, $estInput);
+    if (!$info) {
+        http_response_code(404);
+        exit(json_encode(['ok' => false, 'error' => 'Estudiante no encontrado o ya eliminado.']));
+    }
+
+    $cid = $info['consultor_id'];
+    $uid = (int) ($info['user_id'] ?? 0);
+    $nombreEst = $info['nombre'] ?: ($info['username'] ?? $cid);
+
+    // Obtener ruta de foto de perfil para borrar el archivo físico
+    $stFoto = $pdo->prepare("SELECT foto_perfil FROM lab_estudiantes WHERE consultor_id = ?");
+    $stFoto->execute([$cid]);
+    $fotoPerfil = (string) $stFoto->fetchColumn();
+    if ($fotoPerfil !== '') {
+        $fotoPath = dirname(__DIR__) . '/' . ltrim($fotoPerfil, '/');
+        if (file_exists($fotoPath) && is_file($fotoPath)) {
+            @unlink($fotoPath);
+        }
+    }
+
+    $pdo->beginTransaction();
+    try {
+        $pdo->prepare("DELETE FROM lab_tareas_estudiante WHERE estudiante_id = ?")->execute([$cid]);
+        $pdo->prepare("DELETE FROM lab_reunion_asistentes WHERE consultor_id = ? AND rol = 'estudiante'")->execute([$cid]);
+        $pdo->prepare("DELETE FROM lab_estudiantes WHERE consultor_id = ?")->execute([$cid]);
+        $pdo->prepare("DELETE FROM lab_consultores WHERE id = ?")->execute([$cid]);
+
+        if ($uid > 0) {
+            $pdo->prepare("DELETE FROM users WHERE id = ? AND role = 'estudiante'")->execute([$uid]);
+            $pdo->prepare("DELETE FROM sesiones_panel WHERE user_id = ?")->execute([$uid]);
+            $pdo->prepare("DELETE FROM login_attempts WHERE username = ?")->execute([$info['username']]);
+        }
+
+        $pdo->commit();
+    } catch (Exception $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        http_response_code(500);
+        exit(json_encode(['ok' => false, 'error' => 'Error al eliminar estudiante: ' . $e->getMessage()]));
+    }
+
+    exit(json_encode([
+        'ok' => true,
+        'consultor_id' => $cid,
+        'mensaje' => "El estudiante «{$nombreEst}» fue eliminado correctamente del sistema.",
+    ], JSON_UNESCAPED_UNICODE));
 }
 
 http_response_code(400);

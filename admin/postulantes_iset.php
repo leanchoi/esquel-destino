@@ -386,6 +386,41 @@ require __DIR__ . '/_header.php';
 .btn-imprimir:hover {
   background: #23475f;
 }
+.btn-eliminar-modal {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.btn-eliminar-modal:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+.btn-borrar-card {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all 0.15s;
+}
+.btn-borrar-card:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
 .btn-cerrar-modal {
   background: transparent;
   border: none;
@@ -670,11 +705,18 @@ require __DIR__ . '/_header.php';
             ($p['m_gestion'] ?? 3)
         ) / 8, 1);
     ?>
-      <div class="card-postulante" onclick="abrirFicha(<?= $idx ?>)">
+      <div class="card-postulante" id="card-postulante-<?= e($p['consultor_id']) ?>" onclick="abrirFicha(<?= $idx ?>)">
         <div class="card-header-post">
           <img src="<?= e($foto) ?>" alt="<?= e($nombre) ?>" class="card-foto-grande" onerror="this.src='../assets/images/placeholder-avatar.svg'">
           <div class="card-info-post">
-            <div class="card-nombre"><?= e($nombre . ' ' . $apellido) ?></div>
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;">
+              <div class="card-nombre"><?= e($nombre . ' ' . $apellido) ?></div>
+              <?php if (($u['role'] ?? '') === 'admin'): ?>
+                <button type="button" class="btn-borrar-card no-print" onclick="eliminarEstudianteDirecto(event, '<?= e($p['consultor_id']) ?>', '<?= e(addslashes($nombre . ' ' . $apellido)) ?>')" title="Eliminar estudiante definitivamente">
+                  ✕
+                </button>
+              <?php endif; ?>
+            </div>
             <div class="card-username-badge">@<?= e($p['username'] ?: $p['consultor_id']) ?></div>
             <div class="card-edad">
               <?= $edad !== null ? e($edad) . ' años' : 'Edad sin informar' ?>
@@ -716,6 +758,11 @@ require __DIR__ . '/_header.php';
     <div class="modal-header">
       <h2 class="modal-title">Ficha Técnica de Postulante · ISET 815</h2>
       <div class="modal-actions">
+        <?php if (($u['role'] ?? '') === 'admin'): ?>
+          <button type="button" class="btn-eliminar-modal no-print" onclick="eliminarDesdeModal()" title="Eliminar estudiante definitivamente">
+            🗑️ Eliminar
+          </button>
+        <?php endif; ?>
         <button type="button" class="btn-imprimir" onclick="window.print()">
           🖨️ Imprimir / Guardar PDF
         </button>
@@ -736,8 +783,10 @@ require __DIR__ . '/_header.php';
 const postulantesData = <?= json_encode($postulantes, JSON_UNESCAPED_UNICODE) ?>;
 const proyectosLista = <?= json_encode($proyectosDisponibles, JSON_UNESCAPED_UNICODE) ?>;
 const csrfToken = <?= json_encode(csrf_token()) ?>;
+let currentFichaIndex = null;
 
 function abrirFicha(index) {
+  currentFichaIndex = index;
   const p = postulantesData[index];
   if (!p) return;
 
@@ -996,6 +1045,64 @@ async function guardarAsignacionProyecto(consultorId, proyId, index) {
       feedback.textContent = '✕ Error de conexión al guardar.';
     }
   }
+}
+
+async function eliminarEstudiante(consultorId, nombre) {
+  const seguro = confirm(`¿Estás seguro de que deseás eliminar a «${nombre}»?\n\nEsta acción es definitiva y borrará su ficha, usuario, respuestas de autopercepción y foto de perfil.`);
+  if (!seguro) return false;
+
+  try {
+    const res = await fetch('estudiantes_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        csrf: csrfToken,
+        accion: 'eliminar_estudiante',
+        estudiante_id: consultorId
+      })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      if (currentFichaIndex !== null && postulantesData[currentFichaIndex] && postulantesData[currentFichaIndex].consultor_id === consultorId) {
+        cerrarModal();
+      }
+
+      const card = document.getElementById(`card-postulante-${consultorId}`);
+      if (card) {
+        card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.92)';
+        setTimeout(() => {
+          card.remove();
+          const restantes = document.querySelectorAll('.card-postulante');
+          if (restantes.length === 0) {
+            window.location.reload();
+          }
+        }, 260);
+      } else {
+        window.location.reload();
+      }
+      return true;
+    } else {
+      alert('Error: ' + (data.error || 'No se pudo eliminar al estudiante.'));
+      return false;
+    }
+  } catch (err) {
+    alert('Error de conexión al intentar eliminar.');
+    return false;
+  }
+}
+
+function eliminarDesdeModal() {
+  if (currentFichaIndex === null || !postulantesData[currentFichaIndex]) return;
+  const p = postulantesData[currentFichaIndex];
+  const nombre = (p.nombre ? p.nombre : p.consultor_nombre) + (p.apellido ? ' ' + p.apellido : '');
+  eliminarEstudiante(p.consultor_id, nombre);
+}
+
+function eliminarEstudianteDirecto(event, consultorId, nombre) {
+  event.stopPropagation();
+  eliminarEstudiante(consultorId, nombre);
 }
 
 function cerrarModal() {
