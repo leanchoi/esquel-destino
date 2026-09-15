@@ -987,6 +987,40 @@ a.stat:hover { border-color: var(--borde-control); box-shadow: var(--shadow); tr
 .btn-wa { color: #128C7E !important; border-color: #25D366 !important; }
 .btn-wa:hover { background: rgba(37,211,102,0.08) !important; }
 
+/* EDICIÓN CONTEXTUAL IN-PLACE Y REVISIONES */
+.panel-box-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.panel-box-head h4 { margin: 0; }
+.box-actions { display: inline-flex; gap: 6px; align-items: center; }
+.btn-box-action { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--line-2); background: var(--paper); color: var(--ink-2); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all .12s; text-decoration: none; }
+.btn-box-action:hover { background: var(--surface); color: var(--ink); border-color: var(--borde-control); }
+.btn-box-action.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.box-editor-wrap { background: #F8FAFC; border: 1px solid var(--line-2); border-left: 3px solid #2563EB; border-radius: 4px; padding: 12px 14px; margin-top: 8px; animation: fadeIn .15s ease-out; }
+.box-editor-hint { font-size: 11px; color: var(--ink-3); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+.box-editor-textarea { width: 100%; border: 1px solid var(--line-2); border-radius: 4px; padding: 8px 10px; font-size: 12.5px; font-family: inherit; line-height: 1.5; resize: vertical; background: #FFF; color: var(--ink); box-sizing: border-box; }
+.box-editor-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; align-items: center; }
+.box-editor-motivo { flex: 1; font-size: 11.5px; padding: 5px 8px; border: 1px solid var(--line-2); border-radius: 3px; background: #FFF; }
+
+/* Editor de Ejes Estratégicos */
+.ejes-editor-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+.eje-edit-card { background: #FFF; border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; }
+.eje-edit-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.eje-edit-title-input { width: 100%; font-size: 12.5px; font-weight: 700; padding: 6px 8px; border: 1px solid var(--line-2); border-radius: 3px; margin-bottom: 6px; box-sizing: border-box; }
+
+/* Timeline de Historial de Revisiones */
+.rev-timeline { display: flex; flex-direction: column; gap: 14px; position: relative; padding-left: 18px; margin-top: 8px; }
+.rev-timeline::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 5px; width: 2px; background: var(--line); }
+.rev-card { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; box-shadow: 0 1px 3px rgba(0,0,0,.03); transition: border-color .15s; }
+.rev-card:hover { border-color: var(--borde-control); }
+.rev-card::before { content: ""; position: absolute; left: -17px; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: #2563EB; border: 2px solid var(--surface); box-shadow: 0 0 0 1px #2563EB; }
+.rev-card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; flex-wrap: wrap; gap: 6px; }
+.rev-author { font-size: 12.5px; font-weight: 700; color: var(--ink); }
+.rev-time { font-size: 11px; color: var(--ink-3); }
+.rev-motivo-txt { font-size: 11.5px; color: var(--ink-2); font-style: italic; margin-bottom: 8px; }
+.rev-preview-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px; padding: 8px 10px; font-size: 12px; max-height: 180px; overflow-y: auto; color: #334155; line-height: 1.45; white-space: pre-wrap; word-break: break-word; }
+.rev-preview-box ul { margin: 0; padding-left: 18px; }
+.rev-card-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
+
 /* Reglas para impresión limpia */
 @media print {
   .admin-header, .gestion-header, .gestion-nav, .agenda-bar, .drawer-scrim, .reunion-drawer, .no-print, .toolbar-noprint {

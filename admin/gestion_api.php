@@ -191,6 +191,20 @@ try {
             $minutaCero = (string) $minutaCero;
         }
 
+        $stmtSel = $pdo->prepare("SELECT minuta_cero FROM lab_proyectos WHERE id = ?");
+        $stmtSel->execute([$proyectoId]);
+        $anterior = (string) $stmtSel->fetchColumn();
+
+        if (trim($anterior) !== trim($minutaCero)) {
+            $uNombre = !empty($u['nombre']) ? $u['nombre'] : ($u['username'] ?? 'usuario');
+            $uId = !empty($u['id']) ? (int)$u['id'] : null;
+            $insRev = $pdo->prepare("
+                INSERT INTO lab_proyectos_revisiones (proyecto_id, campo, contenido_anterior, contenido_nuevo, usuario_id, usuario_nombre, motivo, created_at)
+                VALUES (?, 'minuta_cero', ?, ?, ?, ?, 'Edición de Minuta Cero', datetime('now'))
+            ");
+            $insRev->execute([$proyectoId, $anterior, $minutaCero, $uId, $uNombre]);
+        }
+
         $stmt = $pdo->prepare("
             UPDATE lab_proyectos
             SET minuta_cero = ?, updated_at = datetime('now')
@@ -199,6 +213,147 @@ try {
         $stmt->execute([$minutaCero, $proyectoId]);
 
         echo json_encode(['ok' => true]);
+        exit;
+    }
+
+    if ($accion === 'guardar_componente_proyecto') {
+        $proyectoId = trim((string) ($data['proyecto_id'] ?? ''));
+        $campo = trim((string) ($data['campo'] ?? ''));
+        $motivo = trim((string) ($data['motivo'] ?? ''));
+
+        $camposPermitidos = ['diagnostico', 'trabas', 'ejes', 'entregables', 'notas_generales', 'minuta_cero'];
+        if (!in_array($campo, $camposPermitidos, true)) {
+            throw new InvalidArgumentException('Campo no permitido para edición contextual.');
+        }
+        if (!$proyectoId) {
+            throw new InvalidArgumentException('Falta ID del proyecto.');
+        }
+
+        $stmtSel = $pdo->prepare("SELECT $campo FROM lab_proyectos WHERE id = ?");
+        $stmtSel->execute([$proyectoId]);
+        $anterior = $stmtSel->fetchColumn();
+        if ($anterior === false) {
+            throw new InvalidArgumentException('Proyecto no encontrado.');
+        }
+
+        $nuevoRaw = $data['contenido'] ?? '';
+        if (is_array($nuevoRaw)) {
+            $nuevo = json_encode($nuevoRaw, JSON_UNESCAPED_UNICODE);
+        } else {
+            $nuevo = (string) $nuevoRaw;
+        }
+
+        $cambioReal = (trim((string)$anterior) !== trim((string)$nuevo));
+
+        $pdo->beginTransaction();
+
+        if ($cambioReal) {
+            $insRev = $pdo->prepare("
+                INSERT INTO lab_proyectos_revisiones (proyecto_id, campo, contenido_anterior, contenido_nuevo, usuario_id, usuario_nombre, motivo, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+            ");
+            $uNombre = !empty($u['nombre']) ? $u['nombre'] : ($u['username'] ?? 'usuario');
+            $uId = !empty($u['id']) ? (int)$u['id'] : null;
+            $insRev->execute([$proyectoId, $campo, (string)$anterior, (string)$nuevo, $uId, $uNombre, $motivo]);
+
+            $stmtUpd = $pdo->prepare("UPDATE lab_proyectos SET $campo = ?, updated_at = datetime('now') WHERE id = ?");
+            $stmtUpd->execute([$nuevo, $proyectoId]);
+        }
+
+        $pdo->commit();
+
+        $contenidoDecoded = in_array($campo, ['diagnostico', 'trabas', 'ejes', 'entregables'], true)
+            ? (json_decode($nuevo, true) ?: [])
+            : ($campo === 'minuta_cero' ? (json_decode($nuevo, true) ?: $nuevo) : $nuevo);
+
+        echo json_encode([
+            'ok' => true,
+            'mensaje' => 'Componente guardado correctamente.',
+            'campo' => $campo,
+            'contenido' => $contenidoDecoded,
+            'cambio_registrado' => $cambioReal
+        ]);
+        exit;
+    }
+
+    if ($accion === 'obtener_revisiones_componente') {
+        $proyectoId = trim((string) ($data['proyecto_id'] ?? ''));
+        $campo = trim((string) ($data['campo'] ?? ''));
+
+        if (!$proyectoId || !$campo) {
+            throw new InvalidArgumentException('Faltan parámetros requeridos.');
+        }
+
+        $stmt = $pdo->prepare("
+            SELECT id, proyecto_id, campo, usuario_nombre, motivo, created_at, contenido_anterior, contenido_nuevo
+            FROM lab_proyectos_revisiones
+            WHERE proyecto_id = ? AND campo = ?
+            ORDER BY id DESC
+            LIMIT 50
+        ");
+        $stmt->execute([$proyectoId, $campo]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode([
+            'ok' => true,
+            'revisiones' => $rows
+        ]);
+        exit;
+    }
+
+    if ($accion === 'restaurar_revision_componente') {
+        $revisionId = (int) ($data['revision_id'] ?? 0);
+        if (!$revisionId) {
+            throw new InvalidArgumentException('Falta ID de revisión.');
+        }
+
+        $stmtRev = $pdo->prepare("SELECT * FROM lab_proyectos_revisiones WHERE id = ?");
+        $stmtRev->execute([$revisionId]);
+        $rev = $stmtRev->fetch(PDO::FETCH_ASSOC);
+        if (!$rev) {
+            throw new InvalidArgumentException('Revisión no encontrada.');
+        }
+
+        $proyectoId = $rev['proyecto_id'];
+        $campo = $rev['campo'];
+        $camposPermitidos = ['diagnostico', 'trabas', 'ejes', 'entregables', 'notas_generales', 'minuta_cero'];
+        if (!in_array($campo, $camposPermitidos, true)) {
+            throw new InvalidArgumentException('Campo no válido.');
+        }
+
+        $stmtSel = $pdo->prepare("SELECT $campo FROM lab_proyectos WHERE id = ?");
+        $stmtSel->execute([$proyectoId]);
+        $actual = $stmtSel->fetchColumn();
+
+        $aRestaurar = $rev['contenido_nuevo'];
+
+        $pdo->beginTransaction();
+
+        $uNombre = !empty($u['nombre']) ? $u['nombre'] : ($u['username'] ?? 'usuario');
+        $uId = !empty($u['id']) ? (int)$u['id'] : null;
+        $motivo = "Restauración a la versión #" . $rev['id'] . " (" . $rev['created_at'] . " por " . $rev['usuario_nombre'] . ")";
+
+        $insRev = $pdo->prepare("
+            INSERT INTO lab_proyectos_revisiones (proyecto_id, campo, contenido_anterior, contenido_nuevo, usuario_id, usuario_nombre, motivo, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+        ");
+        $insRev->execute([$proyectoId, $campo, (string)$actual, (string)$aRestaurar, $uId, $uNombre, $motivo]);
+
+        $stmtUpd = $pdo->prepare("UPDATE lab_proyectos SET $campo = ?, updated_at = datetime('now') WHERE id = ?");
+        $stmtUpd->execute([$aRestaurar, $proyectoId]);
+
+        $pdo->commit();
+
+        $contenidoDecoded = in_array($campo, ['diagnostico', 'trabas', 'ejes', 'entregables'], true)
+            ? (json_decode($aRestaurar, true) ?: [])
+            : ($campo === 'minuta_cero' ? (json_decode($aRestaurar, true) ?: $aRestaurar) : $aRestaurar);
+
+        echo json_encode([
+            'ok' => true,
+            'mensaje' => 'Versión restaurada con éxito.',
+            'campo' => $campo,
+            'contenido' => $contenidoDecoded
+        ]);
         exit;
     }
 

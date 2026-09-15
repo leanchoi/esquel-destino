@@ -322,6 +322,20 @@ require __DIR__ . '/_header.php';
   </div>
 </aside>
 
+<!-- MODAL / DRAWER DE HISTORIAL DE REVISIONES -->
+<div class="drawer-scrim" id="revScrim" style="z-index:110"></div>
+<aside class="reunion-drawer" id="revDrawer" style="z-index:120" aria-label="Historial de revisiones">
+  <div class="rdrawer-header">
+    <button type="button" class="rdrawer-close" id="revClose" aria-label="Cerrar">&times;</button>
+    <h2 class="rdrawer-title" id="revTitle">Historial de Revisiones</h2>
+    <div class="rdrawer-meta" id="revMeta">Auditoría y control de versiones</div>
+  </div>
+  <div class="rdrawer-body" id="revBody"></div>
+  <div class="rdrawer-footer">
+    <button type="button" class="btn btn-secondary btn-sm" id="btnRevClose">Cerrar</button>
+  </div>
+</aside>
+
 <!-- DATOS GLOBALES INYECTADOS -->
 <script id="labData" type="application/json">
 <?= json_encode([

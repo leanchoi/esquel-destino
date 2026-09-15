@@ -76,10 +76,38 @@ function lab_asegurar_datos(PDO $pdo): void {
         }
     }
 
-    // 3. Sincronización continua de proyectos
-    $updProy = $pdo->prepare("UPDATE lab_proyectos SET titular = ?, diagnostico = ?, trabas = ?, ejes = ?, entregables = ?, minuta_cero = ? WHERE id = ?");
+    // 3. Sincronización segura de proyectos (solo inserta faltantes, nunca sobreescribe ediciones del usuario)
+    $checkProy = $pdo->prepare("SELECT id FROM lab_proyectos WHERE id = ?");
+    $insSingleProy = $pdo->prepare("INSERT INTO lab_proyectos (id, application_id, nombre, titular, linea, puntaje, celula, consultor_sr_id, consultor_jr_id, diagnostico, trabas, ejes, entregables, minuta_cero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $checkApp = $pdo->prepare("SELECT 1 FROM applications WHERE id = ?");
+
     foreach ($proyectos as $p) {
-        $updProy->execute([$p[3], $p[9], $p[10], $p[11], $p[12], $p[13], $p[0]]);
+        $checkProy->execute([$p[0]]);
+        if (!$checkProy->fetchColumn()) {
+            $checkApp->execute([(int)$p[1]]);
+            $appId = $checkApp->fetchColumn() ? (int)$p[1] : null;
+            $insSingleProy->execute([$p[0], $appId, $p[2], $p[3], $p[4], $p[5], $p[6], $p[7], $p[8], $p[9], $p[10], $p[11], $p[12], $p[13]]);
+        }
+    }
+
+    // Registrar línea de base inicial en el historial de revisiones si la tabla está vacía
+    $countRev = (int) $pdo->query("SELECT COUNT(*) FROM lab_proyectos_revisiones")->fetchColumn();
+    if ($countRev === 0) {
+        $insRev = $pdo->prepare("
+            INSERT INTO lab_proyectos_revisiones (proyecto_id, campo, contenido_anterior, contenido_nuevo, usuario_nombre, motivo, created_at)
+            VALUES (?, ?, '', ?, 'Sistema (Versión inicial)', 'Carga inicial de la cohorte', datetime('now'))
+        ");
+        $allProys = $pdo->query("SELECT id, diagnostico, trabas, ejes, entregables, minuta_cero FROM lab_proyectos")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($allProys as $pr) {
+            foreach (['diagnostico', 'trabas', 'ejes', 'entregables'] as $fld) {
+                if (!empty($pr[$fld]) && $pr[$fld] !== '[]') {
+                    $insRev->execute([$pr['id'], $fld, $pr[$fld]]);
+                }
+            }
+            if (!empty($pr['minuta_cero'])) {
+                $insRev->execute([$pr['id'], 'minuta_cero', $pr['minuta_cero']]);
+            }
+        }
     }
 
     // 4. Reuniones oficiales (4 Fuertes + 3-4 Toques Base + 1 Cierre Plenario)
