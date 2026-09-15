@@ -51,6 +51,7 @@ if (es_estudiante($u)) {
         <?php endif; ?>
         <?php if (puede('admin')): ?>
           <a href="profesor.php" class="<?= $nav === 'profesor' ? 'is-active' : '' ?>">Estudiantes ISET</a>
+          <a href="postulantes_iset.php" class="<?= $nav === 'postulantes_iset' ? 'is-active' : '' ?>">Postulantes ISET</a>
           <a href="interesados.php" class="<?= $nav === 'interesados' ? 'is-active' : '' ?>">Interesados</a>
           <a href="analitica.php" class="<?= $nav === 'analitica' ? 'is-active' : '' ?>">Analítica</a>
           <a href="usuarios.php" class="<?= $nav === 'usuarios' ? 'is-active' : '' ?>">Usuarios</a>

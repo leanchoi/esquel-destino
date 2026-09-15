@@ -4,7 +4,12 @@ require_once __DIR__ . '/../includes/auth.php';
 
 iniciar_sesion();
 
-if (usuario_actual()) {
+if ($u = usuario_actual()) {
+    if (es_estudiante($u)) {
+        redirect('estudiante.php');
+    } elseif (es_profesor($u)) {
+        redirect('profesor.php');
+    }
     redirect('dashboard.php');
 }
 
@@ -16,7 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $r = intentar_login(trim((string) ($_POST['username'] ?? '')), (string) ($_POST['password'] ?? ''));
         if ($r['ok']) {
-            redirect(!empty($r['must_change']) ? 'password.php' : 'dashboard.php');
+            if (!empty($r['must_change'])) {
+                redirect('password.php');
+            }
+            $u = usuario_actual();
+            if (es_estudiante($u)) {
+                redirect('estudiante.php');
+            } elseif (es_profesor($u)) {
+                redirect('profesor.php');
+            }
+            redirect('dashboard.php');
         }
         $error = $r['error'];
     }
