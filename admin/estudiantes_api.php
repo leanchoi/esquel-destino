@@ -370,6 +370,8 @@ if ($accion === 'generar_clave_estudiante') {
         'clave' => $nuevaClave,
         'mensaje' => "Contraseña generada para {$info['nombre']}."
     ], JSON_UNESCAPED_UNICODE));
+}
+
 // --------------------------------- eliminar estudiante definitivamente (SOLO ADMIN)
 if ($accion === 'eliminar_estudiante') {
     if (($u['role'] ?? '') !== 'admin') {
