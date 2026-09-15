@@ -556,7 +556,8 @@
     }
   }
 
-  let filtroProyectosModo = 'todos'; // 'todos' | 'mios'
+  let filtroProyectosModo = 'todos';
+  let p360TabActiva = 'plan'; // 'todos' | 'mios'
 
   function renderExpedienteSidebar() {
     const list = document.getElementById('proyectosNavList');
@@ -655,76 +656,155 @@
         </div>
 
         <nav class="p360-tabs" role="tablist">
-          <button type="button" class="p360-tab-btn is-active" data-ptab="plan">📋 Plan Estratégico (10 Semanas)</button>
-          <button type="button" class="p360-tab-btn" data-ptab="minutacero">🎙️ Minuta Cero</button>
-          <button type="button" class="p360-tab-btn" data-ptab="postulacion">📝 Postulación Original</button>
-          <button type="button" class="p360-tab-btn" data-ptab="jurado">⚖️ Votos del Jurado</button>
-          <button type="button" class="p360-tab-btn" data-ptab="encuentros">📅 Encuentros (${evs.length})</button>
-          <button type="button" class="p360-tab-btn" data-ptab="compromisos">✅ Compromisos (${comps.length})</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'plan' ? 'is-active' : ''}" data-ptab="plan">📋 Plan Estratégico (10 Semanas)</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'minutacero' ? 'is-active' : ''}" data-ptab="minutacero">🎙️ Minuta Cero</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'postulacion' ? 'is-active' : ''}" data-ptab="postulacion">📝 Postulación Original</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'jurado' ? 'is-active' : ''}" data-ptab="jurado">⚖️ Votos del Jurado</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'encuentros' ? 'is-active' : ''}" data-ptab="encuentros">📅 Encuentros (${evs.length})</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'compromisos' ? 'is-active' : ''}" data-ptab="compromisos">✅ Compromisos (${comps.length})</button>
         </nav>
       </div>
 
       <!-- Sub-Pestaña: Plan Estratégico -->
-      <div id="ptab-plan" class="p360-tab-content">
+      <div id="ptab-plan" class="p360-tab-content" style="display:${p360TabActiva === 'plan' ? 'block' : 'none'}">
         <div class="grid-2col">
-          <div class="panel-box">
-            <h4>Diagnóstico de situación</h4>
-            <ul class="bullet-list">
-              ${(p.diagnostico || []).map(d => `<li>${esc(d)}</li>`).join('') || '<li>Sin diagnóstico cargado.</li>'}
-            </ul>
+          <div class="panel-box" id="box-diagnostico">
+            <div class="panel-box-head">
+              <h4>Diagnóstico de situación</h4>
+              <div class="box-actions">
+                <button type="button" class="btn-box-action btn-edit-box" data-campo="diagnostico" data-pid="${esc(p.id)}">✏️ Editar</button>
+                <button type="button" class="btn-box-action btn-hist-box" data-campo="diagnostico" data-pid="${esc(p.id)}">🕒 Historial</button>
+              </div>
+            </div>
+            <div class="box-content-view" id="view-diagnostico">
+              <ul class="bullet-list">
+                ${(p.diagnostico || []).map(d => `<li>${esc(d)}</li>`).join('') || '<li>Sin diagnóstico cargado.</li>'}
+              </ul>
+            </div>
+            <div class="box-editor-wrap" id="editor-diagnostico" style="display:none">
+              <div class="box-editor-hint">💡 Ingresá un ítem por renglón. Podés agregar, editar o borrar líneas:</div>
+              <textarea class="box-editor-textarea" rows="5" placeholder="Un diagnóstico por línea...">${(p.diagnostico || []).map(esc).join('\n')}</textarea>
+              <div class="box-editor-actions">
+                <input type="text" class="box-editor-motivo" placeholder="Motivo del cambio (opcional)...">
+                <button type="button" class="btn btn-secondary btn-sm btn-cancel-box" data-campo="diagnostico">Cancelar</button>
+                <button type="button" class="btn btn-primary btn-sm btn-save-box" data-campo="diagnostico" data-pid="${esc(p.id)}">💾 Guardar</button>
+              </div>
+            </div>
 
-            <h4 style="margin-top:20px">Trabas y cuellos de botella</h4>
-            <ul class="bullet-list is-warning">
-              ${(p.trabas || []).map(t => `<li>${esc(t)}</li>`).join('') || '<li>Sin trabas registradas.</li>'}
-            </ul>
+            <div style="margin-top:24px" id="box-trabas">
+              <div class="panel-box-head">
+                <h4>Trabas y cuellos de botella</h4>
+                <div class="box-actions">
+                  <button type="button" class="btn-box-action btn-edit-box" data-campo="trabas" data-pid="${esc(p.id)}">✏️ Editar</button>
+                  <button type="button" class="btn-box-action btn-hist-box" data-campo="trabas" data-pid="${esc(p.id)}">🕒 Historial</button>
+                </div>
+              </div>
+              <div class="box-content-view" id="view-trabas">
+                <ul class="bullet-list is-warning">
+                  ${(p.trabas || []).map(t => `<li>${esc(t)}</li>`).join('') || '<li>Sin trabas registradas.</li>'}
+                </ul>
+              </div>
+              <div class="box-editor-wrap" id="editor-trabas" style="display:none">
+                <div class="box-editor-hint">💡 Ingresá una traba o cuello de botella por renglón:</div>
+                <textarea class="box-editor-textarea" rows="5" placeholder="Una traba por línea...">${(p.trabas || []).map(esc).join('\n')}</textarea>
+                <div class="box-editor-actions">
+                  <input type="text" class="box-editor-motivo" placeholder="Motivo del cambio (opcional)...">
+                  <button type="button" class="btn btn-secondary btn-sm btn-cancel-box" data-campo="trabas">Cancelar</button>
+                  <button type="button" class="btn btn-primary btn-sm btn-save-box" data-campo="trabas" data-pid="${esc(p.id)}">💾 Guardar</button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="panel-box">
-            <h4>Ejes estratégicos de trabajo</h4>
-            ${(p.ejes || []).map(eje => `
-              <div class="eje-item">
-                <strong>${esc(eje.t)}</strong>
-                <ul>${(eje.items || []).map(it => `<li>${esc(it)}</li>`).join('')}</ul>
+          <div class="panel-box" id="box-ejes">
+            <div class="panel-box-head">
+              <h4>Ejes estratégicos de trabajo</h4>
+              <div class="box-actions">
+                <button type="button" class="btn-box-action btn-edit-box" data-campo="ejes" data-pid="${esc(p.id)}">✏️ Editar</button>
+                <button type="button" class="btn-box-action btn-hist-box" data-campo="ejes" data-pid="${esc(p.id)}">🕒 Historial</button>
               </div>
-            `).join('') || '<p class="sub">Sin ejes cargados.</p>'}
+            </div>
+            <div class="box-content-view" id="view-ejes">
+              ${(p.ejes || []).map(eje => `
+                <div class="eje-item">
+                  <strong>${esc(eje.t)}</strong>
+                  <ul>${(eje.items || []).map(it => `<li>${esc(it)}</li>`).join('')}</ul>
+                </div>
+              `).join('') || '<p class="sub">Sin ejes cargados.</p>'}
+            </div>
+            <div class="box-editor-wrap" id="editor-ejes" style="display:none">
+              <div class="box-editor-hint">💡 Editá los títulos y las acciones de cada eje (un ítem por línea):</div>
+              <div class="ejes-editor-list" id="ejesEditorContainer"></div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnAddEjeBtn" style="margin-bottom:10px">+ Agregar otro eje</button>
+              <div class="box-editor-actions">
+                <input type="text" class="box-editor-motivo" placeholder="Motivo del cambio (opcional)...">
+                <button type="button" class="btn btn-secondary btn-sm btn-cancel-box" data-campo="ejes">Cancelar</button>
+                <button type="button" class="btn btn-primary btn-sm btn-save-ejes" data-pid="${esc(p.id)}">💾 Guardar ejes</button>
+              </div>
+            </div>
 
-            <h4 style="margin-top:20px">Entregables finales comprometidos</h4>
-            <ul class="bullet-list is-ok">
-              ${(p.entregables || []).map(ent => `<li>${esc(ent)}</li>`).join('') || '<li>Sin entregables definidos.</li>'}
-            </ul>
+            <div style="margin-top:24px" id="box-entregables">
+              <div class="panel-box-head">
+                <h4>Entregables finales comprometidos</h4>
+                <div class="box-actions">
+                  <button type="button" class="btn-box-action btn-edit-box" data-campo="entregables" data-pid="${esc(p.id)}">✏️ Editar</button>
+                  <button type="button" class="btn-box-action btn-hist-box" data-campo="entregables" data-pid="${esc(p.id)}">🕒 Historial</button>
+                </div>
+              </div>
+              <div class="box-content-view" id="view-entregables">
+                <ul class="bullet-list is-ok">
+                  ${(p.entregables || []).map(ent => `<li>${esc(ent)}</li>`).join('') || '<li>Sin entregables definidos.</li>'}
+                </ul>
+              </div>
+              <div class="box-editor-wrap" id="editor-entregables" style="display:none">
+                <div class="box-editor-hint">💡 Ingresá un entregable por renglón:</div>
+                <textarea class="box-editor-textarea" rows="5" placeholder="Un entregable por línea...">${(p.entregables || []).map(esc).join('\n')}</textarea>
+                <div class="box-editor-actions">
+                  <input type="text" class="box-editor-motivo" placeholder="Motivo del cambio (opcional)...">
+                  <button type="button" class="btn btn-secondary btn-sm btn-cancel-box" data-campo="entregables">Cancelar</button>
+                  <button type="button" class="btn btn-primary btn-sm btn-save-box" data-campo="entregables" data-pid="${esc(p.id)}">💾 Guardar</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="panel-box" style="margin-top:20px">
-          <h4>Bitácora y Notas Generales del Proyecto</h4>
+        <div class="panel-box" style="margin-top:20px" id="box-notas_generales">
+          <div class="panel-box-head">
+            <h4>Bitácora y Notas Generales del Proyecto</h4>
+            <div class="box-actions">
+              <button type="button" class="btn-box-action btn-hist-box" data-campo="notas_generales" data-pid="${esc(p.id)}">🕒 Historial</button>
+            </div>
+          </div>
           <textarea id="p360NotasGenerales" class="form-textarea" rows="4" placeholder="Notas de evolución, acuerdos con la Subsecretaría, derivaciones...">${esc(p.notas_generales || '')}</textarea>
-          <div style="text-align:right;margin-top:8px">
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;align-items:center">
+            <input type="text" id="p360NotasMotivo" class="box-editor-motivo" placeholder="Motivo o referencia del apunte (opcional)..." style="max-width:320px">
             <button type="button" class="btn btn-secondary btn-sm" id="btnGuardarNotasProy" data-pid="${esc(p.id)}">Guardar notas del proyecto</button>
           </div>
         </div>
       </div>
 
       <!-- Sub-Pestaña: Minuta Cero -->
-      <div id="ptab-minutacero" class="p360-tab-content" style="display:none">
+      <div id="ptab-minutacero" class="p360-tab-content" style="display:${p360TabActiva === 'minutacero' ? 'block' : 'none'}">
         ${renderMinutaCero(p)}
       </div>
 
       <!-- Sub-Pestaña: Postulación Original -->
-      <div id="ptab-postulacion" class="p360-tab-content" style="display:none">
+      <div id="ptab-postulacion" class="p360-tab-content" style="display:${p360TabActiva === 'postulacion' ? 'block' : 'none'}">
         <div class="postulacion-box">
           ${renderPostulacionOriginal(p)}
         </div>
       </div>
 
       <!-- Sub-Pestaña: Votos del Jurado -->
-      <div id="ptab-jurado" class="p360-tab-content" style="display:none">
+      <div id="ptab-jurado" class="p360-tab-content" style="display:${p360TabActiva === 'jurado' ? 'block' : 'none'}">
         <div class="jurado-box">
           ${renderVotosJurado(p)}
         </div>
       </div>
 
       <!-- Sub-Pestaña: Encuentros -->
-      <div id="ptab-encuentros" class="p360-tab-content" style="display:none">
+      <div id="ptab-encuentros" class="p360-tab-content" style="display:${p360TabActiva === 'encuentros' ? 'block' : 'none'}">
         <div class="pencuentros-list">
           ${evs.map(e => {
             const pr = getProgresoCheck(e);
@@ -749,7 +829,7 @@
       </div>
 
       <!-- Sub-Pestaña: Compromisos -->
-      <div id="ptab-compromisos" class="p360-tab-content" style="display:none">
+      <div id="ptab-compromisos" class="p360-tab-content" style="display:${p360TabActiva === 'compromisos' ? 'block' : 'none'}">
         <div class="compromisos-manager">
           <div class="panel-box">
             <h4>Nuevo compromiso / entregable</h4>
@@ -779,6 +859,7 @@
         body.querySelectorAll('.p360-tab-btn').forEach(b => b.classList.remove('is-active'));
         body.querySelectorAll('.p360-tab-content').forEach(c => c.style.display = 'none');
         btn.classList.add('is-active');
+        p360TabActiva = btn.dataset.ptab;
         const target = document.getElementById('ptab-' + btn.dataset.ptab);
         if (target) target.style.display = 'block';
       });
@@ -792,16 +873,163 @@
       });
     }
 
-    // Guardar notas generales
+    // --- EDICIÓN CONTEXTUAL IN-PLACE Y REVISIONES ---
+    // Toggle editor inline
+    body.querySelectorAll('.btn-edit-box').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const campo = btn.dataset.campo;
+        const box = body.querySelector('#box-' + campo);
+        if (!box) return;
+        const view = box.querySelector('#view-' + campo);
+        const editor = box.querySelector('#editor-' + campo);
+        if (!editor || !view) return;
+        if (editor.style.display === 'none') {
+          editor.style.display = 'block';
+          view.style.display = 'none';
+          btn.classList.add('is-active');
+          btn.textContent = 'Cerrar editor';
+          if (campo === 'ejes') {
+            renderEjesEditor(p, editor.querySelector('#ejesEditorContainer'));
+          }
+        } else {
+          editor.style.display = 'none';
+          view.style.display = 'block';
+          btn.classList.remove('is-active');
+          btn.textContent = '✏️ Editar';
+        }
+      });
+    });
+
+    // Cancelar edición inline
+    body.querySelectorAll('.btn-cancel-box').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const campo = btn.dataset.campo;
+        const box = body.querySelector('#box-' + campo);
+        if (!box) return;
+        const view = box.querySelector('#view-' + campo);
+        const editor = box.querySelector('#editor-' + campo);
+        if (editor) editor.style.display = 'none';
+        if (view) view.style.display = 'block';
+        const editBtn = box.querySelector('.btn-edit-box');
+        if (editBtn) {
+          editBtn.classList.remove('is-active');
+          editBtn.textContent = '✏️ Editar';
+        }
+      });
+    });
+
+    // Guardar cambios en listas (diagnostico, trabas, entregables)
+    body.querySelectorAll('.btn-save-box').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const campo = btn.dataset.campo;
+        const pid = btn.dataset.pid;
+        const box = body.querySelector('#box-' + campo);
+        if (!box) return;
+        const textarea = box.querySelector('.box-editor-textarea');
+        const motivoInput = box.querySelector('.box-editor-motivo');
+        const lines = (textarea?.value || '').split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        const motivo = motivoInput ? motivoInput.value.trim() : '';
+
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+
+        apiPost({
+          accion: 'guardar_componente_proyecto',
+          proyecto_id: pid,
+          campo: campo,
+          contenido: lines,
+          motivo: motivo
+        }, res => {
+          btn.disabled = false;
+          btn.textContent = '💾 Guardar';
+          if (res.ok) {
+            showToast('Cambios guardados correctamente.');
+            p[campo] = res.contenido;
+            renderExpedienteDetalle();
+          } else {
+            alert('Error al guardar: ' + (res.error || 'Error desconocido'));
+          }
+        });
+      });
+    });
+
+    // Guardar cambios en Ejes Estratégicos
+    body.querySelectorAll('.btn-save-ejes').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pid = btn.dataset.pid;
+        const box = body.querySelector('#box-ejes');
+        if (!box) return;
+        const motivoInput = box.querySelector('.box-editor-motivo');
+        const motivo = motivoInput ? motivoInput.value.trim() : '';
+
+        const cards = box.querySelectorAll('.eje-edit-card');
+        const nuevosEjes = [];
+        cards.forEach(c => {
+          const title = c.querySelector('.eje-edit-title-input')?.value.trim() || '';
+          const items = (c.querySelector('.eje-edit-items-input')?.value || '')
+            .split('\n').map(l => l.trim()).filter(l => l.length > 0);
+          if (title || items.length > 0) {
+            nuevosEjes.push({ t: title, items: items });
+          }
+        });
+
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+
+        apiPost({
+          accion: 'guardar_componente_proyecto',
+          proyecto_id: pid,
+          campo: 'ejes',
+          contenido: nuevosEjes,
+          motivo: motivo
+        }, res => {
+          btn.disabled = false;
+          btn.textContent = '💾 Guardar ejes';
+          if (res.ok) {
+            showToast('Ejes estratégicos guardados correctamente.');
+            p.ejes = res.contenido;
+            renderExpedienteDetalle();
+          } else {
+            alert('Error al guardar: ' + (res.error || 'Error desconocido'));
+          }
+        });
+      });
+    });
+
+    // Guardar notas generales con motivo y auditoría
     const btnNotas = document.getElementById('btnGuardarNotasProy');
     if (btnNotas) {
       btnNotas.addEventListener('click', () => {
         const txt = document.getElementById('p360NotasGenerales')?.value || '';
-        guardarPlanProyecto(p.id, { notas_generales: txt }, () => {
-          showToast('Notas del proyecto guardadas.');
+        const motivo = document.getElementById('p360NotasMotivo')?.value.trim() || '';
+        btnNotas.disabled = true;
+        btnNotas.textContent = 'Guardando...';
+
+        apiPost({
+          accion: 'guardar_componente_proyecto',
+          proyecto_id: p.id,
+          campo: 'notas_generales',
+          contenido: txt,
+          motivo: motivo
+        }, res => {
+          btnNotas.disabled = false;
+          btnNotas.textContent = 'Guardar notas del proyecto';
+          if (res.ok) {
+            showToast('Notas del proyecto guardadas.');
+            p.notas_generales = res.contenido;
+          } else {
+            alert('Error: ' + (res.error || 'No se pudo guardar'));
+          }
         });
       });
     }
+
+    // Botones de Historial de Revisiones
+    body.querySelectorAll('.btn-hist-box').forEach(btn => {
+      btn.addEventListener('click', () => {
+        abrirHistorialRevisiones(btn.dataset.pid, btn.dataset.campo);
+      });
+    });
 
     // Guardar Minuta Cero
     body.querySelectorAll('.btn-guardar-mc').forEach(btn => {
@@ -938,6 +1166,7 @@
             ${mc.lugar ? `<span class="badge" style="font-size:12px;padding:5px 10px">📍 ${esc(mc.lugar)}</span>` : ''}
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-secondary btn-sm btn-hist-box" data-pid="${esc(p.id)}" data-campo="minuta_cero" title="Ver historial de cambios de la Minuta Cero">🕒 Historial</button>
             <a href="imprimir.php?tipo=minutacero&id=${encodeURIComponent(p.id)}" target="_blank" class="btn btn-secondary btn-sm" title="Imprimir carátula y reporte de Minuta Cero">🖨️ Imprimir Minuta Cero</a>
             <a href="${esc(getUrlWaMinutaCero(p))}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="color:#128C7E;border-color:#25D366" title="Compartir síntesis de Minuta Cero por WhatsApp">📲 Compartir por WhatsApp</a>
           </div>
@@ -1581,10 +1810,195 @@
 
   document.getElementById('drawerClose')?.addEventListener('click', cerrarDrawer);
   document.getElementById('btnDrawerCancel')?.addEventListener('click', cerrarDrawer);
+  document.getElementById('revClose')?.addEventListener('click', cerrarHistorialRevisiones);
+  document.getElementById('btnRevClose')?.addEventListener('click', cerrarHistorialRevisiones);
+  document.getElementById('revScrim')?.addEventListener('click', cerrarHistorialRevisiones);
+
   scrim?.addEventListener('click', cerrarDrawer);
   document.addEventListener('keydown', ev => {
-    if (ev.key === 'Escape' && reunionActiva) cerrarDrawer();
+    if (ev.key === 'Escape') { if (document.getElementById('revDrawer')?.classList.contains('is-open')) { cerrarHistorialRevisiones(); } else if (reunionActiva) { cerrarDrawer(); } }
   });
+
+  
+  // -------------------------------------------------------------------------
+  // 8.1 EDITOR DE EJES ESTRATEGICOS Y HISTORIAL DE REVISIONES
+  // -------------------------------------------------------------------------
+  function renderEjesEditor(p, container) {
+    if (!container) return;
+    const ejes = JSON.parse(JSON.stringify(p.ejes || []));
+    if (ejes.length === 0) {
+      ejes.push({ t: '', items: [] });
+    }
+
+    function renderList() {
+      container.innerHTML = ejes.map((ej, idx) => `
+        <div class="eje-edit-card" data-idx="${idx}">
+          <div class="eje-edit-head">
+            <strong style="font-size:12px;color:var(--ink)">Eje #${idx + 1}</strong>
+            ${ejes.length > 1 ? `<button type="button" class="btn btn-secondary btn-sm btn-del-eje" data-idx="${idx}" style="color:#C4442E;padding:2px 6px;font-size:11px">&times; Quitar eje</button>` : ''}
+          </div>
+          <input type="text" class="eje-edit-title-input" placeholder="Título del eje estratégico..." value="${esc(ej.t || '')}">
+          <div style="font-size:11px;color:var(--ink-3);margin-bottom:4px">Acciones / Tareas (un ítem por línea):</div>
+          <textarea class="box-editor-textarea eje-edit-items-input" rows="3" placeholder="Una tarea por línea...">${(ej.items || []).map(esc).join('\n')}</textarea>
+        </div>
+      `).join('');
+
+      container.querySelectorAll('.btn-del-eje').forEach(b => {
+        b.addEventListener('click', () => {
+          const idx = Number(b.dataset.idx);
+          ejes.splice(idx, 1);
+          renderList();
+        });
+      });
+    }
+
+    renderList();
+
+    const addBtn = container.parentElement?.querySelector('#btnAddEjeBtn');
+    if (addBtn) {
+      addBtn.onclick = () => {
+        ejes.push({ t: '', items: [] });
+        renderList();
+      };
+    }
+  }
+
+  function abrirHistorialRevisiones(proyectoId, campo) {
+    const revDrawer = document.getElementById('revDrawer');
+    const revScrim = document.getElementById('revScrim');
+    const revTitle = document.getElementById('revTitle');
+    const revMeta = document.getElementById('revMeta');
+    const revBody = document.getElementById('revBody');
+
+    if (!revDrawer || !revBody) return;
+
+    const LABELS_CAMPO = {
+      diagnostico: 'Diagnóstico de situación',
+      trabas: 'Trabas y cuellos de botella',
+      ejes: 'Ejes estratégicos de trabajo',
+      entregables: 'Entregables finales comprometidos',
+      notas_generales: 'Bitácora y notas del proyecto',
+      minuta_cero: 'Minuta Cero'
+    };
+
+    const p = proyectos[proyectoId];
+    if (revTitle) revTitle.textContent = `Historial: ${LABELS_CAMPO[campo] || campo}`;
+    if (revMeta) revMeta.textContent = `${p ? p.nombre : proyectoId} · Auditoría y control de versiones`;
+    revBody.innerHTML = '<div style="padding:30px 20px;text-align:center;color:var(--ink-3)">Cargando historial de revisiones...</div>';
+
+    revDrawer.classList.add('is-open');
+    revScrim?.classList.add('is-open');
+
+    apiPost({
+      accion: 'obtener_revisiones_componente',
+      proyecto_id: proyectoId,
+      campo: campo
+    }, res => {
+      if (!res.ok) {
+        revBody.innerHTML = `<div class="alert-strip-danger" style="margin:16px">Error: ${esc(res.error || 'No se pudo cargar el historial')}</div>`;
+        return;
+      }
+      const revs = res.revisiones || [];
+      if (revs.length === 0) {
+        revBody.innerHTML = `
+          <div style="padding:40px 20px;text-align:center;color:var(--ink-2)">
+            <div style="font-size:36px;margin-bottom:10px">📝</div>
+            <strong style="font-size:14px;color:var(--ink)">Sin revisiones archivadas todavía</strong>
+            <p style="font-size:12.5px;color:var(--ink-3);margin-top:8px;line-height:1.5">
+              Cada vez que guardes cambios en este componente, el sistema guardará automáticamente quién realizó la modificación, la fecha exacta y la posibilidad de restaurar cualquier versión anterior.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      revBody.innerHTML = `
+        <div style="font-size:12px;color:var(--ink-2);margin-bottom:12px">
+          Se encontraron <strong>${revs.length}</strong> versión(es) registrada(s) para este componente:
+        </div>
+        <div class="rev-timeline">
+          ${revs.map((r, idx) => {
+            let previewHtml = '';
+            try {
+              const parsed = JSON.parse(r.contenido_nuevo);
+              if (Array.isArray(parsed)) {
+                if (campo === 'ejes') {
+                  previewHtml = parsed.map(ej => `<div style="margin-bottom:6px"><strong>${esc(ej.t)}</strong><ul style="margin:2px 0 0 16px;padding:0">${(ej.items || []).map(it => `<li>${esc(it)}</li>`).join('')}</ul></div>`).join('');
+                } else {
+                  previewHtml = `<ul style="margin:0;padding-left:18px">${parsed.map(it => `<li>${esc(it)}</li>`).join('')}</ul>`;
+                }
+              } else if (typeof parsed === 'object' && parsed !== null) {
+                if (parsed.texto_completo) {
+                  previewHtml = `<div><strong>${esc(parsed.titulo || 'Minuta Cero')}</strong> (${esc(parsed.fecha || '')})<br>${esc(parsed.resumen || '')}<br><br><pre style="white-space:pre-wrap;font-family:inherit;font-size:11px">${esc(parsed.texto_completo)}</pre></div>`;
+                } else {
+                  previewHtml = `<pre style="font-size:11px;margin:0">${esc(JSON.stringify(parsed, null, 2))}</pre>`;
+                }
+              } else {
+                previewHtml = esc(parsed);
+              }
+            } catch(e) {
+              previewHtml = esc(r.contenido_nuevo);
+            }
+
+            const esActual = idx === 0;
+
+            return `
+              <div class="rev-card">
+                <div class="rev-card-head">
+                  <span class="rev-author">👤 ${esc(r.usuario_nombre || 'Sistema')}</span>
+                  <span class="rev-time">🕒 ${esc(r.created_at)}</span>
+                </div>
+                ${esActual ? '<div style="margin-bottom:6px"><span class="badge badge-ok" style="font-size:10.5px;padding:2px 6px">Versión más reciente</span></div>' : ''}
+                ${r.motivo ? `<div class="rev-motivo-txt">«${esc(r.motivo)}»</div>` : ''}
+                <div class="rev-preview-box">
+                  ${previewHtml || '<em style="color:var(--ink-3)">Contenido vacío</em>'}
+                </div>
+                <div class="rev-card-footer">
+                  <button type="button" class="btn btn-secondary btn-sm rev-restore-btn" data-revid="${r.id}" data-pid="${esc(proyectoId)}" data-campo="${esc(campo)}">
+                    ⏪ Restaurar esta versión
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      // Handlers de rollback
+      revBody.querySelectorAll('.rev-restore-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          const revId = b.dataset.revid;
+          if (!confirm('¿Confirmás que querés restaurar los datos de esta versión? El estado actual quedará archivado como un punto histórico más.')) {
+            return;
+          }
+          b.disabled = true;
+          b.textContent = 'Restaurando...';
+          apiPost({
+            accion: 'restaurar_revision_componente',
+            revision_id: revId
+          }, rRes => {
+            b.disabled = false;
+            b.textContent = '⏪ Restaurar esta versión';
+            if (rRes.ok) {
+              showToast('Versión restaurada con éxito.');
+              if (p) {
+                p[campo] = rRes.contenido;
+              }
+              cerrarHistorialRevisiones();
+              renderExpedienteDetalle();
+            } else {
+              alert('Error al restaurar: ' + (rRes.error || 'Error desconocido'));
+            }
+          });
+        });
+      });
+    });
+  }
+
+  function cerrarHistorialRevisiones() {
+    document.getElementById('revDrawer')?.classList.remove('is-open');
+    document.getElementById('revScrim')?.classList.remove('is-open');
+  }
 
   // -------------------------------------------------------------------------
   // 9. EXPORTACION Y HERRAMIENTAS

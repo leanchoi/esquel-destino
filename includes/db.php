@@ -390,6 +390,22 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_tar_reu ON lab_tareas_estudiante (reunion_id);");
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_tar_proy ON lab_tareas_estudiante (proyecto_id);");
 
+    // Historial de revisiones de los componentes del plan de trabajo (edición contextual in-place)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_proyectos_revisiones (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        proyecto_id TEXT NOT NULL,
+        campo TEXT NOT NULL,
+        contenido_anterior TEXT NOT NULL,
+        contenido_nuevo TEXT NOT NULL,
+        usuario_id INTEGER NULL,
+        usuario_nombre TEXT NOT NULL DEFAULT 'usuario',
+        motivo TEXT NOT NULL DEFAULT '',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (proyecto_id) REFERENCES lab_proyectos (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_rev_proy_campo ON lab_proyectos_revisiones (proyecto_id, campo);");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_rev_fecha ON lab_proyectos_revisiones (created_at);");
+
 
     // Migraciones de columnas.
     //
