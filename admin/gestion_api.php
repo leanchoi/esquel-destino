@@ -7,6 +7,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/estudiantes.php';
 
 $u = usuario_actual();
 if (!$u || !puede_gestionar_lab($u)) {
@@ -72,9 +73,89 @@ try {
             }
         }
 
+        // Vincular al estudiante del proyecto si la fecha es a partir de su alta
+        $stEst = $pdo->prepare("
+            SELECT e.consultor_id
+            FROM lab_reuniones r
+            JOIN lab_estudiantes e ON e.proyecto_id = r.proyecto_id AND e.activo = 1
+            WHERE r.id = ? AND (e.alta_desde IS NULL OR e.alta_desde = '' OR ? >= e.alta_desde)
+        ");
+        $stEst->execute([$id, $fecha]);
+        $estId = $stEst->fetchColumn();
+        if ($estId) {
+            $insAsistEst = $pdo->prepare("INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol, asistio) VALUES (?, ?, 'estudiante', 1)");
+            $insAsistEst->execute([$id, $estId]);
+        }
+
         $pdo->commit();
 
+        // Regenerar o recalcular vencimientos de consignas para el estudiante
+        generar_consignas_reunion($pdo, $id);
+
         echo json_encode(['ok' => true, 'mensaje' => 'Reunión actualizada correctamente.']);
+        exit;
+    }
+
+    if ($accion === 'crear_reunion') {
+        $proyectoId = trim((string) ($data['proyecto_id'] ?? ''));
+        if (!$proyectoId) {
+            throw new InvalidArgumentException('Falta ID del proyecto.');
+        }
+
+        $numero = (int) ($data['numero_reunion'] ?? 0);
+        if ($numero <= 0) {
+            $stMax = $pdo->prepare("SELECT COALESCE(MAX(numero_reunion), 0) + 1 FROM lab_reuniones WHERE proyecto_id = ?");
+            $stMax->execute([$proyectoId]);
+            $numero = (int) $stMax->fetchColumn();
+        }
+
+        $id = trim((string) ($data['id'] ?? ''));
+        if (!$id) {
+            $id = $proyectoId . '-r' . $numero;
+        }
+
+        $titulo = trim((string) ($data['titulo'] ?? ("Encuentro #" . $numero)));
+        $fecha = trim((string) ($data['fecha'] ?? date('Y-m-d')));
+        $horaInicio = trim((string) ($data['hora_inicio'] ?? '10:00'));
+        $horaFin = trim((string) ($data['hora_fin'] ?? '12:00'));
+        $lugar = trim((string) ($data['lugar'] ?? 'Oficina Esquel LAB'));
+        $tipo = trim((string) ($data['tipo'] ?? 'ind'));
+        $asistentes = is_array($data['asistentes'] ?? null) ? $data['asistentes'] : [];
+
+        $pdo->beginTransaction();
+
+        $stmt = $pdo->prepare("
+            INSERT INTO lab_reuniones (id, proyecto_id, numero_reunion, titulo, tipo, lugar, fecha, hora_inicio, hora_fin, estado, guia_consultor, preguntas_clave, objetivos, checklist, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'programada', '', '[]', '[]', '[]', datetime('now'), datetime('now'))
+        ");
+        $stmt->execute([$id, $proyectoId, $numero, $titulo, $tipo, $lugar, $fecha, $horaInicio, $horaFin]);
+
+        $insAsist = $pdo->prepare("INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol) VALUES (?, ?, 'asistente')");
+        foreach ($asistentes as $consId) {
+            $consId = trim((string) $consId);
+            if ($consId) {
+                $insAsist->execute([$id, $consId]);
+            }
+        }
+
+        // Sumar al estudiante si fecha >= alta_desde
+        $stEst = $pdo->prepare("
+            SELECT e.consultor_id
+            FROM lab_estudiantes e
+            WHERE e.proyecto_id = ? AND e.activo = 1 AND (e.alta_desde IS NULL OR e.alta_desde = '' OR ? >= e.alta_desde)
+        ");
+        $stEst->execute([$proyectoId, $fecha]);
+        $estId = $stEst->fetchColumn();
+        if ($estId) {
+            $insAsistEst = $pdo->prepare("INSERT OR IGNORE INTO lab_reunion_asistentes (reunion_id, consultor_id, rol, asistio) VALUES (?, ?, 'estudiante', 1)");
+            $insAsistEst->execute([$id, $estId]);
+        }
+
+        $pdo->commit();
+
+        generar_consignas_reunion($pdo, $id);
+
+        echo json_encode(['ok' => true, 'reunion_id' => $id, 'mensaje' => 'Reunión creada correctamente.']);
         exit;
     }
 

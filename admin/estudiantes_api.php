@@ -47,6 +47,27 @@ function tarea_propia(PDO $pdo, int $id, array $u): ?array
     return $st->fetch() ?: null;
 }
 
+/**
+ * Resuelve el estudiante a partir de consultor_id ('est-xyz') o username ('iset01').
+ */
+function resolver_estudiante(PDO $pdo, string $idOrUser): ?array
+{
+    $idOrUser = trim($idOrUser);
+    if ($idOrUser === '') {
+        return null;
+    }
+    $st = $pdo->prepare("
+        SELECT e.consultor_id, e.user_id, e.proyecto_id, e.legajo,
+               c.nombre, u.username
+        FROM lab_estudiantes e
+        JOIN lab_consultores c ON c.id = e.consultor_id
+        LEFT JOIN users u ON u.id = e.user_id
+        WHERE e.consultor_id = ? OR u.username = ?
+    ");
+    $st->execute([$idOrUser, $idOrUser]);
+    return $st->fetch(PDO::FETCH_ASSOC) ?: null;
+}
+
 // ---------------------------------------------------- guardar una entrega
 if ($accion === 'borrador' || $accion === 'entregar') {
     $tarea = tarea_propia($pdo, $tareaId, $u);
@@ -164,13 +185,137 @@ if ($accion === 'asignar') {
         http_response_code(403);
         exit(json_encode(['ok' => false, 'error' => 'Sólo un administrador reasigna estudiantes.']));
     }
-    $est = (string) ($data['estudiante'] ?? '');
+    $estInput = (string) ($data['estudiante'] ?? '');
     $proy = (string) ($data['proyecto'] ?? '');
+
+    $estRow = resolver_estudiante($pdo, $estInput);
+    $est = $estRow ? $estRow['consultor_id'] : $estInput;
 
     $pdo->prepare('UPDATE lab_estudiantes SET proyecto_id = ? WHERE consultor_id = ?')->execute([$proy ?: null, $est]);
     $tocadas = $proy !== '' ? iset_enganchar_reuniones($pdo, $est) : 0;
 
     exit(json_encode(['ok' => true, 'reuniones' => $tocadas, 'mensaje' => "Reasignado. Se engancharon $tocadas reuniones."]));
+}
+
+// ------------------------------------ crear tarea intermedia (entre reuniones)
+if ($accion === 'crear_intermedia') {
+    if (!puede_gestionar_lab($u)) {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Sólo el equipo consultor puede asignar tareas intermedias.']));
+    }
+
+    $estInput = trim((string) ($data['estudiante_id'] ?? ''));
+    $titulo = trim((string) ($data['titulo'] ?? ''));
+    $consigna = trim((string) ($data['consigna'] ?? ''));
+    $minChars = max(0, (int) ($data['min_caracteres'] ?? 500));
+    $horasEst = max(0.5, (float) ($data['horas_estimadas'] ?? 3.0));
+    $venceAt = trim((string) ($data['vence_at'] ?? ''));
+    if ($venceAt !== '') {
+        $venceAt = str_replace('T', ' ', $venceAt);
+        if (strlen($venceAt) === 16) {
+            $venceAt .= ':00';
+        }
+    }
+
+    if (!$estInput || !$titulo || !$consigna) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Completá el estudiante, el título y la consigna.']));
+    }
+
+    $estRow = resolver_estudiante($pdo, $estInput);
+    if (!$estRow) {
+        http_response_code(404);
+        exit(json_encode(['ok' => false, 'error' => 'Estudiante no encontrado.']));
+    }
+    $estId = $estRow['consultor_id'];
+    $proyId = trim((string) ($data['proyecto_id'] ?? '')) ?: (string) $estRow['proyecto_id'];
+
+    if (!$proyId) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'El estudiante no tiene emprendimiento asignado.']));
+    }
+
+    $ins = $pdo->prepare("
+        INSERT INTO lab_tareas_estudiante
+        (estudiante_id, proyecto_id, reunion_id, momento, plantilla_id, titulo, consigna, min_caracteres, horas_estimadas, vence_at, estado)
+        VALUES (?, ?, NULL, 'intermedia', 'intermedia', ?, ?, ?, ?, ?, 'pendiente')
+    ");
+    $ins->execute([$estId, $proyId, $titulo, $consigna, $minChars, $horasEst, $venceAt ?: null]);
+    $tareaNuevaId = (int) $pdo->lastInsertId();
+
+    exit(json_encode([
+        'ok' => true,
+        'tarea_id' => $tareaNuevaId,
+        'mensaje' => 'Tarea intermedia asignada correctamente al estudiante.'
+    ], JSON_UNESCAPED_UNICODE));
+}
+
+// --------------------------------- actualizar nombre real y legajo del estudiante
+if ($accion === 'actualizar_estudiante') {
+    if (($u['role'] ?? '') !== 'admin') {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Sólo un administrador puede actualizar la nómina.']));
+    }
+    $estInput = trim((string) ($data['estudiante_id'] ?? ''));
+    $nombre = trim((string) ($data['nombre'] ?? ''));
+    $legajo = trim((string) ($data['legajo'] ?? ''));
+
+    if (!$estInput || !$nombre) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'El estudiante y el nombre son obligatorios.']));
+    }
+
+    $estRow = resolver_estudiante($pdo, $estInput);
+    $estId = $estRow ? $estRow['consultor_id'] : $estInput;
+
+    $pdo->prepare("UPDATE lab_consultores SET nombre = ? WHERE id = ?")->execute([$nombre, $estId]);
+    $pdo->prepare("UPDATE lab_estudiantes SET legajo = ? WHERE consultor_id = ?")->execute([$legajo, $estId]);
+
+    $reunionesTocadas = 0;
+    if (isset($data['proyecto_id'])) {
+        $proy = trim((string) $data['proyecto_id']);
+        $pdo->prepare('UPDATE lab_estudiantes SET proyecto_id = ? WHERE consultor_id = ?')->execute([$proy ?: null, $estId]);
+        if ($proy !== '') {
+            $reunionesTocadas = iset_enganchar_reuniones($pdo, $estId);
+        }
+    }
+
+    exit(json_encode([
+        'ok' => true,
+        'reuniones' => $reunionesTocadas,
+        'mensaje' => 'Datos del estudiante actualizados.' . ($reunionesTocadas > 0 ? " Se engancharon $reunionesTocadas reuniones." : '')
+    ], JSON_UNESCAPED_UNICODE));
+}
+
+// --------------------------------- generar contraseña dictable para estudiante
+if ($accion === 'generar_clave_estudiante') {
+    if (($u['role'] ?? '') !== 'admin') {
+        http_response_code(403);
+        exit(json_encode(['ok' => false, 'error' => 'Sólo un administrador puede generar claves.']));
+    }
+    $estInput = trim((string) ($data['estudiante_id'] ?? ''));
+    if (!$estInput) {
+        http_response_code(400);
+        exit(json_encode(['ok' => false, 'error' => 'Falta ID de estudiante.']));
+    }
+
+    $info = resolver_estudiante($pdo, $estInput);
+    if (!$info) {
+        http_response_code(404);
+        exit(json_encode(['ok' => false, 'error' => 'Estudiante no encontrado.']));
+    }
+
+    $nuevaClave = clave_dictable();
+    $pdo->prepare("UPDATE users SET password = ?, must_change_password = 1 WHERE id = ?")
+        ->execute([password_hash($nuevaClave, PASSWORD_DEFAULT), (int) $info['user_id']]);
+
+    exit(json_encode([
+        'ok' => true,
+        'usuario' => $info['username'],
+        'nombre' => $info['nombre'],
+        'clave' => $nuevaClave,
+        'mensaje' => "Contraseña generada para {$info['nombre']}."
+    ], JSON_UNESCAPED_UNICODE));
 }
 
 http_response_code(400);

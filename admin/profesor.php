@@ -41,7 +41,7 @@ if (($_GET['export'] ?? '') === 'csv') {
     $out = fopen('php://output', 'w');
     fwrite($out, "\xEF\xBB\xBF");
     fputcsv($out, ['Estudiante', 'Usuario', 'Legajo', 'Emprendimiento', 'Horas usadas', 'Horas presupuesto',
-                   'Consignas', 'Entregadas', 'A tiempo', 'Caracteres', 'Específicos', 'Sirvió', 'A medias',
+                   'Consignas', 'Entregadas', 'Vencidas', 'A tiempo', 'Caracteres', 'Específicos', 'Sirvió', 'A medias',
                    'A rehacer', 'Utilidad %', 'Ingresos al panel', 'Minutos en el panel']);
     foreach ($pdo->query('SELECT consultor_id FROM lab_estudiantes ORDER BY consultor_id') as $e) {
         $p = panel_estudiante($pdo, $e['consultor_id']);
@@ -50,7 +50,7 @@ if (($_GET['export'] ?? '') === 'csv') {
         fputcsv($out, [
             $p['estudiante']['nombre'], $p['estudiante']['username'], $p['estudiante']['legajo'],
             $p['estudiante']['proyecto_nombre'], $p['horas']['usadas'], $p['horas']['presupuesto'],
-            $r['asignadas'], $r['entregadas'], $r['a_tiempo'], $r['caracteres'],
+            $r['asignadas'], $r['entregadas'], $r['vencidas'], $r['a_tiempo'], $r['caracteres'],
             $r['especificos']['ok'] . ' de ' . $r['especificos']['total'],
             $r['valoradas']['sirvio'], $r['valoradas']['parcial'], $r['valoradas']['rehacer'],
             $r['utilidad'] === null ? '' : $r['utilidad'],
@@ -68,19 +68,24 @@ foreach ($ids as $id) {
     if ($p) $paneles[$id] = $p;
 }
 
-// Orden: primero los que necesitan atención. Un alumno que entregó todo y
-// todo sirvió no necesita que el profesor lo mire; el que no entregó, sí.
+// Orden: primero los que necesitan atención. Un alumno con tareas vencidas o pendientes
+// va primero. Un alumno que entregó todo y todo sirvió no necesita que el profesor lo mire.
 uasort($paneles, function ($a, $b) {
+    $va = $a['resumen']['vencidas'] ?? 0;
+    $vb = $b['resumen']['vencidas'] ?? 0;
+    if ($va !== $vb) return $vb <=> $va;
+
     $fa = $a['resumen']['asignadas'] - $a['resumen']['entregadas'];
     $fb = $b['resumen']['asignadas'] - $b['resumen']['entregadas'];
     if ($fa !== $fb) return $fb <=> $fa;
     return ($a['resumen']['utilidad'] ?? 101) <=> ($b['resumen']['utilidad'] ?? 101);
 });
 
-$totales = ['asignadas' => 0, 'entregadas' => 0, 'a_tiempo' => 0, 'sirvio' => 0, 'valoradas' => 0];
+$totales = ['asignadas' => 0, 'entregadas' => 0, 'vencidas' => 0, 'a_tiempo' => 0, 'sirvio' => 0, 'valoradas' => 0];
 foreach ($paneles as $p) {
     $totales['asignadas'] += $p['resumen']['asignadas'];
     $totales['entregadas'] += $p['resumen']['entregadas'];
+    $totales['vencidas'] += $p['resumen']['vencidas'];
     $totales['a_tiempo'] += $p['resumen']['a_tiempo'];
     $totales['sirvio'] += $p['resumen']['valoradas']['sirvio'];
     $totales['valoradas'] += array_sum($p['resumen']['valoradas']);
@@ -108,6 +113,9 @@ require __DIR__ . '/_header.php';
 
     <div class="stats">
       <div class="stat"><span class="k">Entregadas</span><span class="v"><?= $p['resumen']['entregadas'] ?>/<?= $p['resumen']['asignadas'] ?></span></div>
+      <?php if (!empty($p['resumen']['vencidas'])): ?>
+        <div class="stat alerta"><span class="k">Vencidas</span><span class="v"><?= $p['resumen']['vencidas'] ?></span></div>
+      <?php endif; ?>
       <div class="stat"><span class="k">A tiempo</span><span class="v"><?= $p['resumen']['a_tiempo'] ?></span></div>
       <div class="stat <?= ($p['resumen']['utilidad'] ?? 0) >= 70 ? 'raiz' : (($p['resumen']['utilidad'] === null) ? '' : 'alerta') ?>">
         <span class="k">Utilidad</span><span class="v"><?= $p['resumen']['utilidad'] === null ? '—' : $p['resumen']['utilidad'] . '%' ?></span>
@@ -118,24 +126,33 @@ require __DIR__ . '/_header.php';
     </div>
 
     <?php foreach ($p['tareas'] as $t):
-      if ($t['estado'] === 'pendiente' && $t['entrega'] === '') continue;
+      $esVencida = $t['estado'] === 'pendiente' && !empty($t['vence_at']) && $t['vence_at'] < date('Y-m-d H:i');
+      if ($t['estado'] === 'pendiente' && $t['entrega'] === '' && !$esVencida) continue;
       $señ = señales_escritura($t);
       $esp = $t['momento'] === 'durante' ? especificos_cumplidos(json_decode($t['especificos'] ?: '{}', true) ?: []) : null;
     ?>
-      <article class="panel prof-entrega">
+      <article class="panel prof-entrega<?= $esVencida ? ' es-vencida' : '' ?>">
         <header class="prof-entrega-head">
           <div>
             <span class="est-momento est-m-<?= e($t['momento']) ?>"><?= e(MOMENTOS_ESTUDIANTE[$t['momento']]['label'] ?? '') ?></span>
             <h3><?= e($t['titulo']) ?></h3>
             <p class="sub">
-              <?= $t['entregado_at'] ? 'Entregada ' . e(fecha_corta($t['entregado_at'], true)) : 'Borrador sin entregar' ?>
-              <?php if ($t['vence_at'] !== '' && $t['entregado_at'] && $t['entregado_at'] > $t['vence_at']): ?>
-                · <span class="prof-tarde">fuera de plazo</span>
+              <?php if ($esVencida): ?>
+                <span class="prof-tarde" style="font-weight:600">⚠️ Vencida <?= e(fecha_corta($t['vence_at'], true)) ?> sin entregar</span>
+              <?php elseif ($t['entregado_at']): ?>
+                Entregada <?= e(fecha_corta($t['entregado_at'], true)) ?>
+                <?php if ($t['vence_at'] !== '' && $t['entregado_at'] > $t['vence_at']): ?>
+                  · <span class="prof-tarde">fuera de plazo</span>
+                <?php endif; ?>
+              <?php else: ?>
+                Borrador sin entregar
               <?php endif; ?>
             </p>
           </div>
           <?php if ($t['valoracion'] !== ''): $v = VALORACIONES_APORTE[$t['valoracion']]; ?>
             <span class="est-val est-v-<?= e($t['valoracion']) ?>"><?= e($v['label']) ?></span>
+          <?php elseif ($esVencida): ?>
+            <span class="prof-tarde" style="font-weight:600">Vencida</span>
           <?php else: ?>
             <span class="sub">Sin valorar</span>
           <?php endif; ?>
@@ -169,6 +186,9 @@ require __DIR__ . '/_header.php';
     <div class="stats">
       <div class="stat"><span class="k">Consignas</span><span class="v"><?= $totales['asignadas'] ?></span></div>
       <div class="stat"><span class="k">Entregadas</span><span class="v"><?= $totales['entregadas'] ?></span></div>
+      <?php if (!empty($totales['vencidas'])): ?>
+        <div class="stat alerta"><span class="k">Vencidas</span><span class="v"><?= $totales['vencidas'] ?></span></div>
+      <?php endif; ?>
       <div class="stat"><span class="k">A tiempo</span><span class="v"><?= $totales['a_tiempo'] ?></span></div>
       <div class="stat raiz"><span class="k">Aportes que sirvieron</span><span class="v"><?= $totales['sirvio'] ?><?= $totales['valoradas'] ? '/' . $totales['valoradas'] : '' ?></span></div>
     </div>
@@ -210,7 +230,11 @@ require __DIR__ . '/_header.php';
                 </td>
                 <td class="num" data-col="Entregas">
                   <?= $r['entregadas'] ?>/<?= $r['asignadas'] ?>
-                  <?php if ($faltan > 0): ?><div class="sub prof-tarde"><?= $faltan ?> sin entregar</div><?php endif; ?>
+                  <?php if (!empty($r['vencidas'])): ?>
+                    <div class="sub prof-tarde" style="font-weight:600">⚠️ <?= $r['vencidas'] ?> <?= $r['vencidas'] === 1 ? 'vencida' : 'vencidas' ?></div>
+                  <?php elseif ($faltan > 0): ?>
+                    <div class="sub prof-tarde"><?= $faltan ?> sin entregar</div>
+                  <?php endif; ?>
                 </td>
                 <td class="num" data-col="Específicos"><?= $r['especificos']['total'] ? $r['especificos']['ok'] . '/' . $r['especificos']['total'] : '—' ?></td>
                 <td class="num" data-col="Horas"><?= number_format($p['horas']['usadas'], 1, ',', '') ?><div class="sub">de <?= (int) $p['horas']['presupuesto'] ?></div></td>

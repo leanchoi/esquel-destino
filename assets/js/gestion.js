@@ -443,7 +443,10 @@
             ${evs.map(e => {
               const p = proyectos[e.proyecto_id] || {};
               const pr = getProgresoCheck(e);
-              const asistNombres = e.asistentes.map(aid => consultores[aid]?.nombre || aid).join(', ');
+              const asistNombres = e.asistentes.map(aid => {
+                const c = consultores[aid];
+                return c ? (c.tipo === 'estudiante' ? `🎓 ${c.nombre}` : c.nombre) : aid;
+              }).join(', ');
               const hora = e.hora_inicio ? (e.hora_fin ? `${e.hora_inicio} a ${e.hora_fin}` : e.hora_inicio) : '';
 
               return `
@@ -605,6 +608,163 @@
     });
   }
 
+  function renderAporteEstudiante(p) {
+    const est = p.estudiante;
+    if (!est || !est.ficha) {
+      return `
+        <div class="empty-state-notice">
+          <p>Este emprendimiento todavía no tiene un estudiante del ISET 815 asignado.</p>
+          <p class="sub">Podés asignarlo desde la pantalla de <a href="usuarios.php" style="color:var(--berry);font-weight:600">Usuarios</a>.</p>
+        </div>
+      `;
+    }
+
+    const ficha = est.ficha;
+    const horas = est.horas || { usadas: 0, presupuesto: 60, porcentaje: 0, cantidad_reuniones: 0, tareas: 0 };
+    const tareas = est.tareas || [];
+    const entregadas = tareas.filter(t => t.estado !== 'pendiente');
+    const pendientes = tareas.filter(t => t.estado === 'pendiente');
+
+    return `
+      <div class="estudiante-aporte-wrap">
+        <!-- CABECERA DEL ESTUDIANTE -->
+        <div class="panel-box" style="margin-bottom:20px;border-left:4px solid #2F5D7C">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
+            <div style="display:flex;gap:14px;align-items:center">
+              <div class="cons-avatar" style="background:#2F5D7C;width:48px;height:48px;font-size:18px;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:50%;font-weight:700">
+                ${esc(ficha.nombre.slice(0, 2).toUpperCase())}
+              </div>
+              <div>
+                <span class="badge" style="background:#2F5D7C;color:#fff">Convenio ISET 815</span>
+                <h3 style="margin:4px 0 2px;font-size:20px">${esc(ficha.nombre)}</h3>
+                <div class="sub">Usuario: <strong>${esc(ficha.username)}</strong> ${ficha.legajo ? `· Legajo: <strong>${esc(ficha.legajo)}</strong>` : ''} · Instituto: ${esc(ficha.instituto || 'ISET 815')}</div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+              <div class="est-horas" style="min-width:240px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span class="est-horas-n">${Number(horas.usadas).toFixed(1)} <small>de ${Number(horas.presupuesto).toFixed(0)} h</small></span>
+                  <span style="font-weight:700;font-size:13px;color:#2F5D7C">${horas.porcentaje}%</span>
+                </div>
+                <div class="est-barra"><span style="width:${horas.porcentaje}%"></span></div>
+                <div class="est-horas-d">${horas.cantidad_reuniones} reuniones · ${Number(horas.tareas).toFixed(1)} h de trabajo propio</div>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm btn-nueva-intermedia" data-pid="${esc(p.id)}" data-eid="${esc(ficha.consultor_id)}">
+                ➕ Asignar Tarea Intermedia
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTA DE ENTREGAS Y CONSIGNAS -->
+        <div class="estudiante-entregas-list">
+          <h3 style="font-size:18px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+            <span>Entregas y Consignas del Estudiante</span>
+            <span class="badge ok">${entregadas.length} entregada${entregadas.length === 1 ? '' : 's'}</span>
+            ${pendientes.length > 0 ? `<span class="badge" style="background:var(--paper);border:1px solid var(--line)">${pendientes.length} pendiente${pendientes.length === 1 ? '' : 's'}</span>` : ''}
+          </h3>
+
+          ${tareas.length === 0 ? `
+            <div class="empty-state-notice">
+              <p>Todavía no se generaron consignas para este estudiante.</p>
+              <p class="sub">Las consignas vinculadas a las reuniones se generan automáticamente a partir del 1/10/2026. También podés asignar una tarea intermedia en cualquier momento con el botón superior.</p>
+            </div>
+          ` : tareas.map(t => {
+            const esDurante = t.momento === 'durante';
+            const esEntregado = t.estado !== 'pendiente';
+            const esp = t.especificos_analisis;
+            const momentoInfo = {
+              'antes': { label: 'Preparación previa', cls: 'est-m-antes' },
+              'durante': { label: 'En la sala', cls: 'est-m-durante' },
+              'despues': { label: 'Entregable práctico', cls: 'est-m-despues' },
+              'intermedia': { label: 'Tarea intermedia', cls: 'est-m-intermedia' }
+            }[t.momento] || { label: t.momento, cls: '' };
+
+            const valBadge = {
+              'sirvio': '<span class="badge ok" style="font-size:12px">👍 Sirvió para el caso</span>',
+              'parcial': '<span class="badge warn" style="font-size:12px">⚡ A medias / Utilidad parcial</span>',
+              'rehacer': '<span class="badge err" style="font-size:12px">🔄 Hay que rehacerlo</span>'
+            }[t.valoracion] || (esEntregado ? '<span class="sub" style="font-size:12px">⏳ Pendiente de valoración</span>' : '');
+
+            return `
+              <div class="panel-box" style="margin-bottom:18px;border-left:3px solid ${esEntregado ? '#2F5D7C' : 'var(--line)'}">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:10px">
+                  <div>
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+                      <span class="est-momento ${momentoInfo.cls}">${esc(momentoInfo.label)}</span>
+                      ${t.reunion_titulo ? `
+                        <span class="sub" style="font-weight:600">
+                          📅 Encuentro #${t.numero_reunion}: ${esc(t.reunion_titulo)} (${fCorta(t.reunion_fecha)})
+                        </span>
+                      ` : '<span class="sub" style="font-weight:600">Investigación entre reuniones</span>'}
+                    </div>
+                    <h4 style="font-size:16px;margin:2px 0 0">${esc(t.titulo)}</h4>
+                  </div>
+                  <div style="text-align:right">
+                    ${esEntregado ? `
+                      <span class="badge ok" style="font-size:11px">Entregado el ${esc(fCorta(t.entregado_at))}</span>
+                      <div class="sub" style="font-size:12px;margin-top:3px">${t.caracteres} caracteres · ${t.horas_estimadas} h</div>
+                    ` : `
+                      <span class="badge" style="font-size:11px">Vence: ${esc(fCorta(t.vence_at))}</span>
+                      <div class="sub" style="font-size:12px;margin-top:3px">${t.horas_estimadas} h estimadas</div>
+                    `}
+                  </div>
+                </div>
+
+                <!-- CONSIGNAS -->
+                <div class="est-consigna" style="margin-bottom:12px;font-size:13.5px">
+                  ${esc(t.consigna)}
+                </div>
+
+                ${esDurante && esp ? `
+                  <div class="prof-esp" style="margin-bottom:12px">
+                    <span class="prof-esp-n ${esp.completo ? 'es-ok' : 'es-falta'}">
+                      ${esp.cumplidos} de ${esp.total} específicos traídos
+                    </span>
+                    ${Object.values(esp.detalle).map(d => `
+                      <span class="prof-esp-i ${d.ok ? 'es-ok' : 'es-falta'}">
+                        ${esc(d.label)}: ${d.trae}/${d.pide}
+                      </span>
+                    `).join('')}
+                  </div>
+                ` : ''}
+
+                <!-- TEXTO DE ENTREGA -->
+                ${esEntregado ? `
+                  <div style="background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 16px;font-size:14.5px;white-space:pre-wrap;line-height:1.6;color:var(--ink)">
+                    ${esc(t.entrega || 'Sin texto registrado.')}
+                  </div>
+
+                  <!-- BLOQUE DE VALORACIÓN DEL CONSULTOR -->
+                  <div class="val-card" data-tid="${t.id}">
+                    <div class="val-status-row">
+                      <strong style="font-size:13px">Valoración del equipo consultor:</strong>
+                      ${valBadge}
+                      ${t.valoracion_nota ? `<span class="sub" style="font-style:italic">«${esc(t.valoracion_nota)}» — ${esc(t.valorado_por)} (${esc(fCorta(t.valorado_at))})</span>` : ''}
+                    </div>
+
+                    <div class="val-actions-row">
+                      <button type="button" class="btn-val-opt ${t.valoracion === 'sirvio' ? 'is-selected ok' : ''}" data-val="sirvio">👍 Sirvió</button>
+                      <button type="button" class="btn-val-opt ${t.valoracion === 'parcial' ? 'is-selected warn' : ''}" data-val="parcial">⚡ A medias</button>
+                      <button type="button" class="btn-val-opt ${t.valoracion === 'rehacer' ? 'is-selected err' : ''}" data-val="rehacer">🔄 Rehacer</button>
+                      <input type="text" class="form-input input-val-nota" placeholder="Nota o feedback para el estudiante y el profesor..." value="${esc(t.valoracion_nota || '')}" style="flex:1;min-width:200px;font-size:13px">
+                      <button type="button" class="btn btn-primary btn-sm btn-guardar-val" data-tid="${t.id}">Guardar</button>
+                    </div>
+                  </div>
+                ` : `
+                  <div class="sub" style="font-style:italic;padding:8px 0">
+                    Aún pendiente de entrega por parte del estudiante.
+                  </div>
+                `}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
   function renderExpedienteDetalle() {
     const body = document.getElementById('expedienteBody');
     if (!body) return;
@@ -658,6 +818,7 @@
         <nav class="p360-tabs" role="tablist">
           <button type="button" class="p360-tab-btn ${p360TabActiva === 'plan' ? 'is-active' : ''}" data-ptab="plan">📋 Plan Estratégico (10 Semanas)</button>
           <button type="button" class="p360-tab-btn ${p360TabActiva === 'minutacero' ? 'is-active' : ''}" data-ptab="minutacero">🎙️ Minuta Cero</button>
+          <button type="button" class="p360-tab-btn ${p360TabActiva === 'estudiante' ? 'is-active' : ''}" data-ptab="estudiante">🎓 Aporte del Estudiante (${p.estudiante?.tareas?.filter(t => t.estado !== 'pendiente').length || 0})</button>
           <button type="button" class="p360-tab-btn ${p360TabActiva === 'postulacion' ? 'is-active' : ''}" data-ptab="postulacion">📝 Postulación Original</button>
           <button type="button" class="p360-tab-btn ${p360TabActiva === 'jurado' ? 'is-active' : ''}" data-ptab="jurado">⚖️ Votos del Jurado</button>
           <button type="button" class="p360-tab-btn ${p360TabActiva === 'encuentros' ? 'is-active' : ''}" data-ptab="encuentros">📅 Encuentros (${evs.length})</button>
@@ -814,7 +975,10 @@
                   <span class="badge">${fCorta(e.fecha)}</span>
                   <span class="ev-tipo-pill">${LABEL_TIPO[e.tipo]}</span>
                   <strong>#${e.numero_reunion} · ${esc(e.titulo)}</strong>
-                  <div class="sub">📍 ${esc(e.lugar)} ${e.hora_inicio ? `· ⏰ ${esc(e.hora_inicio)}` : ''} · 👥 ${esc(e.asistentes.map(aid => consultores[aid]?.nombre || aid).join(', '))}</div>
+                  <div class="sub">📍 ${esc(e.lugar)} ${e.hora_inicio ? `· ⏰ ${esc(e.hora_inicio)}` : ''} · 👥 ${esc(e.asistentes.map(aid => {
+                    const c = consultores[aid];
+                    return c ? (c.tipo === 'estudiante' ? `🎓 ${c.nombre}` : c.nombre) : aid;
+                  }).join(', '))}</div>
                 </div>
                 <div class="penc-right" style="display:flex;align-items:center;gap:6px">
                   ${pr ? `<span class="prog-pill">${pr.hechos}/${pr.total} tareas</span>` : ''}
@@ -850,6 +1014,11 @@
             ${renderCompromisosList(p.id)}
           </div>
         </div>
+      </div>
+
+      <!-- Sub-Pestaña: Aporte del Estudiante -->
+      <div id="ptab-estudiante" class="p360-tab-content" style="display:${p360TabActiva === 'estudiante' ? 'block' : 'none'}">
+        ${renderAporteEstudiante(p)}
       </div>
     `;
 
@@ -1106,6 +1275,80 @@
         });
       });
     }
+
+    // Eventos de valoración en la pestaña de estudiante
+    body.querySelectorAll('.val-card').forEach(card => {
+      const tid = card.dataset.tid;
+      const optBtns = card.querySelectorAll('.btn-val-opt');
+      let selectedVal = card.querySelector('.btn-val-opt.is-selected')?.dataset.val || '';
+
+      optBtns.forEach(ob => {
+        ob.addEventListener('click', () => {
+          optBtns.forEach(b => {
+            b.classList.remove('is-selected', 'ok', 'warn', 'err');
+          });
+          const v = ob.dataset.val;
+          selectedVal = v;
+          ob.classList.add('is-selected', v === 'sirvio' ? 'ok' : (v === 'parcial' ? 'warn' : 'err'));
+        });
+      });
+
+      const btnGuardar = card.querySelector('.btn-guardar-val');
+      if (btnGuardar) {
+        btnGuardar.addEventListener('click', async () => {
+          if (!selectedVal) {
+            showToast('Elegí una valoración (Sirvió, A medias o Rehacer).', 'warn');
+            return;
+          }
+          const notaInput = card.querySelector('.input-val-nota');
+          const nota = notaInput ? notaInput.value.trim() : '';
+
+          btnGuardar.disabled = true;
+          btnGuardar.textContent = 'Guardando...';
+
+          try {
+            const resp = await fetch('estudiantes_api.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                accion: 'valorar',
+                id: tid,
+                valoracion: selectedVal,
+                nota: nota,
+                csrf: csrfToken
+              })
+            });
+            const res = await resp.json();
+            if (!res.ok) throw new Error(res.error || 'Error al guardar.');
+
+            // Actualizar en el objeto de datos en memoria
+            const tObj = p.estudiante?.tareas?.find(x => String(x.id) === String(tid));
+            if (tObj) {
+              tObj.valoracion = selectedVal;
+              tObj.valoracion_nota = nota;
+              tObj.valorado_por = yo.username;
+              tObj.valorado_at = new Date().toISOString();
+              tObj.estado = 'revisado';
+            }
+
+            showToast('Valoración guardada correctamente.');
+            renderExpedienteDetalle();
+          } catch (err) {
+            showToast(err.message, 'err');
+          } finally {
+            btnGuardar.disabled = false;
+            btnGuardar.textContent = 'Guardar';
+          }
+        });
+      }
+    });
+
+    // Botón nueva tarea intermedia
+    body.querySelectorAll('.btn-nueva-intermedia').forEach(btn => {
+      btn.addEventListener('click', () => {
+        abrirTareaModal(btn.dataset.eid, btn.dataset.pid);
+      });
+    });
 
     attachCompromisosEvents();
   }
@@ -1369,7 +1612,15 @@
     const grid = document.getElementById('consultoresGrid');
     if (!grid) return;
 
-    grid.innerHTML = Object.values(consultores).map(c => {
+    const equipoConsultores = Object.values(consultores).filter(c => c.tipo !== 'estudiante');
+    const estudiantesIset = Object.values(consultores).filter(c => c.tipo === 'estudiante');
+
+    const htmlConsultores = `
+      <div style="grid-column: 1 / -1; margin-bottom: 8px">
+        <h3 style="font-size: 18px; margin: 0 0 4px">Equipo Consultor LAB</h3>
+        <p class="sub" style="margin: 0">Conducción y acompañamiento metodológico de los 18 emprendimientos</p>
+      </div>
+    ` + equipoConsultores.map(c => {
       const mios = reuniones.filter(r => r.asistentes.includes(c.id));
       const comoSr = Object.values(proyectos).filter(p => p.consultor_sr_id === c.id);
       const comoJr = Object.values(proyectos).filter(p => p.consultor_jr_id === c.id);
@@ -1420,6 +1671,60 @@
       `;
     }).join('');
 
+    const htmlEstudiantes = estudiantesIset.length ? `
+      <div style="grid-column: 1 / -1; margin-top: 24px; margin-bottom: 8px; padding-top: 20px; border-top: 1px solid var(--line)">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="badge" style="background:#2F5D7C;color:#fff;font-size:12px;padding:4px 10px">Convenio ISET 815</span>
+          <h3 style="font-size: 18px; margin: 0">Estudiantes Asignados (1 a 1)</h3>
+        </div>
+        <p class="sub" style="margin: 4px 0 0">60 horas de presupuesto por estudiante · Incorporación posterior a FIT (1/10/2026)</p>
+      </div>
+    ` + estudiantesIset.map(c => {
+      const mios = reuniones.filter(r => r.asistentes.includes(c.id));
+      const proyAsignado = Object.values(proyectos).find(p => p.estudiante?.ficha?.consultor_id === c.id);
+      const estInfo = proyAsignado?.estudiante;
+      const horas = estInfo?.horas || { usadas: 0, presupuesto: 60, porcentaje: 0 };
+      const entregasCount = (estInfo?.tareas || []).filter(t => t.estado !== 'pendiente').length;
+
+      return `
+        <div class="consultor-card is-estudiante" data-cid="${esc(c.id)}">
+          <div class="cons-head">
+            <div class="cons-avatar" style="background:#2F5D7C;color:#fff">${c.nombre.slice(0, 2).toUpperCase()}</div>
+            <div>
+              <h3 class="cons-name">${esc(c.nombre)}</h3>
+              <span class="cons-rol-badge badge-iset">Estudiante ISET</span>
+            </div>
+            <div class="cons-kpi">
+              <strong>${mios.length}</strong>
+              <span class="sub">encuentros</span>
+            </div>
+          </div>
+
+          <div class="cons-proyectos-bar">
+            <span><strong>Emprendimiento:</strong> ${proyAsignado ? esc(proyAsignado.nombre) : '<em class="sub">Sin asignar</em>'}</span>
+          </div>
+
+          <div style="margin: 12px 0 8px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px">
+              <span><strong>${Number(horas.usadas).toFixed(1)}</strong> de ${Number(horas.presupuesto).toFixed(0)} h</span>
+              <span style="color:#2F5D7C;font-weight:700">${horas.porcentaje}%</span>
+            </div>
+            <div class="est-barra" style="margin:4px 0 6px"><span style="width:${horas.porcentaje}%"></span></div>
+            <div class="sub" style="font-size:12px">${entregasCount} entregas realizadas</div>
+          </div>
+
+          <p class="cons-restriccion-text" style="font-size:12.5px">${esc(c.restricciones || 'Convenio ISET 815.')}</p>
+
+          <div class="cons-footer">
+            <button type="button" class="btn btn-secondary btn-sm btn-ver-agenda-cons" data-cid="${esc(c.id)}">Ver agenda (${mios.length})</button>
+            ${proyAsignado ? `<button type="button" class="btn btn-secondary btn-sm btn-ver-proy-est" data-pid="${esc(proyAsignado.id)}">Abrir ficha</button>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('') : '';
+
+    grid.innerHTML = htmlConsultores + htmlEstudiantes;
+
     grid.querySelectorAll('.btn-ver-agenda-cons').forEach(btn => {
       btn.addEventListener('click', () => {
         const cid = btn.dataset.cid;
@@ -1427,6 +1732,17 @@
         document.querySelector('.gnav-btn[data-tab="agenda"]').click();
         document.querySelector('.submode-btn[data-mode="dxd"]').click();
         renderDiaPorDia();
+      });
+    });
+
+    grid.querySelectorAll('.btn-ver-proy-est').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pid = btn.dataset.pid;
+        proyectoActivoId = pid;
+        p360TabActiva = 'estudiante';
+        document.querySelector('.gnav-btn[data-tab="expediente"]').click();
+        renderExpedienteSidebar();
+        renderExpedienteDetalle();
       });
     });
   }
@@ -1650,7 +1966,7 @@
       <div class="rsec">
         <h5>Equipo consultor asignado</h5>
         <div class="chips-selector">
-          ${Object.values(consultores).map(c => {
+          ${Object.values(consultores).filter(c => c.tipo !== 'estudiante').map(c => {
             const on = r.asistentes.includes(c.id);
             const fitConflicto = on && enFIT(r.fecha) && ['francisco', 'agustina'].includes(c.id);
             return `
@@ -1660,6 +1976,13 @@
             `;
           }).join('')}
         </div>
+        ${p && p.estudiante && p.estudiante.ficha ? `
+          <div style="margin-top:10px;font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:8px">
+            <span>🎓 <strong>Estudiante ISET asignado:</strong></span>
+            <span class="badge" style="background:#2F5D7C;color:#fff">${esc(p.estudiante.ficha.nombre)}</span>
+            <span class="sub" style="font-size:12px">(se vincula automáticamente al proyecto)</span>
+          </div>
+        ` : ''}
       </div>
 
       <!-- PLAYBOOK PEDAGOGICO: GUIA DEL CONSULTOR -->
@@ -1814,9 +2137,21 @@
   document.getElementById('btnRevClose')?.addEventListener('click', cerrarHistorialRevisiones);
   document.getElementById('revScrim')?.addEventListener('click', cerrarHistorialRevisiones);
 
+  document.getElementById('tareaModalClose')?.addEventListener('click', cerrarTareaModal);
+  document.getElementById('btnTareaModalCancel')?.addEventListener('click', cerrarTareaModal);
+  document.getElementById('tareaModalScrim')?.addEventListener('click', cerrarTareaModal);
+
   scrim?.addEventListener('click', cerrarDrawer);
   document.addEventListener('keydown', ev => {
-    if (ev.key === 'Escape') { if (document.getElementById('revDrawer')?.classList.contains('is-open')) { cerrarHistorialRevisiones(); } else if (reunionActiva) { cerrarDrawer(); } }
+    if (ev.key === 'Escape') {
+      if (document.getElementById('tareaModalDrawer')?.classList.contains('is-open')) {
+        cerrarTareaModal();
+      } else if (document.getElementById('revDrawer')?.classList.contains('is-open')) {
+        cerrarHistorialRevisiones();
+      } else if (reunionActiva) {
+        cerrarDrawer();
+      }
+    }
   });
 
   
@@ -1999,6 +2334,113 @@
     document.getElementById('revDrawer')?.classList.remove('is-open');
     document.getElementById('revScrim')?.classList.remove('is-open');
   }
+
+  function abrirTareaModal(estId, proyId) {
+    const scrim = document.getElementById('tareaModalScrim');
+    const drawer = document.getElementById('tareaModalDrawer');
+    const selEst = document.getElementById('tiEstudiante');
+    if (!scrim || !drawer || !selEst) return;
+
+    // Poblar select de estudiantes con proyecto
+    selEst.innerHTML = Object.values(proyectos).filter(pr => pr.estudiante && pr.estudiante.ficha).map(pr => {
+      const e = pr.estudiante.ficha;
+      const isSel = (e.consultor_id === estId || pr.id === proyId);
+      return `<option value="${esc(e.consultor_id)}" data-pid="${esc(pr.id)}" ${isSel ? 'selected' : ''}>${esc(e.nombre)} · ${esc(pr.nombre)}</option>`;
+    }).join('');
+
+    // Sugerir fecha límite: 7 días desde hoy a las 18:00
+    const dLimit = new Date();
+    dLimit.setDate(dLimit.getDate() + 7);
+    const dateStr = dLimit.toISOString().slice(0, 10) + 'T18:00';
+    const venceInp = document.getElementById('tiVenceAt');
+    if (venceInp) venceInp.value = dateStr;
+
+    scrim.classList.add('is-open');
+    drawer.classList.add('is-open');
+  }
+
+  function cerrarTareaModal() {
+    document.getElementById('tareaModalDrawer')?.classList.remove('is-open');
+    document.getElementById('tareaModalScrim')?.classList.remove('is-open');
+  }
+
+  document.getElementById('btnTareaModalSave')?.addEventListener('click', async () => {
+    const selEst = document.getElementById('tiEstudiante');
+    const opt = selEst?.selectedOptions[0];
+    const estId = selEst?.value;
+    const proyId = opt?.dataset.pid;
+    const titulo = document.getElementById('tiTitulo')?.value.trim();
+    const consigna = document.getElementById('tiConsigna')?.value.trim();
+    const minChars = parseInt(document.getElementById('tiMinChars')?.value || '500', 10);
+    const horas = parseFloat(document.getElementById('tiHoras')?.value || '3.0');
+    const venceAt = document.getElementById('tiVenceAt')?.value;
+
+    if (!estId || !titulo || !consigna || !venceAt) {
+      showToast('Completá todos los campos requeridos.', 'warn');
+      return;
+    }
+
+    const btnSave = document.getElementById('btnTareaModalSave');
+    btnSave.disabled = true;
+    btnSave.textContent = 'Guardando...';
+
+    try {
+      const resp = await fetch('estudiantes_api.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accion: 'crear_intermedia',
+          estudiante_id: estId,
+          proyecto_id: proyId,
+          titulo: titulo,
+          consigna: consigna,
+          min_caracteres: minChars,
+          horas_estimadas: horas,
+          vence_at: venceAt,
+          csrf: csrfToken
+        })
+      });
+      const res = await resp.json();
+      if (!res.ok) throw new Error(res.error || 'Error al guardar.');
+
+      // Agregar en memoria
+      if (proyectos[proyId] && proyectos[proyId].estudiante) {
+        proyectos[proyId].estudiante.tareas.unshift({
+          id: res.tarea_id,
+          estudiante_id: estId,
+          proyecto_id: proyId,
+          reunion_id: null,
+          momento: 'intermedia',
+          titulo: titulo,
+          consigna: consigna,
+          min_caracteres: minChars,
+          horas_estimadas: horas,
+          vence_at: venceAt.replace('T', ' ') + ':00',
+          estado: 'pendiente',
+          entrega: '',
+          especificos: null,
+          entregado_at: null,
+          caracteres: 0,
+          valoracion: '',
+          valoracion_nota: ''
+        });
+        proyectos[proyId].estudiante.horas.tareas += horas;
+        proyectos[proyId].estudiante.horas.usadas += horas;
+      }
+
+      showToast('Tarea intermedia asignada correctamente.');
+      cerrarTareaModal();
+      document.getElementById('formTareaIntermedia')?.reset();
+      if (proyectoActivoId === proyId) {
+        renderExpedienteDetalle();
+      }
+    } catch (err) {
+      showToast(err.message, 'err');
+    } finally {
+      btnSave.disabled = false;
+      btnSave.textContent = 'Asignar tarea';
+    }
+  });
 
   // -------------------------------------------------------------------------
   // 9. EXPORTACION Y HERRAMIENTAS

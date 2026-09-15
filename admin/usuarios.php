@@ -2,9 +2,11 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/graficos.php';
+require_once __DIR__ . '/../includes/estudiantes.php';
 
 $u = requiere_rol('admin');
 $pdo = db();
+iset_asegurar_estudiantes($pdo);
 
 $msg = null;
 // La contraseña recién generada, para mostrarla una sola vez en esta página.
@@ -103,8 +105,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$usuarios = $pdo->query('SELECT id, username, role, must_change_password, created_at FROM users ORDER BY created_at ASC')->fetchAll();
+$todosLosUsuarios = $pdo->query('SELECT id, username, role, must_change_password, created_at FROM users ORDER BY created_at ASC')->fetchAll();
+$usuarios = array_filter($todosLosUsuarios, fn($usr) => $usr['role'] !== 'estudiante');
 $accesoLab = array_column($pdo->query('SELECT user_id FROM lab_user_access')->fetchAll(), 'user_id', 'user_id');
+
+$estudiantesIset = $pdo->query("
+    SELECT e.consultor_id, e.user_id, e.proyecto_id, e.legajo,
+           c.nombre AS nombre_real, u.username, u.must_change_password,
+           p.nombre AS proyecto_nombre
+      FROM lab_estudiantes e
+      JOIN lab_consultores c ON c.id = e.consultor_id
+      LEFT JOIN users u ON u.id = e.user_id
+      LEFT JOIN lab_proyectos p ON p.id = e.proyecto_id
+     ORDER BY e.consultor_id ASC
+")->fetchAll();
+
+$proyectosDisponibles = $pdo->query("SELECT id, nombre FROM lab_proyectos ORDER BY nombre ASC")->fetchAll();
 
 
 // ------------------------------------------------------------------ actividad
@@ -377,6 +393,113 @@ require __DIR__ . '/_header.php';
     </div>
   </div>
 
+  <!-- ---------------- Convenio ISET 815: Nómina de Estudiantes ---------------- -->
+  <div class="panel iset-admin-panel" style="margin-top:28px">
+    <div class="hoy-head" style="margin:0 0 16px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2 class="panel-title" style="font-size:20px;margin:0;display:flex;align-items:center;gap:8px">
+          <span>Convenio ISET 815 · Nómina de Estudiantes</span>
+          <span class="badge-iset" style="font-size:12px;padding:3px 9px"><?= count($estudiantesIset) ?> alumnos</span>
+        </h2>
+        <p class="hint" style="margin:4px 0 0">
+          Asignación 1 a 1 de estudiantes con cada emprendimiento del programa. Modificá el nombre real y legajo cuando llegue la nómina oficial, reasigná casos o generá contraseñas dictables para enviarles por WhatsApp.
+        </p>
+      </div>
+    </div>
+
+    <!-- Caja para mostrar la clave recién generada para un estudiante -->
+    <div class="clave-nueva" id="boxClaveEstudiante" style="display:none;margin-bottom:20px;border-color:var(--iset-color,#2F5D7C)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h2 id="boxClaveEstTitulo" style="color:var(--iset-color,#2F5D7C);margin:0">Contraseña generada</h2>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('boxClaveEstudiante').style.display='none'" style="font-size:12px;padding:3px 8px">✕ Cerrar</button>
+      </div>
+      <p class="clave-aviso" style="margin-bottom:12px">
+        Anotala o copiala <strong>ahora</strong>. Pasásela al estudiante por WhatsApp.
+      </p>
+
+      <div class="clave-caja" style="margin-bottom:12px">
+        <code id="boxClaveEstValor"></code>
+        <button type="button" class="btn btn-secondary btn-sm" data-copiar="boxClaveEstValor">Copiar clave</button>
+      </div>
+
+      <details class="clave-wa" open>
+        <summary style="font-weight:700;cursor:pointer;color:var(--iset-color,#2F5D7C)">Mensaje listo para mandarle por WhatsApp</summary>
+        <textarea id="boxClaveEstMensaje" rows="6" readonly style="font-family:var(--font-mono);font-size:13px;background:var(--paper-2)"></textarea>
+        <button type="button" class="btn btn-secondary btn-sm" data-copiar="boxClaveEstMensaje" style="margin-top:6px">Copiar mensaje completo</button>
+      </details>
+
+      <p class="clave-pie" style="margin-top:10px">
+        El estudiante ingresa a través de la portada del panel: https://<?= e(SITE_DOMINIO) ?>/admin/ (o directamente a /admin/estudiante.php).
+      </p>
+    </div>
+
+    <div class="table-scroll">
+      <table class="crm-table tabla-estudiantes-iset">
+        <thead>
+          <tr>
+            <th style="width:85px">Usuario</th>
+            <th>Nombre real</th>
+            <th style="width:110px">Legajo</th>
+            <th>Emprendimiento asignado</th>
+            <th style="width:105px">Estado clave</th>
+            <th style="text-align:right;min-width:180px">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($estudiantesIset as $est): ?>
+            <tr id="fila-est-<?= e($est['consultor_id']) ?>">
+              <td>
+                <code style="font-weight:700;color:var(--iset-color,#2F5D7C)"><?= e($est['username']) ?></code>
+              </td>
+              <td data-col="Nombre real">
+                <input type="text" class="input-sm input-est-nombre"
+                       id="nombre-<?= e($est['consultor_id']) ?>"
+                       value="<?= e($est['nombre_real']) ?>"
+                       placeholder="Nombre y apellido"
+                       style="width:100%;max-width:240px">
+              </td>
+              <td data-col="Legajo">
+                <input type="text" class="input-sm input-est-legajo"
+                       id="legajo-<?= e($est['consultor_id']) ?>"
+                       value="<?= e($est['legajo'] ?? '') ?>"
+                       placeholder="Legajo"
+                       style="width:90px">
+              </td>
+              <td data-col="Emprendimiento">
+                <select class="input-sm select-est-proy"
+                        id="proy-<?= e($est['consultor_id']) ?>"
+                        style="width:100%;max-width:260px">
+                  <option value="">— Sin asignar —</option>
+                  <?php foreach ($proyectosDisponibles as $pr): ?>
+                    <option value="<?= e($pr['id']) ?>" <?= $est['proyecto_id'] === $pr['id'] ? 'selected' : '' ?>>
+                      <?= e($pr['nombre']) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </td>
+              <td class="sub" id="estado-clave-<?= e($est['consultor_id']) ?>" data-col="Estado">
+                <?= $est['must_change_password'] ? 'Provisoria' : 'Activo' ?>
+              </td>
+              <td class="right nowrap">
+                <button type="button" class="btn btn-secondary btn-sm btn-guardar-est"
+                        data-est="<?= e($est['consultor_id']) ?>"
+                        title="Guardar nombre, legajo y asignación de emprendimiento">
+                  Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm btn-clave-est"
+                        data-est="<?= e($est['consultor_id']) ?>"
+                        data-usuario="<?= e($est['username']) ?>"
+                        title="Generar contraseña dictable y mensaje WhatsApp">
+                  🔑 Clave
+                </button>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ---------------- actividad ---------------- -->
   <div class="hoy-head" style="margin:34px 0 6px">
     <div>
@@ -403,7 +526,7 @@ require __DIR__ . '/_header.php';
         uasort($porUsuario, fn($a, $b) => $b['ingresos'] <=> $a['ingresos']);
         foreach ($porUsuario as $nombre => $d):
           $rol = null;
-          foreach ($usuarios as $usr) {
+          foreach ($todosLosUsuarios as $usr) {
               if ($usr['username'] === $nombre) { $rol = $usr['role']; break; }
           }
           $promedio = $d['sesiones'] > 0 ? (int) round($d['segundos'] / $d['sesiones']) : 0;
@@ -452,5 +575,132 @@ require __DIR__ . '/_header.php';
     <?php endif; ?>
   </div>
 </div>
+
+<script>
+const CSRF_TOKEN = <?= json_encode(csrf_token()) ?>;
+const SITE_DOMINIO = <?= json_encode(SITE_DOMINIO) ?>;
+
+// Guardar datos del estudiante (nombre, legajo, reasignar emprendimiento)
+document.querySelectorAll('.btn-guardar-est').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var estId = this.getAttribute('data-est');
+    var nombreInput = document.getElementById('nombre-' + estId);
+    var legajoInput = document.getElementById('legajo-' + estId);
+    var proySelect = document.getElementById('proy-' + estId);
+    var originalBtnText = btn.textContent;
+
+    var nombre = (nombreInput ? nombreInput.value : '').trim();
+    var legajo = (legajoInput ? legajoInput.value : '').trim();
+    var proyId = proySelect ? proySelect.value : '';
+
+    if (!nombre) {
+      alert('Por favor completá el nombre real del estudiante.');
+      if (nombreInput) nombreInput.focus();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Guardando...';
+
+    fetch('estudiantes_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        accion: 'actualizar_estudiante',
+        estudiante_id: estId,
+        nombre: nombre,
+        legajo: legajo,
+        proyecto_id: proyId,
+        csrf: CSRF_TOKEN
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(res) {
+      btn.disabled = false;
+      if (res.ok) {
+        btn.textContent = '✓ Guardado';
+        btn.classList.add('ok');
+        setTimeout(function() {
+          btn.textContent = originalBtnText;
+          btn.classList.remove('ok');
+        }, 1800);
+      } else {
+        btn.textContent = originalBtnText;
+        alert(res.error || 'Ocurrió un error al guardar los datos.');
+      }
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = originalBtnText;
+      alert('Error de conexión con el servidor.');
+    });
+  });
+});
+
+// Generar contraseña dictable para el estudiante y preparar mensaje WhatsApp
+document.querySelectorAll('.btn-clave-est').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var estId = this.getAttribute('data-est');
+    var usuario = this.getAttribute('data-usuario');
+    var nombreInput = document.getElementById('nombre-' + estId);
+    var nombre = (nombreInput ? nombreInput.value : '').trim() || 'Estudiante';
+    var originalBtnText = btn.textContent;
+
+    if (!confirm('¿Generar una nueva contraseña dictable para ' + nombre + ' (' + usuario + ')? La anterior dejará de funcionar.')) {
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Generando...';
+
+    fetch('estudiantes_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        accion: 'generar_clave_estudiante',
+        estudiante_id: estId,
+        csrf: CSRF_TOKEN
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(res) {
+      btn.disabled = false;
+      btn.textContent = originalBtnText;
+      if (res.ok) {
+        var box = document.getElementById('boxClaveEstudiante');
+        var titulo = document.getElementById('boxClaveEstTitulo');
+        var val = document.getElementById('boxClaveEstValor');
+        var wa = document.getElementById('boxClaveEstMensaje');
+        var estado = document.getElementById('estado-clave-' + estId);
+
+        if (titulo) titulo.textContent = 'Contraseña nueva de ' + (res.nombre || nombre) + ' (' + res.usuario + ')';
+        if (val) val.textContent = res.clave;
+
+        var host = SITE_DOMINIO || window.location.host;
+        var msg = 'Hola ' + (res.nombre || nombre) + '! Te compartimos tu acceso a la plataforma de Esquel LAB (Convenio ISET 815):\n\n' +
+                  '🔗 Acceso: https://' + host + '/admin/\n' +
+                  '👤 Usuario: ' + res.usuario + '\n' +
+                  '🔑 Contraseña provisoria: ' + res.clave + '\n\n' +
+                  'Al ingresar por primera vez te va a pedir definir tu contraseña personal.\n' +
+                  '¡Éxitos con el acompañamiento al emprendimiento!';
+
+        if (wa) wa.value = msg;
+        if (estado) estado.textContent = 'Provisoria';
+        if (box) {
+          box.style.display = 'block';
+          box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      } else {
+        alert(res.error || 'Ocurrió un error al generar la clave.');
+      }
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = originalBtnText;
+      alert('Error de conexión con el servidor.');
+    });
+  });
+});
+</script>
 
 <?php require __DIR__ . '/_footer.php'; ?>

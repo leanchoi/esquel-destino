@@ -401,14 +401,19 @@ function panel_estudiante(PDO $pdo, string $estudianteId): array
     $tareas = $t->fetchAll();
 
     $entregadas = 0;
+    $vencidas = 0;
     $aTiempo = 0;
     $caracteres = 0;
     $especificosOk = 0;
     $especificosTotal = 0;
     $valoradas = ['sirvio' => 0, 'parcial' => 0, 'rehacer' => 0];
+    $ahora = date('Y-m-d H:i');
 
     foreach ($tareas as $x) {
         if ($x['estado'] === 'pendiente') {
+            if (!empty($x['vence_at']) && $x['vence_at'] < $ahora) {
+                $vencidas++;
+            }
             continue;
         }
         $entregadas++;
@@ -446,6 +451,7 @@ function panel_estudiante(PDO $pdo, string $estudianteId): array
         'resumen'    => [
             'asignadas'   => count($tareas),
             'entregadas'  => $entregadas,
+            'vencidas'    => $vencidas,
             'a_tiempo'    => $aTiempo,
             'caracteres'  => $caracteres,
             'especificos' => ['ok' => $especificosOk, 'total' => $especificosTotal],

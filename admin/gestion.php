@@ -13,6 +13,7 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/jurado.php';
+require_once __DIR__ . '/../includes/estudiantes.php';
 
 $u = requiere_gestion_lab();
 $pdo = db();
@@ -22,6 +23,7 @@ if (file_exists(__DIR__ . '/../includes/lab_seed.php')) {
     require_once __DIR__ . '/../includes/lab_seed.php';
     lab_asegurar_datos($pdo);
 }
+iset_asegurar_estudiantes($pdo);
 
 // 1. Metadatos de la cohorte
 $meta = [
@@ -100,6 +102,48 @@ foreach ($proyectosRaw as $p) {
 
     $proyectos[$p['id']] = $p;
 }
+
+// 3.b Estudiantes del ISET 815 vinculados y sus entregas
+$stmtEst = $pdo->prepare("
+    SELECT e.*, c.nombre, c.color, u.username
+    FROM lab_estudiantes e
+    JOIN lab_consultores c ON c.id = e.consultor_id
+    JOIN users u ON u.id = e.user_id
+    WHERE e.proyecto_id = ? AND e.activo = 1
+");
+$stmtTareas = $pdo->prepare("
+    SELECT t.*, r.fecha AS reunion_fecha, r.numero_reunion, r.titulo AS reunion_titulo
+    FROM lab_tareas_estudiante t
+    LEFT JOIN lab_reuniones r ON r.id = t.reunion_id
+    WHERE t.estudiante_id = ? AND (t.proyecto_id = ? OR t.proyecto_id IS NULL)
+    ORDER BY CASE WHEN t.entregado_at IS NOT NULL AND t.entregado_at != '' THEN t.entregado_at ELSE t.vence_at END DESC, t.id DESC
+");
+
+foreach ($proyectos as $pid => &$p) {
+    $stmtEst->execute([$pid]);
+    $est = $stmtEst->fetch();
+    if ($est) {
+        $horas = horas_estudiante($pdo, $est['consultor_id']);
+        $stmtTareas->execute([$est['consultor_id'], $pid]);
+        $tareasRaw = $stmtTareas->fetchAll();
+        $tareas = [];
+        foreach ($tareasRaw as $t) {
+            if ($t['momento'] === 'durante') {
+                $espData = json_decode($t['especificos'] ?: '{}', true) ?: [];
+                $t['especificos_analisis'] = especificos_cumplidos($espData);
+            }
+            $tareas[] = $t;
+        }
+        $p['estudiante'] = [
+            'ficha'  => $est,
+            'horas'  => $horas,
+            'tareas' => $tareas,
+        ];
+    } else {
+        $p['estudiante'] = null;
+    }
+}
+unset($p);
 
 // 4. Reuniones y Asistentes
 $reunionesRaw = $pdo->query("
@@ -196,9 +240,16 @@ require __DIR__ . '/_header.php';
           <label>Consultor:</label>
           <select id="filtroConsultor">
             <option value="">Todo el equipo</option>
-            <?php foreach ($consultores as $c): ?>
-              <option value="<?= e($c['id']) ?>"><?= e($c['nombre']) ?> (<?= e($c['rol']) ?>)</option>
-            <?php endforeach; ?>
+            <optgroup label="Equipo de Consultores">
+              <?php foreach ($consultores as $c): if (($c['tipo'] ?? '') === 'estudiante') continue; ?>
+                <option value="<?= e($c['id']) ?>"><?= e($c['nombre']) ?> (<?= e($c['rol']) ?>)</option>
+              <?php endforeach; ?>
+            </optgroup>
+            <optgroup label="Estudiantes ISET 815">
+              <?php foreach ($consultores as $c): if (($c['tipo'] ?? '') !== 'estudiante') continue; ?>
+                <option value="<?= e($c['id']) ?>"><?= e($c['nombre']) ?></option>
+              <?php endforeach; ?>
+            </optgroup>
           </select>
         </div>
         <div class="agenda-filter">
@@ -333,6 +384,51 @@ require __DIR__ . '/_header.php';
   <div class="rdrawer-body" id="revBody"></div>
   <div class="rdrawer-footer">
     <button type="button" class="btn btn-secondary btn-sm" id="btnRevClose">Cerrar</button>
+  </div>
+</aside>
+
+<!-- MODAL / DRAWER DE NUEVA TAREA INTERMEDIA -->
+<div class="drawer-scrim" id="tareaModalScrim" style="z-index:110"></div>
+<aside class="reunion-drawer" id="tareaModalDrawer" style="z-index:120" aria-label="Asignar tarea intermedia">
+  <div class="rdrawer-header">
+    <button type="button" class="rdrawer-close" id="tareaModalClose" aria-label="Cerrar">&times;</button>
+    <div class="rdrawer-kick">Convenio ISET 815</div>
+    <h2 class="rdrawer-title" id="tareaModalTitle">Nueva Tarea Intermedia</h2>
+    <div class="rdrawer-meta">Investigación y entregables de fondo entre reuniones</div>
+  </div>
+  <div class="rdrawer-body" id="tareaModalBody">
+    <form id="formTareaIntermedia" style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <label class="lbl" for="tiEstudiante">Estudiante asignado:</label>
+        <select id="tiEstudiante" class="form-input" required></select>
+      </div>
+      <div>
+        <label class="lbl" for="tiTitulo">Título de la consigna:</label>
+        <input type="text" id="tiTitulo" class="form-input" placeholder="Ej: Investigación sobre coleccionismo artesanal y piezas únicas" required>
+      </div>
+      <div>
+        <label class="lbl" for="tiConsigna">Consigna detallada (qué se pide, fuentes esperadas, formato):</label>
+        <textarea id="tiConsigna" class="form-textarea" rows="5" placeholder="Explicá con precisión qué material concreto debe relevar el estudiante antes de la fecha límite..." required></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label class="lbl" for="tiMinChars">Mínimo de caracteres:</label>
+          <input type="number" id="tiMinChars" class="form-input" value="600" min="0" step="50">
+        </div>
+        <div>
+          <label class="lbl" for="tiHoras">Horas estimadas:</label>
+          <input type="number" id="tiHoras" class="form-input" value="3.0" min="0.5" max="20" step="0.5">
+        </div>
+      </div>
+      <div>
+        <label class="lbl" for="tiVenceAt">Fecha y hora límite de entrega:</label>
+        <input type="datetime-local" id="tiVenceAt" class="form-input" required>
+      </div>
+    </form>
+  </div>
+  <div class="rdrawer-footer">
+    <button type="button" class="btn btn-secondary btn-sm" id="btnTareaModalCancel">Cancelar</button>
+    <button type="button" class="btn btn-primary btn-sm" id="btnTareaModalSave">Asignar tarea</button>
   </div>
 </aside>
 
