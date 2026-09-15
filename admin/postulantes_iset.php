@@ -3,8 +3,8 @@
  * Dashboard de Postulantes ISET 815 · Onboarding y Perfilado Psicotécnico
  *
  * Permite a la conducción y equipo de consultores auditar los perfiles
- * psicológicos y técnicos de los estudiantes del ISET 815 para la asignación
- * estratégica a los 18 emprendimientos turísticos acelerados de Esquel LAB.
+ * psicológicos, técnicos y de conducta pasada de los estudiantes del ISET 815
+ * para la asignación estratégica a los 18 emprendimientos turísticos acelerados de Esquel LAB.
  */
 
 require_once __DIR__ . '/../includes/db.php';
@@ -37,7 +37,7 @@ $st = $pdo->query("
       LEFT JOIN users u ON u.id = e.user_id
       LEFT JOIN lab_proyectos p ON p.id = e.proyecto_id
      WHERE (u.username NOT LIKE 'iset%' AND u.username NOT GLOB 'iset[0-9][0-9]') OR u.username IS NULL
-     ORDER BY (e.r_planificacion != '' OR e.foto_perfil != '') DESC, e.created_at DESC, e.consultor_id ASC
+     ORDER BY (e.r_posicion != '' OR e.r_planificacion != '' OR e.foto_perfil != '') DESC, e.created_at DESC, e.consultor_id ASC
 ");
 $postulantes = $st->fetchAll(PDO::FETCH_ASSOC);
 
@@ -78,24 +78,33 @@ if (($_GET['export'] ?? '') === 'zip') {
         'Dirección',
         'Grupo Sanguíneo',
         'Contacto Emergencia',
+        'Movilidad',
+        'Dispositivo de Trabajo',
         'Trabaja Actualmente',
         'Lugar de Trabajo',
         'Horario de Trabajo',
         'Rol de Trabajo',
         'Emprendimiento Asignado',
-        'Iniciativa (Locus 1-5)',
-        'Tolerancia a la Frustración (1-5)',
-        'Visión de Sistema (1-5)',
-        'Ambición Profesional (1-5)',
-        'Creatividad Operativa (1-5)',
-        'Autonomía de Decisión (1-5)',
-        'Empatía Comercial (1-5)',
-        'Gestión del Tiempo (1-5)',
-        'Promedio Matriz',
-        'R. Planificación y Viabilidad',
-        'R. Desarrollo de Producto',
-        'R. Comercialización',
-        'R. Pensamiento Crítico',
+        'Interés Más Fuerte',
+        'Área Más Floja (Reforzar)',
+        '1. Para arrancar (1=Confirmar, 5=Arrancar)',
+        '2. Cuando algo se traba (1=Pedir ayuda, 5=Insistir solo)',
+        '3. Ritmo y detalle (1=Rápido, 5=Lento y chequeado)',
+        '4. Cómo rendís mejor (1=Marcando, 5=Objetivo y solo)',
+        '5. Gente que no conocés (1=Cansa/solas, 5=Carga pilas)',
+        '6. Cómo contás lo hecho (1=Hablando, 5=Escribiendo)',
+        '7. Cómo preferís corrección (1=En el momento, 5=A solas)',
+        '8. Adónde querés llegar (1=Estable/seguro, 5=Propio)',
+        'CP 1: Organizar con otros',
+        'CP 2: Contactar desconocido',
+        'CP 3: Dejar algo a mitad',
+        'CP 4: Cobrar plata propia',
+        'CP 5: Crítica dura',
+        'P1: Tomá posición (Planificación)',
+        'P2: Producto (Estructurado / Detalle)',
+        'P3: Tres movimientos (Comercialización)',
+        'P4: Una cuenta de verdad (Comunicación)',
+        'P5: Expectativa personal',
         'Foto Archivo',
         'Fecha de Registro',
     ];
@@ -107,17 +116,6 @@ if (($_GET['export'] ?? '') === 'zip') {
         $edad = calcular_edad($p['fecha_nacimiento'] ?? null);
         $nombre = $p['nombre'] ?: $p['consultor_nombre'];
         $apellido = $p['apellido'] ?: '';
-
-        $promedioMatriz = round((
-            ($p['m_locus'] ?? 3) +
-            ($p['m_frustracion'] ?? 3) +
-            ($p['m_vision'] ?? 3) +
-            ($p['m_ambicion'] ?? 3) +
-            ($p['m_creatividad'] ?? 3) +
-            ($p['m_autonomia'] ?? 3) +
-            ($p['m_empatia'] ?? 3) +
-            ($p['m_gestion'] ?? 3)
-        ) / 8, 2);
 
         $row = [
             $p['consultor_id'],
@@ -131,24 +129,33 @@ if (($_GET['export'] ?? '') === 'zip') {
             $p['direccion'] ?? '',
             $p['grupo_sanguineo'] ?? '',
             $p['contacto_emergencia'] ?? '',
+            $p['movilidad'] ?? '',
+            $p['dispositivo_trabajo'] ?? '',
             !empty($p['trabaja_actualmente']) ? 'Sí' : 'No',
             $p['trabajo_lugar'] ?? '',
             $p['trabajo_horario'] ?? '',
             $p['trabajo_rol'] ?? '',
             $p['proyecto_nombre'] ?? 'Sin asignar',
-            $p['m_locus'] ?? 3,
-            $p['m_frustracion'] ?? 3,
-            $p['m_vision'] ?? 3,
-            $p['m_ambicion'] ?? 3,
-            $p['m_creatividad'] ?? 3,
-            $p['m_autonomia'] ?? 3,
-            $p['m_empatia'] ?? 3,
-            $p['m_gestion'] ?? 3,
-            $promedioMatriz,
-            $p['r_planificacion'] ?? '',
+            $p['interes_fuerte'] ?? '',
+            $p['interes_debil'] ?? '',
+            $p['m_arrancar'] ?? ($p['m_locus'] ?? 3),
+            $p['m_traba'] ?? ($p['m_frustracion'] ?? 3),
+            $p['m_ritmo'] ?? ($p['m_vision'] ?? 3),
+            $p['m_rendir'] ?? ($p['m_ambicion'] ?? 3),
+            $p['m_gente'] ?? ($p['m_creatividad'] ?? 3),
+            $p['m_comunicar'] ?? ($p['m_autonomia'] ?? 3),
+            $p['m_correccion'] ?? ($p['m_empatia'] ?? 3),
+            $p['m_destino'] ?? ($p['m_gestion'] ?? 3),
+            $p['cp_organizar'] ?? '',
+            $p['cp_contactar'] ?? '',
+            $p['cp_inconcluso'] ?? '',
+            $p['cp_cobrar'] ?? '',
+            $p['cp_critica'] ?? '',
+            $p['r_posicion'] ?: ($p['r_planificacion'] ?? ''),
             $p['r_producto'] ?? '',
-            $p['r_comercializacion'] ?? '',
-            $p['r_resolucion'] ?? '',
+            $p['r_movimientos'] ?: ($p['r_comercializacion'] ?? ''),
+            $p['r_cuenta'] ?: ($p['r_resolucion'] ?? ''),
+            $p['r_expectativa'] ?? '',
             $p['foto_perfil'] ?? '',
             $p['created_at'] ?? '',
         ];
@@ -186,7 +193,7 @@ require __DIR__ . '/_header.php';
 ?>
 
 <style>
-/* Grilla y Tarjetas de Postulantes */
+/* Barra Superior y Botones */
 .topbar-actions {
   display: flex;
   align-items: center;
@@ -212,9 +219,10 @@ require __DIR__ . '/_header.php';
   transform: translateY(-1px);
 }
 
+/* Grilla y Tarjetas de Postulantes */
 .grid-postulantes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 22px;
   margin-top: 24px;
 }
@@ -239,7 +247,7 @@ require __DIR__ . '/_header.php';
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .card-foto-grande {
   width: 74px;
@@ -283,34 +291,25 @@ require __DIR__ . '/_header.php';
 .card-meta-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   margin-top: auto;
   padding-top: 14px;
   border-top: 1px solid var(--border, #f1f5f9);
-  font-size: 12px;
+  font-size: 11.5px;
 }
-.pill-trabajo {
-  background: #fef3c7;
-  color: #92400e;
+.pill-base {
   padding: 3px 8px;
   border-radius: 12px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
-.pill-exclusivo {
-  background: #dcfce7;
-  color: #166534;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-.pill-promedio {
-  background: #e0e7ff;
-  color: #3730a3;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-weight: 700;
-  margin-left: auto;
-}
+.pill-trabajo { background: #fef3c7; color: #92400e; }
+.pill-exclusivo { background: #dcfce7; color: #166534; }
+.pill-movilidad { background: #e0f2fe; color: #0369a1; }
+.pill-disp { background: #f3e8ff; color: #6b21a8; }
+.pill-interes { background: #fae8ff; color: #86198f; font-weight: 700; margin-left: auto; }
 
 /* Modal de Ficha Técnica */
 .modal-overlay {
@@ -335,7 +334,7 @@ require __DIR__ . '/_header.php';
   background: #ffffff;
   border-radius: 16px;
   width: 100%;
-  max-width: 960px;
+  max-width: 980px;
   max-height: 90dvh;
   display: flex;
   flex-direction: column;
@@ -353,7 +352,7 @@ require __DIR__ . '/_header.php';
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 24px;
+  padding: 16px 24px;
   border-bottom: 1px solid #e2e8f0;
   background: #f8fafc;
 }
@@ -383,9 +382,7 @@ require __DIR__ . '/_header.php';
   gap: 6px;
   transition: background 0.2s;
 }
-.btn-imprimir:hover {
-  background: #23475f;
-}
+.btn-imprimir:hover { background: #23475f; }
 .btn-eliminar-modal {
   background: #fee2e2;
   color: #991b1b;
@@ -473,7 +470,7 @@ require __DIR__ . '/_header.php';
 .ficha-lista-contacto {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 24px;
+  gap: 12px 20px;
   margin-top: 10px;
   font-size: 13.5px;
   color: #475569;
@@ -482,16 +479,31 @@ require __DIR__ . '/_header.php';
   color: #1e293b;
 }
 
-/* Barras de la Matriz */
-.seccion-matriz {
+/* Bloque Interpretativo y Guía */
+.guia-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #166534;
+  line-height: 1.5;
+}
+.guia-box strong {
+  color: #14532d;
+}
+
+/* Secciones del Modal */
+.seccion-admin-box {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 24px;
 }
-.seccion-matriz h4 {
-  margin: 0 0 16px 0;
+.seccion-admin-box h4 {
+  margin: 0 0 14px 0;
   font-size: 16px;
   color: #0f172a;
   font-family: var(--font-title, serif);
@@ -499,6 +511,8 @@ require __DIR__ . '/_header.php';
   justify-content: space-between;
   align-items: center;
 }
+
+/* Grilla de Barras de Matriz */
 .grid-barras {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -540,13 +554,41 @@ require __DIR__ . '/_header.php';
   line-height: 1.25;
 }
 
-/* Respuestas de Texto */
-.seccion-respuestas h4 {
-  margin: 0 0 16px 0;
-  font-size: 16px;
-  color: #0f172a;
-  font-family: var(--font-title, serif);
+/* Conducta Pasada List */
+.lista-conducta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
+.conducta-fila {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.conducta-txt {
+  font-size: 13.5px;
+  color: #1e293b;
+  flex: 1;
+  line-height: 1.4;
+}
+.badge-conducta {
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge-nunca { background: #f1f5f9; color: #64748b; }
+.badge-una { background: #fef3c7; color: #92400e; }
+.badge-algunas { background: #dbeafe; color: #1e40af; }
+.badge-muchas { background: #dcfce7; color: #166534; font-weight: 800; }
+
+/* Respuestas de Texto y Producto */
 .bloque-respuesta {
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -556,10 +598,19 @@ require __DIR__ . '/_header.php';
   margin-bottom: 16px;
 }
 .bloque-pregunta {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bloque-subarea {
+  font-size: 11.5px;
+  color: #2F5D7C;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 .bloque-texto {
   font-size: 14px;
@@ -569,7 +620,30 @@ require __DIR__ . '/_header.php';
   margin: 0;
 }
 
-/* Cabecera para Impresión (oculta en pantalla) */
+/* Tabla estructurada de producto */
+.tabla-prod-6 {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 13.5px;
+}
+.tabla-prod-6 th {
+  text-align: left;
+  background: #f1f5f9;
+  padding: 8px 12px;
+  color: #475569;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  width: 32%;
+}
+.tabla-prod-6 td {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  line-height: 1.45;
+}
+
+/* Cabecera para Impresión A4 */
 .print-header-dossier {
   display: none;
 }
@@ -588,12 +662,10 @@ require __DIR__ . '/_header.php';
     margin: 0 !important;
     padding: 0 !important;
   }
-  /* Ocultar toda la interfaz administrativa circundante */
   .admin-header, .admin-topbar, .admin-nav, .grid-postulantes, .no-print,
   .btn-cerrar-modal, .btn-imprimir, .modal-actions, .modal-header {
     display: none !important;
   }
-  /* Desplegar el modal plano como documento */
   .modal-overlay {
     position: static !important;
     background: transparent !important;
@@ -617,8 +689,6 @@ require __DIR__ . '/_header.php';
     padding: 0 !important;
     overflow: visible !important;
   }
-
-  /* Cabecera institucional A4 */
   .print-header-dossier {
     display: flex !important;
     justify-content: space-between;
@@ -635,9 +705,7 @@ require __DIR__ . '/_header.php';
     font-size: 11px;
     color: #475569;
   }
-
-  /* Asegurar colores de barras y fondos en PDF */
-  .seccion-matriz, .bloque-respuesta {
+  .seccion-admin-box, .bloque-respuesta {
     page-break-inside: avoid;
     break-inside: avoid;
   }
@@ -651,10 +719,6 @@ require __DIR__ . '/_header.php';
     print-color-adjust: exact !important;
     background: #e2e8f0 !important;
   }
-  .bloque-respuesta {
-    border: 1px solid #cbd5e1 !important;
-    border-left: 4px solid #2F5D7C !important;
-  }
 }
 </style>
 
@@ -662,7 +726,7 @@ require __DIR__ . '/_header.php';
   <div>
     <h1>Postulantes ISET 815 · Onboarding</h1>
     <p style="margin:4px 0 0 0;font-size:14px;color:var(--ink-2);">
-      Perfilado psicológico, técnico y de criterio turístico para asignación estratégica a los 18 emprendimientos.
+      Perfilado psicológico, técnico y de conducta pasada para asignación estratégica a los 18 emprendimientos.
     </p>
   </div>
   <div class="topbar-actions">
@@ -693,17 +757,6 @@ require __DIR__ . '/_header.php';
         $nombre = $p['nombre'] ?: $p['consultor_nombre'];
         $apellido = $p['apellido'] ?: '';
         $foto = !empty($p['foto_perfil']) ? '../' . ltrim($p['foto_perfil'], '/') : '../assets/images/placeholder-avatar.svg';
-
-        $promedioMatriz = round((
-            ($p['m_locus'] ?? 3) +
-            ($p['m_frustracion'] ?? 3) +
-            ($p['m_vision'] ?? 3) +
-            ($p['m_ambicion'] ?? 3) +
-            ($p['m_creatividad'] ?? 3) +
-            ($p['m_autonomia'] ?? 3) +
-            ($p['m_empatia'] ?? 3) +
-            ($p['m_gestion'] ?? 3)
-        ) / 8, 1);
     ?>
       <div class="card-postulante" id="card-postulante-<?= e($p['consultor_id']) ?>" onclick="abrirFicha(<?= $idx ?>)">
         <div class="card-header-post">
@@ -734,14 +787,28 @@ require __DIR__ . '/_header.php';
 
         <div class="card-meta-pills">
           <?php if (!empty($p['trabaja_actualmente'])): ?>
-            <span class="pill-trabajo" title="<?= e($p['trabajo_rol'] . ' en ' . $p['trabajo_lugar']) ?>">💼 Empleado</span>
+            <span class="pill-base pill-trabajo" title="<?= e($p['trabajo_rol'] . ' en ' . $p['trabajo_lugar']) ?>">💼 Empleado</span>
           <?php else: ?>
-            <span class="pill-exclusivo">🎓 Dedicación plena</span>
+            <span class="pill-base pill-exclusivo">🎓 Exclusivo</span>
           <?php endif; ?>
 
-          <span class="pill-promedio" title="Promedio de los 8 factores de la matriz">
-            ★ <?= $promedioMatriz ?> / 5
-          </span>
+          <?php if (!empty($p['movilidad'])): ?>
+            <span class="pill-base pill-movilidad" title="Movilidad principal">
+              🛵 <?= e(ucfirst($p['movilidad'])) ?>
+            </span>
+          <?php endif; ?>
+
+          <?php if (!empty($p['dispositivo_trabajo'])): ?>
+            <span class="pill-base pill-disp" title="Equipamiento">
+              💻 <?= e(ucfirst($p['dispositivo_trabajo'])) ?>
+            </span>
+          <?php endif; ?>
+
+          <?php if (!empty($p['interes_fuerte'])): ?>
+            <span class="pill-base pill-interes" title="Interés preferente">
+              🎯 <?= e($p['interes_fuerte']) ?>
+            </span>
+          <?php endif; ?>
         </div>
       </div>
     <?php endforeach; ?>
@@ -773,7 +840,7 @@ require __DIR__ . '/_header.php';
     </div>
 
     <div class="modal-body" id="modalFichaContent">
-      <!-- El contenido se inyecta dinámicamente mediante JS -->
+      <!-- Inyectado dinámicamente mediante JS -->
     </div>
 
   </div>
@@ -784,6 +851,34 @@ const postulantesData = <?= json_encode($postulantes, JSON_UNESCAPED_UNICODE) ?>
 const proyectosLista = <?= json_encode($proyectosDisponibles, JSON_UNESCAPED_UNICODE) ?>;
 const csrfToken = <?= json_encode(csrf_token()) ?>;
 let currentFichaIndex = null;
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function linkifyInstagram(text) {
+  if (!text) return '';
+  const escaped = escapeHtml(text);
+  return escaped.replace(/@([a-zA-Z0-9._]+)/g, function(match, username) {
+    return `<a href="https://instagram.com/${encodeURIComponent(username)}" target="_blank" rel="noopener noreferrer" style="color:#2F5D7C;font-weight:700;text-decoration:none;">@${username} ↗</a>`;
+  });
+}
+
+function badgeConducta(val) {
+  if (!val) return '<span class="badge-conducta badge-nunca">Sin respuesta</span>';
+  val = String(val).trim();
+  if (val === 'Nunca') return '<span class="badge-conducta badge-nunca">Nunca</span>';
+  if (val === 'Una vez') return '<span class="badge-conducta badge-una">Una vez</span>';
+  if (val === 'Algunas veces') return '<span class="badge-conducta badge-algunas">Algunas veces</span>';
+  if (val === 'Muchas veces') return '<span class="badge-conducta badge-muchas">Muchas veces ★</span>';
+  return `<span class="badge-conducta badge-algunas">${escapeHtml(val)}</span>`;
+}
 
 function abrirFicha(index) {
   currentFichaIndex = index;
@@ -805,7 +900,7 @@ function abrirFicha(index) {
   const nombreCompleto = (p.nombre ? p.nombre : p.consultor_nombre) + (p.apellido ? ' ' + p.apellido : '');
   const fotoSrc = p.foto_perfil ? '../' + p.foto_perfil.replace(/^\/+/, '') : '../assets/images/placeholder-avatar.svg';
 
-  // Opciones de emprendimientos para el selector de asignación
+  // Selector de asignación a emprendimiento
   let proyectosOptionsHtml = '';
   proyectosLista.forEach(pr => {
     const asignadoAOtro = postulantesData.find(other => other.consultor_id !== p.consultor_id && other.proyecto_id === pr.id);
@@ -821,27 +916,28 @@ function abrirFicha(index) {
     igHtml = `<a href="https://instagram.com/${encodeURIComponent(igClean)}" target="_blank" rel="noopener noreferrer" style="color:#2F5D7C;font-weight:700;text-decoration:none;">@${escapeHtml(igClean)} ↗</a>`;
   }
 
-  // Dimensiones de la Matriz
+  // 1. Matriz de Trabajo (8 Filas Neutrales)
   const dimensiones = [
-    { k: 'm_locus', t: 'Iniciativa', izq: 'Indicaciones previas', der: 'Control y propuesta' },
-    { k: 'm_frustracion', t: 'Tolerancia Frustración', izq: 'Desmotivación rápida', der: 'Recalcula y resuelve' },
-    { k: 'm_vision', t: 'Visión de Sistema', izq: 'Tarea aislada', der: 'Impacto en todo el proyecto' },
-    { k: 'm_ambicion', t: 'Ambición Profesional', izq: 'Básico aprobado', der: 'Destacarse y absorber' },
-    { k: 'm_creatividad', t: 'Creatividad Operativa', izq: 'Recetas conocidas', der: 'Soluciones laterales' },
-    { k: 'm_autonomia', t: 'Autonomía de Decisión', izq: 'Validar cada paso', der: 'Decide y luego informa' },
-    { k: 'm_empatia', t: 'Empatía Comercial', izq: 'Aspecto técnico', der: 'Valor para el turista' },
-    { k: 'm_gestion', t: 'Gestión del Tiempo', izq: 'Reacciona al día', der: 'Planifica y cumple plazos' }
+    { k: 'm_arrancar', fallback: 'm_locus', t: '1. Para arrancar', izq: 'Confirmar antes de moverme', der: 'Arrancar y corregir sobre la marcha' },
+    { k: 'm_traba', fallback: 'm_frustracion', t: '2. Cuando algo se traba', izq: 'Pedir ayuda rápido', der: 'Insistir solo hasta destrabarlo' },
+    { k: 'm_ritmo', fallback: 'm_vision', t: '3. Ritmo y detalle', izq: 'Avanzar rápido', der: 'Lento y chequeado' },
+    { k: 'm_rendir', fallback: 'm_ambicion', t: '4. Cómo rendís mejor', izq: 'Con alguien marcando', der: 'Objetivo y me dejan solo' },
+    { k: 'm_gente', fallback: 'm_creatividad', t: '5. Gente que no conocés', izq: 'Me cansa / a solas', der: 'Me carga pilas' },
+    { k: 'm_comunicar', fallback: 'm_autonomia', t: '6. Cómo contás lo hecho', izq: 'Hablándolo', der: 'Escribiéndolo' },
+    { k: 'm_correccion', fallback: 'm_empatia', t: '7. Cómo preferís corrección', izq: 'En el momento', der: 'Después, a solas' },
+    { k: 'm_destino', fallback: 'm_gestion', t: '8. Adónde querés llegar', izq: 'Estable y seguro', der: 'Algo propio' },
   ];
 
   let matrizHtml = '';
   dimensiones.forEach(d => {
-    const val = parseInt(p[d.k] || 3, 10);
+    let val = parseInt(p[d.k] || p[d.fallback] || 3, 10);
+    if (isNaN(val) || val < 1 || val > 5) val = 3;
     const pct = (val / 5) * 100;
     matrizHtml += `
       <div class="barra-item">
         <div class="barra-label-row">
           <span>${d.t}</span>
-          <span style="color:#2F5D7C;">${val} / 5</span>
+          <span style="color:#2F5D7C;font-weight:800;">${val} / 5</span>
         </div>
         <div class="barra-track">
           <div class="barra-fill" style="width: ${pct}%;"></div>
@@ -854,27 +950,57 @@ function abrirFicha(index) {
     `;
   });
 
-  // Respuestas de desarrollo
-  const respuestasHtml = `
-    <div class="bloque-respuesta">
-      <div class="bloque-pregunta">1. Planificación y Viabilidad (Riesgos fuera de temporada alta)</div>
-      <p class="bloque-texto">${p.r_planificacion ? escapeHtml(p.r_planificacion) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
-    </div>
-    <div class="bloque-respuesta">
-      <div class="bloque-pregunta">2. Desarrollo de Producto (Recurso subexplotado innovador)</div>
-      <p class="bloque-texto">${p.r_producto ? escapeHtml(p.r_producto) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
-    </div>
-    <div class="bloque-respuesta">
-      <div class="bloque-pregunta">3. Comercialización (Digitalización sin perder identidad local)</div>
-      <p class="bloque-texto">${p.r_comercializacion ? escapeHtml(p.r_comercializacion) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
-    </div>
-    <div class="bloque-respuesta">
-      <div class="bloque-pregunta">4. Pensamiento Crítico (Resolución con muy pocos recursos)</div>
-      <p class="bloque-texto">${p.r_resolucion ? escapeHtml(p.r_resolucion) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
-    </div>
-  `;
+  // 2. Conducta Pasada
+  const preguntasCp = [
+    { k: 'cp_organizar', t: 'Organizaste algo que dependía de que otros aparecieran (juntada, viaje, torneo, trabajo grupal)' },
+    { k: 'cp_contactar', t: 'Le escribiste a alguien que no conocías para pedir algo (info, presupuesto, changa, entrevista)' },
+    { k: 'cp_inconcluso', t: 'Empezaste algo por tu cuenta y lo dejaste por la mitad' },
+    { k: 'cp_cobrar', t: 'Cobraste plata por algo propio (venta, trabajo suelto, servicio, no sueldo)' },
+    { k: 'cp_critica', t: 'Alguien te hizo una crítica dura y terminaste cambiando lo que estabas haciendo' },
+  ];
 
-  // Armado del contenido modal
+  let conductaHtml = '';
+  preguntasCp.forEach(cp => {
+    conductaHtml += `
+      <div class="conducta-fila">
+        <div class="conducta-txt">${cp.t}</div>
+        <div>${badgeConducta(p[cp.k])}</div>
+      </div>
+    `;
+  });
+
+  // 3. Desglose de Producto (P2)
+  let p2RenderHtml = '';
+  let jsonProd = null;
+  if (p.r_producto_json && p.r_producto_json.trim() !== '' && p.r_producto_json !== '{}') {
+    try {
+      jsonProd = JSON.parse(p.r_producto_json);
+    } catch(e) {}
+  }
+
+  if (jsonProd && (jsonProd.incluye || jsonProd.duracion || jsonProd.precio)) {
+    p2RenderHtml = `
+      <table class="tabla-prod-6">
+        <tr><th>Lugar / Productor real</th><td><strong>${escapeHtml(jsonProd.lugar_persona || 'No especificado')}</strong></td></tr>
+        <tr><th>1. Qué incluye</th><td>${escapeHtml(jsonProd.incluye || '—')}</td></tr>
+        <tr><th>2. Cuánto dura</th><td>${escapeHtml(jsonProd.duracion || '—')}</td></tr>
+        <tr><th>3. Cuánta gente por vez</th><td>${escapeHtml(jsonProd.capacidad || '—')}</td></tr>
+        <tr><th>4. Día y horario</th><td>${escapeHtml(jsonProd.horario || '—')}</td></tr>
+        <tr><th>5. Precio y cálculo</th><td>${escapeHtml(jsonProd.precio || '—')}</td></tr>
+        <tr><th>6. Qué le falta hoy para venderlo</th><td>${escapeHtml(jsonProd.falta || '—')}</td></tr>
+      </table>
+    `;
+  } else {
+    p2RenderHtml = `<p class="bloque-texto">${p.r_producto ? escapeHtml(p.r_producto) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>`;
+  }
+
+  // Textos de P1, P3, P4, P5
+  const textoP1 = p.r_posicion || p.r_planificacion || '';
+  const textoP3 = p.r_movimientos || p.r_comercializacion || '';
+  const textoP4 = p.r_cuenta || p.r_resolucion || '';
+  const textoP5 = p.r_expectativa || '';
+
+  // Armado completo del Modal
   const content = `
     <!-- Cabecera Oficial para Impresión A4 -->
     <div class="print-header-dossier">
@@ -883,7 +1009,7 @@ function abrirFicha(index) {
       </div>
       <div class="meta-print">
         <strong>Convenio ISET 815 · Cohorte 2026</strong><br>
-        Ficha Técnica y Psicotécnica de Onboarding<br>
+        Dossier Técnico y de Conducta de Postulante<br>
         Generado el: ${new Date().toLocaleDateString('es-AR')}
       </div>
     </div>
@@ -891,11 +1017,12 @@ function abrirFicha(index) {
     <!-- Perfil Superior -->
     <div class="ficha-perfil-top">
       <img src="${escapeHtml(fotoSrc)}" alt="${escapeHtml(nombreCompleto)}" class="ficha-foto-modal" onerror="this.src='../assets/images/placeholder-avatar.svg'">
-      <div class="ficha-datos-persona">
+      <div class="ficha-datos-persona" style="flex:1;">
         <h3>${escapeHtml(nombreCompleto)}</h3>
         <div style="font-size:14px;color:#64748b;margin-bottom:8px;">
           Usuario: <strong style="color:#2F5D7C;font-family:monospace;">@${escapeHtml(p.username || p.consultor_id)}</strong> · ${escapeHtml(edadTexto)} (${p.fecha_nacimiento || 'Sin fecha'})
         </div>
+        
         <div class="ficha-lista-contacto">
           <div class="ficha-contacto-item">
             <strong>WhatsApp:</strong> <a href="https://wa.me/${encodeURIComponent((p.telefono || '').replace(/[^0-9]/g, ''))}" target="_blank" rel="noopener noreferrer" style="color:#059669;font-weight:700;text-decoration:none;">${escapeHtml(p.telefono || '—')} ↗</a>
@@ -910,12 +1037,16 @@ function abrirFicha(index) {
             <strong>Grupo Sanguíneo:</strong> <span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-weight:700;">${escapeHtml(p.grupo_sanguineo || '—')}</span>
           </div>
           <div class="ficha-contacto-item">
-            <strong>Contacto Emergencia:</strong> ${escapeHtml(p.contacto_emergencia || '—')}
+            <strong>Emergencia:</strong> ${escapeHtml(p.contacto_emergencia || '—')}
           </div>
         </div>
 
-        <div style="margin-top:14px;background:#f8fafc;border:1px solid #e2e8f0;padding:10px 14px;border-radius:8px;font-size:13.5px;">
-          <strong>Situación Laboral:</strong> ${p.trabaja_actualmente == 1 ? `💼 <em>Trabaja en ${escapeHtml(p.trabajo_lugar || '—')} (${escapeHtml(p.trabajo_horario || '—')}) como ${escapeHtml(p.trabajo_rol || '—')}</em>` : '🎓 <em>Dedicación exclusiva al terciario y prácticas</em>'}
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;">
+          <span class="pill-base pill-movilidad">🛵 Movilidad: <strong>${escapeHtml(p.movilidad || 'Sin dato')}</strong></span>
+          <span class="pill-base pill-disp">💻 Dispositivo: <strong>${escapeHtml(p.dispositivo_trabajo || 'Sin dato')}</strong></span>
+          ${p.trabaja_actualmente == 1 
+            ? `<span class="pill-base pill-trabajo">💼 Empleado: ${escapeHtml(p.trabajo_rol || '')} en ${escapeHtml(p.trabajo_lugar || '')} (${escapeHtml(p.trabajo_horario || '')})</span>` 
+            : `<span class="pill-base pill-exclusivo">🎓 Dedicación exclusiva al terciario</span>`}
         </div>
 
         <!-- Asignación de Emprendimiento Esquel LAB -->
@@ -945,25 +1076,111 @@ function abrirFicha(index) {
       </div>
     </div>
 
-    <!-- Matriz de Autopercepción -->
-    <div class="seccion-matriz">
+    <!-- Áreas de Interés (Doble select) -->
+    <div style="background:#fdf4ff;border:1px solid #f0abfc;border-radius:10px;padding:12px 18px;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px;">
+      <div>
+        🎯 <strong>Área de mayor interés:</strong> <span style="color:#86198f;font-weight:700;">${escapeHtml(p.interes_fuerte || 'Sin especificar')}</span>
+      </div>
+      <div>
+        ⚠️ <strong>Área en la que se siente más flojo/a:</strong> <span style="color:#9d174d;font-weight:700;">${escapeHtml(p.interes_debil || 'Sin especificar')}</span>
+      </div>
+    </div>
+
+    <!-- Sección 1: Cómo Trabaja (Autopercepción · 8 filas) -->
+    <div class="seccion-admin-box">
       <h4>
-        <span>Matriz de Autopercepción (8 Dimensiones · 1 a 5)</span>
+        <span>Cómo trabaja (Autopercepción · 8 filas · 1 a 5)</span>
       </h4>
+      <div style="background:#eff6ff;border-left:3px solid #3b82f6;padding:10px 14px;border-radius:4px;font-size:12.5px;color:#1e40af;margin-bottom:14px;line-height:1.4;">
+        ℹ️ <em>La grilla de ocho filas es autopercepción: mide cómo se ve la persona, no cómo es. Sirve para elegir con qué caso ponerla y qué preguntarle en la primera charla; no sirve para ordenar de mejor a peor.</em>
+      </div>
       <div class="grid-barras">
         ${matrizHtml}
       </div>
     </div>
 
-    <!-- Respuestas Abiertas -->
-    <div class="seccion-respuestas">
-      <h4>Criterio Turístico y Pensamiento Crítico</h4>
-      ${respuestasHtml}
+    <!-- Sección 2: Conducta Pasada -->
+    <div class="seccion-admin-box">
+      <h4>
+        <span>Conducta Pasada ("Qué te pasó últimamente")</span>
+      </h4>
+      
+      <!-- Guía de lectura NPC vs Main Character -->
+      <div class="guia-box">
+        <strong>💡 Criterio técnico para leer conducta pasada (NPC vs. Main Character):</strong>
+        <ul style="margin:6px 0 0 0;padding-left:18px;line-height:1.45;">
+          <li><strong>El ítem 3 ("dejó algo por la mitad")</strong> parece un defecto y es el más importante: quien nunca dejó nada por la mitad es, casi siempre, quien nunca empezó nada.</li>
+          <li><strong>"Nunca" en 1, 2 y 4 y también "nunca" en 3:</strong> Perfil que no arranca solo. Requiere un consultor encima y consignas cerradas. Asignar a un emprendimiento ordenado con titular activo.</li>
+          <li><strong>"Algunas/muchas" en 1, 2 y 4, con 3 en "algunas":</strong> El que arranca. Va al emprendimiento trabado donde hay que empujar proactivamente.</li>
+          <li><strong>Alto en 2:</strong> Sale a la calle (relevamientos, proveedores, entrevistas).</li>
+          <li><strong>Alto en 5:</strong> Aguanta la corrección técnica (se le pueden pedir borradores y devolvérselos corregidos).</li>
+        </ul>
+      </div>
+
+      <div class="lista-conducta">
+        ${conductaHtml}
+      </div>
+    </div>
+
+    <!-- Sección 3: Criterio Turístico y Casos Reales -->
+    <div class="seccion-admin-box">
+      <h4>Criterio Turístico y Respuestas a Casos Reales</h4>
+      
+      <div class="bloque-respuesta">
+        <div class="bloque-pregunta">
+          <span>1. Planificación: ¿Le falta promoción a Esquel?</span>
+          <span class="bloque-subarea">Min. 500 chars · Long: ${textoP1.length}</span>
+        </div>
+        <p class="bloque-texto">${textoP1 ? escapeHtml(textoP1) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
+      </div>
+
+      <div class="bloque-respuesta">
+        <div class="bloque-pregunta">
+          <span>2. Desarrollo de Producto Comprable (6 campos estructurados)</span>
+          <span class="bloque-subarea">Producto</span>
+        </div>
+        ${p2RenderHtml}
+      </div>
+
+      <div class="bloque-respuesta">
+        <div class="bloque-pregunta">
+          <span>3. Comercialización: Tres movimientos para caso a 12 km</span>
+          <span class="bloque-subarea">Min. 500 chars · Long: ${textoP3.length}</span>
+        </div>
+        <p class="bloque-texto">${textoP3 ? escapeHtml(textoP3) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
+      </div>
+
+      <div class="bloque-respuesta">
+        <div class="bloque-pregunta">
+          <span>4. Comunicación: Auditoría de cuenta real de Instagram</span>
+          <span class="bloque-subarea">Min. 500 chars · Long: ${textoP4.length}</span>
+        </div>
+        <p class="bloque-texto">${textoP4 ? linkifyInstagram(textoP4) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
+      </div>
+
+      <div class="bloque-respuesta">
+        <div class="bloque-pregunta">
+          <span>5. Expectativa Personal: ¿Por qué estás acá y qué te querés llevar?</span>
+          <span class="bloque-subarea">Mini expectativa</span>
+        </div>
+        <p class="bloque-texto">${textoP5 ? escapeHtml(textoP5) : '<em style="color:#94a3b8;">Sin respuesta registrada.</em>'}</p>
+      </div>
     </div>
   `;
 
   document.getElementById('modalFichaContent').innerHTML = content;
   document.getElementById('modalFichaOverlay').classList.add('is-open');
+}
+
+function cerrarModal() {
+  document.getElementById('modalFichaOverlay').classList.remove('is-open');
+  currentFichaIndex = null;
+}
+
+function cerrarFicha(event) {
+  if (event.target.id === 'modalFichaOverlay') {
+    cerrarModal();
+  }
 }
 
 async function guardarAsignacionProyecto(consultorId, proyId, index) {
@@ -1103,33 +1320,6 @@ function eliminarDesdeModal() {
 function eliminarEstudianteDirecto(event, consultorId, nombre) {
   event.stopPropagation();
   eliminarEstudiante(consultorId, nombre);
-}
-
-function cerrarModal() {
-  document.getElementById('modalFichaOverlay').classList.remove('is-open');
-}
-
-function cerrarFicha(event) {
-  if (event.target === document.getElementById('modalFichaOverlay')) {
-    cerrarModal();
-  }
-}
-
-// Cerrar con Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    cerrarModal();
-  }
-});
-
-function escapeHtml(text) {
-  if (!text) return '';
-  return String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
 }
 </script>
 
