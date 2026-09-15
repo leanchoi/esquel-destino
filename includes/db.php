@@ -311,6 +311,85 @@ $colsCriterios        comentario TEXT NOT NULL DEFAULT '',
     );");
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_comp_proy ON lab_compromisos (proyecto_id);");
 
+    // ------------------------------------------------------------------
+    // Convenio ISET 815: los estudiantes en el acompañamiento
+    // ------------------------------------------------------------------
+    //
+    // Un estudiante es, a los efectos de la agenda, un participante más: tiene
+    // disponibilidad, va a reuniones y consume horas. Por eso vive en
+    // lab_consultores con tipo='estudiante' y no en una tabla aparte: así la
+    // agenda global, la matriz de carga y la asistencia lo toman sin tocar una
+    // línea. Lo que es propio del estudiante —instituto, legajo, presupuesto de
+    // horas, a qué emprendimiento está asignado— va en esta ficha aparte.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_estudiantes (
+        consultor_id TEXT PRIMARY KEY,
+        user_id INTEGER NULL,
+        instituto TEXT NOT NULL DEFAULT 'ISET 815',
+        legajo TEXT NOT NULL DEFAULT '',
+        proyecto_id TEXT NULL,
+        horas_presupuesto REAL NOT NULL DEFAULT 60,
+        alta_desde TEXT NOT NULL DEFAULT '',
+        activo INTEGER NOT NULL DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (consultor_id) REFERENCES lab_consultores (id) ON DELETE CASCADE,
+        FOREIGN KEY (proyecto_id) REFERENCES lab_proyectos (id) ON DELETE SET NULL
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_est_proy ON lab_estudiantes (proyecto_id);");
+
+    // Las consignas que se le piden al estudiante.
+    //
+    // Cada reunión le genera tres: una antes, una durante y una después. Entre
+    // reunión y reunión puede haber además una 'intermedia' de investigación.
+    //
+    // Lo que se pide NO es un resumen. Un resumen lo escribe cualquiera —o
+    // cualquier cosa— sin haber estado. Se piden materiales que sólo salen de
+    // haber estado ahí y de haber trabajado: frases textuales con su autor,
+    // números concretos que se dijeron, lo que contradice lo que ya teníamos
+    // anotado. Ese es el control real contra el relleno: no un detector, sino
+    // una consigna que no se puede contestar sin haber participado.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS lab_tareas_estudiante (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        estudiante_id TEXT NOT NULL,
+        proyecto_id TEXT NOT NULL,
+        reunion_id TEXT NULL,
+        momento TEXT NOT NULL DEFAULT 'despues',
+        plantilla_id TEXT NOT NULL DEFAULT '',
+        titulo TEXT NOT NULL,
+        consigna TEXT NOT NULL DEFAULT '',
+        min_caracteres INTEGER NOT NULL DEFAULT 0,
+        horas_estimadas REAL NOT NULL DEFAULT 0,
+        vence_at TEXT NOT NULL DEFAULT '',
+        estado TEXT NOT NULL DEFAULT 'pendiente',
+        entrega TEXT NOT NULL DEFAULT '',
+        especificos TEXT NOT NULL DEFAULT '{}',
+        entregado_at DATETIME NULL,
+
+        -- Telemetría del proceso de escritura. Son hechos sobre CÓMO llegó el
+        -- texto, no un veredicto sobre quién lo escribió: cuántos caracteres
+        -- entraron pegados de una, en cuántas sesiones se editó y cuánto tiempo
+        -- estuvo el campo enfocado. El profesor mira los hechos y decide.
+        caracteres INTEGER NOT NULL DEFAULT 0,
+        caracteres_pegados INTEGER NOT NULL DEFAULT 0,
+        sesiones_edicion INTEGER NOT NULL DEFAULT 0,
+        segundos_edicion INTEGER NOT NULL DEFAULT 0,
+
+        -- La valoración del consultor que estuvo en la reunión. Es el juicio
+        -- que de verdad importa: si el aporte sirvió para el emprendimiento.
+        valoracion TEXT NOT NULL DEFAULT '',
+        valoracion_nota TEXT NOT NULL DEFAULT '',
+        valorado_por TEXT NOT NULL DEFAULT '',
+        valorado_at DATETIME NULL,
+
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (estudiante_id) REFERENCES lab_consultores (id) ON DELETE CASCADE,
+        FOREIGN KEY (proyecto_id) REFERENCES lab_proyectos (id) ON DELETE CASCADE,
+        FOREIGN KEY (reunion_id) REFERENCES lab_reuniones (id) ON DELETE CASCADE
+    );");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_tar_est ON lab_tareas_estudiante (estudiante_id, estado);");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_tar_reu ON lab_tareas_estudiante (reunion_id);");
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_lab_tar_proy ON lab_tareas_estudiante (proyecto_id);");
+
 
     // Migraciones de columnas.
     //
