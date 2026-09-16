@@ -217,6 +217,17 @@ require __DIR__ . '/_header.php';
             </tr>
           </thead>
           <tbody>
+            <?php if (empty($paneles)): ?>
+              <tr>
+                <td colspan="8" style="text-align:center;padding:48px 24px;color:var(--ink-2)">
+                  <div style="font-size:32px;margin-bottom:10px">🎓</div>
+                  <strong style="font-size:16px;color:var(--ink);display:block;margin-bottom:6px">Aún no hay estudiantes con emprendimiento asignado</strong>
+                  <p style="margin:0 auto;max-width:540px;line-height:1.5;font-size:14px;color:var(--ink-2)">
+                    Los alumnos se encuentran completando el registro y evaluación de autopercepción. A medida que la coordinación les asigne su emprendimiento en marcha, acá podrás ver sus entregas, horas de trabajo y las devoluciones de los consultores.
+                  </p>
+                </td>
+              </tr>
+            <?php else: ?>
             <?php foreach ($paneles as $id => $p): $r = $p['resumen']; $faltan = $r['asignadas'] - $r['entregadas']; ?>
               <tr>
                 <td data-col="Estudiante"><strong><?= e($p['estudiante']['nombre']) ?></strong><div class="sub"><?= e($p['estudiante']['username'] ?? '') ?></div></td>
@@ -242,6 +253,7 @@ require __DIR__ . '/_header.php';
                 <td class="right"><a class="btn btn-secondary btn-sm" href="?est=<?= e($id) ?>">Ver</a></td>
               </tr>
             <?php endforeach; ?>
+            <?php endif; ?>
           </tbody>
         </table>
       </div>

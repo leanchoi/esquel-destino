@@ -44,6 +44,9 @@ if (es_estudiante($u)) {
         <a href="estudiante.php" class="<?= $nav === 'estudiante' ? 'is-active' : '' ?>">Mi emprendimiento</a>
       <?php elseif (es_profesor($u)): ?>
         <a href="profesor.php" class="<?= $nav === 'profesor' ? 'is-active' : '' ?>">Mis estudiantes</a>
+        <?php if (puede_gestionar_lab($u)): ?>
+          <a href="gestion.php" class="<?= $nav === 'gestion' ? 'is-active' : '' ?>">Gestión LAB</a>
+        <?php endif; ?>
       <?php else: ?>
         <a href="dashboard.php" class="<?= $nav === 'postulaciones' ? 'is-active' : '' ?>">Postulaciones</a>
         <?php if (puede_gestionar_lab($u)): ?>
